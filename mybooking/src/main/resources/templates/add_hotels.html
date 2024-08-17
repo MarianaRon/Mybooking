@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додати свое помешкання</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #003580;
+            color: white;
+        }
+        .navbar-brand {
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-left: 200px;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1em;
+            margin-right: 15px;
+        }
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            margin-right: 200px;
+
+        }
+        .auth-buttons .btn-light {
+            background-color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .dropdown-menu {
+            background-color: white;
+            color: black;
+            border: none;
+            max-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+        .dropdown-menu a {
+            color: black;
+            background-color: white;
+        }
+        .dropdown-menu a:hover {
+            background-color: #9a9998;
+            color: black;
+        }
+
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .housing-type {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+        .housing-type button {
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Arrenvi.com</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>
+                    </li>
+                    <div class="auth-buttons">
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                 <span th:text="${session.userName}"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                                <li><a class="dropdown-item" href="add_hotels.html">Додати нове помешкання</a></li>
+                                <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<h1>Додайте своє помешкання на Arrenvi.com і готуйтеся приймати гостей</h1>
+<div class="container">
+
+<div class="housing-type">
+    <h2>Апартаменти</h2>
+    <p>Помешкання з меблями і кухнею, яке гості бронюють цілком</p>
+    <button onclick="showForm('apartment')">Зареєструвати свое помешкання</button>
+</div>
+
+<div class="housing-type">
+    <h2>Будинки</h2>
+    <p>Апартаменти, будинки для відпочинку, вілли та ін.</p>
+    <button onclick="showForm('house')">Зареєструвати свое помешкання</button>
+</div>
+
+<div class="housing-type">
+    <h2>Готель або готель типу "ліжко та сніданок"</h2>
+    <p>Помешкання, як от готелі, готелі типу "ліжко та сніданок", хостели, апарт-готелі тощо </p>
+    <button onclick="showForm('hotel')">Зареєструвати свое помешкання</button>
+</div>
+
+<div class="housing-type">
+    <h2>Альтернативні помешкання</h2>
+    <p>Ботелі, кемпінги, намети-люкс та ін.</p>
+    <button onclick="showForm('alternative')">Зареєструвати свое помешкання</button>
+</div>
+</div>
+
+<form id="registration-form" style="display:none;" action="/partners/add" method="post">
+    <h2>Реєстрація помешкання</h2>
+    <input type="hidden" id="housing-type" name="housingType">
+    <label for="name">Назва:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="description">Опис:</label>
+    <textarea id="description" name="description" required></textarea><br><br>
+
+    <label for="address">Адресса:</label>
+    <input type="text" id="address" name="address" required><br><br>
+
+    <label for="latitude">Широта:</label>
+    <input type="number" id="latitude" name="latitude" step="0.000001"><br><br>
+
+    <label for="longitude">Довгота:</label>
+    <input type="number" id="longitude" name="longitude" step="0.000001"><br><br>
+
+    <label for="owner">Власник( незаповнюється)</label>
+    <input type="hidden" id="owner" name="owner" value="1"><br><br>
+
+    <button type="submit">Зареєструвати</button>
+</form>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function showForm(type) {
+        document.getElementById('housing-type').value = type;
+        document.getElementById('registration-form').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

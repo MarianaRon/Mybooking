@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hotel_search</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div class="container">
+    <h1>пошук готелів</h1>
+    <form th:action="@{/hotels/search}" method="get">
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name" required/><br/><br/>
+        <button type="submit">Искать</button>
+    </form>
+    <br/>
+    <h2>Результаты поиска</h2>
+    <div th:if="${hotels}">
+        <ul>
+            <li th:each="hotel : ${hotels}">
+                <span th:text="${hotel.name}"></span> - <span th:text="${hotel.description}"></span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Выбор валюты</title>
+</head>
+<body>
+<h1>Выберите валюту</h1>
+<form action="#" th:action="@{/setCurrency}" method="post">
+    <!-- Список выбора валют -->
+    <select name="currency">
+        <!-- Перебираем список валют и создаем option для каждой -->
+        <option th:each="currency : ${currencies}"
+                th:value="${currency.code}"
+                th:text="${currency.name}"></option>
+    </select>
+    <!-- Кнопка для отправки формы -->
+    <button type="submit">Выбрать</button>
+</form>
+</body>
+</html>
