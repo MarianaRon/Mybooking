@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Partner Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .form-step label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-step input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-step button {
+            width: 100%;
+            padding: 10px;
+            background: #4a65ea;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-step button:hover {
+            background: #3747c0;
+        }
+        .form-step .link-button {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #4a65ea;
+            text-decoration: none;
+        }
+        .form-step .link-button:hover {
+            text-decoration: underline;
+        }
+        #error-message {
+            color: red;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form id="partner-form" action="/partners" method="post">
+        <!-- Step 1: Enter Email -->
+        <div class="form-step active" id="step-1">
+            <h2>Створення акаунта партнера</h2>
+            <label for="email">Електронна адреса:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="button" onclick="nextStep(2)">Продовжити</button>
+            <a href="/exit_Account" class="link-button">Войти</a>
+        </div>
+
+        <!-- Step 2: Enter Contact Information -->
+        <div class="form-step" id="step-2">
+            <h2>Контактні дані</h2>
+            <label for="first-name">Ім'я:</label>
+            <input type="text" id="first-name" name="firstName" required>
+            <label for="last-name">Прізвище:</label>
+            <input type="text" id="last-name" name="lastName" required>
+            <label for="phone">Номер телефону:</label>
+            <input type="tel" id="phone" name="phone" required>
+            <button type="button" onclick="nextStep(3)">Далі</button>
+        </div>
+
+        <!-- Step 3: Create Password -->
+        <div class="form-step" id="step-3">
+            <h2>Створіть пароль</h2>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" minlength="6" required>
+            <label for="confirm-password">Підтвердити пароль:</label>
+            <input type="password" id="confirm-password" name="confirmPassword" minlength="6" required>
+            <div id="error-message"></div>
+            <button type="submit">Створити акаунт</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function nextStep(step) {
+        document.querySelectorAll('.form-step').forEach(function(stepElement) {
+            stepElement.classList.remove('active');
+        });
+        document.getElementById('step-' + step).classList.add('active');
+    }
+
+    document.getElementById('partner-form').addEventListener('submit', function(event) {
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirm-password').value;
+        var errorMessage = document.getElementById('error-message');
+
+        if (password !== confirmPassword) {
+            event.preventDefault();
+            errorMessage.textContent = 'Паролі не співпадають';
+        } else if (password.length < 6) {
+            event.preventDefault();
+            errorMessage.textContent = 'Пароль має бути не менше 6 символів';
+        } else {
+            errorMessage.textContent = '';
+        }
+    });
+</script>
+
+</body>
+</html>
