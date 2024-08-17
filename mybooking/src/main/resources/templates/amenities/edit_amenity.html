@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit_amenity</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div class="container">
+    <h1>Внесення змін у таблицю ЗРУЧНОСТІ</h1>
+</div>
+
+<!-- Форма для редагування зручності -->
+<form action="#" th:action="@{/amenities/edit/{id}(id=${amenity.id})}" method="post">
+    <label for="name">Назва зручності:</label>
+    <input type="text" id="name" name="name" th:value="${amenity.name}" required>
+    <button type="submit">Зберегти зміни</button>
+</form>
+
+<!-- Посилання для повернення на сторінку зі списком зручностей -->
+<div>
+    <a class="nav-link" href="/amenities/amenity_list">Назад до списку зручностей</a>
+</div>
+
+<!-- Посилання на сторінку адміністратора -->
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+</body>
+</html>

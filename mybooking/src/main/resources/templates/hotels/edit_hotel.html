@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit_hotel</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div class="container">
+    <h1>Внесення змін у таблицю ГОТЕЛІ</h1>
+
+    <!-- Форма для редагування готелю -->
+    <form th:action="@{/hotels/edit/{id}(id=${hotel.id})}" method="post">
+        <label for="name">Назва:</label>
+        <input type="text" id="name" name="name" th:value="${hotel.name}" required>
+
+        <label for="description">Опис:</label>
+        <textarea id="description" name="description" required th:text="${hotel.description}"></textarea>
+
+        <label for="address">Адреса:</label>
+        <input type="text" id="address" name="address" th:value="${hotel.address}" required>
+
+        <label for="latitude">Широта:</label>
+        <input type="number" step="0.000001" id="latitude" name="latitude" th:value="${hotel.latitude}">
+
+        <label for="longitude">Довгота:</label>
+        <input type="number" step="0.000001" id="longitude" name="longitude" th:value="${hotel.longitude}">
+
+        <label for="owner">Власник:</label>
+        <select id="owner" name="owner" required>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}" th:selected="${hotel.owner.id == user.id}"></option>
+        </select>
+
+        <label for="housingType">Тип житла:</label>
+        <input type="text" id="housingType" name="housingType" th:value="${hotel.housingType}" required>
+
+        <button type="submit">Зберегти зміни</button>
+    </form>
+
+    <div>
+        <a class="nav-link" href="/hotels/hotel_list">Назад до списку готелів</a>
+        <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+    </div>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit_reservation</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div class="container">
+    <h1>Внесення змін у таблицю БРОНЮВАННЯ</h1>
+
+    <form th:action="@{'/reservations/edit/' + ${reservation.id}}" method="post">
+        <div>
+            <label for="user">Користувач:</label>
+            <select name="userId" id="user" th:value="${reservation.user.id}">
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="room">Кімната:</label>
+            <select name="roomId" id="room" th:value="${reservation.room.id}">
+                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="checkInDate">Дата заїзду:</label>
+            <input type="datetime-local" id="checkInDate" name="checkInDate" th:value="${reservation.checkInDate}">
+        </div>
+        <div>
+            <label for="checkOutDate">Дата виїзду:</label>
+            <input type="datetime-local" id="checkOutDate" name="checkOutDate" th:value="${reservation.checkOutDate}">
+        </div>
+        <div>
+            <label for="totalPrice">Загальна вартість:</label>
+            <input type="number" step="0.01" id="totalPrice" name="totalPrice" th:value="${reservation.totalPrice}">
+        </div>
+        <button type="submit">Зберегти зміни</button>
+    </form>
+</div>
+
+<a class="nav-link" href="/reservations/reservation_list">Назад до списку бронювань</a>
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+</body>
+</html>

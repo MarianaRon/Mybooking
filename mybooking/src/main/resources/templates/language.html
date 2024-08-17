@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Выбор языка</title>
+</head>
+<body>
+<h1>Выберите язык</h1>
+<!-- Форма для выбора языка -->
+<form th:action="@{/setLanguage}" method="post">
+    <!-- Выпадающий список языков -->
+    <select name="language">
+        <!-- Перебор списка языков и создание опций для выбора -->
+        <option th:each="language : ${languages}"
+                th:value="${language.code}"
+                th:text="${language.name}"></option>
+    </select>
+    <button type="submit">Выбрать</button>
+</form>
+</body>
+</html>

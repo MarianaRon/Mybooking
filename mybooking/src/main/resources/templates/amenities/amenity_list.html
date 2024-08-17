@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amenity_list</title>
+</head>
+<body>
+
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Таблиця ЗРУЧНОСТІ</h1>
+</div>
+
+<!-- Форма для створення нової зручності -->
+<div>
+    <form action="/amenities/create" method="post">
+        <label for="name">Назва зручності:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Додати</button>
+    </form>
+</div>
+
+<!-- Виведення списку зручностей -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="amenity : ${amenities}">
+        <td th:text="${amenity.id}"></td>
+        <td th:text="${amenity.name}"></td>
+        <td>
+            <a th:href="@{/amenities/edit/{id}(id=${amenity.id})}">Редагувати</a>
+            <form th:action="@{/amenities/delete/{id}(id=${amenity.id})}" method="post" style="display:inline;">
+                <button type="submit">Видалити</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Посилання на сторінку адміністратора -->
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+</body>
+</html>

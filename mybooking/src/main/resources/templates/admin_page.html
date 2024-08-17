@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin_page</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+<div>
+   <h1>Сторінка адміністратора</h1>
+</div>
+<div>
+    <a class="nav-link" href="/users/user_list">Таблиця КОРИСТУВАЧІ</a>
+</div>
+
+<div>
+    <a class="nav-link" style="color: #5c00e6;" href="/hotels/hotel_list">Таблиця ГОТЕЛІ</a>
+</div>
+
+<div>
+    <a class="nav-link" style="color: #5c00e6;" href="/partners/partner_list">Таблиця ПАРТНЕРИ</a>
+</div>
+
+
+<div>
+    <a class="nav-link" style="color: #5c00e6;" href="/rooms/room_list">Таблиця КІМНАТИ</a>
+</div>
+
+<div>
+    <a class="nav-link" href="/reservations/reservation_list">Таблиця БРОНЮВАННЯ</a>
+</div>
+
+<div>
+    <a class="nav-link" style="color: #5c00e6;" href="/reviews/review_list">Таблиця ВІДГУКИ (REVIEW)</a>
+</div>
+
+<div>
+    <a class="nav-link" style="color: #5c00e6;" href="/amenities/amenity_list">Таблиця ЗРУЧНОСТІ (AMENITY)</a>
+</div>
+
+<div>
+    <a class="nav-link" style="color: #5c00e6;" href="/images/image_list">Таблиця ФОТО</a>
+</div>
+
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

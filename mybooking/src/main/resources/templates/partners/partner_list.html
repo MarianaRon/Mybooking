@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Partner List</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Таблиця Партнери</h1>
+</div>
+
+<!-- Форма для створення нового партнера -->
+<div>
+    <h2>Створення нового партнера</h2>
+    <form th:action="@{/partners}" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="firstName">Ім'я:</label>
+        <input type="text" id="firstName" name="firstName" required><br>
+
+        <label for="lastName">Прізвище:</label>
+        <input type="text" id="lastName" name="lastName" required><br>
+
+        <label for="phone">Телефон:</label>
+        <input type="text" id="phone" name="phone" required><br>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="confirmPassword">Підтвердження пароля:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+        <button type="submit">Додати партнера</button>
+    </form>
+</div>
+
+<!-- Таблиця з існуючими партнерами -->
+<div>
+    <h2>Список партнерів</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Ім'я</th>
+            <th>Прізвище</th>
+            <th>Телефон</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="partner : ${partners}">
+            <td th:text="${partner.id}"></td>
+            <td th:text="${partner.email}"></td>
+            <td th:text="${partner.firstName}"></td>
+            <td th:text="${partner.lastName}"></td>
+            <td th:text="${partner.phone}"></td>
+            <td>
+                <a th:href="@{/partners/edit/{id}(id=${partner.id})}">Редагувати</a>
+                <form th:action="@{/partners/{id}(id=${partner.id})}" method="post" style="display:inline-block;">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

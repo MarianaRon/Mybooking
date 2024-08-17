@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Review List</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Таблиця відгуків</h1>
+</div>
+
+<div>
+    <a class="nav-link" href="/reviews/new_review">Додати новий коментар</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Content</th>
+        <th>Rating</th>
+        <th>Review Date</th>
+        <th>Hotel</th>
+        <th>User</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review : ${reviews}">
+        <td th:text="${review.id}">1</td>
+        <td th:text="${review.content}">Sample content</td>
+        <td th:text="${review.rating}">5</td>
+        <td th:text="${review.reviewDate}">2023-08-22T14:00</td>
+        <td th:text="${review.hotel.name}">Sample Hotel</td>
+        <td th:text="${review.user.username}">John Doe</td>
+        <td>
+            <a th:href="@{/reviews/edit_review/{id}(id=${review.id})}">Редагувати</a>
+            <form th:action="@{/reviews/delete/{id}(id=${review.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit">Видалити</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation_list</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Таблиця БРОНЮВАННЯ</h1>
+</div>
+
+<!-- Форма для створення нового бронювання -->
+<div>
+    <form action="/reservations/create" method="post">
+        <div>
+            <label for="user">Користувач:</label>
+            <select name="userId" id="user">
+                <!-- Тут потрібно вивести всіх користувачів з бази даних -->
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="room">Кімната:</label>
+            <select name="roomId" id="room">
+                <!-- Тут потрібно вивести всі кімнати з бази даних -->
+                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="checkInDate">Дата заїзду:</label>
+            <input type="datetime-local" id="checkInDate" name="checkInDate">
+        </div>
+        <div>
+            <label for="checkOutDate">Дата виїзду:</label>
+            <input type="datetime-local" id="checkOutDate" name="checkOutDate">
+        </div>
+        <div>
+            <label for="totalPrice">Загальна вартість:</label>
+            <input type="number" step="0.01" id="totalPrice" name="totalPrice">
+        </div>
+        <button type="submit">Додати бронювання</button>
+    </form>
+</div>
+
+<!-- Вивід існуючих бронювань -->
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Користувач</th>
+            <th>Кімната</th>
+            <th>Дата заїзду</th>
+            <th>Дата виїзду</th>
+            <th>Загальна вартість</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation : ${reservations}">
+            <td th:text="${reservation.user.name}"></td>
+            <td th:text="${reservation.room.name}"></td>
+            <td th:text="${reservation.checkInDate}"></td>
+            <td th:text="${reservation.checkOutDate}"></td>
+            <td th:text="${reservation.totalPrice}"></td>
+            <td>
+                <a th:href="@{'/reservations/edit/' + ${reservation.id}}">Редагувати</a>
+                <form th:action="@{'/reservations/delete/' + ${reservation.id}}" method="post" style="display:inline;">
+                    <button type="submit">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адмінінстратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

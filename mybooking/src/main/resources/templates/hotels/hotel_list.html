@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel_list</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div class="container">
+    <h1>Робота з таблицею ГОТЕЛІ</h1>
+
+    <!-- Форма для створення нового готелю -->
+    <form action="/hotels/add" method="post">
+        <label for="name">Назва:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="description">Опис:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="address">Адреса:</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="latitude">Широта:</label>
+        <input type="number" step="0.000001" id="latitude" name="latitude">
+
+        <label for="longitude">Довгота:</label>
+        <input type="number" step="0.000001" id="longitude" name="longitude">
+
+        <label for="owner">Власник:</label>
+        <select id="owner" name="owner" required>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+        </select>
+
+        <label for="housingType">Тип житла:</label>
+        <input type="text" id="housingType" name="housingType" required>
+
+        <button type="submit">Додати готель</button>
+    </form>
+
+    <!-- Таблиця з переліком готелів -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Адреса</th>
+            <th>Тип житла</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hotel : ${hotels}">
+            <td th:text="${hotel.id}"></td>
+            <td th:text="${hotel.name}"></td>
+            <td th:text="${hotel.description}"></td>
+            <td th:text="${hotel.address}"></td>
+            <td th:text="${hotel.housingType}"></td>
+            <td>
+                <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}">Редагувати</a>
+                <form th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" style="display:inline;">
+                    <button type="submit">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+    </div>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>

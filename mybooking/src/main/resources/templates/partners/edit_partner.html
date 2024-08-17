@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Partner</title>
+</head>
+<body>
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Внесення змін до таблиці Партнери</h1>
+</div>
+
+<div>
+    <form th:action="@{/partners/update/{id}(id=${partner.id})}" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${partner.email}" required><br>
+
+        <label for="firstName">Ім'я:</label>
+        <input type="text" id="firstName" name="firstName" th:value="${partner.firstName}" required><br>
+
+        <label for="lastName">Прізвище:</label>
+        <input type="text" id="lastName" name="lastName" th:value="${partner.lastName}" required><br>
+
+        <label for="phone">Телефон:</label>
+        <input type="text" id="phone" name="phone" th:value="${partner.phone}" required><br>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Оновити партнера</button>
+    </form>
+</div>
+
+<div>
+    <a class="nav-link" href="/partners/partner_list">Назад до списку партнерів</a>
+</div>
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+</body>
+</html>
