@@ -4,6 +4,7 @@ import com.example.mybooking.model.Partner;
 import com.example.mybooking.service.HotelService;
 import com.example.mybooking.service.PartnerService;
 import com.example.mybooking.service.UserService;
+
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,25 +27,33 @@ public class PartnerController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping
-    public List<Partner> getAllPartners() {
-        return partnerService.getAllPartners();
+    public String getAllPartners(Model model) {
+        List<Partner> partners = partnerService.getAllPartners();
+        model.addAttribute("partners", partners);
+        return "partners/partner_list";
     }
 
     @GetMapping("/{id}")
-    public Optional<Partner> getPartnerById(@PathVariable Long id) {
-        return partnerService.getPartnerById(id);
+    public String getPartnerById(@PathVariable Long id, Model model) {
+        Optional<Partner> partner = partnerService.getPartnerById(id);
+        if (partner.isPresent()) {
+            model.addAttribute("partner", partner.get());
+            return "partners/partner_details";
+        } else {
+            return "redirect:/partners";
+        }
     }
 
     @GetMapping("/new")
-    public String showPartnerForm() {
-        return "partner_Account";
+    public String showPartnerForm(Model model) {
+        model.addAttribute("partner", new Partner());
+        return "partners/partner_form";
     }
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "exit_Account";
+        return "partners/partner_login";
     }
 
     @PostMapping("/login")
@@ -57,7 +66,7 @@ public class PartnerController {
             return "redirect:/home_partners";
         } else {
             model.addAttribute("errorMessage", "Invalid email or password");
-            return "partner_login";
+            return "partners/partner_login";
         }
     }
 
@@ -69,12 +78,12 @@ public class PartnerController {
 
         if (!partner.getPassword().equals(confirmPassword)) {
             model.addAttribute("errorMessage", "Passwords do not match");
-            return "partner_Account";
+            return "partners/partner_form";
         }
 
         if (partner.getPassword().length() < 6) {
             model.addAttribute("errorMessage", "Password must be at least 6 characters long");
-            return "partner_Account";
+            return "partners/partner_form";
         }
 
         partnerService.createPartner(partner);
@@ -84,20 +93,13 @@ public class PartnerController {
     @DeleteMapping("/{id}")
     public String deletePartner(@PathVariable Long id) {
         partnerService.deletePartner(id);
-        return "redirect:/partners/partner_list";
+        return "redirect:/partners";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/partners/login";
-    }
-
-    @GetMapping("/partner_list")
-    public String partnerList(Model model) {
-        List<Partner> partners = partnerService.getAllPartners();
-        model.addAttribute("partners", partners);
-        return "partners/partner_list";
     }
 
     @GetMapping("/edit/{id}")
@@ -107,12 +109,12 @@ public class PartnerController {
             model.addAttribute("partner", partner.get());
             return "partners/edit_partner";
         } else {
-            return "redirect:/partners/partner_list";
+            return "redirect:/partners";
         }
     }
 
     @PostMapping("/update/{id}")
-    public String updatePartner(@PathVariable Long id, @ModelAttribute Partner updatedPartner) {
+    public String updatePartner(@PathVariable Long id, @ModelAttribute Partner updatedPartner, Model model) {
         Optional<Partner> partner = partnerService.getPartnerById(id);
         if (partner.isPresent()) {
             Partner existingPartner = partner.get();
@@ -120,11 +122,16 @@ public class PartnerController {
             existingPartner.setFirstName(updatedPartner.getFirstName());
             existingPartner.setLastName(updatedPartner.getLastName());
             existingPartner.setPhone(updatedPartner.getPhone());
+
             if (updatedPartner.getPassword().length() >= 6) {
                 existingPartner.setPassword(updatedPartner.getPassword());
+            } else {
+                model.addAttribute("errorMessage", "Password must be at least 6 characters long");
+                return "partners/edit_partner";
             }
+
             partnerService.createPartner(existingPartner);
         }
-        return "redirect:/partners/partner_list";
+        return "redirect:/partners";
     }
 }

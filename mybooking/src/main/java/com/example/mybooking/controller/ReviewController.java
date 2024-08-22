@@ -28,6 +28,8 @@ public class ReviewController {
     @Autowired
     private UserService userService;
 
+    // Веб-методи
+
     @GetMapping("/review_list")
     public String reviewList(Model model) {
         List<Review> reviews = reviewService.getAllReviews();
@@ -37,34 +39,32 @@ public class ReviewController {
 
     @GetMapping("/edit_review/{id}")
     public String editReviewForm(@PathVariable Long id, Model model) {
-        Optional<Review> review = reviewService.getReviewById(id);
-        if (review.isPresent()) {
-            model.addAttribute("review", review.get());
-            model.addAttribute("hotels", hotelService.getAllHotels());
-            model.addAttribute("users", userService.getAllUsers());
-            return "reviews/edit_review";
-        } else {
-            return "redirect:/reviews/review_list";
-        }
+        Review review = reviewService.getReviewById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        model.addAttribute("review", review);
+        model.addAttribute("hotels", hotelService.getAllHotels());
+        model.addAttribute("users", userService.getAllUsers());
+        return "reviews/edit_review";
     }
 
     @PostMapping("/edit_review/{id}")
-    public String updateReview(@PathVariable Long id, @ModelAttribute Review reviewDetails) {
-        Optional<Review> optionalReview = reviewService.getReviewById(id);
-        if (optionalReview.isPresent()) {
-            Review review = optionalReview.get();
-            review.setContent(reviewDetails.getContent());
-            review.setRating(reviewDetails.getRating());
-            review.setReviewDate(reviewDetails.getReviewDate());
-            review.setHotel(reviewDetails.getHotel());
-            review.setUser(reviewDetails.getUser());
-            reviewService.saveReview(review);
-        }
+    public String updateReview1(@PathVariable Long id, @ModelAttribute Review reviewDetails) {
+        Review review = reviewService.getReviewById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        review.setContent(reviewDetails.getContent());
+        review.setRating(reviewDetails.getRating());
+        review.setReviewDate(reviewDetails.getReviewDate());
+        review.setHotel(reviewDetails.getHotel());
+        review.setUser(reviewDetails.getUser());
+
+        reviewService.saveReview(review);
         return "redirect:/reviews/review_list";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteReview(@PathVariable Long id) {
+    public String deleteReview1(@PathVariable Long id) {
         reviewService.deleteReview(id);
         return "redirect:/reviews/review_list";
     }
@@ -77,8 +77,50 @@ public class ReviewController {
     }
 
     @PostMapping("/new_review")
-    public String createReview(@ModelAttribute Review review) {
+    public String createReview1(@ModelAttribute Review review) {
         reviewService.saveReview(review);
         return "redirect:/reviews/review_list";
+    }
+
+    @GetMapping
+    public String getAllReviews(Model model) {
+        model.addAttribute("reviews", reviewService.getAllReviews());
+        return "reviews/review_list";
+    }
+
+    // REST API методи
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
+        Optional<Review> review = reviewService.getReviewById(id);
+        return review.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Review> createReview(@RequestBody Review review) {
+        Review savedReview = reviewService.saveReview(review);
+        return ResponseEntity.ok(savedReview);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Review> updateReview(@PathVariable Long id, @RequestBody Review reviewDetails) {
+        Review review = reviewService.getReviewById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        review.setContent(reviewDetails.getContent());
+        review.setRating(reviewDetails.getRating());
+        review.setReviewDate(reviewDetails.getReviewDate());
+        review.setHotel(reviewDetails.getHotel());
+        review.setUser(reviewDetails.getUser());
+
+        Review updatedReview = reviewService.saveReview(review);
+        return ResponseEntity.ok(updatedReview);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+        reviewService.deleteReview(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -7,6 +7,7 @@ import com.example.mybooking.service.ReservationService;
 import com.example.mybooking.service.UserService;
 import com.example.mybooking.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,10 @@ public class ReservationController {
             @RequestParam LocalDateTime checkOutDate,
             @RequestParam Double totalPrice) {
 
-        User user = userService.getUserById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Room room = roomService.getRoomById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
+        User user = userService.getUserById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Room room = roomService.getRoomById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
 
         Reservation reservation = new Reservation(user, room, checkInDate, checkOutDate, LocalDateTime.now(), null, null, totalPrice);
         reservationService.saveReservation(reservation);
@@ -79,8 +82,10 @@ public class ReservationController {
         Reservation reservation = reservationService.getReservationById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        User user = userService.getUserById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Room room = roomService.getRoomById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
+        User user = userService.getUserById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Room room = roomService.getRoomById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
 
         reservation.setUser(user);
         reservation.setRoom(room);
@@ -96,5 +101,47 @@ public class ReservationController {
     public String deleteReservation(@PathVariable Long id) {
         reservationService.deleteReservation(id);
         return "redirect:/reservations/reservation_list";
+    }
+
+    @GetMapping
+    public String getAllReservations(Model model) {
+        model.addAttribute("reservations", reservationService.getAllReservations());
+        return "reservations/reservation_list";
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
+        Optional<Reservation> reservation = reservationService.getReservationById(id);
+        return reservation.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+        Reservation savedReservation = reservationService.saveReservation(reservation);
+        return ResponseEntity.ok(savedReservation);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservationDetails) {
+        Reservation reservation = reservationService.getReservationById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        reservation.setUser(reservationDetails.getUser());
+        reservation.setRoom(reservationDetails.getRoom());
+        reservation.setCheckInDate(reservationDetails.getCheckInDate());
+        reservation.setCheckOutDate(reservationDetails.getCheckOutDate());
+        reservation.setReservationDate(reservationDetails.getReservationDate());
+        reservation.setApprovalDate(reservationDetails.getApprovalDate());
+        reservation.setTotalPrice(reservationDetails.getTotalPrice());
+
+        Reservation updatedReservation = reservationService.saveReservation(reservation);
+        return ResponseEntity.ok(updatedReservation);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReservationRest(@PathVariable Long id) {
+        reservationService.deleteReservation(id);
+        return ResponseEntity.noContent().build();
     }
 }
