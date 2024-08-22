@@ -1,4 +1,5 @@
 package com.example.mybooking.controller;
+
 import com.example.mybooking.model.User;
 import com.example.mybooking.repository.IUserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -84,12 +85,14 @@ public class MainController {
     }
 
 
+
 //головна сторінка для партнера після реєстрації
     @GetMapping("/home_partners")
     public String home_partners( Model model ){
         model.addAttribute("home_partners");
         return "/home_partners";
     }
+
     @GetMapping("/admin_page")
     public String admin_page( Model model ){
         model.addAttribute("admin_page");
@@ -156,11 +159,13 @@ public class MainController {
         return "registration";
     }
 
+
     @GetMapping("/support")
     public String support(Model model ){
 //       model.addAttribute("support");
         return "/supports";
     }
+
 
     @GetMapping("/hotels/hotel_list")
     public String hotel_list(Model model ){

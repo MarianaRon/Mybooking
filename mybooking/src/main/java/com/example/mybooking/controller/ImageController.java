@@ -4,14 +4,18 @@ import com.example.mybooking.model.Image;
 import com.example.mybooking.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
+
 @RequestMapping("/images")
 public class ImageController {
 
@@ -58,6 +62,7 @@ public class ImageController {
         return ResponseEntity.noContent().build();
     }
 
+
     // Метод для відображення сторінки списку зображень
     @GetMapping("/image_list")
     public String imageList(Model model) {
@@ -66,3 +71,7 @@ public class ImageController {
         return "images/image_list"; // Назва HTML-файлу, що відображатиме список зображень
     }
 }
+
+
+
+

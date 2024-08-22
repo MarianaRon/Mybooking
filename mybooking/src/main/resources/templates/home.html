@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="uk" xmlns:th="">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,9 +86,10 @@
 </div>
 
 <!--сторінка адміністратора-->
-<div>
+<div th:if="${login eq 'okobilska@gmail.com'}">
 <a class="nav-link"  href="/admin_page">Сторінка адміністратора</a>
 </div>
+
 
 
 <!-- Main Content: основное содержимое страницы -->

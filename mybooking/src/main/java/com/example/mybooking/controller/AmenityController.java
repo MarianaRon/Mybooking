@@ -3,6 +3,8 @@ package com.example.mybooking.controller;
 import com.example.mybooking.model.Amenity;
 import com.example.mybooking.service.AmenityService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+
 @RequestMapping("/amenities")
 public class AmenityController {
 
@@ -51,5 +54,8 @@ public class AmenityController {
     public String deleteAmenity(@PathVariable Long id) {
         amenityService.deleteAmenity(id);
         return "redirect:/amenities/amenity_list";
+
     }
+
+
 }
