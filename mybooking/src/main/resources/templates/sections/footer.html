@@ -1,12 +1,10 @@
-
-<!-- Footer: нижняя часть страницы -->
 <nav th:fragment="footer" class="navbar navbar-expand-lg navbar-light">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Arrenvi.com - Домашня сторінка</title>
         <style>
-            /* Стилі перенесені з головного файлу */
+
             body {
                 font-family: Arial, sans-serif;
                 margin: 0;
@@ -16,115 +14,114 @@
 
             a {
                 text-decoration: none;
-                color: #003580;
+                color: #0071c2;
             }
 
-            /* Footer стили */
-            footer {
-                background-color: #003580;
-                color: white;
-                padding: 20px 0;
-                margin-top: 50px;
-            }
-
-            .footer-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                display: flex;
-                justify-content: space-between;
+            .container-fluid {
                 padding: 0 20px;
             }
 
-            .footer-column {
-                width: 30%;
+            .navbar {
+                background-color: #003580;
+                padding: 10px 0;
+                color: white;
             }
 
-            .footer-column h4 {
-                margin-bottom: 15px;
-                font-size: 16px;
+            .navbar-top {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #004d99;
             }
 
-            .footer-column ul {
+            .navbar-top .navbar-nav {
+                display: flex;
+                align-items: center;
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
             }
 
-            .footer-column ul li {
-                margin-bottom: 10px;
-            }
-
-            .footer-column ul li a {
+            .navbar-top .nav-link {
                 color: white;
                 font-size: 14px;
+                margin-right: 15px;
+                font-weight: 500;
             }
 
-            .footer-column ul li a:hover {
-                text-decoration: underline;
+            .navbar-top .nav-link:hover {
+                color: white;
+                border-radius: 5px;
+                background-color: rgba(255, 255, 255, 0.2);
+                padding: 5px;
+            }
+
+            .navbar-bottom {
+                display: flex;
+                justify-content: center;
+                padding-top: 10px;
+            }
+
+            .navbar-bottom .navbar-nav {
+                display: flex;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .navbar-bottom .nav-item {
+                margin-right: 20px;
+            }
+
+            .navbar-bottom .nav-link {
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .navbar-bottom .nav-link:hover {
+                color: white;
+                border-radius: 15px;
+                background-color: rgba(255, 255, 255, 0.2);
+                padding: 5px;
             }
         </style>
     </head>
-
-    <div class="footer-container">
-        <div class="footer-column">
-            <h4>Версія для мобільних пристроїв</h4>
-            <ul>
-                <li><a href="#">Країни</a></li>
-                <li><a href="#">Регіони</a></li>
-                <li><a href="#">Міста</a></li>
-            </ul>
+    <div class="container-fluid">
+        <div class="navbar-top">
+            <div class="auth-buttons">
+                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+            </div>
         </div>
-        <div class="footer-column">
-            <h4>Ваш акаунт</h4>
-            <ul>
-                <li><a href="#">Приватні помешкання</a></li>
-                <li><a href="#">Апартаменти</a></li>
-                <li><a href="#">Курортні готелі</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>Додаткова інформація</h4>
-            <ul>
-                <li><a href="#">Забронюйте своє помешкання</a></li>
-                <li><a href="#">Відгуки гостей</a></li>
-                <li><a href="#">Програма лояльності</a></li>
+        <div class="navbar-bottom">
+            <!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"-->
+            <!--                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+            <!--                <span class="navbar-toggler-icon"></span>-->
+            <!--            </button>-->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/static">Версія для мобільних пристроїв</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contacts">Ваш акаунт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/support">Служба підтримки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/partner_Account">Для бізнесу</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/static">Соц мережі</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/static">Про нас</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/static">Лого</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-
-
-
-
-
-
-<!--<nav th:fragment="footer" class="navbar navbar-expand-lg navbar-light" style="background-color: #4981d2;">-->
-<!--    <div class="container-fluid">-->
-<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"-->
-<!--                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--            <span class="navbar-toggler-icon"></span>-->
-<!--        </button>-->
-<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
-<!--            <ul class="navbar-nav mx-auto">-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link active" aria-current="page" href="/static">Лого</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link active" aria-current="page" href="/support">Тех підтримка</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/contacts">Контакти</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/static">Соц мережі</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/static">Посилання на мобільний додаток</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/static">Сайти партнерів</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</nav>-->

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<<<<<<<<< Temporary merge branch 1
-<html lang="uk">
-=========
 <html lang="uk" xmlns:th="">
->>>>>>>>> Temporary merge branch 2
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,8 +75,6 @@
 <!-- Вставка header -->
 <header th:insert="sections/header::header" ></header>
 
-<<<<<<<<< Temporary merge branch 1
-=========
 <!--напис "вітаємо, гість!"-->
 <div class="container">
     <div class="box1">
@@ -89,12 +84,17 @@
     </div>
 </div>
 
-<!--сторінка адміністратора-->
-<div>
-<a class="nav-link"  href="/admin_page">Сторінка адміністратора</a>
+<!--&lt;!&ndash;сторінка адміністратора&ndash;&gt;-->
+<!--<div th:if="${login eq 'okobilska@gmail.com'}">-->
+<!--<a class="nav-link"  href="/admin_page">Сторінка адміністратора</a>-->
+<!--</div>-->
+
+<!-- Admin Page Link -->
+<div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
+    <a class="nav-link" href="/admin_page">Сторінка адміністратора</a>
 </div>
 
->>>>>>>>> Temporary merge branch 2
+
 
 <!-- Main Content: основное содержимое страницы -->
 <main>

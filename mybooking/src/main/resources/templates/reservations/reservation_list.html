@@ -2,53 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reservation_list</title>
+    <title>Список бронювань</title>
 </head>
 <body>
 <header th:insert="sections/header::header"></header>
 
-<div>
-    <h1>Таблиця БРОНЮВАННЯ</h1>
-</div>
+<div class="container">
+    <h1>Робота з таблицею БРОНЮВАННЯ</h1>
 
-<!-- Форма для створення нового бронювання -->
-<div>
+    <!-- Форма для створення нового бронювання -->
     <form action="/reservations/create" method="post">
-        <div>
-            <label for="user">Користувач:</label>
-            <select name="userId" id="user">
-                <!-- Тут потрібно вивести всіх користувачів з бази даних -->
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
-            </select>
-        </div>
-        <div>
-            <label for="room">Кімната:</label>
-            <select name="roomId" id="room">
-                <!-- Тут потрібно вивести всі кімнати з бази даних -->
-                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-            </select>
-        </div>
-        <div>
-            <label for="checkInDate">Дата заїзду:</label>
-            <input type="datetime-local" id="checkInDate" name="checkInDate">
-        </div>
-        <div>
-            <label for="checkOutDate">Дата виїзду:</label>
-            <input type="datetime-local" id="checkOutDate" name="checkOutDate">
-        </div>
-        <div>
-            <label for="totalPrice">Загальна вартість:</label>
-            <input type="number" step="0.01" id="totalPrice" name="totalPrice">
-        </div>
+        <label for="user">Користувач:</label>
+        <select id="user" name="userId" required>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+        </select>
+
+        <label for="room">Кімната:</label>
+        <select id="room" name="roomId" required>
+            <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.type}"></option>
+        </select>
+
+        <label for="checkInDate">Дата заїзду:</label>
+        <input type="datetime-local" id="checkInDate" name="checkInDate" required>
+
+        <label for="checkOutDate">Дата виїзду:</label>
+        <input type="datetime-local" id="checkOutDate" name="checkOutDate" required>
+
+        <label for="totalPrice">Загальна вартість:</label>
+        <input type="number" step="0.01" id="totalPrice" name="totalPrice" required>
+
         <button type="submit">Додати бронювання</button>
     </form>
-</div>
 
-<!-- Вивід існуючих бронювань -->
-<div>
+    <!-- Таблиця з переліком бронювань -->
     <table>
         <thead>
         <tr>
+            <th>ID</th>
             <th>Користувач</th>
             <th>Кімната</th>
             <th>Дата заїзду</th>
@@ -59,24 +49,25 @@
         </thead>
         <tbody>
         <tr th:each="reservation : ${reservations}">
-            <td th:text="${reservation.user.name}"></td>
-            <td th:text="${reservation.room.name}"></td>
-            <td th:text="${reservation.checkInDate}"></td>
-            <td th:text="${reservation.checkOutDate}"></td>
+            <td th:text="${reservation.id}"></td>
+            <td th:text="${reservation.user.firstName} + ' ' + ${reservation.user.lastName}"></td>
+            <td th:text="${reservation.room.type}"></td>
+            <td th:text="${#dates.format(reservation.checkInDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#dates.format(reservation.checkOutDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${reservation.totalPrice}"></td>
             <td>
-                <a th:href="@{'/reservations/edit/' + ${reservation.id}}">Редагувати</a>
-                <form th:action="@{'/reservations/delete/' + ${reservation.id}}" method="post" style="display:inline;">
+                <a th:href="@{/reservations/edit/{id}(id=${reservation.id})}">Редагувати</a>
+                <form th:action="@{/reservations/delete/{id}(id=${reservation.id})}" method="post" style="display:inline;">
                     <button type="submit">Видалити</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
-</div>
 
-<div>
-    <a class="nav-link" href="/admin_page">Назад до сторінки адмінінстратора</a>
+    <div>
+        <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+    </div>
 </div>
 
 <footer th:insert="sections/footer::footer"></footer>

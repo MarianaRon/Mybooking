@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,12 +45,13 @@ public class MainController {
     public String login(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("currentUser", user);
+            session.setAttribute("currentUser", user); // Store user in session
             return "redirect:/";
         }
         model.addAttribute("error", "Невірне ім'я користувача або пароль");
         return "login";
     }
+
 
     @PostMapping("/google-login")
     public String googleLogin(@RequestParam String idTokenString, HttpSession session) throws GeneralSecurityException, IOException {
@@ -85,8 +87,24 @@ public class MainController {
     }
 
 
+//нове додано для реєстрації
+@PostMapping("/registration")
+public String registerUser(@ModelAttribute("user") User user, Model model) {
+    // Перевірка, чи користувач з таким email або username вже існує
+    if (userRepository.findByEmail(user.getEmail()) != null || userRepository.findByUsername(user.getUsername()) != null) {
+        model.addAttribute("error", "Користувач з таким ім'ям або електронною адресою вже існує");
+        return "registration"; // Повертаємося на сторінку реєстрації з повідомленням про помилку
+    }
 
-//головна сторінка для партнера після реєстрації
+    // Збереження нового користувача
+    userRepository.save(user);
+    return "redirect:/login"; // Переходимо на сторінку входу після успішної реєстрації
+}
+
+
+
+
+    //головна сторінка для партнера після реєстрації
     @GetMapping("/home_partners")
     public String home_partners( Model model ){
         model.addAttribute("home_partners");
@@ -94,10 +112,14 @@ public class MainController {
     }
 
     @GetMapping("/admin_page")
-    public String admin_page( Model model ){
-        model.addAttribute("admin_page");
-        return "/admin_page";
+    public String adminPage(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser != null && "okobilska@gmail.com".equals(currentUser.getEmail())) {
+            return "/admin_page"; // Proceed to the admin page
+        }
+        return "redirect:/"; // Redirect to home if not authorized
     }
+
 
     @GetMapping("/contacts")
     public String contacts( Model model ){

@@ -27,7 +27,7 @@ public class PartnerController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/partner_list")
     public String getAllPartners(Model model) {
         List<Partner> partners = partnerService.getAllPartners();
         model.addAttribute("partners", partners);
@@ -133,5 +133,51 @@ public class PartnerController {
             partnerService.createPartner(existingPartner);
         }
         return "redirect:/partners";
+    }
+
+    @GetMapping("/home_partners")
+    public String showHomePage(HttpSession session, Model model) {
+        String userName = (String) session.getAttribute("userName");
+
+        // Если пользователь залогинен, показываем главную страницу для партнера
+        if (userName != null) {
+            model.addAttribute("welcomeMessage", "Вітаю, " + userName + "!");
+            return "home_partners";
+        } else {
+            // Если пользователь не залогинен, перенаправляем на страницу входа
+            return "redirect:/partners/login";
+        }
+
+    }
+
+
+    // Обработка продолжения регистрации для незарегистрированного партнера
+    @PostMapping("/continue_registration")
+    public String continueRegistration(HttpSession session) {
+        if (session.getAttribute("userName") == null) {
+            return "redirect:/partners/new";
+        } else {
+            return "redirect:/home_partners";
+        }
+    }
+
+    // Обработка перехода на добавление нового жилья
+    @PostMapping("/add_hotels")
+    public String addHotels(HttpSession session) {
+        if (session.getAttribute("userName") != null) {
+            return "redirect:/add_hotels";
+        } else {
+            return "redirect:/partners/login";
+        }
+    }
+
+    // Обработка перехода на просмотр существующих отелей партнера
+    @GetMapping("/hotels_by_partner")
+    public String showHotelsByPartner(HttpSession session) {
+        if (session.getAttribute("userName") != null) {
+            return "hotels_by_partner"; // или другой шаблон, связанный с отображением отелей
+        } else {
+            return "redirect:/partners/login";
+        }
     }
 }

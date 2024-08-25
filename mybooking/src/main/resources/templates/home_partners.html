@@ -1,3 +1,136 @@
+
+<!-- Footer: нижняя часть страницы -->
+
+<nav th:fragment="footer" class="navbar navbar-expand-lg navbar-light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Arrenvi.com - Домашня сторінка</title>
+        <style>
+
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+
+            a {
+                text-decoration: none;
+                color: #0071c2;
+            }
+
+            .container-fluid {
+                padding: 0 20px;
+            }
+
+            .navbar {
+                background-color: #003580;
+                padding: 10px 0;
+                color: white;
+            }
+
+            .navbar-top {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #004d99;
+            }
+
+            .navbar-top .navbar-nav {
+                display: flex;
+                align-items: center;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .navbar-top .nav-link {
+                color: white;
+                font-size: 14px;
+                margin-right: 15px;
+                font-weight: 500;
+            }
+
+            .navbar-top .nav-link:hover {
+                color: white;
+                border-radius: 5px;
+                background-color: rgba(255, 255, 255, 0.2);
+                padding: 5px;
+            }
+
+            .navbar-bottom {
+                display: flex;
+                justify-content: center;
+                padding-top: 10px;
+            }
+
+            .navbar-bottom .navbar-nav {
+                display: flex;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .navbar-bottom .nav-item {
+                margin-right: 20px;
+            }
+
+            .navbar-bottom .nav-link {
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+
+            .navbar-bottom .nav-link:hover {
+                color: white;
+                border-radius: 15px;
+                background-color: rgba(255, 255, 255, 0.2);
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <div class="container-fluid">
+        <div class="navbar-top">
+            <div class="auth-buttons">
+                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+            </div>
+        </div>
+        <div class="navbar-bottom">
+            <!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"-->
+            <!--                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+            <!--                <span class="navbar-toggler-icon"></span>-->
+            <!--            </button>-->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/static">Версія для мобільних пристроїв</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contacts">Ваш акаунт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/support">Служба підтримки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/partner_Account">Для бізнесу</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/static">Соц мережі</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/static">Про нас</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/static">Лого</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,35 +140,40 @@
     <!-- Подключение Bootstrap CSS для стилизации -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Стили для навигационной панели */
         .navbar {
             background-color: #003580;
             color: white;
+            padding: 10px 0;
         }
 
-        /* Стили для бренда в навигационной панели */
         .navbar-brand {
             color: #fff;
             font-size: 1.5em;
             font-weight: bold;
-            margin-left: 200px;
         }
 
-        /* Стили для ссылок навигации */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
         .navbar-nav .nav-link {
             color: #fff;
             font-size: 1em;
             margin-right: 15px;
         }
 
-        /* Стили для кнопок авторизации */
-        .auth-buttons {
+        .header-content {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-right: 200px;
         }
 
-        /* Стили для кнопки авторизации и выпадающего меню */
+        .navbar-bottom {
+            padding: 20px 0;
+        }
+
         .auth-buttons .btn-light {
             border: none;
             border-radius: 4px;
@@ -44,14 +182,12 @@
             cursor: pointer;
         }
 
-        /* Стили для выпадающего меню */
         .dropdown-menu {
             color: black;
             background-color: white;
             border: none;
         }
 
-        /* Стили для ссылок в выпадающем меню */
         .dropdown-menu a {
             color: black;
             background-color: white;
@@ -62,7 +198,6 @@
             color: black;
         }
 
-        /* Стили для футера */
         .footer {
             background-color: #003580;
             color: white;
@@ -75,64 +210,80 @@
     </style>
 </head>
 <body>
-
-<!-- Навигационная панель (Header) -->
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid">
-        <!-- Бренд сайта -->
+<!-- Хедер -->
+<div class="navbar">
+    <div class="container header-content">
         <a class="navbar-brand" href="#">Arrenvi.com</a>
+        <ul class="navbar-nav">
+            <li>
+                <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>
+            </li>
+        </ul>
 
-        <!-- Кнопка для раскрытия навигационного меню на мобильных устройствах -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- Кнопки для незалогиненного пользователя -->
+        <div class="auth-buttons" th:if="${session.userName == null}">
+            <a class="btn btn-light login" href="/partner_Account">Увійти</a>
+            <a class="btn btn-primary register" href="/support">Допомога</a>
+        </div>
 
-        <!-- Навигационное меню -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <!-- Ссылка на страницу выбора языка -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>
-                </li>
-
-                <!-- Блок авторизации и выпадающее меню -->
-                <div class="auth-buttons">
-                    <div class="dropdown">
-                        <!-- Кнопка, которая отображает email партнера после регистрации -->
-                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-<!--                            <img src="path/to/user-icon.png" alt="User Icon" width="20">-->
-                            <!-- Здесь отображается email партнера -->
-                            <span th:text="${session.userName}"></span>
-                        </button>
-
-                        <!-- Выпадающее меню -->
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
-                            <li><a class="dropdown-item" href="add_hotels">Додати нове помешкання</a></li>
-                            <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </ul>
+        <!-- Кнопки для залогиненного пользователя -->
+        <div class="auth-buttons" th:if="${session.userName != null}">
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span th:text="${session.userName}"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                    <li><a class="dropdown-item" href="add_hotels">Додати нове помешкання</a></li>
+                    <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</nav>
 
-<!-- Основной контент страницы -->
-<div class="container mt-5">
-    <!-- Приветствие пользователя -->
-    <h1>Вітаю! <span th:text="${session.userName}"></span></h1>
+    <!-- Вторая строка: сообщение и форма -->
+    <div class="container">
+        <div class="navbar-bottom">
+            <!-- Условия для незалогиненного пользователя -->
+            <div th:if="${session.userName == null}">
+                <h5 class="text-white">Зареєструйте своє помешкання</h5>
+                <form action="/partner_Account" method="get" class="d-flex">
+                    <button type="submit" class="btn btn-primary">Розпочати зараз</button>
+                </form>
+                <form action="/exit_Account" method="get" class="d-flex mt-3">
+                    <button type="submit" class="btn btn-primary">Продовжити реєстрацію</button>
+                </form>
+            </div>
+
+            Маріанна, [24.08.2024 11:47]
+            <!-- Условия для залогиненного пользователя -->
+            <div th:if="${session.userName != null}">
+                <h5 class="text-white">Продовжити реєстрацію</h5>
+                <form action="/hotels_by_partner" method="get" class="d-flex">
+                    <button type="submit" class="btn btn-primary">Продовжити</button>
+                </form>
+                <form action="/add_hotels" method="get" class="d-flex mt-3">
+                    <button type="submit" class="btn btn-primary">Зареєструвати нове помешкання</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Футер страницы -->
+<!-- Основной контент -->
+<div class="container">
+    <div class="navbar-bottom">
+        <!-- Контент страницы -->
+    </div>
+</div>
+
+<!-- Футер -->
 <footer class="footer">
     <div class="container">
         <p>&copy; 2024 Arrenvi.com. Всі права захищені.</p>
     </div>
 </footer>
 
-<!-- Подключение Bootstrap JS для работы интерактивных элементов -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

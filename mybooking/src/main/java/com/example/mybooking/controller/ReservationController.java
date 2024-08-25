@@ -41,6 +41,10 @@ public class ReservationController {
         return "reservations/reservation_list";
     }
 
+
+
+
+
     @PostMapping("/create")
     public String createReservation(
             @RequestParam Long userId,
@@ -116,11 +120,11 @@ public class ReservationController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation savedReservation = reservationService.saveReservation(reservation);
-        return ResponseEntity.ok(savedReservation);
-    }
+//    @PostMapping
+//    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+//        Reservation savedReservation = reservationService.saveReservation(reservation);
+//        return ResponseEntity.ok(savedReservation);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservationDetails) {
