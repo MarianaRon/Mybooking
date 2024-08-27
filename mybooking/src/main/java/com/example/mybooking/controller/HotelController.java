@@ -1,3 +1,5 @@
+package com.example.mybooking.controller;
+
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.User;
 import com.example.mybooking.service.*;
