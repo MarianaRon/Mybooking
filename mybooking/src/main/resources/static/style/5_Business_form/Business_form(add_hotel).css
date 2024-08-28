@@ -1,3 +1,4 @@
+
 .business-form {
     background-color: #f6f6f6;
     display: flex;
@@ -240,7 +241,7 @@
     position: relative;
     width: 40px;
     height: 40px;
-    background-image: url(./img/room.png);
+    background-image: url(/static/img/5_Business_form/room.png);
     background-size: 100% 100%;
 }
 
@@ -287,7 +288,7 @@
 }
 
 .business-form .image-typhotel-2 {
-    background-image: url(./img/house.png);
+    background-image: url(/static/img/5_Business_form/house.png);
     position: relative;
     width: 40px;
     height: 40px;
@@ -311,7 +312,7 @@
 }
 
 .business-form .image-typhotel-3 {
-    background-image: url(./img/3-star-hotel.png);
+    background-image: url(/static/img/5_Business_form/3_Star_Hotel.png);
     position: relative;
     width: 40px;
     height: 40px;
@@ -335,7 +336,7 @@
 }
 
 .business-form .image-typhotel-4 {
-    background-image: url(./img/camping-tent.png);
+    background-image: url(/static/img/5_Business_form/camping_tent.png);
     position: relative;
     width: 40px;
     height: 40px;
