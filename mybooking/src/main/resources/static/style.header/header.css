@@ -1,0 +1,129 @@
+.HEADER-desktop {
+    display: flex;
+    width: 1440px;
+    height: 120px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 130px;
+    position: relative;
+    background-color: #275271;
+}
+
+.HEADER-desktop .frame {
+    display: flex;
+    flex-direction: column;
+    width: 156px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.HEADER-desktop .logo-component {
+    position: relative;
+    width: 136px;
+    height: 31.9px;
+}
+
+.HEADER-desktop .div {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.HEADER-desktop .view {
+    position: relative;
+    width: 40px;
+    height: 19px;
+}
+
+.HEADER-desktop .valute-hover {
+    display: flex;
+    width: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+
+.HEADER-desktop .defalt-uah {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.HEADER-desktop .ukraine {
+    position: relative;
+    width: 32px;
+    height: 31.9px;
+}
+
+.HEADER-desktop .button-outline {
+    display: flex;
+    width: 280px;
+    height: 49.85px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    border-radius: 8px;
+    border: 2px solid;
+    border-color: var(--primarypink);
+}
+
+.HEADER-desktop .button {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--primarypink);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.HEADER-desktop .button-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 180px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    background-color: var(--primarypink);
+    border-radius: 8px;
+}
+
+.HEADER-desktop .text-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}

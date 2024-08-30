@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>City List</title>
+</head>
+<body>
+
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Таблиця Міста</h1>
+</div>
+
+<!-- Форма для створення нового міста -->
+<div>
+    <form action="/cities/add" method="post" enctype="multipart/form-data">
+        <label for="name">Назва міста:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="region">Регіон:</label>
+        <input type="text" id="region" name="region" required>
+        <label for="photoUrl">URL фото:</label>
+        <input type="text" id="photoUrl" name="photoUrl">
+        <!-- Поле для байтового потоку фото -->
+        <label for="photoBytes">Файл фото:</label>
+        <input type="file" id="photoBytes" name="photoBytes">
+        <button type="submit">Додати</button>
+    </form>
+</div>
+
+<!-- Виведення списку міст -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Регіон</th>
+        <th>Кількість готелів</th>
+        <th>Фото</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="city : ${cities}">
+        <td th:text="${city.id}"></td>
+        <td th:text="${city.name}"></td>
+        <td th:text="${city.region}"></td>
+        <td th:text="${city.numberOfHotels}"></td>
+        <td>
+            <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" width="100">
+        </td>
+        <td>
+            <a th:href="@{/cities/edit/{id}(id=${city.id})}">Редагувати</a>
+            <form th:action="@{/cities/delete/{id}(id=${city.id})}" method="post" style="display:inline;">
+                <button type="submit">Видалити</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Посилання на сторінку адміністратора -->
+<div>
+    <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+</body>
+</html>

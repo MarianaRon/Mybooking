@@ -1,0 +1,701 @@
+.login {
+    background-color: #f6f6f6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.login .div {
+    background-color: var(--background);
+    width: 1440px;
+    height: 1470px;
+    position: relative;
+}
+
+.login .FOOTER-desktop {
+    width: 1440px;
+    height: 280px;
+    top: 1190px;
+    background-color: var(--secondarydark-blue);
+    position: absolute;
+    left: 0;
+}
+
+.login .group {
+    position: relative;
+    width: 1180px;
+    height: 200px;
+    top: 40px;
+    left: 130px;
+}
+
+.login .footer {
+    display: flex;
+    width: 1180px;
+    height: 101px;
+    align-items: flex-start;
+    justify-content: space-between;
+    top: 0;
+    background-color: transparent;
+    position: absolute;
+    left: 0;
+}
+
+.login .view {
+    display: flex;
+    flex-direction: column;
+    width: 108px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.login .text-wrapper {
+    position: relative;
+    align-self: stretch;
+    margin-top: -1px;
+    font-family: var(--roboto-subhead-2-font-family);
+    font-weight: var(--roboto-subhead-2-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-subhead-2-font-size);
+    letter-spacing: var(--roboto-subhead-2-letter-spacing);
+    line-height: var(--roboto-subhead-2-line-height);
+    font-style: var(--roboto-subhead-2-font-style);
+}
+
+.login .text-wrapper-2 {
+    position: relative;
+    align-self: stretch;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    font-style: var(--roboto-text-font-style);
+}
+
+.login .view-2 {
+    display: flex;
+    flex-direction: column;
+    width: 188px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.login .frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.login .text-wrapper-3 {
+    position: relative;
+    align-self: stretch;
+    margin-top: -1px;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    font-style: var(--roboto-text-font-style);
+}
+
+.login .view-3 {
+    display: flex;
+    flex-direction: column;
+    width: 194px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.login .view-4 {
+    display: flex;
+    flex-direction: column;
+    width: 184px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.login .social-icon-footer {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.login .img {
+    position: relative;
+    width: 52px;
+    height: 52px;
+}
+
+.login .text-wrapper-4 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.login .line {
+    width: 701px;
+    height: 3px;
+    top: 141px;
+    left: 239px;
+    position: absolute;
+    object-fit: cover;
+}
+
+.login .frame-2 {
+    display: flex;
+    width: 152px;
+    height: 24px;
+    align-items: flex-end;
+    gap: 19px;
+    position: absolute;
+    top: 176px;
+    left: 514px;
+}
+
+.login .logo-component {
+    position: relative;
+    width: 103px;
+    height: 24px;
+}
+
+.login .text-wrapper-5 {
+    position: relative;
+    width: fit-content;
+    margin-right: -108.04px;
+    font-family: var(--roboto-small-text-font-family);
+    font-weight: var(--roboto-small-text-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-small-text-font-size);
+    letter-spacing: var(--roboto-small-text-letter-spacing);
+    line-height: var(--roboto-small-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-small-text-font-style);
+}
+
+.login .HEADER-desktop {
+    display: flex;
+    width: 1440px;
+    height: 120px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 130px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #275271;
+}
+
+.login .logo-component-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 156px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.login .logo-component-2 {
+    position: relative;
+    width: 136px;
+    height: 31.9px;
+}
+
+.login .frame-3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.login .valute-hover-wrapper {
+    position: relative;
+    width: 40px;
+    height: 19px;
+}
+
+.login .valute-hover {
+    display: flex;
+    width: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+
+.login .defalt-uah {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.login .component {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background-image: url(./img/ukraine.png);
+    background-size: 100% 100%;
+}
+
+.login .button-outline {
+    display: flex;
+    width: 280px;
+    height: 49.85px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    border-radius: 8px;
+    border: 2px solid;
+    border-color: var(--primarypink);
+}
+
+.login .button {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--primarypink);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.login .button-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 180px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    background-color: var(--primarypink);
+    border-radius: 8px;
+}
+
+.login .button-2 {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.login .login-form {
+    position: absolute;
+    width: 590px;
+    height: 830px;
+    top: 240px;
+    left: 430px;
+}
+
+.login .overlap-group {
+    position: absolute;
+    width: 580px;
+    height: 643px;
+    top: 187px;
+    left: 0;
+    background-color: var(--typographywhite);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.login .field-with-label {
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    align-items: flex-start;
+    position: absolute;
+    top: 30px;
+    left: 101px;
+}
+
+.login .label-wrapper {
+    display: inline-flex;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.login .label {
+    position: relative;
+    width: fit-content;
+    margin-top: -5.5px;
+    margin-bottom: -3.5px;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.login .field-label {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 10px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: var(--typographywhite);
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--primaryblue);
+}
+
+.login .input-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.login .input-label {
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographygrey);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.login .text-wrapper-6 {
+    position: absolute;
+    top: 220px;
+    left: 100px;
+    font-family: var(--roboto-link-font-family);
+    font-weight: var(--roboto-link-font-weight);
+    color: var(--primaryblue);
+    font-size: var(--roboto-link-font-size);
+    letter-spacing: var(--roboto-link-letter-spacing);
+    line-height: var(--roboto-link-line-height);
+    text-decoration: underline;
+    white-space: nowrap;
+    font-style: var(--roboto-link-font-style);
+}
+
+.login .button-google {
+    display: flex;
+    width: 380px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 398px;
+    left: 100px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--primaryblue);
+}
+
+.login .text-wrapper-7 {
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-small-text-font-family);
+    font-weight: var(--roboto-small-text-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-small-text-font-size);
+    letter-spacing: var(--roboto-small-text-letter-spacing);
+    line-height: var(--roboto-small-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-small-text-font-style);
+}
+
+.login .google {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    margin-top: -1px;
+    margin-bottom: -1px;
+}
+
+.login .icons-social {
+    display: flex;
+    width: 180px;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    position: absolute;
+    top: 493px;
+    left: 200px;
+}
+
+.login .img-2 {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.login .button-blue {
+    display: flex;
+    width: 380px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 286px;
+    left: 100px;
+    background-color: var(--typographygrey);
+    border-radius: 8px;
+}
+
+.login .view-5 {
+    position: absolute;
+    width: 382px;
+    height: 14px;
+    top: 360px;
+    left: 100px;
+}
+
+.login .text-wrapper-8 {
+    position: absolute;
+    top: 0;
+    left: 180px;
+    font-family: var(--roboto-small-text-font-family);
+    font-weight: var(--roboto-small-text-font-weight);
+    color: var(--systemdark-grey);
+    font-size: var(--roboto-small-text-font-size);
+    letter-spacing: var(--roboto-small-text-letter-spacing);
+    line-height: var(--roboto-small-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-small-text-font-style);
+}
+
+.login .line-2 {
+    width: 161px;
+    height: 1px;
+    top: 6px;
+    left: 220px;
+    position: absolute;
+    object-fit: cover;
+}
+
+.login .line-3 {
+    width: 161px;
+    height: 1px;
+    top: 6px;
+    left: 0;
+    position: absolute;
+    object-fit: cover;
+}
+
+.login .p {
+    position: absolute;
+    width: 183px;
+    top: 463px;
+    left: 199px;
+    font-family: var(--roboto-small-text-font-family);
+    font-weight: var(--roboto-small-text-font-weight);
+    color: var(--systemdark-grey);
+    font-size: var(--roboto-small-text-font-size);
+    letter-spacing: var(--roboto-small-text-letter-spacing);
+    line-height: var(--roboto-small-text-line-height);
+    font-style: var(--roboto-small-text-font-style);
+}
+
+.login .field-with-label-2 {
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    align-items: flex-start;
+    position: absolute;
+    top: 120px;
+    left: 101px;
+}
+
+.login .div-2 {
+    position: absolute;
+    width: 379px;
+    height: 50px;
+    top: 553px;
+    left: 101px;
+    font-family: "Roboto-Regular", Helvetica;
+    font-weight: 400;
+    color: transparent;
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.login .span {
+    color: #181a1c;
+    font-family: var(--roboto-small-text-font-family);
+    font-style: var(--roboto-small-text-font-style);
+    font-weight: var(--roboto-small-text-font-weight);
+    letter-spacing: var(--roboto-small-text-letter-spacing);
+    line-height: var(--roboto-small-text-line-height);
+    font-size: var(--roboto-small-text-font-size);
+}
+
+.login .text-wrapper-9 {
+    color: #496b86;
+    font-size: var(--roboto-link-font-size);
+    text-decoration: underline;
+    font-family: var(--roboto-link-font-family);
+    font-style: var(--roboto-link-font-style);
+    font-weight: var(--roboto-link-font-weight);
+    letter-spacing: var(--roboto-link-letter-spacing);
+    line-height: var(--roboto-link-line-height);
+}
+
+.login .div-wrapper {
+    display: flex;
+    width: 290px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 137px;
+    left: 0;
+    background-color: var(--primarypink);
+    border-radius: 8px 0px 0px 8px;
+}
+
+.login .text-wrapper-10 {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.5px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.login .view-6 {
+    display: flex;
+    width: 290px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 137px;
+    left: 290px;
+    background-color: var(--typographywhite);
+    border-radius: 0px 8px 8px 0px;
+    border: 1px solid;
+    border-color: var(--secondarylight-blue);
+}
+
+.login .text-wrapper-11 {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.5px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-button-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.login .text-wrapper-12 {
+    position: absolute;
+    width: 580px;
+    top: 75px;
+    left: 0;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-text-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    font-style: var(--roboto-text-font-style);
+}
+
+.login .text-wrapper-13 {
+    position: absolute;
+    width: 580px;
+    top: 0;
+    left: 0;
+    font-family: var(--roboto-title-font-family);
+    font-weight: var(--roboto-title-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-title-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-title-letter-spacing);
+    line-height: var(--roboto-title-line-height);
+    font-style: var(--roboto-title-font-style);
+}
+
+

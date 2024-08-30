@@ -2,9 +2,7 @@ package com.example.mybooking.model;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Set;
-
 @Entity
 public class Hotel {
 
@@ -59,6 +57,10 @@ public class Hotel {
     @Column(nullable = false)
     private String housingType;
 
+//привязка до міста - готель може бути тільки в одному місті, але у місті може бути багато готелів
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
     //Список изображений отеля. Ссылается на сущность Image. Указывает, что отель может содержать множество изображений.
     //@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
@@ -197,5 +199,13 @@ public class Hotel {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

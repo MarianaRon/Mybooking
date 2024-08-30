@@ -2,22 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Image_list</title>
+    <title>Список зображень</title>
 </head>
 <body>
 
 <header th:insert="sections/header::header"></header>
 
 <div>
-    <h1>Таблиця ФОТО</h1>
+    <h1>Таблиця Зображень</h1>
 </div>
+
+<!-- Форма для створення нового зображення -->
+<div>
+    <h2>Додати нове зображення</h2>
+    <form th:action="@{/images/add}" method="post" enctype="multipart/form-data">
+        <label for="url">URL зображення:</label>
+        <input type="text" id="url" name="url" required>
+
+        <label for="photoBytes">Файл зображення:</label>
+        <input type="file" id="photoBytes" name="photoBytes" required>
+
+        <label for="hotel_id">Готель ID:</label>
+        <input type="number" id="hotel_id" name="hotel_id" required>
+
+        <label for="room_id">Кімната ID (необов'язково):</label>
+        <input type="number" id="room_id" name="room_id">
+
+        <button type="submit">Додати</button>
+    </form>
+</div>
+
+<!-- Виведення списку зображень -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>URL</th>
+        <th>Зображення</th>
+        <th>Готель ID</th>
+        <th>Кімната ID</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="image : ${images}">
+        <td th:text="${image.id}"></td>
+        <td th:text="${image.url}"></td>
+        <td>
+            <img th:src="@{/images/photo/{id}(id=${image.id})}" alt="Фото" width="100">
+        </td>
+        <td th:text="${image.hotel != null ? image.hotel.id : 'N/A'}"></td>
+        <td th:text="${image.room != null ? image.room.id : 'N/A'}"></td>
+        <td>
+            <a th:href="@{/images/edit/{id}(id=${image.id})}">Редагувати</a>
+            <form th:action="@{/images/{id}/delete(id=${image.id})}" method="post" style="display:inline;">
+                <button type="submit">Видалити</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <div>
-    <a class="nav-link"  href="/admin_page">Назад до сторінки адмінінстратора</a>
+    <a href="/admin_page">Назад до сторінки адміністратора</a>
 </div>
+
 <footer th:insert="sections/footer::footer"></footer>
-
-
 
 </body>
 </html>

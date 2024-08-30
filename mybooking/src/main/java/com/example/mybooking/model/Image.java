@@ -3,15 +3,17 @@ package com.example.mybooking.model;
 import jakarta.persistence.*;
 
 @Entity
-
 public class Image {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String url;
+
+    @Lob
+    @Column
+    private byte[] photoBytes; // Додавання поля для зберігання байтових даних
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
@@ -26,12 +28,14 @@ public class Image {
     public Image() {
     }
 
-    public Image(String url, Hotel hotel, Room room) {
+    public Image(String url, byte[] photoBytes, Hotel hotel, Room room) {
         this.url = url;
+        this.photoBytes = photoBytes;
         this.hotel = hotel;
         this.room = room;
     }
 
+    // Геттери і сеттери
     public Long getId() {
         return id;
     }
@@ -46,6 +50,14 @@ public class Image {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public byte[] getPhotoBytes() {
+        return photoBytes;
+    }
+
+    public void setPhotoBytes(byte[] photoBytes) {
+        this.photoBytes = photoBytes;
     }
 
     public Hotel getHotel() {

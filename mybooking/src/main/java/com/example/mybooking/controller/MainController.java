@@ -89,7 +89,7 @@ public class MainController {
 
 //нове додано для реєстрації
 @PostMapping("/registration")
-public String registerUser(@ModelAttribute("user") User user, Model model) {
+public String registerUser(@ModelAttribute("user") User user, HttpSession session, Model model) {
     // Перевірка, чи користувач з таким email або username вже існує
     if (userRepository.findByEmail(user.getEmail()) != null || userRepository.findByUsername(user.getUsername()) != null) {
         model.addAttribute("error", "Користувач з таким ім'ям або електронною адресою вже існує");
@@ -98,7 +98,8 @@ public String registerUser(@ModelAttribute("user") User user, Model model) {
 
     // Збереження нового користувача
     userRepository.save(user);
-    return "redirect:/login"; // Переходимо на сторінку входу після успішної реєстрації
+    session.setAttribute("currentUser", user);
+    return "redirect:/"; // Переходимо на сторінку входу після успішної реєстрації
 }
 
 

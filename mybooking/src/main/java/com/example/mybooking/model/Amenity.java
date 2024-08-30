@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-
 public class Amenity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -3,11 +3,8 @@ package com.example.mybooking.model;
 import jakarta.persistence.*;
 
 import java.util.Set;
-
 @Entity
-
 public class Room {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

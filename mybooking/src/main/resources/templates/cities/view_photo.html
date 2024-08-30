@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Перегляд фото</title>
+</head>
+<body>
+
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Перегляд фото міста</h1>
+    <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" width="500">
+</div>
+
+<!-- Посилання на список міст -->
+<div>
+    <a class="nav-link" href="/cities/city_list">Назад до списку міст</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+</body>
+</html>

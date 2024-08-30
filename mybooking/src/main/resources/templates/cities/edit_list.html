@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit City</title>
+</head>
+<body>
+
+<header th:insert="sections/header::header"></header>
+
+<div>
+    <h1>Редагувати Місто</h1>
+</div>
+
+<!-- Форма для редагування міста -->
+<div>
+    <form th:action="@{/cities/edit/{id}(id=${city.id})}" method="post" enctype="multipart/form-data">
+        <label for="name">Назва міста:</label>
+        <input type="text" id="name" name="name" th:value="${city.name}" required>
+        <label for="region">Регіон:</label>
+        <input type="text" id="region" name="region" th:value="${city.region}" required>
+        <label for="photoUrl">URL фото:</label>
+        <input type="text" id="photoUrl" name="photoUrl" th:value="${city.photoUrl}">
+        <!-- Поле для байтового потоку фото -->
+        <label for="photoBytes">Файл фото:</label>
+        <input type="file" id="photoBytes" name="photoBytes">
+        <button type="submit">Зберегти</button>
+    </form>
+</div>
+
+<!-- Посилання на список міст -->
+<div>
+    <a class="nav-link" href="/cities/city_list">Назад до списку міст</a>
+</div>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+</body>
+</html>

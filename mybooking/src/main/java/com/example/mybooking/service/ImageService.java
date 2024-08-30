@@ -2,6 +2,7 @@ package com.example.mybooking.service;
 
 import com.example.mybooking.model.Image;
 import com.example.mybooking.repository.IImageRepository;
+import com.example.mybooking.repository.IImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
