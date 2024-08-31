@@ -19,9 +19,9 @@ public class ImageService {
         return imageRepository.findAll();
     }
 
-    public Optional<Image> getImageById(Long id) {
-        return imageRepository.findById(id);
-    }
+//    public Optional<Image> getImageById(Long id) {
+//        return imageRepository.findById(id);
+//    }
 
     public Image saveImage(Image image) {
         return imageRepository.save(image);
@@ -30,4 +30,9 @@ public class ImageService {
     public void deleteImage(Long id) {
         imageRepository.deleteById(id);
     }
+
+    public Optional<Image> getImageById(Long id) {
+        return imageRepository.findById(id);
+    }
+
 }

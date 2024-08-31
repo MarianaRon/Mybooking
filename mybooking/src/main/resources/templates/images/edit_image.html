@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<header th:insert="sections/header::header"></header>
+<header th:insert="~{sections/header::header}"></header>
 
 <div>
     <h1>Редагувати зображення</h1>
@@ -20,8 +20,14 @@
     <label for="photoBytes">Файл зображення:</label>
     <input type="file" id="photoBytes" name="photoBytes">
 
+    <!-- Відображення поточного зображення -->
+    <div>
+        <img th:if="${image.photoBytes != null}" th:src="@{/images/photo/{id}(id=${image.id})}" alt="Фото" width="100">
+        <img th:if="${image.photoBytes == null}" th:src="${image.url}" alt="Фото" width="100">
+    </div>
+
     <label for="hotel_id">Готель ID:</label>
-    <input type="number" id="hotel_id" name="hotel_id" th:value="${image.hotel.id}" required>
+    <input type="number" id="hotel_id" name="hotel_id" th:value="${image.hotel != null ? image.hotel.id : ''}" required>
 
     <label for="room_id">Кімната ID:</label>
     <input type="number" id="room_id" name="room_id" th:value="${image.room != null ? image.room.id : ''}">
@@ -33,7 +39,7 @@
     <a href="/images/image_list">Назад до списку зображень</a>
 </div>
 
-<footer th:insert="sections/footer::footer"></footer>
+<footer th:insert="~{sections/footer::footer}"></footer>
 
 </body>
 </html>
