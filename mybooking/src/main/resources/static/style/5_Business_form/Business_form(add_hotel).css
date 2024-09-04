@@ -1,1412 +1,1677 @@
-
-.business-form {
-    background-color: #f6f6f6;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-}
-
-.business-form .div {
-    background-color: var(--background);
-    width: 1440px;
-    height: 3680px;
-    position: relative;
-}
-
-.business-form .overlap-group {
-    position: absolute;
-    width: 820px;
-    height: 2880px;
-    top: 360px;
-    left: 310px;
-    background-color: var(--typographywhite);
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-}
-
-.business-form .overlap {
-    position: absolute;
-    width: 480px;
-    height: 298px;
-    top: 2280px;
-    left: 320px;
-}
-
-.business-form .frame {
-    display: flex;
-    width: 480px;
-    height: 280px;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--typographywhite);
-    border-radius: 8px;
-    border: 1px solid;
-    border-color: var(--secondarylight-blue);
-}
-
-.business-form .text-wrapper {
-    position: relative;
-    flex: 1;
-    margin-top: -1px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographygrey);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .text-wrapper-2 {
-    position: absolute;
-    width: 198px;
-    height: 19px;
-    top: 279px;
-    left: 0;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-small-text-font-size);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .p {
-    position: absolute;
-    height: 19px;
-    top: 39px;
-    left: 20px;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-bold-font-size);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .div-2 {
-    position: absolute;
-    height: 19px;
-    top: 189px;
-    left: 20px;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: transparent;
-    font-size: var(--roboto-text-bold-font-size);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .span {
-    color: #181a1c;
-    font-family: var(--roboto-text-bold-font-family);
-    font-style: var(--roboto-text-bold-font-style);
-    font-weight: var(--roboto-text-bold-font-weight);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    font-size: var(--roboto-text-bold-font-size);
-}
-
-.business-form .text-wrapper-3 {
-    color: #dc5013;
-    font-family: var(--roboto-text-bold-font-family);
-    font-style: var(--roboto-text-bold-font-style);
-    font-weight: var(--roboto-text-bold-font-weight);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    font-size: var(--roboto-text-bold-font-size);
-}
-
-.business-form .field-with-label {
-    display: flex;
-    flex-direction: column;
-    width: 780px;
-    align-items: flex-start;
-    position: absolute;
-    top: 70px;
-    left: 20px;
-}
-
-.business-form .label-wrapper {
-    display: inline-flex;
-    height: 30px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: relative;
-}
-
-.business-form .label {
-    position: relative;
-    width: fit-content;
-    margin-top: -5.5px;
-    margin-bottom: -3.5px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: transparent;
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .text-wrapper-4 {
-    color: #181a1c;
-    font-family: var(--roboto-text-font-family);
-    font-style: var(--roboto-text-font-style);
-    font-weight: var(--roboto-text-font-weight);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-size: var(--roboto-text-font-size);
-}
-
-.business-form .text-wrapper-5 {
-    color: #dc5013;
-    font-family: var(--roboto-text-font-family);
-    font-style: var(--roboto-text-font-style);
-    font-weight: var(--roboto-text-font-weight);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-size: var(--roboto-text-font-size);
-}
-
-.business-form .field-label {
-    display: flex;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 0px 10px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    background-color: var(--typographywhite);
-    border-radius: 8px;
-    border: 1px solid;
-    border-color: var(--primaryblue);
-}
-
-.business-form .input-label-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    flex-grow: 1;
-}
-
-.business-form .input-label {
-    position: relative;
-    width: fit-content;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographygrey);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .typ-hotel {
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    height: 180px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 219px;
-    left: 20px;
-    border-radius: 8px;
-    border: 1px solid;
-    border-color: var(--typographygrey);
-}
-
-.business-form .image-typhotel {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background-image: url(/static/img/5_Business_form/room.png);
-    background-size: 100% 100%;
-}
-
-.business-form .text-wrapper-6 {
-    position: relative;
-    align-self: stretch;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-bold-font-size);
-    text-align: center;
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .text-wrapper-7 {
-    position: relative;
-    align-self: stretch;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-small-text-font-size);
-    text-align: center;
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .typ-hotel-2 {
-    left: 220px;
-    border-color: var(--secondarydarkpink);
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    height: 180px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 219px;
-    border-radius: 8px;
-    border: 1px solid;
-}
-
-.business-form .image-typhotel-2 {
-    background-image: url(/static/img/5_Business_form/house.png);
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background-size: 100% 100%;
-}
-
-.business-form .typ-hotel-3 {
-    left: 420px;
-    border-color: var(--typographygrey);
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    height: 180px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 219px;
-    border-radius: 8px;
-    border: 1px solid;
-}
-
-.business-form .image-typhotel-3 {
-    background-image: url(/static/img/5_Business_form/3_Star_Hotel.png);
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background-size: 100% 100%;
-}
-
-.business-form .typ-hotel-4 {
-    left: 620px;
-    border-color: var(--typographygrey);
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    height: 180px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 219px;
-    border-radius: 8px;
-    border: 1px solid;
-}
-
-.business-form .image-typhotel-4 {
-    background-image: url(/static/img/5_Business_form/camping_tent.png);
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background-size: 100% 100%;
-}
-
-.business-form .line {
-    width: 780px;
-    height: 1px;
-    top: 439px;
-    left: 20px;
-    position: absolute;
-    object-fit: cover;
-}
-
-.business-form .group {
-    position: absolute;
-    width: 784px;
-    height: 770px;
-    top: 480px;
-    left: 20px;
-}
-
-.business-form .text-wrapper-8 {
-    position: absolute;
-    width: 293px;
-    height: 20px;
-    top: 0;
-    left: 0;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-bold-font-size);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .field-with-label-2 {
-    top: 60px;
-    display: flex;
-    flex-direction: column;
-    width: 780px;
-    align-items: flex-start;
-    position: absolute;
-    left: 0;
-}
-
-.business-form .field-with-label-3 {
-    top: 150px;
-    display: flex;
-    flex-direction: column;
-    width: 780px;
-    align-items: flex-start;
-    position: absolute;
-    left: 0;
-}
-
-.business-form .field-with-label-4 {
-    top: 240px;
-    display: flex;
-    flex-direction: column;
-    width: 780px;
-    align-items: flex-start;
-    position: absolute;
-    left: 0;
-}
-
-.business-form .field-with-label-5 {
-    top: 330px;
-    display: flex;
-    flex-direction: column;
-    width: 780px;
-    align-items: flex-start;
-    position: absolute;
-    left: 0;
-}
-
-.business-form .label-2 {
-    position: relative;
-    width: fit-content;
-    margin-top: -5.5px;
-    margin-bottom: -3.5px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .img {
-    width: 780px;
-    height: 1px;
-    top: 769px;
-    left: 0;
-    position: absolute;
-    object-fit: cover;
-}
-
-.business-form .text-wrapper-9 {
-    position: absolute;
-    width: 262px;
-    height: 20px;
-    top: 30px;
-    left: 0;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-small-text-font-size);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .view {
-    position: absolute;
-    width: 780px;
-    height: 290px;
-    top: 440px;
-    left: 0;
-}
-
-.business-form .div-wrapper {
-    display: inline-flex;
-    height: 20px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.business-form .div-3 {
-    position: relative;
-    width: fit-content;
-    margin-top: -10.5px;
-    margin-bottom: -8.5px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: transparent;
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .map-maker-standard {
-    position: absolute;
-    width: 788px;
-    height: 218px;
-    top: 26px;
-    left: -4px;
-    object-fit: cover;
-}
-
-.business-form .frame-2 {
-    display: inline-flex;
-    height: 30px;
-    align-items: center;
-    gap: 10px;
-    position: absolute;
-    top: 260px;
-    left: 3px;
-}
-
-.business-form .address {
-    position: relative;
-    width: 32px;
-    height: 32px;
-    margin-top: -1px;
-    margin-bottom: -1px;
-}
-
-.business-form .text-wrapper-10 {
-    position: relative;
-    align-self: stretch;
-    width: 396px;
-    margin-top: -1px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--primaryblue);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .view-2 {
-    position: absolute;
-    width: 786px;
-    height: 620px;
-    top: 1290px;
-    left: 20px;
-}
-
-.business-form .line-2 {
-    width: 780px;
-    height: 1px;
-    top: 619px;
-    left: 0;
-    position: absolute;
-    object-fit: cover;
-}
-
-.business-form .text-wrapper-11 {
-    position: absolute;
-    width: 289px;
-    height: 20px;
-    top: 0;
-    left: 0;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-bold-font-size);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .frame-3 {
-    display: inline-flex;
-    height: 20px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px 0px;
-    position: absolute;
-    top: 30px;
-    left: 0;
-}
-
-.business-form .info {
-    position: relative;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-bottom: -10px;
-}
-
-.business-form .text-wrapper-12 {
-    position: relative;
-    width: fit-content;
-    margin-top: -8px;
-    margin-bottom: -6px;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-small-text-font-size);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .frame-4 {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    align-items: flex-start;
-    position: absolute;
-    top: 110px;
-    left: 0;
-}
-
-.business-form .checkbox-with-text {
-    display: flex;
-    height: 40px;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-}
-
-.business-form .checkbox {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    margin-top: -2px;
-    margin-bottom: -2px;
-    background-color: var(--typographywhite);
-    border-radius: 4px;
-    border: 1px solid;
-    border-color: var(--primaryblue);
-}
-
-.business-form .text-wrapper-13 {
-    position: relative;
-    flex: 1;
-    margin-top: -0.5px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .frame-5 {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    align-items: flex-start;
-    position: absolute;
-    top: 110px;
-    left: 480px;
-}
-
-.business-form .text-wrapper-14 {
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    margin-top: -1px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .text-wrapper-15 {
-    position: absolute;
-    top: 350px;
-    left: 0;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: #000000;
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .text-wrapper-16 {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: #000000;
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .frame-6 {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    align-items: flex-start;
-    position: absolute;
-    top: 380px;
-    left: 0;
-}
-
-.business-form .frame-7 {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    align-items: flex-start;
-    position: absolute;
-    top: 380px;
-    left: 480px;
-}
-
-.business-form .view-3 {
-    position: absolute;
-    width: 788px;
-    height: 180px;
-    top: 1950px;
-    left: 20px;
-}
-
-.business-form .div-4 {
-    position: absolute;
-    width: 289px;
-    height: 20px;
-    top: 0;
-    left: 0;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: transparent;
-    font-size: var(--roboto-text-bold-font-size);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .text-wrapper-17 {
-    position: absolute;
-    top: 83px;
-    left: 200px;
-    font-family: var(--roboto-subhead-2-font-family);
-    font-weight: var(--roboto-subhead-2-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-subhead-2-font-size);
-    letter-spacing: var(--roboto-subhead-2-letter-spacing);
-    line-height: var(--roboto-subhead-2-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-subhead-2-font-style);
-}
-
-.business-form .text-wrapper-18 {
-    position: absolute;
-    width: 119px;
-    top: 41px;
-    left: 0;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .text-wrapper-19 {
-    position: absolute;
-    top: 130px;
-    left: 0;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-small-text-font-size);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .rectangle {
-    position: absolute;
-    width: 180px;
-    height: 50px;
-    top: 70px;
-    left: 0;
-    background-color: var(--typographywhite);
-    border-radius: 8px;
-    border: 1px solid;
-    border-color: var(--primaryblue);
-}
-
-.business-form .line-3 {
-    width: 780px;
-    height: 1px;
-    top: 179px;
-    left: 0;
-    position: absolute;
-    object-fit: cover;
-}
-
-.business-form .line-4 {
-    width: 780px;
-    height: 1px;
-    top: 2633px;
-    left: 20px;
-    position: absolute;
-    object-fit: cover;
-}
-
-.business-form .text-wrapper-20 {
-    position: absolute;
-    height: 19px;
-    top: 2169px;
-    left: 20px;
-    font-family: var(--roboto-text-bold-font-family);
-    font-weight: var(--roboto-text-bold-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-bold-font-size);
-    letter-spacing: var(--roboto-text-bold-letter-spacing);
-    line-height: var(--roboto-text-bold-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-bold-font-style);
-}
-
-.business-form .frame-8 {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 2200px;
-    left: 20px;
-}
-
-.business-form .info-2 {
-    position: relative;
-    width: 20px;
-    height: 20px;
-}
-
-.business-form .text-wrapper-21 {
-    position: relative;
-    width: fit-content;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-small-text-font-size);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .text-wrapper-22 {
-    position: absolute;
-    width: 367px;
-    top: 2250px;
-    left: 320px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .text-wrapper-23 {
-    position: absolute;
-    top: 2250px;
-    left: 20px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .overlap-2 {
-    position: absolute;
-    width: 280px;
-    height: 299px;
-    top: 2280px;
-    left: 20px;
-}
-
-.business-form .element {
-    position: absolute;
-    width: 154px;
-    height: 21px;
-    top: 278px;
-    left: 2px;
-    font-family: "Roboto-Regular", Helvetica;
-    font-weight: 400;
-    color: transparent;
-    font-size: 12px;
-    letter-spacing: 0;
-    line-height: normal;
-}
-
-.business-form .text-wrapper-24 {
-    color: #181a1c;
-    font-family: var(--roboto-small-text-font-family);
-    font-style: var(--roboto-small-text-font-style);
-    font-weight: var(--roboto-small-text-font-weight);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    font-size: var(--roboto-small-text-font-size);
-}
-
-.business-form .text-wrapper-25 {
-    color: #496b86;
-    font-size: var(--roboto-link-font-size);
-    text-decoration: underline;
-    font-family: var(--roboto-link-font-family);
-    font-style: var(--roboto-link-font-style);
-    font-weight: var(--roboto-link-font-weight);
-    letter-spacing: var(--roboto-link-letter-spacing);
-    line-height: var(--roboto-link-line-height);
-}
-
-.business-form .component {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    top: 0;
-    left: 0;
-    background-color: var(--typographywhite);
-    border-radius: 8px;
-    border: 1px dashed;
-    border-color: var(--primaryblue);
-}
-
-.business-form .frame-9 {
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    align-items: center;
-    position: relative;
-    top: 26px;
-    left: 49px;
-    background-color: var(--typographywhite);
-}
-
-.business-form .picture {
-    position: relative;
-    width: 100px;
-    height: 100px;
-}
-
-.business-form .frame-10 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-}
-
-.business-form .text-wrapper-26 {
-    position: relative;
-    width: 148px;
-    margin-top: -1px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    text-align: center;
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .button {
-    all: unset;
-    box-sizing: border-box;
-    display: flex;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    background-color: var(--primarypink);
-    border-radius: 8px;
-}
-
-.business-form .button-2 {
-    all: unset;
-    box-sizing: border-box;
-    position: relative;
-    width: fit-content;
-    font-family: var(--roboto-button-font-family);
-    font-weight: var(--roboto-button-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-button-font-size);
-    letter-spacing: var(--roboto-button-letter-spacing);
-    line-height: var(--roboto-button-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-button-font-style);
-}
-
-.business-form .frame-11 {
-    display: flex;
-    width: 780px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: absolute;
-    top: 2674px;
-    left: 20px;
-}
-
-.business-form .info-3 {
-    position: relative;
-    width: 32px;
-    height: 32px;
-}
-
-.business-form .text-wrapper-27 {
-    position: relative;
-    flex: 1;
-    margin-top: -1px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .button-blue {
-    display: flex;
-    width: 280px;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: absolute;
-    top: 2783px;
-    left: 270px;
-    background-color: var(--primaryblue);
-    border-radius: 8px;
-}
-
-.business-form .div-5 {
-    position: absolute;
-    top: 39px;
-    left: 596px;
-    font-family: "Roboto-Regular", Helvetica;
-    font-weight: 400;
-    color: transparent;
+/* Загальні стилі */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовки та текст */
+.field-with-label .text-wrapper-34 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.field-with-label .text-wrapper-35 {
     font-size: 16px;
-    letter-spacing: 0;
-    line-height: 16px;
-    white-space: nowrap;
+    color: #666;
+    margin-bottom: 20px;
 }
 
-.business-form .text-wrapper-28 {
-    color: #3ba165;
-    font-size: var(--roboto-small-text-font-size);
-    font-family: var(--roboto-small-text-font-family);
-    font-style: var(--roboto-small-text-font-style);
-    font-weight: var(--roboto-small-text-font-weight);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
+.label-wrapper .label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
 }
 
-.business-form .FOOTER-desktop {
-    position: absolute;
-    width: 1440px;
-    height: 280px;
-    top: 3400px;
-    left: 0;
-    background-color: var(--secondarydark-blue);
+.text-wrapper-4 {
+    color: #333;
 }
 
-.business-form .group-2 {
-    position: relative;
-    width: 1180px;
-    height: 200px;
-    top: 40px;
-    left: 130px;
+.text-wrapper-5 {
+    color: #FF6F61;
 }
 
-.business-form .footer {
-    display: flex;
-    width: 1180px;
-    height: 101px;
-    align-items: flex-start;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: transparent;
-}
-
-.business-form .view-4 {
-    display: flex;
-    flex-direction: column;
-    width: 108px;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-}
-
-.business-form .text-wrapper-29 {
-    position: relative;
-    align-self: stretch;
-    margin-top: -1px;
-    font-family: var(--roboto-subhead-2-font-family);
-    font-weight: var(--roboto-subhead-2-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-subhead-2-font-size);
-    letter-spacing: var(--roboto-subhead-2-letter-spacing);
-    line-height: var(--roboto-subhead-2-line-height);
-    font-style: var(--roboto-subhead-2-font-style);
-}
-
-.business-form .text-wrapper-30 {
-    position: relative;
-    align-self: stretch;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .view-5 {
-    display: flex;
-    flex-direction: column;
-    width: 188px;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-}
-
-.business-form .frame-12 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    position: relative;
-    align-self: stretch;
+/* Поля введення */
+input[type="text"],
+input[type="number"] {
     width: 100%;
-    flex: 0 0 auto;
-}
-
-.business-form .text-wrapper-31 {
-    position: relative;
-    align-self: stretch;
-    margin-top: -1px;
-    font-family: var(--roboto-text-font-family);
-    font-weight: var(--roboto-text-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-text-font-size);
-    letter-spacing: var(--roboto-text-letter-spacing);
-    line-height: var(--roboto-text-line-height);
-    font-style: var(--roboto-text-font-style);
-}
-
-.business-form .view-6 {
-    display: flex;
-    flex-direction: column;
-    width: 194px;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-}
-
-.business-form .view-7 {
-    display: flex;
-    flex-direction: column;
-    width: 184px;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-}
-
-.business-form .social-icon-footer {
-    display: inline-flex;
-    align-items: center;
-    gap: 22px;
-    position: relative;
-    flex: 0 0 auto;
-}
-
-.business-form .img-2 {
-    position: relative;
-    width: 52px;
-    height: 52px;
-}
-
-.business-form .text-wrapper-32 {
-    position: relative;
-    width: fit-content;
-    margin-top: -1px;
-    font-family: var(--roboto-button-font-family);
-    font-weight: var(--roboto-button-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-button-font-size);
-    letter-spacing: var(--roboto-button-letter-spacing);
-    line-height: var(--roboto-button-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-button-font-style);
-}
-
-.business-form .line-5 {
-    width: 701px;
-    height: 3px;
-    top: 141px;
-    left: 239px;
-    position: absolute;
-    object-fit: cover;
-}
-
-.business-form .frame-13 {
-    display: flex;
-    width: 152px;
-    height: 24px;
-    align-items: flex-end;
-    gap: 19px;
-    position: absolute;
-    top: 176px;
-    left: 514px;
-}
-
-.business-form .logo-component {
-    position: relative;
-    width: 103px;
-    height: 24px;
-}
-
-.business-form .text-wrapper-33 {
-    position: relative;
-    width: fit-content;
-    margin-right: -108.04px;
-    font-family: var(--roboto-small-text-font-family);
-    font-weight: var(--roboto-small-text-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-small-text-font-size);
-    letter-spacing: var(--roboto-small-text-letter-spacing);
-    line-height: var(--roboto-small-text-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-small-text-font-style);
-}
-
-.business-form .HEADER-desktop {
-    display: flex;
-    width: 1440px;
-    height: 120px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 130px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #275271;
-}
-
-.business-form .logo-component-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 156px;
-    align-items: flex-start;
-    gap: 10px;
     padding: 10px;
-    position: relative;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
-.business-form .logo-component-2 {
-    position: relative;
-    width: 136px;
-    height: 31.9px;
-}
-
-.business-form .frame-14 {
-    display: inline-flex;
+/* Радіо кнопки */
+.typ-hotel {
+    display: flex;
     align-items: center;
-    gap: 20px;
-    position: relative;
-    flex: 0 0 auto;
+    margin-bottom: 10px;
 }
 
-.business-form .valute-hover-wrapper {
-    position: relative;
+.typ-hotel input[type="radio"] {
+    margin-right: 10px;
+}
+
+.typ-hotel label {
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Чекбокси */
+.checkbox-with-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox-with-text input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.checkbox-with-text label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Ціна */
+.view-3 input[type="number"] {
+    width: calc(100% - 50px);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.view-3 .text-wrapper-17 {
+    display: inline-block;
     width: 40px;
-    height: 19px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+    vertical-align: middle;
+    color: #333;
 }
 
-.business-form .valute-hover {
-    display: flex;
-    width: 40px;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 10px;
-    position: relative;
-}
-
-.business-form .defalt-uah {
-    position: relative;
-    width: fit-content;
-    margin-top: -1px;
-    font-family: var(--roboto-button-font-family);
-    font-weight: var(--roboto-button-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-button-font-size);
+/* Кнопки */
+.button {
     text-align: center;
-    letter-spacing: var(--roboto-button-letter-spacing);
-    line-height: var(--roboto-button-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-button-font-style);
+    margin-top: 20px;
 }
 
-.business-form .ukraine {
-    position: relative;
-    width: 32px;
-    height: 31.9px;
+.button-2 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.business-form .button-outline {
-    display: flex;
-    width: 280px;
-    height: 49.85px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.button-2:hover {
+    background-color: #45a049;
+}
+
+/* Завантаження фото */
+.frame-10 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.frame-10 .text-wrapper-26 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.frame-10 .text-wrapper-7 {
+    font-size: 14px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.button-2 {
+    background-color: #FF6F61;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.button-2:hover {
+    background-color: #ff5a4c;
+}
+
+/* Інформація про примітки */
+.text-wrapper-27 {
+    font-size: 14px;
+    color: #999;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+/* Примітка про обов’язкові поля */
+.div-5 .text-wrapper-24 {
+    font-size: 12px;
+    color: #666;
+    margin-top: 20px;
+}
+
+.div-5 .text-wrapper-5 {
+    color: #FF6F61;
+}
+
+.FOOTER-desktop {
+    margin-top: 40px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+/*form.business-form {*/
+/*    background-color: #f6f6f6;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    width: 100%;*/
+/*}*/
+
+/*form.business-form .div {*/
+/*    background-color: var(--background);*/
+/*    width: 1440px;*/
+/*    height: 3680px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .overlap-group {*/
+/*    position: absolute;*/
+/*    width: 820px;*/
+/*    height: 2880px;*/
+/*    top: 360px;*/
+/*    left: 310px;*/
+/*    background-color: var(--typographywhite);*/
+/*    border-radius: 8px;*/
+/*    box-shadow: var(--shadow);*/
+/*}*/
+
+/*form .business-form .overlap {*/
+/*    position: absolute;*/
+/*    width: 480px;*/
+/*    height: 298px;*/
+/*    top: 2280px;*/
+/*    left: 320px;*/
+/*}*/
+
+/*form .business-form .frame {*/
+/*    display: flex;*/
+/*    width: 480px;*/
+/*    height: 280px;*/
+/*    align-items: flex-start;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    background-color: var(--typographywhite);*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*    border-color: var(--secondarylight-blue);*/
+/*}*/
+
+/*form .business-form .text-wrapper {*/
+/*    position: relative;*/
+/*    flex: 1;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographygrey);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form.business-form .text-wrapper-2 {*/
+/*    position: absolute;*/
+/*    width: 198px;*/
+/*    height: 19px;*/
+/*    top: 279px;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .p {*/
+/*    position: absolute;*/
+/*    height: 19px;*/
+/*    top: 39px;*/
+/*    left: 20px;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .div-2 {*/
+/*    position: absolute;*/
+/*    height: 19px;*/
+/*    top: 189px;*/
+/*    left: 20px;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: transparent;*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .span {*/
+/*    color: #181a1c;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*}*/
+
+/*form .business-form .text-wrapper-3 {*/
+/*    color: #dc5013;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*}*/
+
+/*form .business-form .field-with-label {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 780px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    top: 70px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .label-wrapper {*/
+/*    display: inline-flex;*/
+/*    height: 30px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .label {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-top: -5.5px;*/
+/*    margin-bottom: -3.5px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: transparent;*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-4 {*/
+/*    color: #181a1c;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*}*/
+
+/*form .business-form .text-wrapper-5 {*/
+/*    color: #dc5013;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*}*/
+
+/*form .business-form .field-label {*/
+/*    display: flex;*/
+/*    height: 50px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 0px 10px;*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    width: 100%;*/
+/*    background-color: var(--typographywhite);*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*    border-color: var(--primaryblue);*/
+/*}*/
+
+/*form .business-form .input-label-wrapper {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*    flex: 1;*/
+/*    align-self: stretch;*/
+/*    flex-grow: 1;*/
+/*}*/
+
+/*form .business-form .input-label {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographygrey);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .typ-hotel {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 180px;*/
+/*    height: 180px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    position: absolute;*/
+/*    top: 219px;*/
+/*    left: 20px;*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*    border-color: var(--typographygrey);*/
+/*}*/
+
+/*form .business-form .image-typhotel {*/
+/*    position: relative;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    background-image: url(/static/img/5_Business_form/room.png);*/
+/*    background-size: 100% 100%;*/
+/*}*/
+
+/*form .business-form .text-wrapper-6 {*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-7 {*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .typ-hotel-2 {*/
+/*    left: 220px;*/
+/*    border-color: var(--secondarydarkpink);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 180px;*/
+/*    height: 180px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    position: absolute;*/
+/*    top: 219px;*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*}*/
+
+/*form .business-form .image-typhotel-2 {*/
+/*    background-image: url(/static/img/5_Business_form/house.png);*/
+/*    position: relative;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    background-size: 100% 100%;*/
+/*}*/
+
+/*form .business-form .typ-hotel-3 {*/
+/*    left: 420px;*/
+/*    border-color: var(--typographygrey);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 180px;*/
+/*    height: 180px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    position: absolute;*/
+/*    top: 219px;*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*}*/
+
+/*form .business-form .image-typhotel-3 {*/
+/*    background-image: url(/static/img/5_Business_form/3_Star_Hotel.png);*/
+/*    position: relative;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    background-size: 100% 100%;*/
+/*}*/
+
+/*form .business-form .typ-hotel-4 {*/
+/*    left: 620px;*/
+/*    border-color: var(--typographygrey);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 180px;*/
+/*    height: 180px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    position: absolute;*/
+/*    top: 219px;*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*}*/
+
+/*form .business-form .image-typhotel-4 {*/
+/*    background-image: url(/static/img/5_Business_form/camping_tent.png);*/
+/*    position: relative;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    background-size: 100% 100%;*/
+/*}*/
+
+/*form .business-form .line {*/
+/*    width: 780px;*/
+/*    height: 1px;*/
+/*    top: 439px;*/
+/*    left: 20px;*/
+/*    position: absolute;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .group {*/
+/*    position: absolute;*/
+/*    width: 784px;*/
+/*    height: 770px;*/
+/*    top: 480px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-8 {*/
+/*    position: absolute;*/
+/*    width: 293px;*/
+/*    height: 20px;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .field-with-label-2 {*/
+/*    top: 60px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 780px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .field-with-label-3 {*/
+/*    top: 150px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 780px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .field-with-label-4 {*/
+/*    top: 240px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 780px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .field-with-label-5 {*/
+/*    top: 330px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 780px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .label-2 {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-top: -5.5px;*/
+/*    margin-bottom: -3.5px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .img {*/
+/*    width: 780px;*/
+/*    height: 1px;*/
+/*    top: 769px;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .text-wrapper-9 {*/
+/*    position: absolute;*/
+/*    width: 262px;*/
+/*    height: 20px;*/
+/*    top: 30px;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .view {*/
+/*    position: absolute;*/
+/*    width: 780px;*/
+/*    height: 290px;*/
+/*    top: 440px;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .div-wrapper {*/
+/*    display: inline-flex;*/
+/*    height: 20px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .div-3 {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-top: -10.5px;*/
+/*    margin-bottom: -8.5px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: transparent;*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .map-maker-standard {*/
+/*    position: absolute;*/
+/*    width: 788px;*/
+/*    height: 218px;*/
+/*    top: 26px;*/
+/*    left: -4px;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .frame-2 {*/
+/*    display: inline-flex;*/
+/*    height: 30px;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    position: absolute;*/
+/*    top: 260px;*/
+/*    left: 3px;*/
+/*}*/
+
+/*form .business-form .address {*/
+/*    position: relative;*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*    margin-top: -1px;*/
+/*    margin-bottom: -1px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-10 {*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    width: 396px;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--primaryblue);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .view-2 {*/
+/*    position: absolute;*/
+/*    width: 786px;*/
+/*    height: 620px;*/
+/*    top: 1290px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .line-2 {*/
+/*    width: 780px;*/
+/*    height: 1px;*/
+/*    top: 619px;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .text-wrapper-11 {*/
+/*    position: absolute;*/
+/*    width: 289px;*/
+/*    height: 20px;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .frame-3 {*/
+/*    display: inline-flex;*/
+/*    height: 20px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px 0px;*/
+/*    position: absolute;*/
+/*    top: 30px;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .info {*/
+/*    position: relative;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    margin-top: -10px;*/
+/*    margin-bottom: -10px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-12 {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-top: -8px;*/
+/*    margin-bottom: -6px;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .frame-4 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 300px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    top: 110px;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .checkbox-with-text {*/
+/*    display: flex;*/
+/*    height: 40px;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    width: 100%;*/
+/*}*/
+
+/*form .business-form .checkbox {*/
+/*    position: relative;*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*    margin-top: -2px;*/
+/*    margin-bottom: -2px;*/
+/*    background-color: var(--typographywhite);*/
+/*    border-radius: 4px;*/
+/*    border: 1px solid;*/
+/*    border-color: var(--primaryblue);*/
+/*}*/
+
+/*form .business-form .text-wrapper-13 {*/
+/*    position: relative;*/
+/*    flex: 1;*/
+/*    margin-top: -0.5px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .frame-5 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 300px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    top: 110px;*/
+/*    left: 480px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-14 {*/
+/*    position: relative;*/
+/*    flex: 1;*/
+/*    align-self: stretch;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-15 {*/
+/*    position: absolute;*/
+/*    top: 350px;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: #000000;*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-16 {*/
+/*    position: absolute;*/
+/*    top: 80px;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: #000000;*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .frame-6 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 300px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    top: 380px;*/
+/*    left: 0;*/
+/*}*/
+
+/*form .business-form .frame-7 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 300px;*/
+/*    align-items: flex-start;*/
+/*    position: absolute;*/
+/*    top: 380px;*/
+/*    left: 480px;*/
+/*}*/
+
+/*form .business-form .view-3 {*/
+/*    position: absolute;*/
+/*    width: 788px;*/
+/*    height: 180px;*/
+/*    top: 1950px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .div-4 {*/
+/*    position: absolute;*/
+/*    width: 289px;*/
+/*    height: 20px;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: transparent;*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-17 {*/
+/*    position: absolute;*/
+/*    top: 83px;*/
+/*    left: 200px;*/
+/*    font-family: var(--roboto-subhead-2-font-family);*/
+/*    font-weight: var(--roboto-subhead-2-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-subhead-2-font-size);*/
+/*    letter-spacing: var(--roboto-subhead-2-letter-spacing);*/
+/*    line-height: var(--roboto-subhead-2-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-subhead-2-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-18 {*/
+/*    position: absolute;*/
+/*    width: 119px;*/
+/*    top: 41px;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-19 {*/
+/*    position: absolute;*/
+/*    top: 130px;*/
+/*    left: 0;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .rectangle {*/
+/*    position: absolute;*/
+/*    width: 180px;*/
+/*    height: 50px;*/
+/*    top: 70px;*/
+/*    left: 0;*/
+/*    background-color: var(--typographywhite);*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid;*/
+/*    border-color: var(--primaryblue);*/
+/*}*/
+
+/*form .business-form .line-3 {*/
+/*    width: 780px;*/
+/*    height: 1px;*/
+/*    top: 179px;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .line-4 {*/
+/*    width: 780px;*/
+/*    height: 1px;*/
+/*    top: 2633px;*/
+/*    left: 20px;*/
+/*    position: absolute;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .text-wrapper-20 {*/
+/*    position: absolute;*/
+/*    height: 19px;*/
+/*    top: 2169px;*/
+/*    left: 20px;*/
+/*    font-family: var(--roboto-text-bold-font-family);*/
+/*    font-weight: var(--roboto-text-bold-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-bold-font-size);*/
+/*    letter-spacing: var(--roboto-text-bold-letter-spacing);*/
+/*    line-height: var(--roboto-text-bold-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-bold-font-style);*/
+/*}*/
+
+/*form .business-form .frame-8 {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    position: absolute;*/
+/*    top: 2200px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .info-2 {*/
+/*    position: relative;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-21 {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-22 {*/
+/*    position: absolute;*/
+/*    width: 367px;*/
+/*    top: 2250px;*/
+/*    left: 320px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-23 {*/
+/*    position: absolute;*/
+/*    top: 2250px;*/
+/*    left: 20px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .overlap-2 {*/
+/*    position: absolute;*/
+/*    width: 280px;*/
+/*    height: 299px;*/
+/*    top: 2280px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .element {*/
+/*    position: absolute;*/
+/*    width: 154px;*/
+/*    height: 21px;*/
+/*    top: 278px;*/
+/*    left: 2px;*/
+/*    font-family: "Roboto-Regular", Helvetica;*/
+/*    font-weight: 400;*/
+/*    color: transparent;*/
+/*    font-size: 12px;*/
+/*    letter-spacing: 0;*/
+/*    line-height: normal;*/
+/*}*/
+
+/*form .business-form .text-wrapper-24 {*/
+/*    color: #181a1c;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*}*/
+
+/*form .business-form .text-wrapper-25 {*/
+/*    color: #496b86;*/
+/*    font-size: var(--roboto-link-font-size);*/
+/*    text-decoration: underline;*/
+/*    font-family: var(--roboto-link-font-family);*/
+/*    font-style: var(--roboto-link-font-style);*/
+/*    font-weight: var(--roboto-link-font-weight);*/
+/*    letter-spacing: var(--roboto-link-letter-spacing);*/
+/*    line-height: var(--roboto-link-line-height);*/
+/*}*/
+
+/*form .business-form .component {*/
+/*    position: absolute;*/
+/*    width: 280px;*/
+/*    height: 280px;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    background-color: var(--typographywhite);*/
+/*    border-radius: 8px;*/
+/*    border: 1px dashed;*/
+/*    border-color: var(--primaryblue);*/
+/*}*/
+
+/*form .business-form .frame-9 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 180px;*/
+/*    align-items: center;*/
+/*    position: relative;*/
+/*    top: 26px;*/
+/*    left: 49px;*/
+/*    background-color: var(--typographywhite);*/
+/*}*/
+
+/*form .business-form .picture {*/
+/*    position: relative;*/
+/*    width: 100px;*/
+/*    height: 100px;*/
+/*}*/
+
+/*form .business-form .frame-10 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    width: 100%;*/
+/*    flex: 0 0 auto;*/
+/*}*/
+
+/*form .business-form .text-wrapper-26 {*/
+/*    position: relative;*/
+/*    width: 148px;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .button {*/
+/*    all: unset;*/
+/*    box-sizing: border-box;*/
+/*    display: flex;*/
+/*    height: 50px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    width: 100%;*/
+/*    background-color: var(--primarypink);*/
+/*    border-radius: 8px;*/
+/*}*/
+
+/*form .business-form .button-2 {*/
+/*    all: unset;*/
+/*    box-sizing: border-box;*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    font-family: var(--roboto-button-font-family);*/
+/*    font-weight: var(--roboto-button-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-button-font-size);*/
+/*    letter-spacing: var(--roboto-button-letter-spacing);*/
+/*    line-height: var(--roboto-button-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-button-font-style);*/
+/*}*/
+
+/*form .business-form .frame-11 {*/
+/*    display: flex;*/
+/*    width: 780px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: absolute;*/
+/*    top: 2674px;*/
+/*    left: 20px;*/
+/*}*/
+
+/*form .business-form .info-3 {*/
+/*    position: relative;*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-27 {*/
+/*    position: relative;*/
+/*    flex: 1;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .button-blue {*/
+/*    display: flex;*/
+/*    width: 280px;*/
+/*    height: 50px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: absolute;*/
+/*    top: 2783px;*/
+/*    left: 270px;*/
+/*    background-color: var(--primaryblue);*/
+/*    border-radius: 8px;*/
+/*}*/
+
+/*form .business-form .div-5 {*/
+/*    position: absolute;*/
+/*    top: 39px;*/
+/*    left: 596px;*/
+/*    font-family: "Roboto-Regular", Helvetica;*/
+/*    font-weight: 400;*/
+/*    color: transparent;*/
+/*    font-size: 16px;*/
+/*    letter-spacing: 0;*/
+/*    line-height: 16px;*/
+/*    white-space: nowrap;*/
+/*}*/
+
+/*form .business-form .text-wrapper-28 {*/
+/*    color: #3ba165;*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*}*/
+
+/*form .business-form .FOOTER-desktop {*/
+/*    position: absolute;*/
+/*    width: 1440px;*/
+/*    height: 280px;*/
+/*    top: 3400px;*/
+/*    left: 0;*/
+/*    background-color: var(--secondarydark-blue);*/
+/*}*/
+
+/*form .business-form .group-2 {*/
+/*    position: relative;*/
+/*    width: 1180px;*/
+/*    height: 200px;*/
+/*    top: 40px;*/
+/*    left: 130px;*/
+/*}*/
+
+/*form .business-form .footer {*/
+/*    display: flex;*/
+/*    width: 1180px;*/
+/*    height: 101px;*/
+/*    align-items: flex-start;*/
+/*    justify-content: space-between;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    background-color: transparent;*/
+/*}*/
+
+/*form .business-form .view-4 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 108px;*/
+/*    align-items: flex-start;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .text-wrapper-29 {*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-subhead-2-font-family);*/
+/*    font-weight: var(--roboto-subhead-2-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-subhead-2-font-size);*/
+/*    letter-spacing: var(--roboto-subhead-2-letter-spacing);*/
+/*    line-height: var(--roboto-subhead-2-line-height);*/
+/*    font-style: var(--roboto-subhead-2-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-30 {*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .view-5 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 188px;*/
+/*    align-items: flex-start;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .frame-12 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: flex-start;*/
+/*    gap: 5px;*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    width: 100%;*/
+/*    flex: 0 0 auto;*/
+/*}*/
+
+/*form .business-form .text-wrapper-31 {*/
+/*    position: relative;*/
+/*    align-self: stretch;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-text-font-family);*/
+/*    font-weight: var(--roboto-text-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-text-font-size);*/
+/*    letter-spacing: var(--roboto-text-letter-spacing);*/
+/*    line-height: var(--roboto-text-line-height);*/
+/*    font-style: var(--roboto-text-font-style);*/
+/*}*/
+
+/*form .business-form .view-6 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 194px;*/
+/*    align-items: flex-start;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .view-7 {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 184px;*/
+/*    align-items: flex-start;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .social-icon-footer {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    gap: 22px;*/
+/*    position: relative;*/
+/*    flex: 0 0 auto;*/
+/*}*/
+
+/*form .business-form .img-2 {*/
+/*    position: relative;*/
+/*    width: 52px;*/
+/*    height: 52px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-32 {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-button-font-family);*/
+/*    font-weight: var(--roboto-button-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-button-font-size);*/
+/*    letter-spacing: var(--roboto-button-letter-spacing);*/
+/*    line-height: var(--roboto-button-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-button-font-style);*/
+/*}*/
+
+/*form .business-form .line-5 {*/
+/*    width: 701px;*/
+/*    height: 3px;*/
+/*    top: 141px;*/
+/*    left: 239px;*/
+/*    position: absolute;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*form .business-form .frame-13 {*/
+/*    display: flex;*/
+/*    width: 152px;*/
+/*    height: 24px;*/
+/*    align-items: flex-end;*/
+/*    gap: 19px;*/
+/*    position: absolute;*/
+/*    top: 176px;*/
+/*    left: 514px;*/
+/*}*/
+
+/*form .business-form .logo-component {*/
+/*    position: relative;*/
+/*    width: 103px;*/
+/*    height: 24px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-33 {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-right: -108.04px;*/
+/*    font-family: var(--roboto-small-text-font-family);*/
+/*    font-weight: var(--roboto-small-text-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-small-text-font-size);*/
+/*    letter-spacing: var(--roboto-small-text-letter-spacing);*/
+/*    line-height: var(--roboto-small-text-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-small-text-font-style);*/
+/*}*/
+
+/*form .business-form .HEADER-desktop {*/
+/*    display: flex;*/
+/*    width: 1440px;*/
+/*    height: 120px;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    padding: 0px 130px;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    background-color: #275271;*/
+/*}*/
+
+/*form .business-form .logo-component-wrapper {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 156px;*/
+/*    align-items: flex-start;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .logo-component-2 {*/
+/*    position: relative;*/
+/*    width: 136px;*/
+/*    height: 31.9px;*/
+/*}*/
+
+/*form .business-form .frame-14 {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    gap: 20px;*/
+/*    position: relative;*/
+/*    flex: 0 0 auto;*/
+/*}*/
+
+/*form .business-form .valute-hover-wrapper {*/
+/*    position: relative;*/
+/*    width: 40px;*/
+/*    height: 19px;*/
+/*}*/
+
+/*form .business-form .valute-hover {*/
+/*    display: flex;*/
+/*    width: 40px;*/
+/*    align-items: flex-start;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*form .business-form .defalt-uah {*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-button-font-family);*/
+/*    font-weight: var(--roboto-button-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-button-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-button-letter-spacing);*/
+/*    line-height: var(--roboto-button-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-button-font-style);*/
+/*}*/
+
+/*form .business-form .ukraine {*/
+/*    position: relative;*/
+/*    width: 32px;*/
+/*    height: 31.9px;*/
+/*}*/
+
+/*form .business-form .button-outline {*/
+/*    display: flex;*/
+/*    width: 280px;*/
+/*    height: 49.85px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: relative;*/
+/*    border-radius: 8px;*/
+/*    border: 2px solid;*/
+/*    border-color: var(--primarypink);*/
+/*}*/
+
+/*form .business-form .button-3 {*/
+/*    all: unset;*/
+/*    box-sizing: border-box;*/
+/*    position: relative;*/
+/*    width: fit-content;*/
+/*    font-family: var(--roboto-button-font-family);*/
+/*    font-weight: var(--roboto-button-font-weight);*/
+/*    color: var(--primarypink);*/
+/*    font-size: var(--roboto-button-font-size);*/
+/*    letter-spacing: var(--roboto-button-letter-spacing);*/
+/*    line-height: var(--roboto-button-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-button-font-style);*/
+/*}*/
+
+/*form .business-form .button-wrapper {*/
+/*    all: unset;*/
+/*    box-sizing: border-box;*/
+/*    display: flex;*/
+/*    width: 180px;*/
+/*    height: 50px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    position: relative;*/
+/*    background-color: var(--primarypink);*/
+/*    border-radius: 8px;*/
+/*}*/
+
+/*form .business-form .text-wrapper-34 {*/
+/*    position: absolute;*/
+/*    top: 239px;*/
+/*    left: 490px;*/
+/*    font-family: var(--roboto-h1-font-family);*/
+/*    font-weight: var(--roboto-h1-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-h1-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-h1-letter-spacing);*/
+/*    line-height: var(--roboto-h1-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-h1-font-style);*/
+/*}*/
+
+/*form .business-form .text-wrapper-35 {*/
+/*    position: absolute;*/
+/*    width: 706px;*/
+/*    height: 30px;*/
+/*    top: 299px;*/
+/*    left: 367px;*/
+/*    font-family: var(--roboto-subhead-2-font-family);*/
+/*    font-weight: var(--roboto-subhead-2-font-weight);*/
+/*    color: var(--typographyblack);*/
+/*    font-size: var(--roboto-subhead-2-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-subhead-2-letter-spacing);*/
+/*    line-height: var(--roboto-subhead-2-line-height);*/
+/*    font-style: var(--roboto-subhead-2-font-style);*/
+/*}*/
+/*Мапа та адреса: Стилізувати область з картою та адресою.*/
+.view {
+    padding: 20px;
+    background-color: #f1faee; /* Світлий фон для області з картою */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.frame-2 {
+    background-color: #ffffff;
+    border: 1px solid #1d3557; /* Темно-синя рамка */
     padding: 10px;
-    position: relative;
-    border-radius: 8px;
-    border: 2px solid;
-    border-color: var(--primarypink);
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-.business-form .button-3 {
-    all: unset;
-    box-sizing: border-box;
-    position: relative;
-    width: fit-content;
-    font-family: var(--roboto-button-font-family);
-    font-weight: var(--roboto-button-font-weight);
-    color: var(--primarypink);
-    font-size: var(--roboto-button-font-size);
-    letter-spacing: var(--roboto-button-letter-spacing);
-    line-height: var(--roboto-button-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-button-font-style);
+.text-wrapper-10 {
+    color: #1d3557; /* Темно-синій текст */
+}
+/*Кнопки: Оформлення кнопок згідно з дизайном.*/
+.button-2 {
+    background-color: #457b9d; /* Синій фон */
+    color: #ffffff; /* Білий текст */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.business-form .button-wrapper {
-    all: unset;
-    box-sizing: border-box;
-    display: flex;
-    width: 180px;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.button-2:hover {
+    background-color: #1d3557; /* Темніший синій при наведенні */
+}
+/*Радіо-кнопки та чекбокси: Стилізувати радіо-кнопки та чекбокси відповідно до макету.*/
+.typ-hotel, .typ-hotel-2, .typ-hotel-3, .typ-hotel-4 {
+    border: 1px solid #1d3557; /* Темно-синя рамка */
     padding: 10px;
-    position: relative;
-    background-color: var(--primarypink);
-    border-radius: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px; /* Округлі кути */
 }
 
-.business-form .text-wrapper-34 {
-    position: absolute;
-    top: 239px;
-    left: 490px;
-    font-family: var(--roboto-h1-font-family);
-    font-weight: var(--roboto-h1-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-h1-font-size);
-    text-align: center;
-    letter-spacing: var(--roboto-h1-letter-spacing);
-    line-height: var(--roboto-h1-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-h1-font-style);
+.checkbox-with-text {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
-.business-form .text-wrapper-35 {
-    position: absolute;
-    width: 706px;
-    height: 30px;
-    top: 299px;
-    left: 367px;
-    font-family: var(--roboto-subhead-2-font-family);
-    font-weight: var(--roboto-subhead-2-font-weight);
-    color: var(--typographyblack);
-    font-size: var(--roboto-subhead-2-font-size);
+.checkbox-with-text input[type="checkbox"], .checkbox-with-text input[type="radio"] {
+    margin-right: 10px;
+}
+/*Заголовки: Оформити заголовки у стилі зображеного макету.*/
+.text-wrapper-8, .text-wrapper-9, .text-wrapper-11, .text-wrapper-20 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1d3557; /* Темно-синій текст */
+}
+
+/*Контейнер форми: Центрування та додавання відступів.
+*/
+form {
+    background-color: #ffffff; /* Білий фон */
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px; /* Ширина форми */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тінь для форми */
+}
+body {
+    background-color: #f7f7f7; /* Світло-сірий фон */
+}
+
+header, .FOOTER-desktop {
+    background-color: #1d3557; /* Темно-синій фон */
+    color: #ffffff; /* Білий текст */
+}
+/*Футер: Оформити футер*/
+.FOOTER-desktop {
+    padding: 20px;
     text-align: center;
-    letter-spacing: var(--roboto-subhead-2-letter-spacing);
-    line-height: var(--roboto-subhead-2-line-height);
-    font-style: var(--roboto-subhead-2-font-style);
+    color: #ffffff; /* Білий текст */
 }
