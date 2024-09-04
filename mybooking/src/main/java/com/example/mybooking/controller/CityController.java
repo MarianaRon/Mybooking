@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cities")
@@ -103,4 +104,16 @@ public class CityController {
         headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(photoBytes, headers, HttpStatus.OK);
     }
+    @GetMapping("/carousel")
+    public String getCarouselCities(Model model) {
+        List<City> cities = cityService.getAllCities(); // Отримуємо всі міста
+        model.addAttribute("cities", cities);
+        return "home/carousel";
+    }
+    @GetMapping("/")
+    public String showHomePage(Model model) {
+        return "redirect:/cities/carousel";
+    }
+
+
 }

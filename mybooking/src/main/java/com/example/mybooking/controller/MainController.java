@@ -1,11 +1,14 @@
 package com.example.mybooking.controller;
 
+import com.example.mybooking.model.City;
 import com.example.mybooking.model.User;
+import com.example.mybooking.repository.ICityRepository;
 import com.example.mybooking.repository.IUserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.example.mybooking.service.CityService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -25,9 +31,16 @@ public class MainController {
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private ICityRepository cityRepository;
+    @Autowired
+    private CityService cityService;
+
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
+        List<City> cities = cityService.getAllCities();
+        model.addAttribute("cities", cities);
         if (currentUser != null) {
             model.addAttribute("welcomeMessage", "Вітаємо, " + currentUser.getUsername() + "!");
         } else {
