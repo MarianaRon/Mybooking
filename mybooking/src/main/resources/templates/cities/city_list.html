@@ -63,7 +63,14 @@
 <div>
     <a class="nav-link" href="/admin_page">Назад до сторінки адміністратора</a>
 </div>
+<!--                    <div th:each="city, stat : ${cities}" th:classappend="carousel-item ${stat.index == 0} ? 'active' : ''">-->
+<!--                        <img th:if="${city.photoBytes != null}" th:src="@{/cities/photo/{id}(id=${city.id})}" class="d-block w-100" alt="Фото міста">-->
+<!--                        <img th:if="${city.photoBytes == null}" th:src="${city.photoUrl}" class="d-block w-100" alt="Фото міста">-->
 
+<!--                        <div class="carousel-caption d-none d-md-block">-->
+<!--                            <h5 th:text="${city.name}"></h5>-->
+<!--                            <p th:text="${city.region}"></p>-->
+<!--                        </div>-->
 <footer th:insert="sections/footer::footer"></footer>
 
 </body>

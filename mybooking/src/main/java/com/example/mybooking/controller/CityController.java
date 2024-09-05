@@ -26,6 +26,16 @@ public class CityController {
         model.addAttribute("cities", cityService.getAllCities());
         return "cities/city_list";
     }
+    @GetMapping("/photo/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getPhoto(@PathVariable Long id) {
+        City city = cityService.getCityById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid city Id: " + id));
+        byte[] photoBytes = city.getPhotoBytes();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(photoBytes, headers, HttpStatus.OK);
+    }
 
     @GetMapping("/edit/{id}")
     public String editCityForm(@PathVariable Long id, Model model) {
@@ -93,27 +103,16 @@ public class CityController {
         return "redirect:/cities/city_list";
     }
 
-    @GetMapping("/photo/{id}")
-    @ResponseBody
-    public ResponseEntity<byte[]> getPhoto(@PathVariable Long id) {
-        City city = cityService.getCityById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid city Id: " + id));
-
-        byte[] photoBytes = city.getPhotoBytes();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(photoBytes, headers, HttpStatus.OK);
-    }
-    @GetMapping("/carousel")
-    public String getCarouselCities(Model model) {
-        List<City> cities = cityService.getAllCities(); // Отримуємо всі міста
-        model.addAttribute("cities", cities);
-        return "home/carousel";
-    }
-    @GetMapping("/")
-    public String showHomePage(Model model) {
-        return "redirect:/cities/carousel";
-    }
+//    @GetMapping("/carousel")
+//    public String getCarouselCities(Model model) {
+//        List<City> cities = cityService.getAllCities(); // Отримуємо всі міста
+//        model.addAttribute("cities", cities);
+//        return "/home";
+//    }
+//    @GetMapping("/")
+//    public String showHomePage(Model model) {
+//        return "redirect:/home";
+//    }
 
 
 }
