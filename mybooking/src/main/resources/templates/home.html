@@ -28,401 +28,191 @@
 </head>
 <body>
 <header th:insert="sections/header::header" style="background-color: #275271;"></header>
-<div class="main">
-    <div class="div">
-        <div class="overlap">
-            <img class="backgrnd-header" src="/images/backgr_header.jpg" />
-            <p class="p">Найкращі готелі, апартаменти та хостели... і не тільки</p>
-            <div class="text-wrapper">Подорожуй з комфортом</div>
-
-            <div class="search-block">
-                <div class="group">
-                    <div class="place-field">
-                        <div class="field-icon">
-                            <div class="icon-set-for-field"></div>
-                            <div class="frame"><div class="text-wrapper-2">Куди вирушаєте?</div></div>
-                        </div>
-                    </div>
-                    <div class="calendar-picker">
-                        <img class="hearts" src="img/tear-off-calendar.svg" />
-                        <div class="frame"><div class="text-wrapper-2">Коли вирушаєте?</div></div>
-                    </div>
-                    <button class="button"><button class="button-2">Шукати</button></button>
-                    <div class="guest-picker">
-                        <div class="icon-set-for-field-2"></div>
-                        <div class="frame"><div class="text-wrapper-2">Кількість гостей</div></div>
-                        <img class="expand-arrow" src="img/expand-arrow.svg" />
-                    </div>
+<div class="overlap">
+    <img class="backgrnd-header" src="/images/backgr_header.jpg" />
+    <div class="text-container">
+        <h2 style="color: #f0f0f0">Подорожуй з комфортом</h2>
+        <p style="color: #f0f0f0">Найкращі готелі, апартаменти та хостели... і не тільки</p>
+    </div>
+    <div class="search-block">
+        <form action="/search" method="POST">
+            <div class="place-field">
+                <div class="field-icon">
+<!--                    <label for="city">Куди вирушаєте?</label>-->
+                    <select name="city" id="city">
+                        <option value="">Куди вирушаєте?</option>
+                        <!-- Додати список міст -->
+                        <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name} + ', ' + ${city.region}"></option>
+                    </select>
                 </div>
             </div>
-        </div>
-        <p class="text-wrapper-3">Або виберіть помешкання на мапі</p>
-            <div id="map" class="map"></div>
-
-        <div class="text-wrapper-4">Найпопулярніші готелі України</div>
-        <p class="text-wrapper-5">Забронюйте наші найпопулярніші унікальні помешкання</p>
-
-        <div class="newsletter">
-            <div class="overlap-group" style="position: relative; display: inline-block;">
-                <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />
-                <p class="text-wrapper-6">
-                    Залишайтеся в курсі нових місць для відпочинку
-                </p>
-                <div class="button-blue">
-                    <button class="button-2">Підписатися на newsletter</button>
-                </div>
+            <div class="calendar-picker">
+                <label for="date" style="color: #f0f0f0;">Коли вирушаєте?</label>
+                <input type="date" id="date" name="date">
             </div>
-        </div>
-<!--        -->
-<!--        -->
-<!--        <div class="newsletter">-->
-<!--            <div class="overlap-group">-->
-<!--                <p class="text-wrapper-6">Залишайтеся в курсі нових місць для відпочинку</p>-->
-<!--                <div class="button-blue"><button class="button-2">Підписатися на newsletter</button></div>-->
-<!--            </div>-->
-<!--        </div>-->
+            <div class="guest-picker">
+                <label for="guests" style="color: #f0f0f0;">Кількість гостей</label>
+                <input type="number" id="guests" name="guests" min="1" value="1">
+            </div>
+            <button type="submit" class="button-2">Шукати</button>
+        </form>
+    </div>
+</div>
 
+        <h2 style="margin-top: 50px">Або виберіть помешкання на мапі</h2>
+            <div id="map" class="map" style="margin-top: 20px"></div>
+        <h2 class="" th:text="${welcomeMessage}"></h2>
 
-        <div class="view-2">
-            <p class="text-wrapper-7">Виберіть у якому місті України ви хочете відпочити</p>
-            <div class="text-wrapper-8">Міста України</div>
-            <div class="first_carusel">
-                <div id="cityCarousel" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators (якщо потрібні) -->
-                    <ol class="carousel-indicators">
-                        <li th:each="city, stat : ${cities}" data-target="#cityCarousel" th:data-slide-to="${stat.index}" th:classappend="${stat.index == 0} ? 'active' : ''"></li>
-                    </ol>
+<h2>Міста України</h2>
+<div id="cityCarousel" class="carousel slide" data-ride="carousel">
+<div class="carousel-inner">
+<!--                        <div th:each="city, stat : ${cities}" th:classappend="carousel-item ${stat.index == 0} ? 'active' : ''">-->
 
-                    <div class="carousel-inner">
-                        <!-- Кожне місто -->
-                        <div th:each="city, stat : ${cities}" th:classappend="${stat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-                            <!-- Перевірка наявності зображення у вигляді байтів -->
-                            <img th:if="${city.photoBytes != null}" th:src="@{/cities/photo/{id}(id=${city.id})}" class="d-block w-100" alt="Фото міста" style="height: 750px;">
-                            <!-- Якщо немає байтів зображення, показати за посиланням -->
-                            <img th:if="${city.photoBytes == null}" th:src="${city.photoUrl}" class="d-block w-100" alt="Фото міста" style="height: auto;">
+                            <div th:each="city, stat : ${cities}" th:classappend="'carousel-item ' + (${stat.index == 0} ? 'active' : '')">
+                            <img th:if="${city.photoBytes != null}" th:src="@{/cities/photo/{id}(id=${city.id})}" class="d-block w-100" alt="Фото міста">
+                            <img th:if="${city.photoBytes == null}" th:src="${city.photoUrl}" class="d-block w-100" alt="Фото міста">
 
                             <div class="carousel-caption d-none d-md-block">
                                 <h5 th:text="${city.name}"></h5>
                                 <p th:text="${city.region}"></p>
                             </div>
-                        </div>
+</div>
+</div>
+<a class="carousel-control-prev" href="#cityCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#cityCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+</a>
+</div>
 
-                    </div>
+<p>Виберіть, у якому місті України ви хочете відпочити</p>
 
-                    <!-- Кнопки для перемикання слайдів -->
-                    <a class="carousel-control-prev" href="#cityCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Попередній</span>
-                    </a>
-                    <a class="carousel-control-next" href="#cityCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Наступний</span>
-                    </a>
-                </div>
-                <div class="second_carousel">
-                    <p class="text-wrapper-11">Спробуйте найпопулярніші напрямки для подорожі</p>
-                    <div class="text-wrapper-12">Популярні напрямки для подорожі</div>
 
-                    <div id="multiItemCarousel" class="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div th:each="city, stat : ${cities}" th:if="${stat.index < 3}" class="col-4">
-                                        <img th:src="@{/cities/photo/{id}(id=${city.id})}" class="d-block w-100" alt="Фото міста" style="width: 250px; height: 200px">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5 th:text="${city.name}"></h5>
-                                            <p th:text="${city.region}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!--&lt;!&ndash; Секція newsletter &ndash;&gt;-->
+<!--<div class="newsletter">-->
+<!--    <div class="overlap-group">-->
+<!--        <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />-->
+<!--        <p class="text-wrapper-6">-->
+<!--            Залишайтеся в курсі нових місць для відпочинку-->
+<!--        </p>-->
+<!--        <div class="button-blue" style="margin-top: -70px">-->
+<!--            <button class="button-2">Підписатися на newsletter</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
-                        <!-- Кнопки для перемикання слайдів -->
-                        <a class="carousel-control-prev slider-button" href="#" role="button">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Попередній</span>
-                        </a>
-                        <a class="carousel-control-next slider-button" href="#" role="button">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Наступний</span>
-                        </a>
-                    </div>
-                </div>
+<!--<script>-->
+<!--    // Обробка каруселі міст-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--        const btnPrev = document.querySelector(".carousel-control-prev");-->
+<!--        const btnNext = document.querySelector(".carousel-control-next");-->
+<!--        const items = document.querySelectorAll(".carousel-item");-->
+<!--        const itemsPerView = 3; // Кількість міст на екрані-->
+<!--        let currentIndex = 0;-->
 
-            </div>
-<!--            <div class="overlap-group-wrapper">-->
-<!--                <div class="overlap-group-2">-->
-<!--                    <div class="frame-3">-->
-<!--                        <div class="frame-4">-->
-<!--                            <div class="component-2"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Львів</div>-->
-<!--                                <div class="text-wrapper-10">(318 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-5">-->
-<!--                            <div class="picture-wrapper"><img class="picture" src="img/picture-2.png" /></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Львів</div>-->
-<!--                                <div class="text-wrapper-10">(318 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-6">-->
-<!--                            <div class="component-3"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Харків</div>-->
-<!--                                <div class="text-wrapper-10">(48 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-7">-->
-<!--                            <div class="picture-wrapper"><img class="img" src="img/picture-3.png" /></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Харків</div>-->
-<!--                                <div class="text-wrapper-10">(48 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-8">-->
-<!--                            <div class="component-4"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Дніпро</div>-->
-<!--                                <div class="text-wrapper-10">(46 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-9">-->
-<!--                            <div class="picture-wrapper"><img class="picture-2" src="img/picture-5.png" /></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Дніпро</div>-->
-<!--                                <div class="text-wrapper-10">(46 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-10">-->
-<!--                            <div class="component-5"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Буковель</div>-->
-<!--                                <div class="text-wrapper-10">(456 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-11">-->
-<!--                            <div class="picture-wrapper"><img class="picture-3" src="img/picture-11.png" /></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Буковель</div>-->
-<!--                                <div class="text-wrapper-10">(456 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-12">-->
-<!--                            <div class="component-6"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Київ</div>-->
-<!--                                <div class="text-wrapper-10">(462 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-13">-->
-<!--                            <div class="picture-wrapper"><img class="picture-4" src="img/picture-12.png" /></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Київ</div>-->
-<!--                                <div class="text-wrapper-10">(462 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-14">-->
-<!--                            <div class="component-7"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Одеса</div>-->
-<!--                                <div class="text-wrapper-10">(125 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="frame-15">-->
-<!--                            <div class="component-8"></div>-->
-<!--                            <div class="text-city">-->
-<!--                                <div class="text-wrapper-9">Одеса</div>-->
-<!--                                <div class="text-wrapper-10">(125 помешкань)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="arrows">-->
-<!--                        <img class="arrow" src="img/arrow-2.svg" /> <img class="arrow-2" src="img/arrow-5.svg" />-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+<!--        function showImages(startIndex) {-->
+<!--            items.forEach(item => item.classList.remove("active"));-->
+<!--            for (let i = 0; i < itemsPerView; i++) {-->
+<!--                let index = (startIndex + i) % items.length; // Прокручування по кругу-->
+<!--                items[index].classList.add("active");-->
+<!--            }-->
+<!--        }-->
+
+<!--        function prevImage() {-->
+<!--            currentIndex&#45;&#45;;-->
+<!--            if (currentIndex < 0) {-->
+<!--                currentIndex = items.length - 1;-->
+<!--            }-->
+<!--            showImages(currentIndex);-->
+<!--        }-->
+
+<!--        function nextImage() {-->
+<!--            currentIndex++;-->
+<!--            if (currentIndex >= items.length) {-->
+<!--                currentIndex = 0;-->
+<!--            }-->
+<!--            showImages(currentIndex);-->
+<!--        }-->
+
+<!--        // Спочатку показуємо перші три міста-->
+<!--        showImages(currentIndex);-->
+
+<!--        // Обробники подій для кнопок-->
+<!--        btnPrev.addEventListener("click", prevImage);-->
+<!--        btnNext.addEventListener("click", nextImage);-->
+<!--    });-->
+<!--</script>-->
+
+
+
+<div class="newsletter" >
+    <div class="overlap-group">
+        <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />
+        <p class="text-wrapper-6">
+            Залишайтеся в курсі нових місць для відпочинку
+        </p>
+        <div class="button-blue" style="margin-top: -70px" >
+            <button class="button-2" >Підписатися на newsletter</button>
         </div>
-        <h2 class="text-wrapper-11" th:text="${welcomeMessage}"></h2>
-
+    </div>
+</div>
         <!-- Admin Page Link -->
         <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
             <a class="nav-link" href="/admin_page">Сторінка адміністратора</a>
         </div>
 
-        <div class="text-wrapper-12">Популярні напрямки для подорожі</div>
-        <div class="overlap-wrapper">
 
 
-
-            <!--            <div class="overlap-2">-->
-<!--                <div class="frame-16">-->
-<!--                    <div class="view-3">-->
-<!--                        <div class="photo-directions"></div>-->
-<!--                        <div class="div-wrapper"><div class="text-wrapper-13">Львів</div></div>-->
-<!--                    </div>-->
-<!--                    <div class="view-4">-->
-<!--                        <div class="rectangle-wrapper"><img class="rectangle" src="img/rectangle-104-6.png" /></div>-->
-<!--                        <div class="div-wrapper"><div class="text-wrapper-13">Львів</div></div>-->
-<!--                    </div>-->
-
-
-<!--                    <div class="frame-17">-->
-<!--                        <div class="photo-directions-2"></div>-->
-<!--                        <div class="div-wrapper"><div class="text-wrapper-13">Закарпаття</div></div>-->
-<!--                    </div>-->
-<!--                    <div class="frame-18">-->
-<!--                        <div class="rectangle-wrapper"><img class="rectangle-2" src="img/rectangle-104-12.png" /></div>-->
-<!--                        <div class="div-wrapper"><div class="text-wrapper-13">Закарпаття</div></div>-->
-<!--                    </div>-->
-<!--                    <div class="frame-19">-->
-<!--                        <div class="photo-directions-3"></div>-->
-<!--                        <div class="div-wrapper"><div class="text-wrapper-13">Одеса</div></div>-->
-<!--                    </div>-->
-<!--                    <div class="frame-20">-->
-<!--                        <div class="rectangle-wrapper"><img class="rectangle-3" src="img/rectangle-104-7.png" /></div>-->
-<!--                        <div class="div-wrapper"><div class="text-wrapper-13">Одеса</div></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="arrows-2">-->
-<!--                    <img class="arrow" src="img/arrow-4.svg" /> <img class="arrow-2" src="img/image.svg" />-->
+<h2>Спробуйте найпопулярніші напрямки для подорожі</h2>
+<p>Популярні напрямки для подорожі</p>
+<!--<div class="second_carousel">-->
+<!--    <div id="secondCarousel" class="carousel slide" data-ride="carousel">-->
+<!--        <ol class="carousel-indicators">-->
+<!--            <li data-target="#secondCarousel" data-slide-to="0" class="active"></li>-->
+<!--            <li data-target="#secondCarousel" data-slide-to="1"></li>-->
+<!--            <li data-target="#secondCarousel" data-slide-to="2"></li>-->
+<!--        </ol>-->
+<!--        <div class="carousel-inner">-->
+<!--            <div class="carousel-item active">-->
+<!--                <img src="city1.jpg" class="d-block w-100" alt="City 1">-->
+<!--                <div class="carousel-caption">-->
+<!--                    <h5>Місто 1</h5>-->
+<!--                    <p>Опис міста 1</p>-->
 <!--                </div>-->
 <!--            </div>-->
-        </div>
-<!--        <div class="view-5">-->
-<!--            <div class="overlap-3">-->
-<!--                <div class="frame-21">-->
-<!--                    <div class="hotel-block">-->
-<!--                        <div class="frame-22">-->
-<!--                            <div class="frame-23">-->
-<!--                                <div class="text-wrapper-14">Готель Отрада</div>-->
-<!--                                <div class="hearts-2"></div>-->
-<!--                            </div>-->
-<!--                            <div class="text-wrapper-15">Одеса, Україна</div>-->
-<!--                            <div class="frame-24">-->
-<!--                                <div class="group-2">-->
-<!--                                    <div class="star"></div>-->
-<!--                                    <div class="star-2"></div>-->
-<!--                                    <div class="star-3"></div>-->
-<!--                                    <div class="star-4"></div>-->
-<!--                                    <div class="star-5"></div>-->
-<!--                                </div>-->
-<!--                                <div class="text-wrapper-16">(311 відгуків)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="photo-directions-4"></div>-->
-<!--                    </div>-->
-<!--                    <div class="hotel-block-2">-->
-<!--                        <div class="frame-22">-->
-<!--                            <div class="frame-23">-->
-<!--                                <div class="text-wrapper-14">Готель Отрада</div>-->
-<!--                                <div class="hearts"><img class="heart" src="img/heart-4.png" /></div>-->
-<!--                            </div>-->
-<!--                            <div class="text-wrapper-15">Одеса, Україна</div>-->
-<!--                            <div class="frame-24">-->
-<!--                                <div class="group-2">-->
-<!--                                    <div class="star-wrapper"><img class="star-6" src="img/star-4.png" /></div>-->
-<!--                                    <div class="img-wrapper"><img class="star-7" src="img/star-17.png" /></div>-->
-<!--                                    <div class="star-8"><img class="star-9" src="img/star-14.png" /></div>-->
-<!--                                    <div class="star-10"><img class="star-11" src="img/star-2.png" /></div>-->
-<!--                                    <div class="star-12"><img class="star-13" src="img/star.png" /></div>-->
-<!--                                </div>-->
-<!--                                <div class="text-wrapper-16">(311 відгуків)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="photo-directions-5"><img class="rectangle-4" src="img/rectangle-104-5.png" /></div>-->
-<!--                    </div>-->
-<!--                    <div class="hotel-block-3">-->
-<!--                        <div class="frame-22">-->
-<!--                            <div class="frame-23">-->
-<!--                                <div class="text-wrapper-14">Київ Vogue Апартаменти</div>-->
-<!--                                <div class="hearts-3"></div>-->
-<!--                            </div>-->
-<!--                            <div class="text-wrapper-15">Київ, Україна</div>-->
-<!--                            <div class="frame-24">-->
-<!--                                <div class="group-2">-->
-<!--                                    <div class="star-14"></div>-->
-<!--                                    <div class="star-15"></div>-->
-<!--                                    <div class="star-16"></div>-->
-<!--                                    <div class="star-17"></div>-->
-<!--                                    <div class="star-18"></div>-->
-<!--                                </div>-->
-<!--                                <div class="text-wrapper-16">(31 відгук)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="photo-directions-6"></div>-->
-<!--                    </div>-->
-<!--                    <div class="hotel-block-4">-->
-<!--                        <div class="frame-22">-->
-<!--                            <div class="frame-23">-->
-<!--                                <div class="text-wrapper-14">Київ Vogue Апартаменти</div>-->
-<!--                                <div class="hearts"><img class="heart-2" src="img/heart-2.png" /></div>-->
-<!--                            </div>-->
-<!--                            <div class="text-wrapper-15">Київ, Україна</div>-->
-<!--                            <div class="frame-24">-->
-<!--                                <div class="group-2">-->
-<!--                                    <div class="star-wrapper"><img class="star-19" src="img/star-9.png" /></div>-->
-<!--                                    <div class="img-wrapper"><img class="star-20" src="img/star-28.png" /></div>-->
-<!--                                    <div class="star-8"><img class="star-21" src="img/star-18.png" /></div>-->
-<!--                                    <div class="star-10"><img class="star-22" src="img/star-16.png" /></div>-->
-<!--                                    <div class="star-12"><img class="star-23" src="img/star-15.png" /></div>-->
-<!--                                </div>-->
-<!--                                <div class="text-wrapper-16">(31 відгук)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="photo-directions-5"><img class="rectangle-5" src="img/rectangle-104.png" /></div>-->
-<!--                    </div>-->
-<!--                    <div class="hotel-block-5">-->
-<!--                        <div class="frame-22">-->
-<!--                            <div class="frame-23">-->
-<!--                                <div class="text-wrapper-14">готель Буковель</div>-->
-<!--                                <div class="hearts-4"></div>-->
-<!--                            </div>-->
-<!--                            <div class="text-wrapper-15">Буковель, Україна</div>-->
-<!--                            <div class="frame-24">-->
-<!--                                <div class="group-2">-->
-<!--                                    <div class="star-24"></div>-->
-<!--                                    <div class="star-25"></div>-->
-<!--                                    <div class="star-26"></div>-->
-<!--                                    <div class="star-27"></div>-->
-<!--                                    <div class="star-28"></div>-->
-<!--                                </div>-->
-<!--                                <div class="text-wrapper-16">(311 відгуків)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="photo-directions-7"></div>-->
-<!--                    </div>-->
-<!--                    <div class="hotel-block-6">-->
-<!--                        <div class="frame-22">-->
-<!--                            <div class="frame-23">-->
-<!--                                <div class="text-wrapper-14">Шале 2 сезони Буковель</div>-->
-<!--                                <div class="hearts-5"></div>-->
-<!--                            </div>-->
-<!--                            <div class="text-wrapper-15">Буковель, Україна</div>-->
-<!--                            <div class="frame-24">-->
-<!--                                <div class="group-2">-->
-<!--                                    <div class="star-wrapper"><img class="star-29" src="img/star-11.png" /></div>-->
-<!--                                    <div class="img-wrapper"><img class="star-30" src="img/star-6.png" /></div>-->
-<!--                                    <div class="star-8"><img class="star-31" src="img/image.png" /></div>-->
-<!--                                    <div class="star-10"><img class="star-32" src="img/star-5.png" /></div>-->
-<!--                                    <div class="star-12"><img class="star-33" src="img/star-3.png" /></div>-->
-<!--                                </div>-->
-<!--                                <div class="text-wrapper-16">(311 відгуків)</div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="photo-directions-5"><img class="rectangle-6" src="img/rectangle-104-11.png" /></div>-->
-<!--                    </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <img src="city2.jpg" class="d-block w-100" alt="City 2">-->
+<!--                <div class="carousel-caption">-->
+<!--                    <h5>Місто 2</h5>-->
+<!--                    <p>Опис міста 2</p>-->
 <!--                </div>-->
-<!--                <div class="arrows-3">-->
-<!--                    <img class="arrow" src="img/arrow.svg" /> <img class="arrow-3" src="img/arrow-3.svg" />-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <img src="city3.jpg" class="d-block w-100" alt="City 3">-->
+<!--                <div class="carousel-caption">-->
+<!--                    <h5>Місто 3</h5>-->
+<!--                    <p>Опис міста 3</p>-->
 <!--                </div>-->
 <!--            </div>-->
 <!--        </div>-->
+<!--        <a class="carousel-control-prev second-slider-button" href="#secondCarousel" role="button" data-slide="prev">-->
+<!--            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--            <span class="sr-only">Попередній</span>-->
+<!--        </a>-->
+<!--        <a class="carousel-control-next second-slider-button" href="#secondCarousel" role="button" data-slide="next">-->
+<!--            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--            <span class="sr-only">Наступний</span>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
 
-    </div>
-</div>
+
+<h2>Найпопулярніші готелі України</h2>
+<p>Забронюйте наші найпопулярніші унікальні помешкання</p>
+
 <!--для каруселі МІСТА -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
