@@ -1,60 +1,45 @@
-<nav th:fragment="header" class="navbar navbar-expand-lg navbar-light" xmlns:th="">
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-light" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="stylesheet" href="globals.css" />
         <link rel="stylesheet" href="/style.header/header_styleguide.css" />
         <link rel="stylesheet" href="/style.header/header.css" />
         <title>Arrenvi.com - Домашня сторінка</title>
     </head>
 
-<!--    <div class="container-fluid">-->
-<!--        <div class="navbar-top">-->
-<!--            <a class="navbar-brand" href="#">Arrenvi.com</a>-->
-<!--            <ul class="navbar-nav">-->
-<!--                <li>-->
-<!--                    <a class="nav-link" href="/currencies">Валюта <span th:text="${session.currency}"></span></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/login">Вхід</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/registration">Реєстрація</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <form action="/logout" method="get">-->
-<!--                        <button type="submit" class="btn btn-link nav-link">Вихід</button>-->
-<!--                    </form>-->
-
-<!--                </li>-->
-
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    це треба залишити!!1!!!!!!!-->
-    <div class="HEADER-desktop">
-        <div class="frame"><img class="logo-component" src="img/logo-component.svg" /></div>
-        <div class="div">
-            <div class="view">
-                <div class="valute-hover"><div class="defalt-uah">UAH</div></div>
+    <div class="container-fluid" style="background-color: #275271;">
+        <div class="navbar-top d-flex justify-content-between align-items-center">
+            <!-- Логотип зліва -->
+            <div class="frame">
+                <a class="nav-link" href="/"><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 50px;"/></span></a>
             </div>
-            <img class="ukraine" src="/images/ukraine.png"/>
 
-            <div class="button-outline">
-                <a class="button" href="/home_partners">Зареєструвати своє помешкання</a>
-            </div>
-            <button class="button-wrapper">
-                <a class="text-wrapper" href="/login">Увійти</a>
-            </button>
+            <!-- Посилання праворуч -->
+            <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+                <li>
+                    <a class="nav-link" href="/currencies">Валюта <span th:text="${session.currency}"></span></a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+                </li>
+                <li class="nav-item" th:if="${session.currentUser != null}">
+                    <a class="nav-link" href="/user_account">Кабінет користувача</a>
+                </li>
+                <li class="nav-item" th:if="${session.currentUser == null}">
+                    <a class="nav-link" href="/login" style="background-color: rgba(163, 193, 217, 1); border: 1px solid wheat; border-radius: 5px;">Вхід</a>
+                </li>
+                <li class="nav-item" th:if="${session.currentUser == null}">
+                    <a class="nav-link" href="/registration" style="background-color: rgba(163, 193, 217, 1); border: 1px solid wheat; border-radius: 5px;">Реєстрація</a>
+                </li>
+                <li class="nav-item" th:if="${session.currentUser != null}">
+                    <form action="/logout" method="get">
+                        <button type="submit" class="btn btn-link nav-link" style="background-color: rgba(231, 161, 136, 1); border: 1px solid wheat; border-radius: 5px;">Вихід</button>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
-
 </nav>

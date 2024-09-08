@@ -58,6 +58,17 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/user_account")
+    public String userAccount(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/login"; // Якщо користувач не залогінений, перенаправити на сторінку входу
+        }
+        model.addAttribute("user", currentUser); // Передати користувача в модель
+        return "users/user_account"; // Показати сторінку кабінету користувача
+    }
+
+
 
     @PostMapping("/google-login")
     public String googleLogin(@RequestParam String idTokenString, HttpSession session) throws GeneralSecurityException, IOException {
@@ -107,8 +118,6 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
     session.setAttribute("currentUser", user);
     return "redirect:/"; // Переходимо на сторінку входу після успішної реєстрації
 }
-
-
 
 
     //головна сторінка для партнера після реєстрації

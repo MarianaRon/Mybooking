@@ -29,7 +29,7 @@ public class Review {
     private Hotel hotel;
 
 
-    //Отель, к которому относится отзыв. Ссылается на сущность Hotel. Обязательное поле.
+    //користувач, який залишив відгук
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

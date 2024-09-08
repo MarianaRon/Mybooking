@@ -29,4 +29,13 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    public boolean checkPassword(User user, String oldPassword) {
+        return user.getPassword().equals(oldPassword); // Перевірка старого паролю
+    }
+
+    public void changePassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+        userRepository.save(user); // Збереження нового паролю
+    }
 }
