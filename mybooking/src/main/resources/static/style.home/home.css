@@ -155,11 +155,71 @@ p {
 /* Відступи між блоками */
 .map {
     margin: 30px 0;
+    width: 100%;
+    height: 300px;
 }
 
 /* Загальні відступи для блоків */
 section {
     margin: 50px 0;
     padding: 20px;
+}
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    width: 100%; /* Додаємо ширину для контейнера */
+}
+
+.carousel-track {
+    display: flex;
+    overflow: hidden;
+    width: 80%; /* Ширина контейнера каруселі */
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+.carousel-item {
+    min-width: 18%; /* Фіксована ширина для слайда */
+    margin-right: 15px;
+    text-align: center;
+}
+
+.city-photo {
+    width: 100%;
+    height: 200px; /* Фіксована висота зображення */
+    object-fit: cover; /* Пропорційно обрізати зображення під рамку */
+    border-radius: 8px;
+}
+
+.city-info {
+    margin-top: 10px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(39, 82, 113, 0.8);
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10; /* Кнопки будуть поверх контенту */
+}
+
+.carousel-btn.prev {
+    left: 10px; /* Зсув кнопки вліво */
+}
+
+.carousel-btn.next {
+    right: 10px; /* Зсув кнопки вправо */
+}
+
+.carousel-btn:hover {
+    background-color: #275271;
 }
 

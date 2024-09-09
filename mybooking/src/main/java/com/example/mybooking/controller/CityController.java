@@ -53,11 +53,9 @@ public class CityController {
                              @RequestParam("photoBytes") MultipartFile photoBytes) {
         City city = cityService.getCityById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid city Id: " + id));
-
         city.setName(name);
         city.setRegion(region);
         city.setPhotoUrl(photoUrl);
-
         // Перевірка, чи файл не порожній
         if (!photoBytes.isEmpty()) {
             try {
@@ -67,7 +65,6 @@ public class CityController {
                 e.printStackTrace();  // Логування помилки
             }
         }
-
         // Зберігаємо оновлене місто
         cityService.saveCity(city);
         return "redirect:/cities/city_list";
@@ -102,17 +99,5 @@ public class CityController {
         cityService.saveCity(city);
         return "redirect:/cities/city_list";
     }
-
-//    @GetMapping("/carousel")
-//    public String getCarouselCities(Model model) {
-//        List<City> cities = cityService.getAllCities(); // Отримуємо всі міста
-//        model.addAttribute("cities", cities);
-//        return "/home";
-//    }
-//    @GetMapping("/")
-//    public String showHomePage(Model model) {
-//        return "redirect:/home";
-//    }
-
 
 }
