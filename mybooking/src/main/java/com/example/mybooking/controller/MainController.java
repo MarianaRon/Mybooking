@@ -179,31 +179,17 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         return "add_hotels";
     }
 
-//    @GetMapping("/currency")
-//    public String currency(Model model ){
-//        model.addAttribute("currency");
-//        return "currency";
-  //  }
-//    @GetMapping("/login")
-//    public String login(Model model ){
-////       model.addAttribute("login");
-//        return "users/login";
-//    }
-//
-
     @GetMapping("/registration")
     public String registrationForm(Model model) {
         model.addAttribute("user", new User());
         return "registration";
     }
 
-
     @GetMapping("/support")
     public String support(Model model ){
 //       model.addAttribute("support");
         return "/supports";
     }
-
 
     @GetMapping("/hotels/hotel_list")
     public String hotel_list(Model model ){
