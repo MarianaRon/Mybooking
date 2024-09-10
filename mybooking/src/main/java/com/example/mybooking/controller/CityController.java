@@ -1,6 +1,9 @@
 package com.example.mybooking.controller;
 
 import com.example.mybooking.model.City;
+import com.example.mybooking.model.Hotel;
+import com.example.mybooking.repository.ICityRepository;
+import com.example.mybooking.repository.IHotelRepository;
 import com.example.mybooking.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +23,27 @@ public class CityController {
 
     @Autowired
     private CityService cityService;
+    @Autowired
+    private ICityRepository cityRepository;
+
+    @Autowired
+    private IHotelRepository hotelRepository;
+
+
+    // метод для сортування готелів за містом
+    @GetMapping("/sort_hotels_by_city/{cityId}")
+    public String sortHotelsByCity(@PathVariable Long cityId, Model model) {
+        // Отримуємо місто по ID
+        City city = cityRepository.findById(cityId).orElseThrow(() -> new IllegalArgumentException("Invalid city Id:" + cityId));
+        // Отримуємо список готелів, які належать до цього міста
+        List<Hotel> hotels = hotelRepository.findByCity(city);
+
+        // Додаємо список готелів та місто у модель для відображення на сторінці
+        model.addAttribute("city", city);
+        model.addAttribute("hotels", hotels);
+
+        return "sort_hotels_by_city"; // Повертаємо назву шаблону сторінки
+    }
 
     @GetMapping("/city_list")
     public String listCities(Model model) {

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сортування готелів за обраним містом</title>
+    <link rel="stylesheet" href="/style.home/home_styleguide.css" />
+    <link rel="stylesheet" href="/style.home/home.css" />
+</head>
+<body>
+<header th:insert="sections/header::header" style="background-color: #275271;"></header>
+<h2>Готелі в місті [[${city.name}]]</h2>
+<div class="hotel-list">
+    <div th:if="${hotels.size() > 0}">
+        <div th:each="hotel : ${hotels}" class="hotel-item">
+            <h2 th:text="${hotel.name}"></h2>
+            <p th:text="${hotel.description}"></p>
+            <p th:text="${hotel.address}"></p>
+        </div>
+    </div>
+    <div th:if="${hotels.size() == 0}">
+        <p>Готелів у цьому місті поки що немає.</p>
+    </div>
+</div>
+
+<footer th:insert="sections/footer::footer" style="background-color: #275271;"></footer>
+</body>
+</html>

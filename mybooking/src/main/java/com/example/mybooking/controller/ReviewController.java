@@ -123,4 +123,20 @@ public class ReviewController {
         reviewService.deleteReview(id);
         return ResponseEntity.noContent().build();
     }
+
+//    для каруселі на сторінку Про нас
+@GetMapping("/review_slider")
+public String getReviewSlider(Model model) {
+    // Отримуємо всі відгуки
+    List<Review> allReviews = reviewService.getAllReviews();
+
+    // Перша трійка відгуків для початкового відображення
+    List<Review> firstThreeReviews = allReviews.subList(0, Math.min(3, allReviews.size()));
+
+    model.addAttribute("reviews", firstThreeReviews);
+    model.addAttribute("totalReviews", allReviews.size());
+    return "reviews/review_slider";
+}
+
+
 }

@@ -164,6 +164,9 @@ section {
     margin: 50px 0;
     padding: 20px;
 }
+
+
+
 .carousel-container {
     display: flex;
     justify-content: center;
@@ -185,6 +188,10 @@ section {
     min-width: 18%; /* Фіксована ширина для слайда */
     margin-right: 15px;
     text-align: center;
+}
+
+.carousel-item img:hover {
+    transform: scale(1.05);
 }
 
 .city-photo {

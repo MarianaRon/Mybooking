@@ -196,5 +196,8 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         return "/hotels/hotel_list";
     }
 
-
+    @GetMapping("/about_us")
+    public String about_us(Model model ){
+        return "/about_us";
+    }
 }

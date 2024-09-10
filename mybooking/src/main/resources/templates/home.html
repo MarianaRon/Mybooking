@@ -21,10 +21,8 @@
         <form action="/search" method="POST">
             <div class="place-field">
                 <div class="field-icon">
-<!--                    <label for="city">Куди вирушаєте?</label>-->
                     <select name="city" id="city">
                         <option value="">Куди вирушаєте?</option>
-                        <!-- Додати список міст -->
                         <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name} + ', ' + ${city.region}"></option>
                     </select>
                 </div>
@@ -52,7 +50,15 @@
     <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>
     <div class="carousel-track">
         <div class="carousel-item" th:each="city : ${cities}" style="display: inline-block;">
-            <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">
+<!--            контролер для переходу по натиску на картинку написаний у CityController-->
+            <a th:href="@{/sort_hotels_by_city/{cityId}(cityId=${city.id})}">
+                <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">
+            </a>
+            <a th:href="@{/sort_hotels_by_city/{cityId}(cityId=${city.id})}">
+                <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">
+            </a>
+
+
             <div class="city-info">
                 <h3 th:text="${city.name}"></h3>
                 <p th:text="${city.region}"></p>
@@ -75,7 +81,7 @@
 </div>
         <!-- Admin Page Link -->
         <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
-            <a class="nav-link" href="/admin_page">Сторінка адміністратора</a>
+            <a class="nav-link" style="color: #5c00e6;" href="/admin_page">Сторінка адміністратора</a>
         </div>
 
 

@@ -1,5 +1,6 @@
 package com.example.mybooking.repository;
 
+import com.example.mybooking.model.City;
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,10 @@ public interface IHotelRepository extends JpaRepository<Hotel, Long> {
 
     // Метод для поиска отелей по владельцу
     List<Hotel> findByOwner(User owner);
+
+
+
+    //для сортуваня готелів по місту
+        List<Hotel> findByCity(City city);
+
 }

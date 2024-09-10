@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Про нас</title>
+    <link rel="stylesheet" href="/style.about_us/about_us.css" />
+</head>
+<body>
+<header th:insert="~{sections/header::header}" style="background-color: #275271;"></header>
+
+<div class="about_us">
+    <!-- Картинка з синім відтінком та текстом -->
+    <div class="header-image">
+        <img class="backgrnd-header" src="/images/about_us_1.jpg" alt="Про нас"/>
+        <h1>Про нашу компанію</h1>
+    </div>
+
+    <!-- Опис компанії -->
+    <div class="content">
+        <h5>Про ARRENVI.com</h5>
+        <p class="text">Компанія Arrenvi.com, молода компанія заснована в 2024 році в Україні. Місія компанії – допомагати людям відкривати світ.</p>
+        <p class="text">Інвестуючи в технології, які допомагають подорожувати без клопоту, Arrenvi.com пропонує мільйонам гостей приголомшливі варіанти дозвілля та неймовірні помешкання: від приватних помешкань до готелів і не тільки.</p>
+        <p class="text">Платформа пропонує понад 2 мільйони зареєстрованих помешкань, з-поміж яких понад 1 мільйон – це будинки, апартаменти й інші унікальні помешкання.</p>
+    </div>
+
+    <!-- Блок "Чому саме ми?" -->
+    <div class="benefits">
+        <h6>Чому саме ми?</h6>
+        <div class="frame-container">
+            <div class="frame">
+                <img class="check-mark" src="images/check_mark.png" alt="check"/>
+                <div class="text-block">
+                    <div class="text-wrapper">Легка та швидка реєстрація</div>
+                    <p>Реєстрування не займає більше ніж 5 хвилин, також є можливість реєстрації через соц. мережі та електронну пошту.</p>
+                </div>
+            </div>
+
+            <div class="frame">
+                <img class="check-mark" src="images/check_mark.png" alt="check"/>
+                <div class="text-block">
+                    <div class="text-wrapper">Пошук помешкання в 3 кліка</div>
+                    <p>Зрозумілий пошук допоможе швидко знайти саме те помешкання, яке вас зацікавить.</p>
+                </div>
+            </div>
+
+            <div class="frame">
+                <img class="check-mark" src="images/check_mark.png" alt="check"/>
+                <div class="text-block">
+                    <div class="text-wrapper">Велика база готелів</div>
+                    <p>Більш ніж 5 тис. готелів, апартаментів та будинків по всій Україні. Вибір тільки за вами!</p>
+                </div>
+            </div>
+
+            <div class="frame">
+                <img class="check-mark" src="images/check_mark.png" alt="check"/>
+                <div class="text-block">
+                    <div class="text-wrapper">Перевірені арендатори</div>
+                    <p>Ми перевіряємо електронні адреси арендаторів перед тим, як пропонувати помешкання.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    карусель відгуків-->
+    <div class="reviews-container">
+        <h2>Відгуки наших користувачів</h2>
+
+        <!-- Стрілка для попереднього відгуку -->
+        <button class="carousel-btn prev" onclick="prevReview()">&#10094;</button>
+        <!-- Список відгуків -->
+        <div class="reviews-wrapper">
+            <div class="reviews-list">
+                <!-- Перебір відгуків із моделі -->
+                <div th:each="review : ${reviews}" class="review-item">
+                    <p class="review-text" th:text="${review.content}"></p>
+                    <p class="review-author" th:text="${review.user.name}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Стрілка для наступного відгуку -->
+        <button class="carousel-btn next" onclick="nextReview()">&#10095;</button>
+    </div>
+
+    <!-- Останній блок з кнопками -->
+    <div class="register-section">
+        <img class="backgrnd-header" src="/images/about_us_2.jpg" alt="Реєстрація"/>
+        <div class="register-content">
+            <div class="text-column">
+                <h2>Реєструйтеся</h2>
+                <h3>та подорожуйте по Україні</h3>
+                <h3>вже сьогодні</h3>
+            </div>
+            <div class="button-column">
+                <a class="nav-link" href="/registration">Зареєструватися</a>
+                <p>або якщо вже маєте акаунт</p>
+                <a class="nav-link" href="/login">Увійти</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{sections/footer::footer}" style="background-color: #275271;"></footer>
+<script>
+    let currentIndex = 0;
+    const reviews = document.querySelectorAll('.review-item');
+    const totalReviews = reviews.length;
+
+    // Показуємо поточні відгуки
+    function showReviews() {
+        const offset = -(currentIndex * 100); // Зсуваємо блок відгуків
+        document.querySelector('.reviews-list').style.transform = `translateX(${offset}%)`;
+    }
+
+    // Наступний відгук
+    function nextReview() {
+        if (currentIndex < totalReviews - 1) {
+            currentIndex++;
+        } else {
+            currentIndex = 0;
+        }
+        showReviews();
+    }
+
+    // Попередній відгук
+    function prevReview() {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = totalReviews - 1;
+        }
+        showReviews();
+    }
+
+    // Початковий показ відгуків
+    showReviews();
+
+</script>
+</body>
+</html>
