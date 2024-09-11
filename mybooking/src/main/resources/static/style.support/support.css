@@ -1,0 +1,692 @@
+.footer-contacts {
+    background-color: #f6f6f6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.footer-contacts .div {
+    background-color: var(--background);
+    width: 1440px;
+    height: 2280px;
+    position: relative;
+}
+
+.footer-contacts .FOOTER-desktop {
+    width: 1440px;
+    height: 280px;
+    top: 2000px;
+    background-color: var(--secondarydark-blue);
+    position: absolute;
+    left: 0;
+}
+
+.footer-contacts .group {
+    position: relative;
+    height: 200px;
+    top: 40px;
+    width: 1180px;
+    left: 130px;
+}
+
+.footer-contacts .footer {
+    display: flex;
+    width: 1180px;
+    height: 101px;
+    align-items: flex-start;
+    justify-content: space-between;
+    top: 0;
+    background-color: transparent;
+    position: absolute;
+    left: 0;
+}
+
+.footer-contacts .view {
+    display: flex;
+    flex-direction: column;
+    width: 108px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.footer-contacts .text-wrapper {
+    position: relative;
+    align-self: stretch;
+    margin-top: -1px;
+    font-family: var(--roboto-subhead-2-font-family);
+    font-weight: var(--roboto-subhead-2-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-subhead-2-font-size);
+    letter-spacing: var(--roboto-subhead-2-letter-spacing);
+    line-height: var(--roboto-subhead-2-line-height);
+    font-style: var(--roboto-subhead-2-font-style);
+}
+
+.footer-contacts .div-wrapper {
+    position: relative;
+    width: 108px;
+    height: 19px;
+}
+
+.footer-contacts .text-wrapper-2 {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.footer-contacts .view-2 {
+    display: flex;
+    flex-direction: column;
+    width: 188px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.footer-contacts .frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.footer-contacts .text-wrapper-3 {
+    position: relative;
+    align-self: stretch;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    font-style: var(--roboto-text-font-style);
+}
+
+.footer-contacts .view-3 {
+    display: flex;
+    flex-direction: column;
+    width: 194px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.footer-contacts .view-4 {
+    display: flex;
+    flex-direction: column;
+    width: 184px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.footer-contacts .social-icon-footer {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.footer-contacts .img {
+    position: relative;
+    width: 52px;
+    height: 52px;
+}
+
+.footer-contacts .text-wrapper-4 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.footer-contacts .line {
+    position: absolute;
+    width: 701px;
+    height: 3px;
+    top: 141px;
+    left: 239px;
+    object-fit: cover;
+}
+
+.footer-contacts .frame-2 {
+    display: flex;
+    width: 152px;
+    height: 24px;
+    align-items: flex-end;
+    gap: 19px;
+    position: absolute;
+    top: 176px;
+    left: 514px;
+}
+
+.footer-contacts .logo-component {
+    position: relative;
+    width: 103px;
+    height: 24px;
+}
+
+.footer-contacts .text-wrapper-5 {
+    position: relative;
+    width: fit-content;
+    margin-right: -108.04px;
+    font-family: var(--roboto-small-text-font-family);
+    font-weight: var(--roboto-small-text-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-small-text-font-size);
+    letter-spacing: var(--roboto-small-text-letter-spacing);
+    line-height: var(--roboto-small-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-small-text-font-style);
+}
+
+.footer-contacts .HEADER-desktop {
+    display: flex;
+    width: 1440px;
+    height: 120px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 130px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #275271;
+}
+
+.footer-contacts .logo-component-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 156px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.footer-contacts .logo-component-2 {
+    position: relative;
+    width: 136px;
+    height: 31.9px;
+}
+
+.footer-contacts .frame-3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.footer-contacts .valute-hover-wrapper {
+    position: relative;
+    width: 40px;
+    height: 19px;
+}
+
+.footer-contacts .valute-hover {
+    display: flex;
+    width: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+
+.footer-contacts .defalt-uah {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    text-align: center;
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.footer-contacts .component {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background-image: url(./img/ukraine.png);
+    background-size: 100% 100%;
+}
+
+.footer-contacts .button-outline {
+    display: flex;
+    width: 280px;
+    height: 49.85px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    border-radius: 8px;
+    border: 2px solid;
+    border-color: var(--primarypink);
+}
+
+.footer-contacts .button {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--primarypink);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.footer-contacts .button-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 180px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    background-color: var(--primarypink);
+    border-radius: 8px;
+}
+
+.footer-contacts .button-2 {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-button-font-family);
+    font-weight: var(--roboto-button-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-button-font-size);
+    letter-spacing: var(--roboto-button-letter-spacing);
+    line-height: var(--roboto-button-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-button-font-style);
+}
+
+.footer-contacts .overlap-group {
+    position: absolute;
+    width: 1440px;
+    height: 310px;
+    top: 120px;
+    left: 0;
+    background-image: url(./img/rectangle-189.svg);
+    background-size: 100% 100%;
+}
+
+.footer-contacts .text-wrapper-6 {
+    position: absolute;
+    top: 118px;
+    left: 463px;
+    font-family: var(--roboto-title-font-family);
+    font-weight: var(--roboto-title-font-weight);
+    color: var(--typographywhite);
+    font-size: var(--roboto-title-font-size);
+    letter-spacing: var(--roboto-title-letter-spacing);
+    line-height: var(--roboto-title-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-title-font-style);
+}
+
+.footer-contacts .text-wrapper-7 {
+    position: absolute;
+    top: 489px;
+    left: 130px;
+    font-family: var(--roboto-h1-font-family);
+    font-weight: var(--roboto-h1-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-h1-font-size);
+    letter-spacing: var(--roboto-h1-letter-spacing);
+    line-height: var(--roboto-h1-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-h1-font-style);
+}
+
+.footer-contacts .p {
+    position: absolute;
+    top: 546px;
+    left: 130px;
+    font-family: var(--roboto-subhead-font-family);
+    font-weight: var(--roboto-subhead-font-weight);
+    color: var(--primaryblue);
+    font-size: var(--roboto-subhead-font-size);
+    letter-spacing: var(--roboto-subhead-letter-spacing);
+    line-height: var(--roboto-subhead-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-subhead-font-style);
+}
+
+.footer-contacts .frame-4 {
+    display: flex;
+    flex-direction: column;
+    width: 1180px;
+    align-items: flex-start;
+    position: absolute;
+    top: 595px;
+    left: 130px;
+}
+
+.footer-contacts .frame-5 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px 0px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: var(--typographygrey);
+}
+
+.footer-contacts .frame-6 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.footer-contacts .text-wrapper-8 {
+    position: relative;
+    flex: 1;
+    font-family: var(--roboto-text-bold-font-family);
+    font-weight: var(--roboto-text-bold-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-text-bold-font-size);
+    letter-spacing: var(--roboto-text-bold-letter-spacing);
+    line-height: var(--roboto-text-bold-line-height);
+    font-style: var(--roboto-text-bold-font-style);
+}
+
+.footer-contacts .expand-arrow {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.footer-contacts .text-wrapper-9 {
+    position: relative;
+    align-self: stretch;
+    height: 1px;
+    opacity: 0;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.footer-contacts .group-2 {
+    position: absolute;
+    height: 399px;
+    top: 1382px;
+    width: 1180px;
+    left: 130px;
+}
+
+.footer-contacts .field-with-label {
+    display: flex;
+    flex-direction: column;
+    width: 1180px;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.footer-contacts .label-wrapper {
+    display: inline-flex;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.footer-contacts .label {
+    position: relative;
+    width: fit-content;
+    margin-top: -5.5px;
+    margin-bottom: -3.5px;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographyblack);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.footer-contacts .field-label {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 10px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: var(--typographywhite);
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--primaryblue);
+}
+
+.footer-contacts .input-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.footer-contacts .input-label {
+    position: relative;
+    width: fit-content;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographygrey);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.footer-contacts .field-with-label-2 {
+    display: flex;
+    flex-direction: column;
+    width: 1180px;
+    align-items: flex-start;
+    position: absolute;
+    top: 100px;
+    left: 0;
+}
+
+.footer-contacts .frame-wrapper {
+    display: flex;
+    height: 269px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 10px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: var(--typographywhite);
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--primaryblue);
+}
+
+.footer-contacts .frame-7 {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px 0px;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.footer-contacts .text-wrapper-10 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    color: var(--typographygrey);
+    font-size: var(--roboto-text-font-size);
+    letter-spacing: var(--roboto-text-letter-spacing);
+    line-height: var(--roboto-text-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-text-font-style);
+}
+
+.footer-contacts .div-2 {
+    position: absolute;
+    top: 1338px;
+    left: 130px;
+    font-family: var(--roboto-subhead-2-font-family);
+    font-weight: var(--roboto-subhead-2-font-weight);
+    color: transparent;
+    font-size: var(--roboto-subhead-2-font-size);
+    letter-spacing: var(--roboto-subhead-2-letter-spacing);
+    line-height: var(--roboto-subhead-2-line-height);
+    white-space: nowrap;
+    font-style: var(--roboto-subhead-2-font-style);
+}
+
+.footer-contacts .span {
+    color: #181a1c;
+    font-family: var(--roboto-subhead-2-font-family);
+    font-style: var(--roboto-subhead-2-font-style);
+    font-weight: var(--roboto-subhead-2-font-weight);
+    letter-spacing: var(--roboto-subhead-2-letter-spacing);
+    line-height: var(--roboto-subhead-2-line-height);
+    font-size: var(--roboto-subhead-2-font-size);
+}
+
+.footer-contacts .text-wrapper-11 {
+    color: #496b86;
+    font-family: var(--roboto-subhead-2-font-family);
+    font-style: var(--roboto-subhead-2-font-style);
+    font-weight: var(--roboto-subhead-2-font-weight);
+    letter-spacing: var(--roboto-subhead-2-letter-spacing);
+    line-height: var(--roboto-subhead-2-line-height);
+    font-size: var(--roboto-subhead-2-font-size);
+}
+
+.footer-contacts .button-blue-wrapper {
+    position: absolute;
+    width: 678px;
+    height: 79px;
+    top: 1801px;
+    left: 130px;
+}
+
+.footer-contacts .button-blue {
+    display: flex;
+    width: 180px;
+    height: 50px;
+    align-items: flex-start;
+    position: relative;
+}
+
+.footer-contacts .button-blue-2 {
+    display: flex;
+    width: 180px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    background-color: var(--primaryblue);
+    border-radius: 8px;
+}
+
+ .accordion {
+     background-color: #f1f1f1;
+     cursor: pointer;
+     padding: 10px;
+     width: 100%;
+     border: none;
+     text-align: left;
+     outline: none;
+     font-size: 16px;
+     transition: 0.4s;
+ }
+
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+.accordion:after {
+    content: '\002B'; /* Плюс знак */
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212"; /* Мінус знак */
+}
+
+.panel {
+    padding: 0 10px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+
+.panel p {
+    margin: 10px 0;
+}
