@@ -1,7 +1,7 @@
 package com.example.mybooking.service;
 
 import com.example.mybooking.model.Hotel;
-import com.example.mybooking.model.User;
+import com.example.mybooking.model.Partner;
 import com.example.mybooking.repository.IHotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class HotelService {
         return hotelRepository.findByNameContainingOrDescriptionContaining(searchTerm, searchTerm);
     }
     // Получение отелей по владельцу (партнеру)
-    public List<Hotel> getHotelsByOwner(User owner) {
+    public List<Hotel> getHotelsByOwner(Partner owner) {
 
         return hotelRepository.findByOwner(owner);
     }
@@ -49,7 +49,7 @@ public class HotelService {
             hotel.setName(hotelDetails.getName());
             hotel.setDescription(hotelDetails.getDescription());
             hotel.setAddress(hotelDetails.getAddress());
-            hotel.setLatitude(hotelDetails.getLongitude());
+            hotel.setLatitude(hotelDetails.getLatitude());
             hotel.setLongitude(hotelDetails.getLongitude());
             hotel.setOwner(hotelDetails.getOwner());
             hotel.setHousingType(hotelDetails.getHousingType());

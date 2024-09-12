@@ -295,8 +295,11 @@
     </nav>
 </header>
 
+
+
 <div id="step-1" class="step active">
-    <form action="/hotels/add" method="post">
+    <form id="form-step" action="/hotels/add" method="post">
+        <input type="hidden" id="step" name="step" value="1" />
 
         <div class="field-with-label">
             <div class="text-wrapper-34">Реєстрація помешкання</div>
@@ -345,7 +348,8 @@
 </div>
 
 <div id="step-2" class="step">
-    <form action="/hotels/add" method="post">
+    <form id="form-step" action="/hotels/add" method="post">
+        <input type="hidden" id="step" name="step" value="2" />
     <div class="group">
         <p class="text-wrapper-8">Де знаходиться Ваш об’єкт власності?</p>
 
@@ -402,7 +406,8 @@
     </form>
 </div>
 <div id="step-3" class="step">
-    <form action="/hotels/add" method="post">
+    <form id="form-step" action="/hotels/add" method="post">
+        <input type="hidden" id="step" name="step" value="3" />
     <div class="view-2">
         <p class="text-wrapper-11">Зручності на вашому об’єкті</p>
 
@@ -481,7 +486,8 @@
 </div>
 
 <div id="step-4" class="step">
-    <form action="/hotels/add" method="post">
+    <form id="form-step" action="/hotels/submit" method="post">
+        <input type="hidden" id="step" name="step" value="4" />
     <div class="frame-10">
         <p class="text-wrapper-26">Додайте фотографії та опис об’єкта</p>
         <input type="file" id="imageUpload" name="imageUpload" accept="image/*" class="form-control" />

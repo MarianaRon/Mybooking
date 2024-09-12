@@ -24,8 +24,8 @@ public class User {
     private String lastName;
 
     //Список отелей, которыми владеет пользователь. Связь "один ко многим" с сущностью Hotel.
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Hotel> hotels;
+//    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Hotel> hotels;
 
     //Список бронирований, сделанных пользователем. Связь "один ко многим" с сущностью Reservation.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -96,13 +96,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public List<Hotel> getHotels() {
-        return hotels;
-    }
-
-    public void setHotels(List<Hotel> hotels) {
-        this.hotels = hotels;
-    }
+//    public List<Hotel> getHotels() {
+//        return hotels;
+//    }
+//
+//    public void setHotels(List<Hotel> hotels) {
+//        this.hotels = hotels;
+//    }
 
     public List<Reservation> getReservations() {
         return reservations;

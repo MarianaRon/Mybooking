@@ -31,7 +31,7 @@ public class Hotel {
     //Владелец отеля. Ссылается на сущность User, представляющую владельца. Обязательное поле.
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    private Partner owner;
 
     //Список номеров в отеле. Ссылается на сущность Room.Указывает, что отель может содержать множество номеров.
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -62,6 +62,19 @@ public class Hotel {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @Column
+    private String addressCity; // Город
+
+    @Column
+    private String addressStreet; // Улица
+
+    @Column
+    private String additionalInfo; // Дополнительная информация об адресе
+
+    @Column
+    private Double price; // Цена
+
+
     //Список изображений отеля. Ссылается на сущность Image. Указывает, что отель может содержать множество изображений.
     //@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     //private List<Image> images;
@@ -88,13 +101,13 @@ public class Hotel {
 //
 //    }
 
-    public Hotel(String name, String description, String address, Double latitude, Double longitude, User ownerUser, String housingType) {
+    public Hotel(String name, String description, String address, Double latitude, Double longitude, Partner ownerPartner, String housingType) {
         this.name = name;
         this.description = description;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.owner = ownerUser;
+        this.owner = ownerPartner;
         this.housingType = housingType;
         this.rooms = rooms;
         this.reviews = reviews;
@@ -147,24 +160,26 @@ public class Hotel {
     }
 
     //координати
-    public Double getLongitude() {
-        return longitude;
+    public Double getLatitude() {
+        return latitude;
     }
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-
+    public Double getLongitude() {
+        return longitude;
+    }
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public User getOwner() {
+    public Partner getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Partner owner) {
         this.owner = owner;
     }
 
@@ -207,5 +222,37 @@ public class Hotel {
 
     public void setCity(City city) {
         this.city = city;
+    }
+    // Новые геттеры и сеттеры для добавленных полей
+    public String getAddressCity() {
+        return addressCity;
+    }
+
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public String getAddressStreet() {
+        return addressStreet;
+    }
+
+    public void setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
