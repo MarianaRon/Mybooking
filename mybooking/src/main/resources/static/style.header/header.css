@@ -1,44 +1,125 @@
+/*.navbar-top {*/
+/*    display: flex;*/
+/*    justify-content: space-between; !* Логотип зліва, меню праворуч *!*/
+/*    align-items: center;*/
+/*}*/
+
+/*.navbar-nav {*/
+/*    display: flex;*/
+/*    gap: 20px; !* Відстань між елементами меню *!*/
+/*    justify-content: flex-end; !* Вирівнювання праворуч *!*/
+/*    align-items: center;*/
+/*}*/
+
+/*.frame {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    margin-left: 0; !* Забираємо додаткові відступи зліва *!*/
+/*}*/
+
+/*.logo-component {*/
+/*    max-height: 50px; !* Контроль висоти логотипа *!*/
+/*}*/
+
+/*.nav-link {*/
+/*    padding: 10px;*/
+/*    text-decoration: none;*/
+/*    width: fit-content;*/
+/*    margin-top: -1px;*/
+/*    font-family: var(--roboto-button-font-family);*/
+/*    font-weight: var(--roboto-button-font-weight);*/
+/*    color: var(--typographywhite);*/
+/*    font-size: var(--roboto-button-font-size);*/
+/*    text-align: center;*/
+/*    letter-spacing: var(--roboto-button-letter-spacing);*/
+/*    line-height: var(--roboto-button-line-height);*/
+/*    white-space: nowrap;*/
+/*    font-style: var(--roboto-button-font-style);*/
+/*}*/
+
+/*.nav-link:hover {*/
+/*    text-decoration: underline; !* Декорація при наведенні *!*/
+/*}*/
+
+/* Основні стилі для хедера */
 .navbar-top {
-    display: flex;
-    justify-content: space-between; /* Логотип зліва, меню праворуч */
-    align-items: center;
+    padding: 10px 20px;
+    background-color: #275271;
+    color: #fff;
 }
 
-.navbar-nav {
-    display: flex;
-    gap: 20px; /* Відстань між елементами меню */
-    justify-content: flex-end; /* Вирівнювання праворуч */
-    align-items: center;
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    font-size: var(--roboto-text-font-size);
+    line-height: var(--roboto-text-line-height);
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Стилі для кнопок Вхід, Реєстрація та Вихід */
+.btn-action {
+    background-color: rgba(163, 193, 217, 1);
+    border: 1px solid wheat;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    font-size: var(--roboto-text-font-size);
+}
+
+.btn-action:hover {
+    background-color: rgba(163, 193, 217, 0.8);
+}
+
+.btn-logout {
+    background-color: rgba(231, 161, 136, 1);
+    border: 1px solid wheat;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    font-size: var(--roboto-text-font-size);
+}
+
+.btn-logout:hover {
+    background-color: rgba(231, 161, 136, 0.8);
+}
+
+/* Стилі для випадаючих списків */
+.dropdown {
+    background-color: #fff;
+    color: #275271;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+}
+
+.btn-select {
+    background-color: #275271;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: var(--roboto-text-font-family);
+    font-weight: var(--roboto-text-font-weight);
+    font-size: var(--roboto-text-font-size);
+    cursor: pointer;
+}
+
+.btn-select:hover {
+    background-color: #1e3e55;
 }
 
 .frame {
     display: flex;
     align-items: center;
-    margin-left: 0; /* Забираємо додаткові відступи зліва */
-}
-
-.logo-component {
-    max-height: 50px; /* Контроль висоти логотипа */
-}
-
-
-
-.nav-link {
-    padding: 10px;
-    text-decoration: none;
-    width: fit-content;
-    margin-top: -1px;
-    font-family: var(--roboto-button-font-family);
-    font-weight: var(--roboto-button-font-weight);
-    color: var(--typographywhite);
-    font-size: var(--roboto-button-font-size);
-    text-align: center;
-    letter-spacing: var(--roboto-button-letter-spacing);
-    line-height: var(--roboto-button-line-height);
-    white-space: nowrap;
-    font-style: var(--roboto-button-font-style);
-}
-
-.nav-link:hover {
-    text-decoration: underline; /* Декорація при наведенні */
 }

@@ -13,12 +13,14 @@ body {
 .header-image {
     position: relative;
     text-align: center;
+    color: white;
 }
 
-.header-image img {
+.backgrnd-header {
     width: 100%;
-    height: auto;
-    filter: brightness(0.5);
+    height: 400px;
+    object-fit: cover;
+    filter: brightness(50%);
 }
 
 .header-image h1 {
@@ -26,9 +28,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
     font-size: 48px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    color: white;
+    z-index: 1;
 }
 
 .content {
@@ -134,13 +136,6 @@ body {
     color: white;
 }
 
-/*для каруселі відгуків*/
-/*body {*/
-/*    font-family: Arial, sans-serif;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    background-color: #f5f5f5;*/
-/*}*/
 
 .reviews-container {
     max-width: 900px;

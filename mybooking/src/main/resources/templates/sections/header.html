@@ -1,26 +1,29 @@
 <nav th:fragment="header" class="navbar navbar-expand-lg navbar-light" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/style.header/header_styleguide.css" />
-        <link rel="stylesheet" href="/style.header/header.css" />
-        <title>Arrenvi.com - Домашня сторінка</title>
-    </head>
-
     <div class="container-fluid" style="background-color: #275271;">
         <div class="navbar-top d-flex justify-content-between align-items-center">
             <!-- Логотип зліва -->
             <div class="frame">
-                <a class="nav-link" href="/"><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 50px;"/></span></a>
+                <a class="nav-link" href="/"><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" /></a>
             </div>
-
             <!-- Посилання праворуч -->
             <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
                 <li>
-                    <a class="nav-link" href="/currencies">Валюта <span th:text="${session.currency}"></span></a>
+                    <!-- Випадаючий список для вибору валюти -->
+                    <form action="#" th:action="@{/setCurrency}" method="post">
+                        <select name="currency" class="dropdown">
+                            <option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.name}"></option>
+                        </select>
+                        <button type="submit" class="btn-select">Вибрати</button>
+                    </form>
                 </li>
                 <li>
-                    <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>
+                    <!-- Випадаючий список для вибору мови -->
+                    <form th:action="@{/setLanguage}" method="post">
+                        <select name="language" class="dropdown">
+                            <option th:each="language : ${languages}" th:value="${language.code}" th:text="${language.name}"></option>
+                        </select>
+                        <button type="submit" class="btn-select">Вибрати</button>
+                    </form>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
@@ -29,14 +32,14 @@
                     <a class="nav-link" href="/user_account">Кабінет користувача</a>
                 </li>
                 <li class="nav-item" th:if="${session.currentUser == null}">
-                    <a class="nav-link" href="/login" style="background-color: rgba(163, 193, 217, 1); border: 1px solid wheat; border-radius: 5px;">Вхід</a>
+                    <a class="nav-link btn-action" href="/login">Вхід</a>
                 </li>
                 <li class="nav-item" th:if="${session.currentUser == null}">
-                    <a class="nav-link" href="/registration" style="background-color: rgba(163, 193, 217, 1); border: 1px solid wheat; border-radius: 5px;">Реєстрація</a>
+                    <a class="nav-link btn-action" href="/registration">Реєстрація</a>
                 </li>
                 <li class="nav-item" th:if="${session.currentUser != null}">
                     <form action="/logout" method="get">
-                        <button type="submit" class="btn btn-link nav-link" style="background-color: rgba(231, 161, 136, 1); border: 1px solid wheat; border-radius: 5px;">Вихід</button>
+                        <button type="submit" class="btn-logout">Вихід</button>
                     </form>
                 </li>
             </ul>

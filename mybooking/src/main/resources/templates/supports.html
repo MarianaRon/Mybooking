@@ -1,243 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>support</title>
     <link rel="stylesheet" href="globals.css" />
     <link rel="stylesheet" href="/style.support/support.css" />
     <link rel="stylesheet" href="/style.support/support_styleguide.css" />
+    <link rel="stylesheet" href="/style.footer/footer.css">
+    <link rel="stylesheet" href="/style.header/header.css">
+
 </head>
 <body>
-<!--<header th:insert="sections/header::header"></header>-->
+<header th:insert="sections/header::header"></header>
 
-<div class="footer-contacts">
-    <div class="div">
-        <div class="FOOTER-desktop">
-            <div class="group">
-                <footer class="footer">
-                    <div class="view">
-                        <div class="text-wrapper">Про нас</div>
-                        <a class="div-wrapper" href="/about_us"><div class="div">Про компанію</div></a>
-                    </div>
-                    <div class="view-2">
-                        <div class="text-wrapper">Тех. підтримка</div>
-                        <div class="frame">
-                            <div class="div-wrapper"><div class="text-wrapper-2">Найпопулярніші питання</div></div>
-                            <div class="text-wrapper-3">+380 97 255 220</div>
-                            <div class="text-wrapper-3">Arrenvi@gmail.com</div>
-                        </div>
-                    </div>
-                    <div class="view-3">
-                        <div class="text-wrapper">Для бізнесу</div>
-                        <div class="div-wrapper"><div class="text-wrapper-2">Зареєструвати помешкання</div></div>
-                    </div>
-                    <div class="view-4">
-                        <div class="text-wrapper">Ми в соц мережах:</div>
-                        <div class="social-icon-footer">
-                            <img class="img" src="img/instagram.svg" /> <img class="img" src="img/facebook.svg" />
-                        </div>
-                    </div>
-                    <div class="text-wrapper-4">Версія для мобільних пристроїв</div>
-                </footer>
-                <img class="line" src="img/line-1.svg" />
-                <div class="frame-2">
-                    <img class="logo-component" src="img/logo-component.svg" />
-                    <div class="text-wrapper-5">Всі права захищені 2024</div>
-                </div>
-            </div>
-        </div>
-        <div class="HEADER-desktop">
-            <div class="logo-component-wrapper"><img class="logo-component-2" src="img/logo-component-2.svg" /></div>
-            <div class="frame-3">
-                <div class="valute-hover-wrapper">
-                    <div class="valute-hover"><div class="defalt-uah">UAH</div></div>
-                </div>
-                <div class="component"></div>
-                <div class="button-outline"><button class="button">Зареєструвати своє помешкання</button></div>
-                <button class="button-wrapper"><button class="button-2">Увійти</button></button>
-            </div>
-        </div>
-        <div class="overlap-group"><div class="text-wrapper-6">Питання та контакти</div></div>
-        <div class="text-wrapper-7">Швидкі відповіді</div>
-        <p class="p">Відповіді на найпоширеніші питання наших гостей</p>
-        <div class="frame-4">
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">Як можна переконатися, що бронювання оплачено?</p>-->
-<!--                    <img class="expand-arrow" src="img/image.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Вам буде надіслано підтвердження оплати на електронну пошту. Ви зможете завантажити підтвердження оплати у-->
-<!--                    форматі PDF з листа-підтвердження бронювання.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">Чи потрібно мені оплатити щось додатково під час заїзду?</p>-->
-<!--                    <img class="expand-arrow" src="img/expand-arrow-7.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Інколи вас можуть попросити сплатити податки та інші збори під час заїзду. У цьому випадку ви побачите-->
-<!--                    повну ціну до завершення бронювання і в листі-підтвердженні. Якщо ці дані не було зазначено, вам не-->
-<!--                    потрібно нічого платити.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">Чи можу я скасувати своє бронювання?</p>-->
-<!--                    <img class="expand-arrow" src="img/expand-arrow-6.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Якщо бронювання за тарифом, вартість якого не повертається, його неможливо скасувати. Якщо для нього-->
-<!--                    доступне безкоштовне скасування або часткове повернення вартості, відкрийте лист із підтвердженням або-->
-<!--                    сторінку підтвердження в розділі &#34;Бронювання&#34; вашого акаунта: там буде зазначено розмір штрафу.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">Чи можу я внести зміни у своє бронювання?</p>-->
-<!--                    <img class="expand-arrow" src="img/expand-arrow-3.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Внести зміни в бронювання неможливо. Ви також не можете змінити дати проживання, ім&#39;я гостя та адресу-->
-<!--                    електронної пошти.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">Моє бронювання було скасовано або відхилено. Що робити?</p>-->
-<!--                    <img class="expand-arrow" src="img/expand-arrow-5.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Оскільки це бронювання від нашої компанії-партнера, у помешканні міг трапитися овербукінг (надмірні-->
-<!--                    бронювання). У такому разі вони повідомляють нам. Після цього ми повертаємо вам оплату і скасовуємо ваше-->
-<!--                    бронювання.<br /><br />Опрацювання може зайняти від 7 до 10 днів залежно від вашого банку. Якщо у вас є-->
-<!--                    запитання, зверніться безпосередньо у свій банк.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">-->
-<!--                        Я заплатив за своє бронювання, але не отримав електронний лист із підтвердженням. Що робити?-->
-<!--                    </p>-->
-<!--                    <img class="expand-arrow" src="img/expand-arrow.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Щойно ваше бронювання буде підтверджено, ми надішлемо вам лист-підтвердження. Це займає приблизно 2-->
-<!--                    хвилини, але іноді може тривати довше. Перевірте свою папку з небажаною поштою або спамом, оскільки лист-->
-<!--                    може потрапити туди помилково. Якщо ви не отримали жодних листів, зв&#39;яжіться з нашою Службою-->
-<!--                    підтримки.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--            <div class="frame-5">-->
-<!--            <div class="frame-5">-->
-<!--                <div class="frame-6">-->
-<!--                    <p class="text-wrapper-8">Я не можу знайти бронювання у своєму акаунті. Що робити?</p>-->
-<!--                    <img class="expand-arrow" src="img/expand-arrow-4.svg" />-->
-<!--                </div>-->
-<!--                <p class="text-wrapper-9">-->
-<!--                    Якщо ви бронювали через свій акаунт, то воно має з&#39;явитися в розділі &#34;Бронювання&#34;.<br />Якщо-->
-<!--                    під час бронювання ви не увійшли у свій акаунт, бронювання в ньому не з&#39;явиться і додати його буде-->
-<!--                    неможливо.<br />Якщо у вас немає акаунта або під час бронювання ви в нього не увійшли, перевірте, чи-->
-<!--                    отримали ви лист-підтвердження на свою електронну пошту.-->
-<!--                </p>-->
-<!--            </div>-->
-
-                <button class="accordion">Як можна переконатися, що бронювання оплачено?</button>
-                <div class="panel">
-                    <p>Вам буде надіслано підтвердження оплати на електронну пошту. Ви зможете завантажити підтвердження оплати у форматі PDF з листа-підтвердження бронювання.</p>
-                </div>
-
-                <button class="accordion">Чи потрібно мені оплатити щось додатково під час заїзду?</button>
-                <div class="panel">
-                    <p>Інколи вас можуть попросити сплатити податки та інші збори під час заїзду. У цьому випадку ви побачите повну ціну до завершення бронювання і в листі-підтвердженні. Якщо ці дані не було зазначено, вам не потрібно нічого платити.</p>
-                </div>
-
-                <button class="accordion">Чи можу я скасувати своє бронювання?</button>
-                <div class="panel">
-                    <p>Якщо бронювання за тарифом, вартість якого не повертається, його неможливо скасувати. Якщо для нього доступне безкоштовне скасування або часткове повернення вартості, відкрийте лист із підтвердженням або сторінку підтвердження в розділі "Бронювання" вашого акаунта: там буде зазначено розмір штрафу.</p>
-                </div>
-
-                <button class="accordion">Чи можу я внести зміни у своє бронювання?</button>
-                <div class="panel">
-                    <p>Внести зміни в бронювання неможливо. Ви також не можете змінити дати проживання, ім'я гостя та адресу електронної пошти.</p>
-                </div>
-
-                <button class="accordion">Моє бронювання було скасовано або відхилено. Що робити?</button>
-                <div class="panel">
-                    <p>Оскільки це бронювання від нашої компанії-партнера, у помешканні міг трапитися овербукінг (надмірні бронювання). У такому разі вони повідомляють нам. Після цього ми повертаємо вам оплату і скасовуємо ваше бронювання. Опрацювання може зайняти від 7 до 10 днів залежно від вашого банку. Якщо у вас є запитання, зверніться безпосередньо у свій банк.</p>
-                </div>
-
-                <button class="accordion">Я заплатив за своє бронювання, але не отримав електронний лист із підтвердженням. Що робити?</button>
-                <div class="panel">
-                    <p>Щойно ваше бронювання буде підтверджено, ми надішлемо вам лист-підтвердження. Це займає приблизно 2 хвилини, але іноді може тривати довше. Перевірте свою папку з небажаною поштою або спамом, оскільки лист може потрапити туди помилково. Якщо ви не отримали жодних листів, зв'яжіться з нашою Службою підтримки.</p>
-                </div>
-
-                <button class="accordion">Як отримати додаткові послуги від помешкання?</button>
-                <div class="panel">
-                    <p>Якщо ви хочете замовити додаткову послугу, як-от додаткове ліжко, ранній заїзд або трансфер до помешкання, будь ласка, зв'яжіться безпосередньо з помешканням за 1–2 дні до заїзду. Надання додаткових послуг можливе, але не гарантується.</p>
-                </div>
-
-                <button class="accordion">Я не можу знайти бронювання у своєму акаунті. Що робити?</button>
-                <div class="panel">
-                    <p>Якщо ви бронювали через свій акаунт, то воно має з'явитися в розділі "Бронювання". Якщо під час бронювання ви не увійшли у свій акаунт, бронювання в ньому не з'явиться і додати його буде неможливо. Якщо у вас немає акаунта або під час бронювання ви в нього не увійшли, перевірте, чи отримали ви лист-підтвердження на свою електронну пошту.</p>
-                </div>
-        </div>
-                <div class="frame-6">
-                    <p class="text-wrapper-8">Як отримати додаткові послуги від помешкання?</p>
-                    <img class="expand-arrow" src="img/expand-arrow-2.svg" />
-                </div>
-                <p class="text-wrapper-9">
-                    Якщо ви хочете замовити додаткову послугу, як-от додаткове ліжко, ранній заїзд або трансфер до помешкання,
-                    будь ласка, зв&#39;яжіться безпосередньо з помешканням за 1–2 дні до заїзду. Надання додаткових послуг
-                    можливе, але не гарантується.
-                </p>
-            </div>
-
-        </div>
-        <div class="group-2">
-            <div class="field-with-label">
-                <div class="label-wrapper"><div class="label">Тема</div></div>
-                <div class="field-label">
-                    <div class="input-label-wrapper"><div class="input-label">Тема повідомлення</div></div>
-                </div>
-            </div>
-            <div class="field-with-label-2">
-                <div class="label-wrapper"><div class="label">Текст повідомлення</div></div>
-                <div class="frame-wrapper">
-                    <div class="frame-7"><div class="text-wrapper-10">Тема Тема повідомлення</div></div>
-                </div>
-            </div>
-        </div>
-        <p class="div-2">
-            <span class="span">Якщо не знайшли відповіді на своє запитання Ви можете написати до нашої </span>
-            <span class="text-wrapper-11">служби підтримки</span>
-        </p>
-        <div class="button-blue-wrapper">
-            <div class="button-blue">
-                <div class="button-blue-2"><button class="button-2">Відправити</button></div>
-            </div>
-        </div>
-    </div>
+<div class="header-image">
+    <img class="backgrnd-header" src="/images/about_us_1.jpg" alt="Про нас"/>
+    <h1>Питання та контакти</h1>
 </div>
-<!--<footer th:insert="sections/footer::footer"></footer>-->
-<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
+<section class="container">
+    <h2>Швидкі відповіді</h2>
+    <p>Відповіді на найпоширеніші питання наших гостей</p>
+
+    <button class="accordion">Як можна переконатися, що бронювання оплачено?</button>
+    <div class="panel">
+        <p>Вам буде надіслано підтвердження оплати на електронну пошту. Ви зможете завантажити підтвердження оплати у форматі PDF з листа-підтвердження бронювання.</p>
+    </div>
+
+    <button class="accordion">Чи потрібно мені оплатити щось додатково під час заїзду?</button>
+    <div class="panel">
+        <p>Інколи вас можуть попросити сплатити податки та інші збори під час заїзду. У цьому випадку ви побачите повну ціну до завершення бронювання і в листі-підтвердженні. Якщо ці дані не було зазначено, вам не потрібно нічого платити.</p>
+    </div>
+
+    <button class="accordion">Чи можу я скасувати своє бронювання?</button>
+    <div class="panel">
+        <p>Якщо бронювання за тарифом, вартість якого не повертається, його неможливо скасувати. Якщо для нього доступне безкоштовне скасування або часткове повернення вартості, відкрийте лист із підтвердженням або сторінку підтвердження в розділі "Бронювання" вашого акаунта: там буде зазначено розмір штрафу.</p>
+    </div>
+
+    <button class="accordion">Чи можу я внести зміни у своє бронювання?</button>
+    <div class="panel">
+        <p>Внести зміни в бронювання неможливо. Ви також не можете змінити дати проживання, ім'я гостя та адресу електронної пошти.</p>
+    </div>
+
+    <button class="accordion">Моє бронювання було скасовано або відхилено. Що робити?</button>
+    <div class="panel">
+        <p>Оскільки це бронювання від нашої компанії-партнера, у помешканні міг трапитися овербукінг (надмірні бронювання). У такому разі вони повідомляють нам. Після цього ми повертаємо вам оплату і скасовуємо ваше бронювання. Опрацювання може зайняти від 7 до 10 днів залежно від вашого банку. Якщо у вас є запитання, зверніться безпосередньо у свій банк.</p>
+    </div>
+
+    <button class="accordion">Я заплатив за своє бронювання, але не отримав електронний лист із підтвердженням. Що робити?</button>
+    <div class="panel">
+        <p>Щойно ваше бронювання буде підтверджено, ми надішлемо вам лист-підтвердження. Це займає приблизно 2 хвилини, але іноді може тривати довше. Перевірте свою папку з небажаною поштою або спамом, оскільки лист може потрапити туди помилково. Якщо ви не отримали жодних листів, зв'яжіться з нашою Службою підтримки.</p>
+    </div>
+
+    <button class="accordion">Як отримати додаткові послуги від помешкання?</button>
+    <div class="panel">
+        <p>Якщо ви хочете замовити додаткову послугу, як-от додаткове ліжко, ранній заїзд або трансфер до помешкання, будь ласка, зв'яжіться безпосередньо з помешканням за 1–2 дні до заїзду. Надання додаткових послуг можливе, але не гарантується.</p>
+    </div>
+
+    <button class="accordion">Я не можу знайти бронювання у своєму акаунті. Що робити?</button>
+    <div class="panel">
+        <p>Якщо ви бронювали через свій акаунт, то воно має з'явитися в розділі "Бронювання". Якщо під час бронювання ви не увійшли у свій акаунт, бронювання в ньому не з'явиться і додати його буде неможливо. Якщо у вас немає акаунта або під час бронювання ви в нього не увійшли, перевірте, чи отримали ви лист-підтвердження на свою електронну пошту.</p>
+    </div>
+</section>
+
+<section class="container group-2">
+    <h2>Напишіть нам</h2>
+    <form>
+        <label for="topic">Тема повідомлення</label>
+        <input type="text" id="topic" name="topic" placeholder="Тема повідомлення" required />
+
+        <label for="message">Текст повідомлення</label>
+        <textarea id="message" name="message" placeholder="Введіть ваше повідомлення" required></textarea>
+
+        <button type="submit" class="button-2">Відправити</button>
+    </form>
+</section>
+
+<footer th:insert="sections/footer::footer"></footer>
+
+<script>
+    var acc = document.querySelectorAll(".accordion");
+
+    acc.forEach(button => {
+        button.addEventListener("click", function() {
             this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
+            let panel = this.nextElementSibling;
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
         });
-    }
+    });
 </script>
 </body>
 </html>
-

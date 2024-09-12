@@ -6,11 +6,15 @@
     <title>Arrenvi.com - Домашня сторінка</title>
     <link rel="stylesheet" href="/style.home/home_styleguide.css" />
     <link rel="stylesheet" href="/style.home/home.css" />
+    <link rel="stylesheet" href="/style.footer/footer.css">
+    <link rel="stylesheet" href="/style.header/header.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
-<header th:insert="sections/header::header" style="background-color: #275271;"></header>
+<!--<header th:insert="sections/header::header" style="background-color: #275271;"></header>-->
+<header th:insert="~{sections/header::header}" style="background-color: #275271;"></header>
+
 <div class="overlap">
     <img class="backgrnd-header" src="/images/backgr_header.jpg" />
     <div class="text-container">
@@ -40,9 +44,9 @@
     </div>
 </div>
 
-        <h2 style="margin-top: 50px">Або виберіть помешкання на мапі</h2>
-            <div id="map" class="map" style="margin-top: 20px"></div>
-        <h2 class="" th:text="${welcomeMessage}"></h2>
+<h2 style="margin-top: 50px">Або виберіть помешкання на мапі</h2>
+<div id="map" class="map" style="margin-top: 20px"></div>
+<h2 class="" th:text="${welcomeMessage}"></h2>
 
 <h2>Міста України</h2>
 <p>Виберіть, у якому місті України ви хочете відпочити</p>
@@ -50,40 +54,34 @@
     <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>
     <div class="carousel-track">
         <div class="carousel-item" th:each="city : ${cities}" style="display: inline-block;">
-<!--            контролер для переходу по натиску на картинку написаний у CityController-->
             <a th:href="@{/sort_hotels_by_city/{cityId}(cityId=${city.id})}">
                 <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">
             </a>
-            <a th:href="@{/sort_hotels_by_city/{cityId}(cityId=${city.id})}">
-                <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">
-            </a>
-
-
             <div class="city-info">
                 <h3 th:text="${city.name}"></h3>
                 <p th:text="${city.region}"></p>
             </div>
         </div>
+
     </div>
     <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
 </div>
 
-<div class="newsletter" >
+<div class="newsletter">
     <div class="overlap-group">
         <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />
         <p class="text-wrapper-6">
             Залишайтеся в курсі нових місць для відпочинку
         </p>
-        <div class="button-blue" style="margin-top: -70px" >
-            <button class="button-2" >Підписатися на newsletter</button>
+        <div class="button-blue" style="margin-top: -70px">
+            <button class="button-2">Підписатися на newsletter</button>
         </div>
     </div>
 </div>
-        <!-- Admin Page Link -->
-        <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
-            <a class="nav-link" style="color: #5c00e6;" href="/admin_page">Сторінка адміністратора</a>
-        </div>
-
+<!-- Admin Page Link -->
+<div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
+    <a class="nav-link" style="color: #5c00e6;" href="/admin_page">Сторінка адміністратора</a>
+</div>
 
 <h2>Спробуйте найпопулярніші напрямки для подорожі</h2>
 <p>Популярні напрямки для подорожі</p>
@@ -101,42 +99,37 @@
     }).addTo(map);
 </script>
 <script>
-    // для каруселі_1
+    // для каруселі
     let currentIndex = 0;
     const cities = document.querySelectorAll('.carousel-item');
     const totalCities = cities.length;
     const visibleCities = 5;
 
-    // Оновлена функція для відображення зображень
     function showSlides() {
-        // Очищуємо всі елементи
         cities.forEach(city => {
             city.style.display = 'none';
         });
 
-        // Відображаємо 5 елементів, навіть якщо масив прокручується за межі
         for (let i = 0; i < visibleCities; i++) {
-            let index = (currentIndex + i) % totalCities;  // Використовуємо модуль для зациклення
+            let index = (currentIndex + i) % totalCities;
             cities[index].style.display = 'inline-block';
         }
     }
 
-    // Перемикання на наступний слайд
     function nextSlide() {
         currentIndex = (currentIndex + 1) % totalCities;
         showSlides();
     }
 
-    // Перемикання на попередній слайд
     function prevSlide() {
         currentIndex = (currentIndex - 1 + totalCities) % totalCities;
         showSlides();
     }
 
-    // Ініціалізація каруселі при завантаженні
     showSlides();
-
 </script>
-<footer th:insert="sections/footer::footer" style="background-color: #275271;"></footer>
+<!--<footer th:insert="sections/footer::footer" style="background-color: #275271;"></footer>-->
+<footer th:insert="~{sections/footer::footer}" style="background-color: #275271;"></footer>
+
 </body>
 </html>
