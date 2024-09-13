@@ -7,13 +7,59 @@
     <link rel="stylesheet" href="/style.home/home_styleguide.css" />
     <link rel="stylesheet" href="/style.home/home.css" />
     <link rel="stylesheet" href="/style.footer/footer.css">
-    <link rel="stylesheet" href="/style.header/header.css">
+<!--    <link rel="stylesheet" href="/style.header/header.css">-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
 <!--<header th:insert="sections/header::header" style="background-color: #275271;"></header>-->
-<header th:insert="~{sections/header::header}" style="background-color: #275271;"></header>
+<!--<header th:insert="~{sections/header::header}" style="background-color: #275271;"></header>-->
+<div class="container-fluid" style="background-color: #275271;">
+    <div class="navbar-top d-flex justify-content-between align-items-center">
+        <!-- Логотип зліва -->
+        <div class="frame">
+            <a class="nav-link" href="/"><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" /></a>
+        </div>
+        <!-- Посилання праворуч -->
+        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+            <li>
+                <!-- Випадаючий список для вибору валюти -->
+                <form action="#" th:action="@{/setCurrency}" method="post">
+                    <select name="currency" class="dropdown">
+                        <option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.name}"></option>
+                    </select>
+                    <button type="submit" class="btn-select">Вибрати</button>
+                </form>
+            </li>
+            <li>
+                <!-- Випадаючий список для вибору мови -->
+                <form th:action="@{/setLanguage}" method="post">
+                    <select name="language" class="dropdown">
+                        <option th:each="language : ${languages}" th:value="${language.code}" th:text="${language.name}"></option>
+                    </select>
+                    <button type="submit" class="btn-select">Вибрати</button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <a class="nav-link" href="/user_account">Кабінет користувача</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/login">Вхід</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/registration">Реєстрація</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <form action="/logout" method="get">
+                    <button type="submit" class="btn-logout">Вихід</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="overlap">
     <img class="backgrnd-header" src="/images/backgr_header.jpg" />
@@ -129,7 +175,36 @@
     showSlides();
 </script>
 <!--<footer th:insert="sections/footer::footer" style="background-color: #275271;"></footer>-->
-<footer th:insert="~{sections/footer::footer}" style="background-color: #275271;"></footer>
-
+<!--<footer th:insert="~{sections/footer::footer}" style="background-color: #275271;"></footer>-->
+<div class="footer">
+    <div class="view">
+        <div class="text-wrapper">Про нас</div>
+        <a class="div-wrapper" href="/about_us"><div class="div">Про компанію</div></a>
+    </div>
+    <div class="view-2">
+        <div class="text-wrapper">Тех. підтримка</div>
+        <div class="frame">
+            <a class="div-wrapper" href="/support"><div class="div">Найпопулярніші питання</div></a>
+            <div class="text-wrapper-2">+380 97 255 220</div>
+            <div class="text-wrapper-2">Arrenvi@gmail.com</div>
+        </div>
+    </div>
+    <div class="view-3">
+        <div class="text-wrapper">Для бізнесу</div>
+        <div class="div-wrapper"><div class="div">Зареєструвати помешкання</div></div>
+    </div>
+    <div class="view-4">
+        <div class="text-wrapper">Ми в соц мережах:</div>
+        <div class="social-icon-footer">
+            <img class="img" src="/images/instagram.png" />
+            <img class="img" src="/images/facebook.png" />
+        </div>
+    </div>
+    <div class="text-wrapper-3">Версія для мобільних пристроїв</div>
+</div>
+<div class="frame-2">
+    <img class="logo-component" src="/images/logo1.png" />
+    <div class="text-wrapper-5">Всі права захищені 2024</div>
+</div>
 </body>
 </html>

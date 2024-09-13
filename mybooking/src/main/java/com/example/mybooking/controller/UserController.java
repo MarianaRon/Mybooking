@@ -2,8 +2,13 @@ package com.example.mybooking.controller;
 
 import com.example.mybooking.model.User;
 import com.example.mybooking.service.UserService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,55 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
+    // Ін'єкція електронної адреси з application.properties
+    @Value("${spring.mail.username}")
+    private String supportEmail;
+
+
+    // Метод для відправки листа
+    @PostMapping("/sendEmail")
+    public String sendEmail(@RequestParam String topic,
+                            @RequestParam String message,
+                            HttpSession session,
+                            Model model) {
+        // Отримуємо поточного користувача із сесії
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser == null) {
+            // Якщо користувач не зареєстрований, виводимо повідомлення
+            model.addAttribute("notRegistered", true);
+            return "/supports"; // Повертаємося на сторінку з формою
+        }
+
+        try {
+            // Відправка листа зареєстрованим користувачем
+            sendEmailToSupport(currentUser.getEmail(), topic, message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Не вдалося відправити повідомлення. Спробуйте пізніше.");
+            return "/supports";
+        }
+
+        // Після успішної відправки можна зробити редірект або показати повідомлення про успіх
+        model.addAttribute("success", "Повідомлення успішно відправлено!");
+        return "/supports"; // Повертаємося на ту саму сторінку
+    }
+
+    // Метод для відправки листа
+    private void sendEmailToSupport(String fromEmail, String subject, String text) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        helper.setText(text, true); // true - для HTML вмісту
+        helper.setTo(supportEmail); // Адреса служби підтримки з конфігурації
+        helper.setSubject(subject);
+        helper.setFrom(fromEmail); // Відправник - email користувача
+
+        mailSender.send(mimeMessage);
+    }
     @GetMapping("/user_list")
     public String listUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());

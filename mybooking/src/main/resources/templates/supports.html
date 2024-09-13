@@ -20,7 +20,8 @@
 
 <section class="container">
     <h2>Швидкі відповіді</h2>
-    <p>Відповіді на найпоширеніші питання наших гостей</p>
+    <p>ВІДПОВІДІ НА НАЙПОШИРЕНІШІ ПИТАННЯ</p>
+    <p>Натисни на запитання і побачиш відповідь</p>
 
     <button class="accordion">Як можна переконатися, що бронювання оплачено?</button>
     <div class="panel">
@@ -65,7 +66,7 @@
 
 <section class="container group-2">
     <h2>Напишіть нам</h2>
-    <form>
+    <form th:action="@{/users/sendEmail}" method="post">
         <label for="topic">Тема повідомлення</label>
         <input type="text" id="topic" name="topic" placeholder="Тема повідомлення" required />
 
@@ -73,8 +74,12 @@
         <textarea id="message" name="message" placeholder="Введіть ваше повідомлення" required></textarea>
 
         <button type="submit" class="button-2">Відправити</button>
+
+        <!-- Виведення повідомлення, якщо користувач не зареєстрований -->
+        <p th:if="${notRegistered}" style="color: red;">Щоб відправляти повідомлення, треба зареєструватися!</p>
     </form>
 </section>
+
 
 <footer th:insert="sections/footer::footer"></footer>
 
