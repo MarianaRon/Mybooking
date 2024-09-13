@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IHotelRepository extends JpaRepository<Hotel, Long> {
-    // Метод для поиска отелей по названию или описанию
+
     //Метод реализует поиск отелей по частичному совпадению названия или описания.
     List<Hotel> findByNameContainingOrDescriptionContaining(String name, String description);
 

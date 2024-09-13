@@ -30,6 +30,11 @@ public class HotelService {
         return hotelRepository.save(hotel);
     }
 
+    // Сохранение отеля с партнером (владельцем)
+    public Hotel saveHotelWithPartner(Hotel hotel, Partner partner) {
+        hotel.setOwner(partner);  // Привязка партнера к отелю
+        return hotelRepository.save(hotel);  // Сохранение отеля
+    }
     // Удаление отеля по ID
     public void deleteHotel(Long id) {
         hotelRepository.deleteById(id);
@@ -44,6 +49,7 @@ public class HotelService {
 
         return hotelRepository.findByOwner(owner);
     }
+    // Обновление данных отеля
     public void updateHotel(Long id, Hotel hotelDetails) {
         hotelRepository.findById(id).ifPresent(hotel -> {
             hotel.setName(hotelDetails.getName());

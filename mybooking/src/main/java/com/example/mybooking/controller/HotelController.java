@@ -2,7 +2,6 @@ package com.example.mybooking.controller;
 
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Partner;
-import com.example.mybooking.model.User;
 import com.example.mybooking.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +36,14 @@ public class HotelController {
     private ImageService imageService;
     private Partner ownerPartner;
 
-    // Отримання всіх готелів
+    // Получение всех отелей
     @GetMapping
     public String getAllHotels(Model model) {
         List<Hotel> hotels = hotelService.getAllHotels();
         model.addAttribute("hotels", hotels);
         return "hotels/hotel_list";
     }
-    // Отримання готелю за ID
+    // Получение отеля по ID
     @GetMapping("/{id}")
     public String getHotelById(@PathVariable Long id, Model model)
     {
@@ -56,18 +55,18 @@ public class HotelController {
             return "redirect:/hotels";
         }
     }
-    // Форма для добавления отеля
+
+    // Показ формы для добавления отеля
     @GetMapping("/add")
     public String showAddHotelForm(HttpSession session, Model model) {
-        Hotel hotel = (Hotel) session.getAttribute("hotel");
-        if (hotel == null) {
-            hotel = new Hotel();
-            session.setAttribute("hotel", hotel);
-        }
+        Hotel hotel = new Hotel();
         model.addAttribute("hotel", hotel);
 
-        List<Partner> partners = partnerService.getAllPartners();
-        model.addAttribute("partners", partners);
+        // Получаем текущего авторизованного партнера
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/partner_Account"; // Если партнер не авторизован
+        }
 
         return "add_hotels";
     }
@@ -79,13 +78,21 @@ public class HotelController {
             session.setAttribute("hotel", sessionHotel);
         }
 
-        // Обновляем объект Hotel в сессии в зависимости от шага
+        // Получаем авторизованного партнера из сессии
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/partner_Account"; // Если партнер не авторизован
+        }
+
+        // Привязываем партнера к отелю
+        sessionHotel.setOwner(loggedInPartner);
+
+        // Обновляем объект Hotel в зависимости от шага
         switch (step) {
             case 1:
                 sessionHotel.setName(hotel.getName());
                 break;
             case 2:
-
                 sessionHotel.setAddressCity(hotel.getAddressCity());
                 sessionHotel.setAddressStreet(hotel.getAddressStreet());
                 sessionHotel.setAdditionalInfo(hotel.getAdditionalInfo());
@@ -98,37 +105,52 @@ public class HotelController {
                 break;
             case 4:
                 sessionHotel.setDescription(hotel.getDescription());
-                // Здесь вы можете обработать загрузку файла изображения
+                // обработка загрузки файла изображения, если необходимо
                 break;
         }
 
         // Перенаправляем на следующий шаг формы
         return "redirect:/hotels/add?step=" + (step + 1);
     }
+
+
     @PostMapping("/submit")
     public String submitHotel(HttpSession session) {
         Hotel hotel = (Hotel) session.getAttribute("hotel");
         if (hotel != null) {
-            hotelService.saveHotel(hotel);
-            session.removeAttribute("hotel"); // Удаляем данные из сессии после сохранения
+            Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+            if (loggedInPartner != null) {
+                hotelService.saveHotelWithPartner(hotel, loggedInPartner); // Используем метод saveHotelWithPartner
+                session.removeAttribute("hotel"); // Удаляем данные из сессии после сохранения
+            } else {
+                return "redirect:/partner_Account"; // Если партнер не авторизован
+            }
         }
-        return "redirect:/hotels/by-partner";
+        return "redirect:/hotels_by_partner";
     }
 
-    // Отримання готелів, зареєстрованих партнером
-    @GetMapping("/by-partner")
-    public String getHotelsByPartner(@SessionAttribute("loggedInPartner") Partner loggedInPartner, Model model) {
-        // Передаем в модель отели, принадлежащие партнеру
-        model.addAttribute("hotels", hotelService.getHotelsByOwner(loggedInPartner));
-        return "hotels_by_partner";
+    // Получение отелей, зарегистрированных партнером
+    @GetMapping("/hotels_by_partner")
+    public String getHotelsByPartner(HttpSession session, Model model) {
+        // Получаем партнера из сессии
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        if (loggedInPartner == null) {
+            return "redirect:/partner_Account"; // Перенаправление на страницу логина, если партнер не авторизован
+        }
+
+        // Получаем отели, зарегистрированные партнером
+        List<Hotel> hotels = hotelService.getHotelsByOwner(loggedInPartner);
+        model.addAttribute("hotels", hotels);
+        return "hotels_by_partner"; // Отображаем отели партнера
     }
     // Показ форми реєстрації готелю
-    @GetMapping("/hotel_registration")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("hotel", new Hotel());
-        model.addAttribute("partners", partnerService.getAllPartners());
-        return "hotel_form";
-    }
+//    @GetMapping("/hotel_registration")
+//    public String showRegistrationForm(Model model) {
+//        model.addAttribute("hotel", new Hotel());
+//        model.addAttribute("partners", partnerService.getAllPartners());
+//        return "hotel_form";
+//    }
 
 
     @GetMapping("/edit/{id}")

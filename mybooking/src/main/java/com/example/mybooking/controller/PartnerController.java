@@ -27,13 +27,14 @@ public class PartnerController {
     @Autowired
     private UserService userService;
 
+    // Получение списка всех партнеров
     @GetMapping("/partner_list")
     public String getAllPartners(Model model) {
         List<Partner> partners = partnerService.getAllPartners();
         model.addAttribute("partners", partners);
         return "partners/partner_list";
     }
-
+    // Получение информации о партнере по ID
     @GetMapping("/{id}")
     public String getPartnerById(@PathVariable Long id, Model model) {
         Optional<Partner> partner = partnerService.getPartnerById(id);
@@ -44,32 +45,32 @@ public class PartnerController {
             return "redirect:/partners";
         }
     }
-
+    // Отображение формы для создания нового партнера
     @GetMapping("/new")
     public String showPartnerForm(Model model) {
         model.addAttribute("partner", new Partner());
         return "partners/partner_form";
     }
 
+    // Отображение формы входа
     @GetMapping("/login")
     public String showLoginForm() {
         return "partners/partner_login";
     }
-
+    // Обработка логина партнера
     @PostMapping("/login")
     public String loginPartner(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
         Optional<Partner> partner = partnerService.findByEmail(email);
 
         if (partner.isPresent() && partner.get().getPassword().equals(password)) {
-            session.setAttribute("partnerEmail", partner.get().getEmail());
-            session.setAttribute("userName", partner.get().getFirstName());
+            session.setAttribute("loggedInPartner", partner.get());  // Сохраняем партнера в сессии
+            session.setAttribute("userName", partner.get().getFirstName());  // Сохраняем имя пользователя для приветствия
             return "redirect:/home_partners";
         } else {
             model.addAttribute("errorMessage", "Invalid email or password");
             return "partners/partner_login";
         }
     }
-
     @PostMapping
     public String createPartner(
             @ModelAttribute Partner partner,
@@ -99,9 +100,9 @@ public class PartnerController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/partners/login";
+        return "redirect:/exit_Account";
     }
-
+    // Отображение формы редактирования партнера
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Optional<Partner> partner = partnerService.getPartnerById(id);
@@ -135,6 +136,7 @@ public class PartnerController {
         return "redirect:/partners";
     }
 
+    // Отображение главной страницы для партнеров
     @GetMapping("/home_partners")
     public String showHomePage(HttpSession session, Model model) {
         String userName = (String) session.getAttribute("userName");
@@ -145,7 +147,7 @@ public class PartnerController {
             return "home_partners";
         } else {
             // Если пользователь не залогинен, перенаправляем на страницу входа
-            return "redirect:/partners/login";
+            return "redirect:/partner_Account";
         }
 
     }
