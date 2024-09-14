@@ -230,3 +230,81 @@ section {
     background-color: #275271;
 }
 
+
+/* Стилі для верхньої навігаційної панелі */
+.container-fluid {
+    background-color: #275271;
+    padding: 10px 20px;
+}
+
+.navbar-top {
+    display: flex;
+    justify-content: space-between; /* Логотип зліва, інші елементи справа */
+    align-items: center;
+}
+
+/*.frame {*/
+/*    order: 1; !* Лого залишається зліва *!*/
+/*}*/
+
+.navbar-nav {
+    display: flex;
+    justify-content: flex-end; /* Вирівнювання посилань справа */
+    align-items: center;
+    gap: 20px; /* Проміжки між елементами */
+    list-style: none; /* Прибираємо маркери списку */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    list-style: none; /* Прибираємо маркування списку */
+}
+
+.nav-link {
+    color: #fff;
+    font-weight: bold; /* Жирний білий текст */
+    text-decoration: none; /* Прибираємо підкреслення */
+    transition: transform 0.3s ease, color 0.3s ease; /* Анімація для масштабування та зміни кольору */
+}
+
+.nav-link:hover {
+    transform: scale(1.1); /* Збільшуємо при наведенні */
+    color: #e7a188; /* Зміна кольору при наведенні */
+}
+
+.dropdown {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-select {
+    background-color: #e7a188;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-select:hover {
+    background-color: #1b3b51;
+}
+
+.btn-action, .btn-logout {
+    background-color: #e7a188;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-action:hover, .btn-logout:hover {
+    background-color: #1b3b51;
+}
+
+

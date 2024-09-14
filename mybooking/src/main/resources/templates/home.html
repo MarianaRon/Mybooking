@@ -24,20 +24,24 @@
         <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
             <li>
                 <!-- Випадаючий список для вибору валюти -->
-                <form action="#" th:action="@{/setCurrency}" method="post">
+                <form action="#" method="post">
                     <select name="currency" class="dropdown">
-                        <option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.name}"></option>
+                        <option value="UAH">Гривня</option>
+                        <option value="USD">Долар</option>
+                        <option value="EUR">Євро</option>
                     </select>
-                    <button type="submit" class="btn-select">Вибрати</button>
+                    <button type="submit" class="btn-select">Валюта</button>
                 </form>
             </li>
             <li>
                 <!-- Випадаючий список для вибору мови -->
-                <form th:action="@{/setLanguage}" method="post">
+                <form method="post">
                     <select name="language" class="dropdown">
-                        <option th:each="language : ${languages}" th:value="${language.code}" th:text="${language.name}"></option>
+                        <option value="uk">Українська</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
                     </select>
-                    <button type="submit" class="btn-select">Вибрати</button>
+                    <button type="submit" class="btn-select">Мова</button>
                 </form>
             </li>
             <li class="nav-item">

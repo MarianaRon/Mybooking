@@ -33,182 +33,142 @@
         .text-wrapper-11 {
             text-decoration: none;
         }
+
+        /* Стилі для верхньої навігаційної панелі */
+        .container-fluid {
+            background-color: #275271;
+            padding: 10px 20px;
+        }
+
+        .navbar-top {
+            display: flex;
+            justify-content: space-between; /* Логотип зліва, інші елементи справа */
+            align-items: center;
+        }
+
+        /*.frame {*/
+        /*    order: 1; !* Лого залишається зліва *!*/
+        /*}*/
+
+        .navbar-nav {
+            display: flex;
+            justify-content: flex-end; /* Вирівнювання посилань справа */
+            align-items: center;
+            gap: 20px; /* Проміжки між елементами */
+            list-style: none; /* Прибираємо маркери списку */
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-nav li {
+            list-style: none; /* Прибираємо маркування списку */
+        }
+
+        .nav-link {
+            color: #fff;
+            font-weight: bold; /* Жирний білий текст */
+            text-decoration: none; /* Прибираємо підкреслення */
+            transition: transform 0.3s ease, color 0.3s ease; /* Анімація для масштабування та зміни кольору */
+        }
+
+        .nav-link:hover {
+            transform: scale(1.1); /* Збільшуємо при наведенні */
+            color: #e7a188; /* Зміна кольору при наведенні */
+        }
+
+        .dropdown {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-select {
+            background-color: #e7a188;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-select:hover {
+            background-color: #1b3b51;
+        }
+
+        .btn-action, .btn-logout {
+            background-color: #e7a188;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-action:hover, .btn-logout:hover {
+            background-color: #1b3b51;
+        }
+
     </style>
 </head>
 <body>
-<header th:insert="sections/header::header"></header>
-<!--<div class="container">-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-md-6">-->
-<!--            <h2>Вхід</h2>-->
-<!--            <form action="/login" method="post">-->
-<!--                <div class="form-group">-->
-<!--                    <label for="username">Ім'я користувача:</label>-->
-<!--                    <input type="text" class="form-control" id="username" name="username" required>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="password">Пароль:</label>-->
-<!--                    <input type="password" class="form-control" id="password" name="password" required>-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">Увійти</button>-->
-<!--            </form>-->
-<!--            <div class="mt-3">-->
-<!--                <div id="g_id_onload"-->
-<!--                     data-client_id="123456789012-abc123def456ghi789jkl012mnop3456.apps.googleusercontent.com"-->
-<!--                     data-callback="handleCredentialResponse">-->
-<!--                </div>-->
-
-<!--                <div class="g_id_signin" data-type="standard"></div>-->
-
-<!--            </div>-->
-<!--            <p class="mt-3">Ще не маєте облікового запису? <a href="/registration">Зареєструватися</a></p>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<footer th:insert="sections/footer::footer" style="background-color: #4dffb8;"></footer>-->
-<!--</body>-->
-<!--</html>-->
-
-<!--<div class="login-filled">-->
-<!--    <div class="div">-->
-<!--        <div class="FOOTER-desktop">-->
-<!--            <div class="group">-->
-<!--                <footer class="footer">-->
-<!--                    <div class="view">-->
-<!--                        <div class="text-wrapper">Про нас</div>-->
-<!--                        <div class="text-wrapper-2">Про компанію</div>-->
-<!--                    </div>-->
-<!--                    <div class="view-2">-->
-<!--                        <div class="text-wrapper">Тех. підтримка</div>-->
-<!--                        <div class="frame">-->
-<!--                            <div class="text-wrapper-3">Найпопулярніші питання</div>-->
-<!--                            <div class="text-wrapper-2">+380 97 255 220</div>-->
-<!--                            <div class="text-wrapper-2">Arrenvi@gmail.com</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="view-3">-->
-<!--                        <div class="text-wrapper">Для бізнесу</div>-->
-<!--                        <div class="text-wrapper-2">Зареєструвати мешкання</div>-->
-<!--                    </div>-->
-<!--                    <div class="view-4">-->
-<!--                        <div class="text-wrapper">Ми в соц мережах:</div>-->
-<!--                        <div class="social-icon-footer">-->
-<!--                            <img class="img" src="img/instagram.svg" /> <img class="img" src="img/facebook-2.svg" />-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="text-wrapper-4">Версія для мобільних пристроїв</div>-->
-<!--                </footer>-->
-<!--                <img class="line" src="img/line-1.svg" />-->
-<!--                <div class="frame-2">-->
-<!--                    <img class="logo-component" src="img/image.svg" />-->
-<!--                    <div class="text-wrapper-5">Всі права захищені 2024</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--       -->
-<!--<div class="login-form">-->
-<!--    <div class="overlap-group">-->
-<!--        <div class="field-with-label">-->
-<!--            <div class="label-wrapper"><div class="label">Логін</div></div>-->
-<!--            <div class="field-label">-->
-<!--                <div class="written-text-wrapper"><div class="written-text">Ivanova1265@gmail.com</div></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="text-wrapper-6">Забули пароль?</div>-->
-<!--        <div class="button-google">-->
-<!--            <div class="text-wrapper-7">Увійти за допомогою</div>-->
-<!--            <img class="google" src="img/google.svg" />-->
-<!--        </div>-->
-<!--        <div class="icons-social">-->
-<!--            <img class="img-2" src="img/instagram-2.svg" /> <img class="img-2" src="img/facebook.svg" />-->
-<!--        </div>-->
-<!--        <div class="button-blue"><button class="button-2">Увійти</button></div>-->
-<!--        <div class="view-5">-->
-<!--            <div class="text-wrapper-8">або</div>-->
-<!--            <img class="line-2" src="img/line-2.svg" />-->
-<!--            <img class="line-3" src="img/line-3.svg" />-->
-<!--        </div>-->
-<!--        <p class="p">увійти за допомогою соц мереж</p>-->
-<!--        <div class="field-with-label-2">-->
-<!--            <div class="label-wrapper"><div class="label">Пароль</div></div>-->
-<!--            <div class="field-label">-->
-<!--                <div class="written-text-wrapper"><div class="written-text">********</div></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <p class="div-2">-->
-<!--            <span class="span">Входячи або реєструючись, ви погоджуєтесь з </span>-->
-<!--            <span class="text-wrapper-9">умовами використання</span>-->
-<!--            <span class="span"> та </span>-->
-<!--            <span class="text-wrapper-9">політикою конфіденційності</span>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div class="div-wrapper"><div class="text-wrapper-10">Увійти</div></div>-->
-<!--    <div class="view-6"><div class="text-wrapper-11">Зареєструватися</div></div>-->
-<!--    <p class="text-wrapper-12">Увійдіть або зареєструйтесь щоб отримати більше можливостей для бронювання</p>-->
-<!--    <div class="text-wrapper-13">Вітаємо!</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
-
-
+<!--<header th:insert="sections/header::header"></header>-->
+<div class="container-fluid" style="background-color: #275271;">
+    <div class="navbar-top d-flex justify-content-between align-items-center">
+        <!-- Логотип зліва -->
+        <div class="frame">
+            <a class="nav-link" href="/"><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" /></a>
+        </div>
+        <!-- Посилання праворуч -->
+        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+            <li>
+                <!-- Випадаючий список для вибору валюти -->
+                <form action="#" method="post">
+                    <select name="currency" class="dropdown">
+                        <option value="UAH">Гривня</option>
+                        <option value="USD">Долар</option>
+                        <option value="EUR">Євро</option>
+                    </select>
+                    <button type="submit" class="btn-select">Валюта</button>
+                </form>
+            </li>
+            <li>
+                <!-- Випадаючий список для вибору мови -->
+                <form method="post">
+                    <select name="language" class="dropdown">
+                        <option value="uk">Українська</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                    </select>
+                    <button type="submit" class="btn-select">Мова</button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <a class="nav-link" href="/user_account">Кабінет користувача</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/login">Вхід</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/registration">Реєстрація</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <form action="/logout" method="get">
+                    <button type="submit" class="btn-logout">Вихід</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="login">
     <div class="div">
-        <div class="FOOTER-desktop">
-            <div class="group">
-                <footer class="footer">
-                    <div class="view">
-                        <div class="text-wrapper">Про нас</div>
-                        <div class="text-wrapper-2">Про компанію</div>
-                    </div>
-                    <div class="view-2">
-                        <div class="text-wrapper">Тех. підтримка</div>
-                        <div class="frame">
-                            <div class="text-wrapper-3">Найпопулярніші питання</div>
-                            <div class="text-wrapper-2">+380 97 255 220</div>
-                            <div class="text-wrapper-2">Arrenvi@gmail.com</div>
-                        </div>
-                    </div>
-                    <div class="view-3">
-                        <div class="text-wrapper">Для бізнесу</div>
-                        <div class="text-wrapper-2">Зареєструвати мешкання</div>
-                    </div>
-                    <div class="view-4">
-                        <div class="text-wrapper">Ми в соц мережах:</div>
-                        <div class="social-icon-footer">
-                            <img class="img" src="img/instagram-2.svg" /> <img class="img" src="img/image.svg" />
-                        </div>
-                    </div>
-                    <div class="text-wrapper-4">Версія для мобільних пристроїв</div>
-                </footer>
-                <img class="line" src="img/line-1.svg" />
-                <div class="frame-2">
-                    <img class="logo-component" src="img/logo-component.svg" />
-                    <div class="text-wrapper-5">Всі права захищені 2024</div>
-                </div>
-            </div>
-        </div>
-<!--        <div class="HEADER-desktop">-->
-<!--            <div class="logo-component-wrapper"><img class="logo-component-2" src="img/logo-component-2.svg" /></div>-->
-<!--            <div class="frame-3">-->
-<!--                <div class="valute-hover-wrapper">-->
-<!--                    <div class="valute-hover"><div class="defalt-uah">UAH</div></div>-->
-<!--                </div>-->
-<!--                <div class="component"></div>-->
-<!--                <div class="button-outline"><button class="button">Зареєструвати своє помешкання</button></div>-->
-<!--                <button class="button-wrapper"><button class="button-2">Увійти</button></button>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="login-form">
             <div class="overlap-group">
-<!--                <div class="field-with-label">-->
-<!--                    <div class="label-wrapper"><div class="label">Логін</div></div>-->
-<!--                    <div class="field-label">-->
-<!--                        <div class="input-label-wrapper"><div class="input-label">Введіть логін</div></div>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <form action="/login" method="post">
                     <div class="form-group">
                         <label for="username">Ім'я користувача (логін):</label>
@@ -237,12 +197,6 @@
                     <img class="img-2" src="img/instagram.svg" /> <img class="img-2" src="img/facebook.svg" />
                 </div>
                 <div class="button-blue"><button type="submit" class="button-2">Увійти</button></div>
-
-<!--&lt;!&ndash;                    <div class="div-wrapper"><button type="submit" class="text-wrapper-10">Увійти</button></div>&ndash;&gt;-->
-
-<!--                    <div class="view-6">-->
-<!--                        <a class="text-wrapper-11" href="/registration">Зареєструватися</a>-->
-<!--                    </div>-->
 
                 </form>
 
