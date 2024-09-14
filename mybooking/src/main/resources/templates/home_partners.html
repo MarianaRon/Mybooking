@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -66,14 +65,95 @@
             color: black;
         }
 
-        .footer {
-            background-color: #003580;
+        footer {
+            background-color: #275271FF;
             color: white;
-            padding: 10px 0;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .footer-section {
             text-align: center;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            margin-bottom: 15px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+        }
+
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
+            transition: transform 0.2s;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .button {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button .prev-button, .button .next-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid transparent;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button .prev-button {
+            background-color: transparent;
+            border: 1px solid #275271FF;
+            color: #275271FF;
+            display: flex;
+            align-items: center;
+        }
+
+        .button .prev-button svg {
+            margin-right: 5px;
+        }
+
+        .button .next-button {
+            background-color: #275271FF;
+            color: white;
+        }
+
+        .button .prev-button:hover {
+            background-color: #275271FF;
+            color: white;
+        }
+
+        .button .next-button:hover {
+            background-color: #275271FF;
+
         }
     </style>
 </head>
@@ -137,17 +217,65 @@
     </div>
 </div>
 
-<!-- Основной контент -->
-<div class="container">
-    <div class="navbar-bottom">
-        <!-- Контент страницы -->
+<<h1>Редагування профіля</h1>
+<div class="profile-container">
+    <div class="profile-page">
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <!-- Проверяем, существует ли объект partner -->
+                <div th:if="${session.userName != null}">
+                    <h3>{{ partner?.firstName }} {{ partner?.lastName }}</h3>
+                    <p>{{ partner?.email }}</p>
+                </div>
+                <nav class="profile-nav">
+                    <ul>
+                        <li><a href="/partners/profile">Редагувати профіль</a></li>
+                        <li><a href="/partners/hotels_by_partner">Дивитись власні помешкання</a></li>
+                        <li><a href="/partners/favorites">Збережені готелі</a></li>
+                        <li><a href="/partners/bookings">Переглянути бронювання</a></li>
+                        <li><a href="/partners/logout" class="logout-btn">Вийти</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="profile-content">
+            <h1>Профіль власника</h1>
+            <p>Керуйте своїми помешканнями та створюйте нові об'єкти.</p>
+
+            <section class="partner-hotels">
+                <h2>Ваші помешкання</h2>
+                <p>На даний момент у Вас немає зареєстрованих помешкань.</p>
+                <a href="/partners/add_hotels" class="btn btn-primary">Зареєструвати нове помешкання</a>
+            </section>
+        </main>
     </div>
 </div>
 
 <!-- Футер -->
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 Arrenvi.com. Всі права захищені.</p>
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Тех. підтримка</h4>
+            <p>Найпопулярніші питання</p>
+            <p>+380 97 255 220</p>
+            <p>Arrenvi@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>Для бізнесу</h4>
+            <p><a href="add_hotels">Зареєструвати помешкання</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Ми в соц мережах:</h4>
+            <a href="#"><img class="img" src="/images/instagram.png" /></a>
+            <a href="#"><img class="img" src="/images/facebook.png" /></a>
+        </div>
+        <div class="footer-section">
+            <p><a href="#">Версія для мобільних пристроїв</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
     </div>
 </footer>
 

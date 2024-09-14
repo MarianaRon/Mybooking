@@ -3,12 +3,12 @@ package com.example.mybooking.service;
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Partner;
 import com.example.mybooking.repository.IHotelRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +35,14 @@ public class HotelService {
 //    }
 
     // Сохранение отеля с партнером (владельцем)
+    @Transactional // Обеспечивает корректность транзакции
     public Hotel saveHotelWithPartner(Hotel hotel, Partner partner) {
         logger.debug("Entering saveHotelWithPartner with hotel: {} and partner: {}", hotel, partner);
         hotel.setOwner(partner);
+
+        // Логируем состояние отеля перед сохранением
+        logger.info("Attempting to save hotel: {}", hotel);
+
         try {
             Hotel savedHotel = hotelRepository.save(hotel);
             logger.info("Hotel with partner saved successfully: {}", savedHotel);

@@ -2,6 +2,7 @@ package com.example.mybooking.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 @Entity
 public class Hotel {
@@ -82,26 +83,14 @@ public class Hotel {
 
 
     public Hotel() {
+        this.rooms = new HashSet<>();
+        this.reviews = new HashSet<>();
+        this.images = new HashSet<>();
+        this.amenities = new HashSet<>();
     }
 
-
-
-//    public Hotel(String name, String description, String address, Double latitude, Double longitude, User owner, HashSet<Room> rooms, String housingType, Set<String> reviewsSet, Set<String> amenitiesSet, Set<String> imagesSet) {
-//        this.name = name;
-//        this.description = description;
-//        this.address = address;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
-//        this.owner = owner;
-//        this.rooms = rooms;
-//        this.housingType = housingType;
-//        this.reviews = reviews;
-//        this.images = images;
-//        this.amenities = amenities;
-//
-//    }
-
-    public Hotel(String name, String description, String address, Double latitude, Double longitude, Partner ownerPartner, String housingType) {
+    public Hotel(String name, String description, String address, Double latitude, Double longitude, Partner ownerPartner, String housingType, Double price) {
+        this();
         this.name = name;
         this.description = description;
         this.address = address;
@@ -109,11 +98,9 @@ public class Hotel {
         this.longitude = longitude;
         this.owner = ownerPartner;
         this.housingType = housingType;
-        this.rooms = rooms;
-        this.reviews = reviews;
-        this.images = images;
-        this.amenities = amenities;
+        this.price = price;
     }
+
 
     // Геттери та сеттери
     public String getHousingType() {

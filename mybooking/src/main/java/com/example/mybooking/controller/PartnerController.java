@@ -1,4 +1,5 @@
-package com.example.mybooking.controller;
+package
+        com.example.mybooking.controller;
 
 import com.example.mybooking.model.Partner;
 import com.example.mybooking.service.HotelService;
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.List;
-
 
 @Controller
 @RequestMapping("/partners")
@@ -34,6 +34,7 @@ public class PartnerController {
         model.addAttribute("partners", partners);
         return "partners/partner_list";
     }
+
     // Получение информации о партнере по ID
     @GetMapping("/{id}")
     public String getPartnerById(@PathVariable Long id, Model model) {
@@ -45,6 +46,7 @@ public class PartnerController {
             return "redirect:/partners";
         }
     }
+
     // Отображение формы для создания нового партнера
     @GetMapping("/new")
     public String showPartnerForm(Model model) {
@@ -57,39 +59,31 @@ public class PartnerController {
     public String showLoginForm() {
         return "partners/partner_login";
     }
+
     // Обработка логина партнера
     @PostMapping("/login")
     public String loginPartner(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        // Находим партнера по email
         Optional<Partner> optionalPartner = partnerService.findByEmail(email);
 
         if (optionalPartner.isPresent()) {
             Partner partner = optionalPartner.get();
-
-            // Проверяем, совпадает ли пароль
             if (partner.getPassword().equals(password)) {
-                // Сохраняем партнера в сессии
                 session.setAttribute("loggedInPartner", partner);
-                // Сохраняем имя пользователя для приветствия
                 session.setAttribute("userName", partner.getFirstName());
-            return "redirect:/home_partners";
+                return "redirect:/home_partners";
+            } else {
+                model.addAttribute("errorMessage", "Invalid email or password");
+                return "partner_Account";
+            }
         } else {
-            // Если пароль неверный
-            model.addAttribute("errorMessage", "Invalid email or password");
+            model.addAttribute("errorMessage", "No partner found with this email.");
             return "partner_Account";
         }
-    } else {
-        // Если партнер с таким email не найден
-        model.addAttribute("errorMessage", "No partner found with this email.");
-        return "partner_Account";
     }
-    }
-    @PostMapping
-    public String createPartner(
-            @ModelAttribute Partner partner,
-            @RequestParam("confirmPassword") String confirmPassword,
-            Model model) {
 
+    // Создание нового партнера
+    @PostMapping
+    public String createPartner(@ModelAttribute Partner partner, @RequestParam("confirmPassword") String confirmPassword, Model model) {
         if (!partner.getPassword().equals(confirmPassword)) {
             model.addAttribute("errorMessage", "Passwords do not match");
             return "partners/partner_form";
@@ -104,17 +98,20 @@ public class PartnerController {
         return "redirect:/home_partners";
     }
 
+    // Удаление партнера
     @DeleteMapping("/{id}")
     public String deletePartner(@PathVariable Long id) {
         partnerService.deletePartner(id);
         return "redirect:/partners";
     }
 
+    // Логаут
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/exit_Account";
     }
+
     // Отображение формы редактирования партнера
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
@@ -127,6 +124,7 @@ public class PartnerController {
         }
     }
 
+    // Обновление данных партнера
     @PostMapping("/update/{id}")
     public String updatePartner(@PathVariable Long id, @ModelAttribute Partner updatedPartner, Model model) {
         Optional<Partner> partner = partnerService.getPartnerById(id);
@@ -154,17 +152,13 @@ public class PartnerController {
     public String showHomePage(HttpSession session, Model model) {
         String userName = (String) session.getAttribute("userName");
 
-        // Если пользователь залогинен, показываем главную страницу для партнера
         if (userName != null) {
             model.addAttribute("welcomeMessage", "Вітаю, " + userName + "!");
             return "home_partners";
         } else {
-            // Если пользователь не залогинен, перенаправляем на страницу входа
             return "redirect:/partner_Account";
         }
-
     }
-
 
     // Обработка продолжения регистрации для незарегистрированного партнера
     @PostMapping("/continue_registration")
@@ -190,9 +184,10 @@ public class PartnerController {
     @GetMapping("/hotels_by_partner")
     public String showHotelsByPartner(HttpSession session) {
         if (session.getAttribute("userName") != null) {
-            return "hotels_by_partner"; // или другой шаблон, связанный с отображением отелей
+            return "hotels_by_partner";
         } else {
             return "redirect:/partners/login";
         }
     }
+
 }
