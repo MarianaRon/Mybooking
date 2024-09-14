@@ -9,13 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/hotels")
 public class HotelController {
+    private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
 
     @Autowired
     private HotelService hotelService;
@@ -108,6 +110,7 @@ public class HotelController {
                 // обработка загрузки файла изображения, если необходимо
                 break;
         }
+        logger.info("Processing form step {}: {}", step, sessionHotel);
 
         // Перенаправляем на следующий шаг формы
         return "redirect:/hotels/add?step=" + (step + 1);
@@ -121,6 +124,8 @@ public class HotelController {
             Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
             if (loggedInPartner != null) {
                 hotelService.saveHotelWithPartner(hotel, loggedInPartner); // Используем метод saveHotelWithPartner
+
+                logger.info("Hotel submitted: {}", hotel);
                 session.removeAttribute("hotel"); // Удаляем данные из сессии после сохранения
             } else {
                 return "redirect:/partner_Account"; // Если партнер не авторизован
@@ -194,7 +199,7 @@ public class HotelController {
         hotel.setHousingType(housingType);
 
         // Сохраняем изменения в базе данных
-        hotelService.saveHotel(hotel);
+        hotelService.saveHotelWithPartner(hotel, ownerPartner);
 
         // Перенаправляем на страницу списка отелей
         return "redirect:/hotels/hotel_list";
@@ -219,12 +224,12 @@ public class HotelController {
         model.addAttribute("results", results);
         return "search_results";
     }
-    @PostMapping("/hotels/register")
-    public String registerHotel(@ModelAttribute Hotel hotel, BindingResult result) {
-        if (result.hasErrors()) {
-            return "hotel_registration_form"; // верните страницу с формой, если есть ошибки
-        }
-        hotelService.saveHotel(hotel);
-        return "redirect:/hotels_by_partner"; // перенаправление после успешной регистрации
-    }
+//    @PostMapping("/hotels/register")
+//    public String registerHotel(@ModelAttribute Hotel hotel, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return "hotel_registration_form"; // верните страницу с формой, если есть ошибки
+//        }
+//        hotelService.saveHotel(hotel);
+//        return "redirect:/hotels_by_partner"; // перенаправление после успешной регистрации
+//    }
 }

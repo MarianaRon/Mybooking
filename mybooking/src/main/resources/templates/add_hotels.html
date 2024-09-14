@@ -504,11 +504,7 @@
     <div class="button">
         <button type="submit" class="button-2">Зареєструвати помешкання</button>
     </div>
-
-<!--    <div class="button">-->
-<!--        <button type="button" onclick="prevStep(3)">Повернутися на попередню сторінку</button>-->
-<!--        <button type="submit">Зареєструвати помешкання</button>-->
-<!--    </div>-->
+        
     </form>
 </div>
 
@@ -547,7 +543,7 @@
         // Показуємо наступний крок
         document.getElementById('step-' + stepNumber).classList.add('active');
     }
-
+    let map, marker;
     function prevStep(step) {
         document.querySelectorAll('.step').forEach(function (stepElement) {
             stepElement.classList.remove('active');
@@ -571,7 +567,7 @@
             document.getElementById('address').value = 'Latitude: ' + event.latLng.lat() + ', Longitude: ' + event.latLng.lng();
         });
     }
-    // let map, marker;
+
 
     // function initMap() {
     //     map = new google.maps.Map(document.getElementById("map"), {

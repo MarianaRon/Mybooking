@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/partners")
@@ -60,16 +60,29 @@ public class PartnerController {
     // Обработка логина партнера
     @PostMapping("/login")
     public String loginPartner(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        Optional<Partner> partner = partnerService.findByEmail(email);
+        // Находим партнера по email
+        Optional<Partner> optionalPartner = partnerService.findByEmail(email);
 
-        if (partner.isPresent() && partner.get().getPassword().equals(password)) {
-            session.setAttribute("loggedInPartner", partner.get());  // Сохраняем партнера в сессии
-            session.setAttribute("userName", partner.get().getFirstName());  // Сохраняем имя пользователя для приветствия
+        if (optionalPartner.isPresent()) {
+            Partner partner = optionalPartner.get();
+
+            // Проверяем, совпадает ли пароль
+            if (partner.getPassword().equals(password)) {
+                // Сохраняем партнера в сессии
+                session.setAttribute("loggedInPartner", partner);
+                // Сохраняем имя пользователя для приветствия
+                session.setAttribute("userName", partner.getFirstName());
             return "redirect:/home_partners";
         } else {
+            // Если пароль неверный
             model.addAttribute("errorMessage", "Invalid email or password");
-            return "partners/partner_login";
+            return "partner_Account";
         }
+    } else {
+        // Если партнер с таким email не найден
+        model.addAttribute("errorMessage", "No partner found with this email.");
+        return "partner_Account";
+    }
     }
     @PostMapping
     public String createPartner(

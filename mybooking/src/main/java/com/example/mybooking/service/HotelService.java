@@ -3,14 +3,18 @@ package com.example.mybooking.service;
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Partner;
 import com.example.mybooking.repository.IHotelRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class HotelService {
+    private static final Logger logger = LoggerFactory.getLogger(HotelService.class);
 
     @Autowired
     private IHotelRepository hotelRepository;
@@ -26,14 +30,22 @@ public class HotelService {
     }
 
     // Сохранение нового отеля
-    public Hotel saveHotel(Hotel hotel) {
-        return hotelRepository.save(hotel);
-    }
+//    public Hotel saveHotel(Hotel hotel) {
+//        return hotelRepository.save(hotel);
+//    }
 
     // Сохранение отеля с партнером (владельцем)
     public Hotel saveHotelWithPartner(Hotel hotel, Partner partner) {
-        hotel.setOwner(partner);  // Привязка партнера к отелю
-        return hotelRepository.save(hotel);  // Сохранение отеля
+        logger.debug("Entering saveHotelWithPartner with hotel: {} and partner: {}", hotel, partner);
+        hotel.setOwner(partner);
+        try {
+            Hotel savedHotel = hotelRepository.save(hotel);
+            logger.info("Hotel with partner saved successfully: {}", savedHotel);
+            return savedHotel;
+        } catch (Exception e) {
+            logger.error("Error saving hotel with partner: {}", e.getMessage(), e);
+            throw e; // Перебрасываем исключение после логирования
+        }
     }
     // Удаление отеля по ID
     public void deleteHotel(Long id) {
