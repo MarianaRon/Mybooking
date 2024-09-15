@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -38,4 +39,17 @@ public class UserService {
         user.setPassword(newPassword);
         userRepository.save(user); // Збереження нового паролю
     }
+    public void subscribeUser(User user) {
+        user.setSubscribedToNewsletter(true);
+        userRepository.save(user);
+    }
+
+    public List<String> getAllSubscribers() {
+        return userRepository.findBySubscribedToNewsletterTrue()
+                .stream()
+                .map(User::getEmail)  // Витягуємо лише email користувачів
+                .collect(Collectors.toList());
+    }
+
+
 }

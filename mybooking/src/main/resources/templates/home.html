@@ -116,18 +116,42 @@
     </div>
     <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
 </div>
+<!--<div class="newsletter">-->
+<!--    <div class="overlap-group">-->
+<!--        <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />-->
+<!--        <p class="text-wrapper-6">-->
+<!--            Залишайтеся в курсі нових місць для відпочинку-->
+<!--        </p>-->
+<!--&lt;!&ndash;        <div class="button-blue" style="margin-top: -70px">&ndash;&gt;-->
+<!--            <div th:if="${session.currentUser != null && !session.currentUser.subscribedToNewsletter}" class="button-blue" style="margin-top: -70px">-->
+<!--            &lt;!&ndash; Форма для підписки на newsletter &ndash;&gt;-->
+<!--                <form action="/subscribe" method="post">-->
+<!--                    <button type="submit" class="button-2">Підписатися на newsletter</button>-->
+<!--                </form>-->
+<!--            </div>-->
 
+<!--        </div>-->
+<!--</div>-->
+
+<div th:if="${param.subscriptionError}" style="color: red; font-weight: bold;">
+    Ви повинні бути зареєстровані для підписки на newsletter!
+</div>
+<div th:if="${param.subscriptionSuccess}" style="color: green; font-weight: bold;">
+    Вітаємо! Підписку на новини оформлено!
+</div>
 <div class="newsletter">
     <div class="overlap-group">
         <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />
-        <p class="text-wrapper-6">
-            Залишайтеся в курсі нових місць для відпочинку
-        </p>
+        <p class="text-wrapper-6">Залишайтеся в курсі нових місць для відпочинку</p>
         <div class="button-blue" style="margin-top: -70px">
-            <button class="button-2">Підписатися на newsletter</button>
+            <form action="/subscribe" method="post">
+                <button type="submit" class="button-2">Підписатися на newsletter</button>
+            </form>
         </div>
     </div>
 </div>
+
+
 <!-- Admin Page Link -->
 <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
     <a class="nav-link" style="color: #5c00e6;" href="/admin_page">Сторінка адміністратора</a>
