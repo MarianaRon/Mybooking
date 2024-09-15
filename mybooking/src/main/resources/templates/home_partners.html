@@ -8,27 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar {
-            background-color: #003580;
-            color: white;
-            padding: 10px 0;
-        }
-
-        .navbar-brand {
-            color: #fff;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .auth-buttons {
-            display: flex;
-            align-items: center;
-            margin-left: auto;
-        }
-
-        .navbar-nav .nav-link {
-            color: #fff;
-            font-size: 1em;
-            margin-right: 15px;
+            background-color: #275271FF;
+            padding: 20px 0;
         }
 
         .header-content {
@@ -37,34 +18,137 @@
             align-items: center;
         }
 
-        .navbar-bottom {
-            padding: 20px 0;
+        .auth-buttons {
+            display: flex;
+            align-items: center;
         }
 
-        .auth-buttons .btn-light {
+        .auth-buttons .btn-help {
+            background-color: #E7A188FF;
             border: none;
-            border-radius: 4px;
-            font-size: 1em;
-            padding: 5px 10px;
-            cursor: pointer;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #275271FF;
+            border: none;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #E7A188FF;
+            color: white;
+        }
+
+        .register-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 30%;
+            margin-left: 20px;
+        }
+
+        .text-white {
+            color: white;
         }
 
         .dropdown-menu {
-            color: black;
-            background-color: white;
+            display: block;
+            min-width: 160px;
+            z-index: 1000;
+        }
+
+        .dropdown-item:hover {
+            background-color: #E7A188FF;
+            color: white;
+        }
+        .profile-container {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+        }
+
+        .profile-sidebar {
+            flex-basis: 25%;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .profile-content {
+            flex-basis: 75%;
+            padding: 20px;
+        }
+
+        .profile-avatar h3, .profile-avatar p {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #275271FF;
             border: none;
+            transition: background-color 0.3s;
         }
 
-        .dropdown-menu a {
-            color: black;
-            background-color: white;
+        .btn-primary:hover {
+            background-color: #E7A188FF;
         }
 
-        .dropdown-menu a:hover {
-            background-color: #9a9998;
-            color: black;
+
+        .profile-sidebar {
+            width: 100%;
+            max-width: 300px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .profile-sidebar ul {
+            padding: 0;
+            list-style: none;
+        }
+        .profile-sidebar li {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .profile-sidebar li a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+        }
+        .profile-sidebar li a:hover {
+            color: #E7A188FF;
+        }
+        .profile-sidebar li a img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        .delete-account {
+            color: #E74C3C;
+            text-align: center;
+        }
+        .delete-account a {
+            text-decoration: none;
+            color: #E74C3C;
+        }
+        .delete-account a:hover {
+            text-decoration: underline;
         }
 
+        .active-link {
+            color: #E7A188FF;
+            font-weight: bold;
+            border-left: 4px solid #E7A188FF;
+            padding-left: 10px;
+        }
         footer {
             background-color: #275271FF;
             color: white;
@@ -105,152 +189,134 @@
             padding-top: 10px;
         }
 
-        .social-icon {
-            width: 30px;
-            height: 30px;
-            margin: 0 10px;
-            transition: transform 0.2s;
-        }
 
-        .social-icon:hover {
-            transform: scale(1.1);
-        }
-        .button {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .button .prev-button, .button .next-button {
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: 1px solid transparent;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .button .prev-button {
-            background-color: transparent;
-            border: 1px solid #275271FF;
-            color: #275271FF;
-            display: flex;
-            align-items: center;
-        }
-
-        .button .prev-button svg {
-            margin-right: 5px;
-        }
-
-        .button .next-button {
-            background-color: #275271FF;
-            color: white;
-        }
-
-        .button .prev-button:hover {
-            background-color: #275271FF;
-            color: white;
-        }
-
-        .button .next-button:hover {
-            background-color: #275271FF;
-
-        }
     </style>
 </head>
 <body>
 <!-- Хедер -->
 <div class="navbar">
     <div class="container header-content">
-        <a class="navbar-brand" href="#">Arrenvi.com</a>
-        <ul class="navbar-nav">
-            <li>
-                <a class="nav-link" href="/languages">Мова <span th:text="${session.language}"></span></a>
-            </li>
-        </ul>
+        <!-- Логотип -->
+        <div class="logo-container" style="display: flex; align-items: center;">
+            <a class="nav-link" href="/" style="display: flex; align-items: center;">
+                <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 40px; margin-right: 10px;" />
+            </a>
 
-        <!-- Кнопки для незалогиненного пользователя -->
-        <div class="auth-buttons" th:if="${session.userName == null}">
-            <a class="btn btn-light login" href="/exit_Account">Увійти</a>
-            <a class="btn btn-primary register" href="/support">Допомога</a>
         </div>
 
-        <!-- Кнопки для залогиненного пользователя -->
-        <div class="auth-buttons" th:if="${session.userName != null}">
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span th:text="${session.userName}"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
-                    <li><a class="dropdown-item" href="add_hotels">Додати нове помешкання</a></li>
-                    <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
-                </ul>
+        <!-- Блок справа с вопросом "Ви вже наш партнер?" и кнопками -->
+        <div style="display: flex; align-items: center;">
+            <!-- Вопрос с флагом Украины -->
+            <div style="display: flex; align-items: center; margin-right: 20px;">
+                <a class="nav-link" href="/languages"> <img class="ukraine" src="images/Ukraine.png"/> <span th:text="${session.language}"></span></a>
+            </div>
+
+            <!-- Кнопки для незалогиненного пользователя -->
+            <div class="auth-buttons" th:if="${session.userName == null}" style="display: flex; align-items: center;">
+                <span style="color: white; font-size: 1rem;">Ви вже наш партнер?</span>
+                <a class="btn btn-outline-light" href="/exit_Account" style=" margin-left: 10px; margin-right: 10px;">Увійти</a>
+                <a class="btn btn-primary" href="/support">Допомога</a>
+            </div>
+
+            <!-- Кнопки для залогиненного пользователя -->
+            <div class="auth-buttons" th:if="${session.userName != null}" style="display: flex; align-items: center;">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span th:text="${session.userName}">User</span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                        <li><a class="dropdown-item" href="add_hotels">Додати нове помешкання</a></li>
+                        <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Вторая строка: сообщение и форма -->
-    <div class="container">
-        <div class="navbar-bottom">
+    <div class="container" style="padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
+        <!-- Основной контент слева -->
+        <div class="navbar-bottom" style="max-width: 50%;">
+            <h1 class="text-white" style="font-size: 2.5rem;">Зареєструйте своє помешкання на Arrenvi.com</h1>
+            <p class="text-white" style="font-size: 1.2rem;">Незалежно від того, чи приймаєте ви гостей у вільний від роботи час чи це ваша основна робота, зареєструйте своє помешкання сьогодні, щоб почати заробляти більше.</p>
+        </div>
+
+        <!-- Блок справа для регистрации -->
+        <div class="register-box">
             <!-- Условия для незалогиненного пользователя -->
             <div th:if="${session.userName == null}">
-                <h5 class="text-white">Зареєструйте своє помешкання</h5>
-                <form action="/partner_Account" method="get" class="d-flex">
-                    <button type="submit" class="btn btn-primary">Розпочати зараз</button>
-                </form>
-                <form action="/exit_Account" method="get" class="d-flex mt-3">
-                    <button type="submit" class="btn btn-primary">Продовжити реєстрацію</button>
+                <h2 style="color: #333;">Зареєструйтесь безкоштовно</h2>
+                <ul style="color: #333; list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">✔ 45% господарів помешкань отримують своє перше бронювання протягом тижня</li>
+                    <li style="margin-bottom: 10px;">✔ Ви самі вибираєте отримувати миттєві бронювання чи запити</li>
+                    <li style="margin-bottom: 10px;">✔ Ми опрацьовуємо платежі за вас</li>
+                </ul>
+                <form action="/partner_Account" method="get">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Розпочати зараз</button>
                 </form>
             </div>
 
             <!-- Условия для залогиненного пользователя -->
             <div th:if="${session.userName != null}">
-                <h5 class="text-white">Продовжити реєстрацію</h5>
+                <h2 style="color: #333;">Продовжити реєстрацію</h2>
                 <form action="/hotels_by_partner" method="get" class="d-flex">
-                    <button type="submit" class="btn btn-primary">Продовжити</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Продовжити</button>
                 </form>
                 <form action="/add_hotels" method="get" class="d-flex mt-3">
-                    <button type="submit" class="btn btn-primary">Зареєструвати нове помешкання</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Зареєструвати нове помешкання</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<<h1>Редагування профіля</h1>
-<div class="profile-container">
-    <div class="profile-page">
-        <aside class="profile-sidebar">
-            <div class="profile-avatar">
-                <!-- Проверяем, существует ли объект partner -->
-                <div th:if="${session.userName != null}">
-                    <h3>{{ partner?.firstName }} {{ partner?.lastName }}</h3>
-                    <p>{{ partner?.email }}</p>
+<div class="container">
+    <div class="row mt-4">
+        <!-- Боковая панель профиля -->
+        <aside class="col-md-3">
+            <div class="profile-sidebar">
+                <ul>
+                    <li><a href="/partners/profile" class="active-link"><img src="/icons/profile.png" alt=""> Редагування профіля</a></li>
+                    <li><a href="/partners/hotels_by_partner"><img src="/icons/owner.png" alt=""> Для власника</a></li>
+                    <li><a href="/partners/favorites"><img src="/icons/heart.png" alt=""> Збережені готелі</a></li>
+                    <li><a href="/partners/bookings"><img src="/icons/bookings.png" alt=""> Перегляд бронювань</a></li>
+                </ul>
+                <div class="delete-account">
+                    <a href="/partners/delete">Видалити акаунт</a>
                 </div>
-                <nav class="profile-nav">
-                    <ul>
-                        <li><a href="/partners/profile">Редагувати профіль</a></li>
-                        <li><a href="/partners/hotels_by_partner">Дивитись власні помешкання</a></li>
-                        <li><a href="/partners/favorites">Збережені готелі</a></li>
-                        <li><a href="/partners/bookings">Переглянути бронювання</a></li>
-                        <li><a href="/partners/logout" class="logout-btn">Вийти</a></li>
-                    </ul>
-                </nav>
             </div>
         </aside>
 
-        <main class="profile-content">
-            <h1>Профіль власника</h1>
-            <p>Керуйте своїми помешканнями та створюйте нові об'єкти.</p>
+        <!-- Контент профиля -->
+        <div class="col-md-9">
+            <main class="profile-content">
+                <h1>Редагування профіля</h1>
+                <p>Ви можете редагувати свої особисті дані.</p>
+                <form th:action="@{/partners/update/{id}(id=${partner.id})}" th:object="${partner}" method="post">
+                    <div class="form-group">
 
-            <section class="partner-hotels">
-                <h2>Ваші помешкання</h2>
-                <p>На даний момент у Вас немає зареєстрованих помешкань.</p>
-                <a href="/partners/add_hotels" class="btn btn-primary">Зареєструвати нове помешкання</a>
-            </section>
-        </main>
+                        <input type="text" th:field="*{firstName}" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" th:field="*{lastName}" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="email" th:field="*{email}" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" th:field="*{phone}" class="form-control" required/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+                </form>
+            </main>
+        </div>
     </div>
 </div>
+
 
 <!-- Футер -->
 <footer>

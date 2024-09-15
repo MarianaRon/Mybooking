@@ -1,6 +1,6 @@
-package
-        com.example.mybooking.controller;
+package com.example.mybooking.controller;
 
+import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Partner;
 import com.example.mybooking.service.HotelService;
 import com.example.mybooking.service.PartnerService;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
 import java.util.List;
 
@@ -72,11 +73,11 @@ public class PartnerController {
                 session.setAttribute("userName", partner.getFirstName());
                 return "redirect:/home_partners";
             } else {
-                model.addAttribute("errorMessage", "Invalid email or password");
+                model.addAttribute("errorMessage", "Неправильный email или пароль");
                 return "partner_Account";
             }
         } else {
-            model.addAttribute("errorMessage", "No partner found with this email.");
+            model.addAttribute("errorMessage", "Партнер с таким email не найден.");
             return "partner_Account";
         }
     }
@@ -85,12 +86,12 @@ public class PartnerController {
     @PostMapping
     public String createPartner(@ModelAttribute Partner partner, @RequestParam("confirmPassword") String confirmPassword, Model model) {
         if (!partner.getPassword().equals(confirmPassword)) {
-            model.addAttribute("errorMessage", "Passwords do not match");
+            model.addAttribute("errorMessage", "Пароли не совпадают");
             return "partners/partner_form";
         }
 
         if (partner.getPassword().length() < 6) {
-            model.addAttribute("errorMessage", "Password must be at least 6 characters long");
+            model.addAttribute("errorMessage", "Пароль должен быть длиной не менее 6 символов");
             return "partners/partner_form";
         }
 
@@ -105,7 +106,7 @@ public class PartnerController {
         return "redirect:/partners";
     }
 
-    // Логаут
+    // Логаут партнера
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
@@ -114,49 +115,87 @@ public class PartnerController {
 
     // Отображение формы редактирования партнера
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model, HttpSession session) {
         Optional<Partner> partner = partnerService.getPartnerById(id);
-        if (partner.isPresent()) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        // Проверяем, авторизован ли партнер и имеет ли право редактировать
+        if (partner.isPresent() && loggedInPartner != null && partner.get().getId().equals(loggedInPartner.getId())) {
             model.addAttribute("partner", partner.get());
             return "partners/edit_partner";
         } else {
-            return "redirect:/partners";
+            return "redirect:/partner_Account"; // Перенаправляем, если не авторизован
+        }
+    }
+    // Отображение страницы редактирования профиля
+    @GetMapping("/profile")
+    public String showProfilePage(HttpSession session, Model model) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        if (loggedInPartner != null) {
+            model.addAttribute("partner", loggedInPartner);
+            return "partners/edit_profile"; // шаблон для редактирования профиля
+        } else {
+            return "redirect:/exit_Account"; // перенаправление если партнер не залогинен
         }
     }
 
     // Обновление данных партнера
     @PostMapping("/update/{id}")
-    public String updatePartner(@PathVariable Long id, @ModelAttribute Partner updatedPartner, Model model) {
-        Optional<Partner> partner = partnerService.getPartnerById(id);
-        if (partner.isPresent()) {
-            Partner existingPartner = partner.get();
-            existingPartner.setEmail(updatedPartner.getEmail());
+    public String updatePartner(@PathVariable Long id,
+                                @ModelAttribute Partner updatedPartner,
+                                @RequestParam(value = "newPassword", required = false) String newPassword,
+                                @RequestParam(value = "confirmPassword", required = false) String confirmPassword,
+                                HttpSession session,
+                                Model model) {
+
+        Optional<Partner> partnerOpt = partnerService.getPartnerById(id);
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        // Проверка авторизации партнера
+        if (partnerOpt.isPresent() && loggedInPartner != null && partnerOpt.get().getId().equals(loggedInPartner.getId())) {
+            Partner existingPartner = partnerOpt.get();
+
+            // Обновляем личные данные
             existingPartner.setFirstName(updatedPartner.getFirstName());
             existingPartner.setLastName(updatedPartner.getLastName());
+            existingPartner.setEmail(updatedPartner.getEmail());
             existingPartner.setPhone(updatedPartner.getPhone());
 
-            if (updatedPartner.getPassword().length() >= 6) {
-                existingPartner.setPassword(updatedPartner.getPassword());
-            } else {
-                model.addAttribute("errorMessage", "Password must be at least 6 characters long");
-                return "partners/edit_partner";
+            // Логика изменения пароля (если введен новый пароль)
+            if (newPassword != null && !newPassword.isEmpty()) {
+                if (!newPassword.equals(confirmPassword)) {
+                    model.addAttribute("errorMessage", "Пароли не совпадают");
+                    return "partners/edit_profile"; // возвращаемся к форме с ошибкой
+                }
+                if (newPassword.length() < 6) {
+                    model.addAttribute("errorMessage", "Пароль должен быть длиной не менее 6 символов");
+                    return "partners/edit_profile"; // возвращаемся к форме с ошибкой
+                }
+                existingPartner.setPassword(newPassword); // Обновляем пароль
             }
 
+            // Сохраняем обновленные данные
             partnerService.createPartner(existingPartner);
-        }
-        return "redirect:/partners";
-    }
 
+            return "redirect:/partners/profile"; // Возвращаемся на страницу профиля после обновления
+        }
+
+        return "redirect:/partner_Account"; // Перенаправляем, если не авторизован
+    }
     // Отображение главной страницы для партнеров
     @GetMapping("/home_partners")
     public String showHomePage(HttpSession session, Model model) {
-        String userName = (String) session.getAttribute("userName");
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
 
-        if (userName != null) {
-            model.addAttribute("welcomeMessage", "Вітаю, " + userName + "!");
+        // Проверяем, авторизован ли партнер
+        if (loggedInPartner != null) {
+            model.addAttribute("partner", loggedInPartner); // Добавляем объект partner в модель
+            model.addAttribute("welcomeMessage", "Вітаю, " + loggedInPartner.getFirstName() + "!");
             return "home_partners";
         } else {
-            return "redirect:/partner_Account";
+            model.addAttribute("errorMessage", "Пожалуйста, войдите в систему.");
+            return "redirect:/partner_Account"; // Перенаправляем, если партнер не авторизован
         }
     }
 
@@ -182,12 +221,17 @@ public class PartnerController {
 
     // Обработка перехода на просмотр существующих отелей партнера
     @GetMapping("/hotels_by_partner")
-    public String showHotelsByPartner(HttpSession session) {
-        if (session.getAttribute("userName") != null) {
-            return "hotels_by_partner";
-        } else {
-            return "redirect:/partners/login";
-        }
-    }
+    public String showHotelsByPartner(HttpSession session, Model model) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
 
+        // Проверяем, авторизован ли партнер
+        if (loggedInPartner == null) {
+            return "redirect:/partner_Account"; // Перенаправляем на страницу логина, если партнер не авторизован
+        }
+
+        // Получаем отели, зарегистрированные партнером
+        List<Hotel> hotels = hotelService.getHotelsByOwner(loggedInPartner);
+        model.addAttribute("hotels", hotels);
+        return "hotels_by_partner"; // Отображаем отели партнера
+    }
 }
