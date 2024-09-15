@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message_lists</title>
+</head>
+<body>
+<div class="container">
+    <h2>Повідомлення від користувачів</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Тема</th>
+            <th>Повідомлення</th>
+            <th>Електронна адреса</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.id}"></td>
+            <td th:text="${message.topic}"></td>
+            <td th:text="${message.message}"></td>
+            <td th:text="${message.email}"></td>
+            <td>
+                <form th:action="@{/users/admin/messages/delete/{id}(id=${message.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

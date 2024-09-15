@@ -3,6 +3,7 @@ package com.example.mybooking.controller;
 import com.example.mybooking.model.City;
 import com.example.mybooking.model.User;
 import com.example.mybooking.repository.IUserRepository;
+import com.example.mybooking.service.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 @Controller
@@ -28,6 +30,8 @@ public class MainController {
 
     @Autowired
     private CityService cityService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
@@ -199,5 +203,29 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
     @GetMapping("/about_us")
     public String about_us(Model model ){
         return "/about_us";
+    }
+
+    //контролер для відправки підписки на новини
+    @PostMapping("/subscribe")
+    public String subscribeToNewsletter(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            model.addAttribute("errorNewsletter", true); // Показати червоне повідомлення
+            return "redirect:/?subscriptionError=true"; // Додаємо параметр в URL для індикації помилки
+        }
+
+        if (!currentUser.isSubscribedToNewsletter()) {
+            userService.subscribeUser(currentUser);
+            return "redirect:/?subscriptionSuccess=true"; // Додаємо параметр в URL для успішної підписки
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/admin_subscribers")
+    public String showAdminPage(Model model) {
+        List<String> subscribers = userService.getAllSubscribers();
+        System.out.println("Subscribers: " + subscribers); // Логування списку
+        model.addAttribute("subscribers", subscribers);
+        return "admin_page";
     }
 }

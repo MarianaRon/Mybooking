@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -27,51 +29,54 @@ public class UserController {
     @Value("${spring.mail.username}")
     private String supportEmail;
 
-
-    // Метод для відправки листа
-    @PostMapping("/sendEmail")
-    public String sendEmail(@RequestParam String topic,
-                            @RequestParam String message,
-                            HttpSession session,
-                            Model model) {
-        // Отримуємо поточного користувача із сесії
-        User currentUser = (User) session.getAttribute("currentUser");
-
-        if (currentUser == null) {
-            // Якщо користувач не зареєстрований, виводимо повідомлення
-            model.addAttribute("notRegistered", true);
-            return "/supports"; // Повертаємося на сторінку з формою
-        }
-
-        try {
-            // Відправка листа зареєстрованим користувачем
-            sendEmailToSupport(currentUser.getEmail(), topic, message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Не вдалося відправити повідомлення. Спробуйте пізніше.");
-            return "/supports";
-        }
-
-        // Після успішної відправки можна зробити редірект або показати повідомлення про успіх
-        model.addAttribute("success", "Повідомлення успішно відправлено!");
-        return "/supports"; // Повертаємося на ту саму сторінку
-    }
-
-    // Метод для відправки листа
-    private void sendEmailToSupport(String fromEmail, String subject, String text) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-
-        helper.setText(text, true); // true - для HTML вмісту
-        helper.setTo(supportEmail); // Адреса служби підтримки з конфігурації
-        helper.setSubject(subject);
-        helper.setFrom(fromEmail); // Відправник - email користувача
-
-        mailSender.send(mimeMessage);
-    }
+//
+//    // Метод для відправки листа
+//    @PostMapping("/sendEmail")
+//    public String sendEmail(@RequestParam String topic,
+//                            @RequestParam String message,
+//                            HttpSession session,
+//                            Model model) {
+//        // Отримуємо поточного користувача із сесії
+//        User currentUser = (User) session.getAttribute("currentUser");
+//
+//        if (currentUser == null) {
+//            // Якщо користувач не зареєстрований, виводимо повідомлення
+//            model.addAttribute("notRegistered", true);
+//            return "/supports"; // Повертаємося на сторінку з формою
+//        }
+//
+//        try {
+//            // Відправка листа зареєстрованим користувачем
+//            sendEmailToSupport(currentUser.getEmail(), topic, message);
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//            model.addAttribute("error", "Не вдалося відправити повідомлення. Спробуйте пізніше.");
+//            return "/supports";
+//        }
+//
+//        // Після успішної відправки можна зробити редірект або показати повідомлення про успіх
+//        model.addAttribute("success", "Повідомлення успішно відправлено!");
+//        return "/supports"; // Повертаємося на ту саму сторінку
+//    }
+//
+//    // Метод для відправки листа
+//    private void sendEmailToSupport(String fromEmail, String subject, String text) throws MessagingException {
+//        MimeMessage mimeMessage = mailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+//
+//        helper.setText(text, true); // true - для HTML вмісту
+//        helper.setTo(supportEmail); // Адреса служби підтримки з конфігурації
+//        helper.setSubject(subject);
+//        helper.setFrom(fromEmail); // Відправник - email користувача
+//
+//        mailSender.send(mimeMessage);
+//    }
     @GetMapping("/user_list")
     public String listUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
+        List<User> users = userService.getAllUsers(); // отримуємо всіх користувачів
+        List<String> subscribedUsers = userService.getAllSubscribers(); // отримуємо лише підписаних
+        model.addAttribute("users", users);
+        model.addAttribute("subscribedUsers", subscribedUsers);
         return "users/user_list";
     }
 
