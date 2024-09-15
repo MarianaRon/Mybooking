@@ -197,13 +197,6 @@ public class HotelController {
         model.addAttribute("hotels", hotels);
         return "hotels_by_partner"; // Отображаем отели партнера
     }
-    // Показ форми реєстрації готелю
-//    @GetMapping("/hotel_registration")
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("hotel", new Hotel());
-//        model.addAttribute("partners", partnerService.getAllPartners());
-//        return "hotel_form";
-//    }
 
 
     @GetMapping("/edit/{id}")
