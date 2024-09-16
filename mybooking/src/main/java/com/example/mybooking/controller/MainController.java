@@ -205,6 +205,12 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         return "/about_us";
     }
 
+    @GetMapping("/admin_message_list")
+    public String admin_message_list(Model model ){
+        return "/admin_message_list";
+    }
+
+
     //контролер для відправки підписки на новини
     @PostMapping("/subscribe")
     public String subscribeToNewsletter(HttpSession session, Model model) {
