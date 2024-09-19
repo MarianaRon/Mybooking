@@ -14,6 +14,10 @@ public class AmenityService {
     @Autowired
     private IAmenityRepository amenityRepository;
 
+    public List<Amenity> getAmenitiesByIds(List<Long> amenityIds) {
+        return amenityRepository.findAllById(amenityIds); // Предполагается, что используете JpaRepository
+    }
+
     public List<Amenity> getAllAmenities() {
         return amenityRepository.findAll();
     }

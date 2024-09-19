@@ -15,14 +15,13 @@ public class ImageService {
     @Autowired
     private IImageRepository imageRepository;
 
+    // Получение всех изображений
     public List<Image> getAllImages() {
         return imageRepository.findAll();
     }
 
-//    public Optional<Image> getImageById(Long id) {
-//        return imageRepository.findById(id);
-//    }
 
+// Сохранение изображения
     public Image saveImage(Image image) {
         return imageRepository.save(image);
     }
@@ -31,8 +30,13 @@ public class ImageService {
         imageRepository.deleteById(id);
     }
 
+    // Получение изображений по списку ID
     public Optional<Image> getImageById(Long id) {
         return imageRepository.findById(id);
+
+    }
+    public List<Image> getImagesByIds(List<Long> imageIds) {
+        return imageRepository.findAllById(imageIds);
     }
 
 }

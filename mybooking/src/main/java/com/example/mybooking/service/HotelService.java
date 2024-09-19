@@ -71,11 +71,11 @@ public class HotelService {
         hotelRepository.findById(id).ifPresent(hotel -> {
             hotel.setName(hotelDetails.getName());
             hotel.setDescription(hotelDetails.getDescription());
-            hotel.setAddress(hotelDetails.getAddress());
+            //.setAddress(hotelDetails.getAddress());
             hotel.setLatitude(hotelDetails.getLatitude());
             hotel.setLongitude(hotelDetails.getLongitude());
             hotel.setOwner(hotelDetails.getOwner());
-            hotel.setHousingType(hotelDetails.getHousingType());
+           // hotel.setHousingType(hotelDetails.getHousingType());
             hotelRepository.save(hotel);
         });
     }

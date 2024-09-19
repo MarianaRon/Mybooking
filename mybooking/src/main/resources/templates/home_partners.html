@@ -193,6 +193,7 @@
     </style>
 </head>
 <body>
+
 <!-- Хедер -->
 <div class="navbar">
     <div class="container header-content">
@@ -289,34 +290,33 @@
         </aside>
 
         <!-- Контент профиля -->
-        <div class="col-md-9">
-            <main class="profile-content">
-                <h1>Редагування профіля</h1>
-                <p>Ви можете редагувати свої особисті дані.</p>
-                <form th:action="@{/partners/update/{id}(id=${partner.id})}" th:object="${partner}" method="post">
-                    <div class="form-group">
-
-                        <input type="text" th:field="*{firstName}" class="form-control" required/>
-                    </div>
-                    <div class="form-group">
-
-                        <input type="text" th:field="*{lastName}" class="form-control" required/>
-                    </div>
-                    <div class="form-group">
-
-                        <input type="email" th:field="*{email}" class="form-control" required/>
-                    </div>
-                    <div class="form-group">
-
-                        <input type="text" th:field="*{phone}" class="form-control" required/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Зберегти зміни</button>
-                </form>
-            </main>
-        </div>
+<!--        <div class="col-md-9">-->
+<!--            <main class="profile-content">-->
+<!--                <h1>Редагування профіля</h1>-->
+<!--                <p>Ви можете редагувати свої особисті дані.</p>-->
+<!--                <form th:action="@{/partners/update/{id}(id=${partner.id})}" th:object="${partner}" method="post" class="form-edit-profile">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="firstName">Ім'я</label>-->
+<!--                        <input type="text" th:field="*{firstName}" class="form-control" required/>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="lastName">Прізвище</label>-->
+<!--                        <input type="text" th:field="*{lastName}" class="form-control" required/>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="email">Email</label>-->
+<!--                        <input type="email" th:field="*{email}" class="form-control" required/>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="phone">Телефон</label>-->
+<!--                        <input type="text" th:field="*{phone}" class="form-control" required/>-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="btn btn-primary">Зберегти зміни</button>-->
+<!--                </form>-->
+<!--            </main>-->
+<!--        </div>-->
     </div>
 </div>
-
 
 <!-- Футер -->
 <footer>
@@ -344,7 +344,8 @@
         <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
     </div>
 </footer>
-
+<!-- Подключение Bootstrap JS и Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

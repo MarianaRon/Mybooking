@@ -29,4 +29,8 @@ public class RoomService {
     public void deleteRoom(Long id) {
         roomRepository.deleteById(id);
     }
+    // Добавляем метод для получения номеров по списку идентификаторов
+    public List<Room> getRoomsByIds(List<Long> roomIds) {
+        return roomRepository.findAllById(roomIds);
+    }
 }
