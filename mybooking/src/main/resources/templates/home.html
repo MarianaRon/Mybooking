@@ -6,14 +6,52 @@
     <title>Arrenvi.com - Домашня сторінка</title>
     <link rel="stylesheet" href="/style.home/home_styleguide.css" />
     <link rel="stylesheet" href="/style.home/home.css" />
-    <link rel="stylesheet" href="/style.footer/footer.css">
-<!--    <link rel="stylesheet" href="/style.header/header.css">-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    footer {
+        background-color: #275271FF;
+        color: white;
+        padding: 20px 0;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .footer-section h4 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .footer-section p, .footer-section a {
+        font-size: 14px;
+        color: white;
+        text-decoration: none;
+    }
+
+    .footer-section a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 10px;
+    }
+
+</style>
 </head>
 <body>
-<!--<header th:insert="sections/header::header" style="background-color: #275271;"></header>-->
-<!--<header th:insert="~{sections/header::header}" style="background-color: #275271;"></header>-->
 <div class="container-fluid" style="background-color: #275271;">
     <div class="navbar-top d-flex justify-content-between align-items-center">
         <!-- Логотип зліва -->
@@ -116,22 +154,7 @@
     </div>
     <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
 </div>
-<!--<div class="newsletter">-->
-<!--    <div class="overlap-group">-->
-<!--        <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />-->
-<!--        <p class="text-wrapper-6">-->
-<!--            Залишайтеся в курсі нових місць для відпочинку-->
-<!--        </p>-->
-<!--&lt;!&ndash;        <div class="button-blue" style="margin-top: -70px">&ndash;&gt;-->
-<!--            <div th:if="${session.currentUser != null && !session.currentUser.subscribedToNewsletter}" class="button-blue" style="margin-top: -70px">-->
-<!--            &lt;!&ndash; Форма для підписки на newsletter &ndash;&gt;-->
-<!--                <form action="/subscribe" method="post">-->
-<!--                    <button type="submit" class="button-2">Підписатися на newsletter</button>-->
-<!--                </form>-->
-<!--            </div>-->
 
-<!--        </div>-->
-<!--</div>-->
 
 <div th:if="${param.subscriptionError}" style="color: red; font-weight: bold;">
     Ви повинні бути зареєстровані для підписки на newsletter!
@@ -202,37 +225,33 @@
 
     showSlides();
 </script>
-<!--<footer th:insert="sections/footer::footer" style="background-color: #275271;"></footer>-->
-<!--<footer th:insert="~{sections/footer::footer}" style="background-color: #275271;"></footer>-->
-<div class="footer">
-    <div class="view">
-        <div class="text-wrapper">Про нас</div>
-        <a class="div-wrapper" href="/about_us"><div class="div">Про компанію</div></a>
-    </div>
-    <div class="view-2">
-        <div class="text-wrapper">Тех. підтримка</div>
-        <div class="frame">
-            <a class="div-wrapper" href="/support"><div class="div">Найпопулярніші питання</div></a>
-            <div class="text-wrapper-2">+380 97 255 220</div>
-            <div class="text-wrapper-2">Arrenvi@gmail.com</div>
+<!-- Футер -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+<!--            <h4>Тех. підтримка</h4>-->
+            <h4><a class="nav-link" href="/support">Тех. підтримка</a></h4>
+            <p>Найпопулярніші питання</p>
+            <p>+380 97 255 220</p>
+            <p>Arrenvi@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>Для бізнесу</h4>
+            <p><a class="nav-link" href="add_hotels">Зареєструвати помешкання</a></p>
+        </div>
+        <div class="footer-section">
+            <h4><a class="nav-link" href="/about_us">Про нас</a></h4>
+            <h5>Ми в соц мережах:</h5>
+            <a href="#"><img class="img" src="/images/instagram.png" /></a>
+            <a href="#"><img class="img" src="/images/facebook.png" /></a>
+        </div>
+        <div class="footer-section">
+            <p><a href="#">Версія для мобільних пристроїв</a></p>
         </div>
     </div>
-    <div class="view-3">
-        <div class="text-wrapper">Для бізнесу</div>
-        <div class="div-wrapper"><div class="div">Зареєструвати помешкання</div></div>
+    <div class="footer-bottom">
+        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
     </div>
-    <div class="view-4">
-        <div class="text-wrapper">Ми в соц мережах:</div>
-        <div class="social-icon-footer">
-            <img class="img" src="/images/instagram.png" />
-            <img class="img" src="/images/facebook.png" />
-        </div>
-    </div>
-    <div class="text-wrapper-3">Версія для мобільних пристроїв</div>
-</div>
-<div class="frame-2">
-    <img class="logo-component" src="/images/logo1.png" />
-    <div class="text-wrapper-5">Всі права захищені 2024</div>
-</div>
+</footer>
 </body>
 </html>

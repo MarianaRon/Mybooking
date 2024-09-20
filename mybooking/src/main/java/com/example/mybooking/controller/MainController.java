@@ -3,6 +3,7 @@ package com.example.mybooking.controller;
 import com.example.mybooking.model.City;
 import com.example.mybooking.model.User;
 import com.example.mybooking.repository.IUserRepository;
+import com.example.mybooking.service.UserMessageService;
 import com.example.mybooking.service.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -32,6 +33,8 @@ public class MainController {
     private CityService cityService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMessageService userMessageService;
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
@@ -206,8 +209,9 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
     }
 
     @GetMapping("/admin_message_list")
-    public String admin_message_list(Model model ){
-        return "/admin_message_list";
+    public String viewMessages(Model model) {
+        model.addAttribute("messages", userMessageService.getAllMessages());
+        return "admin_message_list"; // Сторінка з повідомленнями
     }
 
 

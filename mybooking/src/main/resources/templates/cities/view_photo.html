@@ -3,6 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Перегляд фото</title>
+    <style>
+        footer {
+            background-color: #275271FF;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .footer-section {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -15,10 +57,40 @@
 
 <!-- Посилання на список міст -->
 <div>
-    <a class="nav-link" href="/cities/city_list">Назад до списку міст</a>
+    <a href="/cities/city_list">Назад до списку міст</a>
+</div>
+<div>
+    <a href="/admin_page">Назад до сторінки адміністратора</a>
 </div>
 
-<footer th:insert="sections/footer::footer"></footer>
-
+<!--<footer th:insert="sections/footer::footer"></footer>-->
+<!-- Футер -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <!--            <h4>Тех. підтримка</h4>-->
+            <a class="nav-link" href="/support">Тех. підтримка</a>
+            <p>Найпопулярніші питання</p>
+            <p>+380 97 255 220</p>
+            <p>Arrenvi@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>Для бізнесу</h4>
+            <p><a class="nav-link" href="add_hotels">Зареєструвати помешкання</a></p>
+        </div>
+        <div class="footer-section">
+            <a class="nav-link" href="/about_us">Про нас</a>
+            <h4>Ми в соц мережах:</h4>
+            <a href="#"><img class="img" src="/images/instagram.png" /></a>
+            <a href="#"><img class="img" src="/images/facebook.png" /></a>
+        </div>
+        <div class="footer-section">
+            <p><a href="#">Версія для мобільних пристроїв</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
+    </div>
+</footer>
 </body>
 </html>
