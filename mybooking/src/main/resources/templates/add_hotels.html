@@ -16,6 +16,16 @@
     <link rel="stylesheet" href="/style.footer/footer_styleguide.css" />
     <link rel="stylesheet" href="/style.footer/footer.css" />
 
+    <!-- Подключите jQuery перед использованием Select2 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Подключение стилей Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Подключение скрипта Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtM422TGS5SjyuYC48tdcOaBN1GKJUQ6E&callback=initMap" async defer></script>
     <style>
         .step {
@@ -298,12 +308,13 @@
     </nav>
 </header>
 
-
+<!--Шаг 1: Имя отеля и тип жилья
+В этом шаге пользователь вводит название отеля и выбирает тип жилья (housingType). Поля обязательны для заполнения, и если какое-то из них не заполнено, будет показано сообщение об ошибке.-->
 
 <div id="step-1" class="step active">
     <form id="form-step" action="/hotels/add" method="post">
         <input type="hidden" id="step" name="step" value="1" />
-
+        <!-- Название отеля -->
         <div class="field-with-label">
             <div class="text-wrapper-34">Реєстрація помешкання</div>
             <p class="text-wrapper-35">Додайте своє помешкання і готуйтесь приймати нових гостей</p>
@@ -311,73 +322,76 @@
 
         <div class="label-wrapper">
             <p class="label">
-                <span class="text-wrapper-4">Назва (заголовок) </span> <span class="text-wrapper-5">*</span>
+                <span class="text-wrapper-4">Назва </span> <span class="text-wrapper-5">*</span>
             </p>
         </div>
         <input type="text" id="name" name="name" class="form-control" placeholder="Назва вашого помешкання" required />
 
+        <!-- Тип жилья -->
         <div class="container">
             <div class="housing-type">
                 <img src="/img/5_Business_form/3_Star_Hotel.png" alt="Апартаменти">
                 <h2>Апартаменти</h2>
                 <p>Помешкання з меблями і кухнею, яке гості бронюють цілком</p>
-                <button type="button" onclick="nextStep(2)">Зареєструвати свое помешкання</button>
+                <button type="button" onclick="selectHousingType('Апартаменти')">Обрати</button>
             </div>
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/house.png" alt="Будинки">
                 <h2>Будинки</h2>
                 <p>Апартаменти, будинки для відпочинку, вілли та ін.</p>
-                <button type="button" onclick="nextStep(2)">Зареєструвати свое помешкання</button>
+                <button type="button" onclick="selectHousingType('Будинки')">Обрати</button>
             </div>
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/Room.png" alt="Готель">
                 <h2>Готель або Hostel</h2>
                 <p>Номер в готелі, хостели, ліжко, апарт-готелі</p>
-                <button type="button" onclick="nextStep(2)">Зареєструвати свое помешкання</button>
+                <button type="button" onclick="selectHousingType('Готель або Hostel')">Обрати</button>
             </div>
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/Camping_Tent.png" alt="Альтернативні помешкання">
                 <h2>Альтернативні помешкання</h2>
                 <p>Ботелі, кемпінги, намети-люкс, звичайні намети.</p>
-                <button type="button" onclick="nextStep(2)">Зареєструвати свое помешкання</button>
+                <button type="button" onclick="selectHousingType('Альтернативні помешкання')">Обрати</button>
             </div>
-        </div>
 
-        </form>
+            <!-- Скрытое поле для хранения выбранного типа жилья -->
+            <input type="hidden" id="housingType" name="housingType" value="" />
+        </div>
+    </form>
 </div>
 
+<!--Шаг 2: Город и адрес
+Этот шаг позволяет пользователю указать город, адрес и координаты для отеля.-->
 <div id="step-2" class="step">
-    <form id="form-step" action="/partners/add_hotels" method="post">
+    <form id="form-step" action="/hotels/add" method="post">
         <input type="hidden" id="step" name="step" value="2" />
-    <div class="group">
         <p class="text-wrapper-8">Де знаходиться Ваш об’єкт власності?</p>
-
+        <!-- Город -->
         <div class="field-with-label-3">
             <div class="label-wrapper">
                 <p class="label">
                     <span class="text-wrapper-4">Місто </span> <span class="text-wrapper-5">*</span>
                 </p>
             </div>
-            <input type="text" id="city" name="addressCity" class="form-control" placeholder="Кременчук" required />
+            <!-- Добавляем выпадающий список для выбора города с Select2 -->
+            <select id="cityId" name="cityId" class="form-control" required></select>
+
         </div>
 
+ <!-- Адрес -->
         <div class="field-with-label-4">
             <div class="label-wrapper">
                 <p class="label">
                     <span class="text-wrapper-4">Вулиця та номер будинку </span> <span class="text-wrapper-5">*</span>
                 </p>
             </div>
-            <input type="text" id="street" name="addressStreet" class="form-control" placeholder="напр. вул. Вячеслава Лепинського 4Б" required />
+            <input type="text" id="street" name="addressStreet" class="form-control" placeholder=" вул. Вячеслава Лепинського 4Б" required />
         </div>
-        <div class="field-with-label-5">
-            <div class="label-wrapper">
-                <p class="label-2">Додаткова інформація (Номер квартири, поверх)</p>
-            </div>
-            <input type="text" id="additionalInfo" name="additionalInfo" class="form-control" placeholder="напр. 2 поверх" />
-        </div>
+
+<!-- Карта для выбора местоположения -->
         <div class="map-container">
             <h4>Зазначте місцерозташування помешкання на мапі</h4>
 
@@ -385,9 +399,6 @@
             <input type="hidden" id="latitude" name="latitude" />
             <input type="hidden" id="longitude" name="longitude" />
         </div>
-
-
-    </div>
 
     <div class="button">
         <button type="button" class="prev-button" onclick="prevStep(1)">
@@ -399,68 +410,31 @@
     </div>
     </form>
 </div>
+
+<!--Шаг 3: Цена и удобства
+На этом шаге пользователь выбирает удобства и устанавливает цену за номер.-->
 <div id="step-3" class="step">
     <form id="form-step" action="/hotels/add" method="post">
         <input type="hidden" id="step" name="step" value="3" />
-    <div class="view-2">
-        <p class="text-wrapper-11">Зручності на вашому об’єкті</p>
 
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="parking" name="amenities" value="Паркінг" />
-            <label for="parking">Паркінг</label>
+        <!-- Динамическое отображение удобств -->
+        <div class="view-2">
+            <p class="text-wrapper-11">Зручності на вашому об’єкті</p>
+            <div class="amenities-container">
+                <ul>
+                    <!-- Iterate over amenities -->
+                    <th:block th:each="amenity : ${amenities}">
+                        <li>
+                            <input type="checkbox" name="amenities" th:value="${amenity.id}" />
+                            <span th:text="${amenity.name}"></span>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+
         </div>
 
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="wifi" name="amenities" value="Wi-Fi" />
-            <label for="wifi">Wi-Fi</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="roomService" name="amenities" value="Обслугов номерів" />
-            <label for="roomService">Обслугов номерів</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="petFriendly" name="amenities" value="Дозвол для тварин" />
-            <label for="petFriendly">Дозвол для тварин</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="gym" name="amenities" value="Тренажерний зал" />
-            <label for="gym">Тренажерний зал</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="restaurant" name="amenities" value="Ресторан" />
-            <label for="restaurant">Ресторан</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="bar" name="amenities" value="Бар" />
-            <label for="bar">Бар</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="spa" name="amenities" value="Спа центр" />
-            <label for="spa">Спа центр</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="pool" name="amenities" value="Басейн" />
-            <label for="pool">Басейн</label>
-        </div>
-
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="massage" name="amenities" value="Масаж" />
-            <label for="massage">Масаж</label>
-        </div>
-        <div class="checkbox-with-text">
-            <input type="checkbox" id="tv" name="amenities" value="Телевизор" />
-            <label for="tv">Телевизор</label>
-        </div>
-
-    </div>
-
+ <!-- Цена -->
     <div class="view-3">
         <p class="text-wrapper-11">Вартість номера</p>
         <input type="number" id="price" name="price" class="form-control" placeholder="1000" required />
@@ -471,7 +445,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
             </svg>
-            Назад
+
         </button>
         <button type="button" class="next-button" onclick="nextStep(4)">Продовжити</button>
     </div>
@@ -479,12 +453,23 @@
 
 </div>
 
+
+
+<!--Шаг 4: Изображения и описание
+Пользователь загружает изображения и добавляет описание объекта.-->
 <div id="step-4" class="step">
-    <form id="form-step" action="/hotels/submit" method="post">
+    <form id="form-step" action="/hotels/add" method="post" enctype="multipart/form-data">
         <input type="hidden" id="step" name="step" value="4" />
+
+
+<!-- Загрузка изображений -->
     <div class="frame-10">
         <p class="text-wrapper-26">Додайте фотографії та опис об’єкта</p>
         <input type="file" id="imageUpload" name="imageUpload" accept="image/*" class="form-control" />
+    </div>
+
+ <!-- Описание -->
+    <div class="frame-10">
         <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5"></textarea>
     </div>
     <div class="button">
@@ -528,24 +513,84 @@
     </div>
 </footer>
 
+<!--позволяет выбрать тип жилья и установить его в скрытом поле формы.-->
+
 <script>
+    // Функция для выбора типа жилья и автоматического перехода на следующий шаг
+    function selectHousingType(type) {
+        // Устанавливаем выбранный тип жилья в скрытое поле
+        document.getElementById('housingType').value = type;
+
+        // Сохраняем данные формы и переходим на следующий шаг
+        nextStep(2);
+    }
+
+    // Функция для перехода на следующий шаг
+    function nextStep(step) {
+        // Устанавливаем значение шага
+        document.getElementById('step').value = step;
+
+        // Отправляем форму
+        document.getElementById('form-step').submit();
+    }
+</script>
+<script>
+    // Инициализация карты
+    var map;
+    var marker;
 
     function initMap() {
-        var location = {lat: 50.4501, lng: 30.5234};  // Пример координат (Киев)
-        var map = new google.maps.Map(document.getElementById('map'), {
+        var initialLocation = {lat: 50.4501, lng: 30.5234};  // Начальное местоположение (Киев)
+        map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
-            center: location
+            center: initialLocation
         });
 
-        // Используйте стандартный маркер
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            title: 'Кременчук'
+        // Инициализируем маркер как null
+        marker = null;
+
+        // Добавляем обработчик клика по карте для выбора местоположения
+        map.addListener('click', function(event) {
+            placeMarker(event.latLng);
         });
     }
 
+    // Функция для установки маркера на карте
+    function placeMarker(location) {
+        if (marker) {
+            marker.setPosition(location);
+        } else {
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: 'Selected Location'
+            });
+        }
+
+        // Обновляем скрытые поля
+        document.getElementById('latitude').value = location.lat();
+        document.getElementById('longitude').value = location.lng();
+    }
 </script>
+
+<!--<script>-->
+
+<!--    function initMap() {-->
+<!--        var location = {lat: 50.4501, lng: 30.5234};  // Пример координат (Киев)-->
+<!--        var map = new google.maps.Map(document.getElementById('map'), {-->
+<!--            zoom: 12,-->
+<!--            center: location-->
+<!--        });-->
+
+<!--        // Используйте стандартный маркер-->
+<!--        var marker = new google.maps.Marker({-->
+<!--            position: location,-->
+<!--            map: map,-->
+<!--            title: 'Кременчук'-->
+<!--        });-->
+<!--    }-->
+
+<!--</script>-->
 <script>
     function nextStep(stepNumber) {
         // Ховаємо поточний крок
@@ -562,6 +607,77 @@
         document.getElementById('step-' + step).classList.add('active');
 
 
+    }
+</script>
+<script>
+    // Инициализация Select2 для выбора города с использованием AJAX
+
+    //Инициализация Select2 с AJAX:
+    //Добавлен JavaScript для инициализации Select2 с поддержкой поиска по AJAX.
+    //При выборе города осуществляется AJAX-запрос для получения координат и обновления карты.
+    $(document).ready(function() {
+        $('#cityId').select2({
+            placeholder: "Выберите город",
+            minimumInputLength: 1,
+            ajax: {
+                url: '/cities/search',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term // поисковый запрос
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (city) {
+                            return {
+                                id: city.id,
+                                text: city.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        // Обработка выбора города для обновления карты
+        $('#cityId').on('select2:select', function (e) {
+            var cityId = e.params.data.id;
+            fetchCityCoordinates(cityId);
+        });
+    });
+
+    function fetchCityCoordinates(cityId) {
+        $.ajax({
+            url: '/cities/' + cityId + '/coordinates',
+            method: 'GET',
+            success: function(data) {
+                var location = { lat: data.latitude, lng: data.longitude };
+                // Центрируем карту на выбранном местоположении
+                map.setCenter(location);
+                map.setZoom(12);
+
+                // Устанавливаем или перемещаем маркер
+                if (marker) {
+                    marker.setPosition(location);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: 'Selected Location'
+                    });
+                }
+
+                // Обновляем скрытые поля
+                document.getElementById('latitude').value = data.latitude;
+                document.getElementById('longitude').value = data.longitude;
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching city coordinates:', error);
+            }
+        });
     }
 </script>
 

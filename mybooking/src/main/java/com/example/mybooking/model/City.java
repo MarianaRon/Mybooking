@@ -30,6 +30,13 @@ public class City {
     @Column
     private byte[] photoBytes;
 
+    // Поля широты и долготы, необязательные для заполнения
+    @Column
+    private Double latitude;
+
+    @Column
+    private Double longitude;
+
     // Constructors
     public City() {
     }
@@ -96,5 +103,20 @@ public class City {
 
     public void setPhotoBytes(byte[] photoBytes) {
         this.photoBytes = photoBytes;
+    }
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

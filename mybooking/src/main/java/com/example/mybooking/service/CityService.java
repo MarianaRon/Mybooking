@@ -29,5 +29,10 @@ public class CityService {
     public void deleteCity(Long id) {
         cityRepository.deleteById(id);
     }
+
+    // Метод для поиска городов по части имени
+    public List<City> findCitiesByNameContaining(String name) {
+        return cityRepository.findByNameContainingIgnoreCase(name);
+    }
 }
 

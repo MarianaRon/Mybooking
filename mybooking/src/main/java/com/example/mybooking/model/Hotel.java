@@ -45,6 +45,10 @@ public class Hotel {
     @JoinColumn(name = "partner_id", nullable = false)
     private Partner owner;
 
+    // Тип жилья, например гостиница, апартаменты и т.д.
+    @Column
+    private String housingType;
+
     // Список удобств, которые предлагает отель
     @ManyToMany
     @JoinTable(
@@ -67,7 +71,7 @@ public class Hotel {
     }
 
     // Конструктор с параметрами
-    public Hotel(String name, String addressStreet, Double latitude, Double longitude, Double price, String description, City city, Partner owner) {
+    public Hotel(String name, String addressStreet, Double latitude, Double longitude, Double price, String description, City city, Partner owner, String housingType) {
         this.name = name;
         this.addressStreet = addressStreet;
         this.latitude = latitude;
@@ -76,6 +80,7 @@ public class Hotel {
         this.description = description;
         this.city = city;
         this.owner = owner;
+        this.housingType = housingType;
     }
 
     // Геттеры и сеттеры для всех полей
@@ -152,6 +157,14 @@ public class Hotel {
         this.owner = owner;
     }
 
+    public String getHousingType() {
+        return housingType;
+    }
+
+    public void setHousingType(String housingType) {
+        this.housingType = housingType;
+    }
+
     public Set<Amenity> getAmenities() {
         return amenities;
     }
@@ -176,41 +189,41 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-    // Метод для добавления удобства
-    public void addAmenity(Amenity amenity) {
-        amenities.add(amenity);
-        amenity.getHotels().add(this);
-    }
-
-    // Метод для удаления удобства
-    public void removeAmenity(Amenity amenity) {
-        amenities.remove(amenity);
-        amenity.getHotels().remove(this);
-    }
-
-    // Метод для добавления изображения
-    public void addImage(Image image) {
-        images.add(image);
-        image.setHotel(this);
-    }
-
-    // Метод для удаления изображения
-    public void removeImage(Image image) {
-        images.remove(image);
-        image.setHotel(null);
-    }
-
-    // Метод для добавления номера
-    public void addRoom(Room room) {
-        rooms.add(room);
-        room.setHotel(this);
-    }
-
-    // Метод для удаления номера
-    public void removeRoom(Room room) {
-        rooms.remove(room);
-        room.setHotel(null);
-    }
+//    // Метод для добавления удобства
+//    public void addAmenity(Amenity amenity) {
+//        amenities.add(amenity);
+//        amenity.getHotels().add(this);
+//    }
+//
+//    // Метод для удаления удобства
+//    public void removeAmenity(Amenity amenity) {
+//        amenities.remove(amenity);
+//        amenity.getHotels().remove(this);
+//    }
+//
+//    // Метод для добавления изображения
+//    public void addImage(Image image) {
+//        images.add(image);
+//        image.setHotel(this);
+//    }
+//
+//    // Метод для удаления изображения
+//    public void removeImage(Image image) {
+//        images.remove(image);
+//        image.setHotel(null);
+//    }
+//
+//    // Метод для добавления номера
+//    public void addRoom(Room room) {
+//        rooms.add(room);
+//        room.setHotel(this);
+//    }
+//
+//    // Метод для удаления номера
+//    public void removeRoom(Room room) {
+//        rooms.remove(room);
+//        room.setHotel(null);
+//    }
 }
 
 

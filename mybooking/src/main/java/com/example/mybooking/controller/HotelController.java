@@ -11,7 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,7 @@ public class HotelController {
     @Autowired
     private CityService cityService; // Добавляем CityService для работы с городами
     // Получение всех отелей
+    //получает список всех отелей с помощью сервиса HotelService и добавляет его в модель для отображения на странице hotel_list.html.
     @GetMapping
     public String getAllHotels(Model model) {
         List<Hotel> hotels = hotelService.getAllHotels();
@@ -50,6 +52,7 @@ public class HotelController {
         return "hotels/hotel_list";
     }
     // Получение отеля по ID
+    //получает отель по его ID через сервис HotelService. Если отель найден, он отображается на странице hotel_details.html. Если нет, происходит перенаправление на список отелей.
     @GetMapping("/hotel/{id}")
     public String getHotelById(@PathVariable Long id, Model model) {
         Optional<Hotel> hotel = hotelService.getHotelById(id);
@@ -60,7 +63,11 @@ public class HotelController {
             return "redirect:/hotels";
         }
     }
+
+    //Многошаговая форма: добавление отеля Методы для добавления отеля разбиты на шаги, где информация сохраняется поэтапно, что позволяет разделить ввод данных на несколько шагов
+
     // Метод для инициализации объекта отеля в сессии
+    //проверяет, существует ли в сессии объект отеля. Если нет, создается новый объект отеля и сохраняется в сессии для дальнейшего использования.
     private Hotel initializeHotelInSession(HttpSession session) {
         Hotel sessionHotel = (Hotel) session.getAttribute("hotel");
         if (sessionHotel == null) {
@@ -72,12 +79,23 @@ public class HotelController {
     }
 
     // Показ формы для добавления отеля
+    //метод отображает форму для добавления отеля. Также осуществляется проверка авторизованного партнера, так как только партнеры могут добавлять отели.
     @GetMapping("/add")
     public String showAddHotelForm(HttpSession session, Model model, HttpServletResponse response) {
         Hotel hotel = new Hotel();
         model.addAttribute("hotel", hotel);
 
-        // Отключаем кэширование
+
+        // Получаем список удобств из базы данных
+        List<Amenity> amenities = amenityService.getAllAmenities();
+        logger.info("Loaded amenities: {}", amenities); // Логирование для проверки
+        model.addAttribute("amenities", amenities); // Передаем удобства в модель
+        ;
+
+        // Проверяем, передаются ли данные об удобствах
+        System.out.println("Удобства загружены: " + amenities);
+
+        // Отключаем кэширование для страницы добавления отеля
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Прокси
@@ -85,45 +103,56 @@ public class HotelController {
         // Получаем текущего авторизованного партнера
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
-            return "redirect:/partner_Account"; // Если партнер не авторизован
+            // Переход на страницу авторизации, если партнер не авторизован
+            return "redirect:/partner_Account";
         }
-
-        return "add_hotels"; // Возвращаем шаблон страницы добавления отеля
+// Возвращаем шаблон страницы добавления отеля
+        return "add_hotels";
     }
-
+    @PostMapping("/add")
     public String processFormStep(@ModelAttribute Hotel hotel, HttpSession session,
                                   @RequestParam("cityId") Long cityId, // ID города
                                   @RequestParam("amenities") List<Long> amenityIds,
-                                  @RequestParam("images") List<Long> imageIds,
+                                  @RequestParam("images") List<MultipartFile> imageFiles, // Загрузка изображений
                                   @RequestParam("rooms") List<Long> roomIds,
                                   @RequestParam("step") int step,
                                   @RequestParam(required = false) String roomType,
                                   @RequestParam(required = false) Double roomPrice,
-                                  @RequestParam(required = false) Integer roomCapacity) {
-        // Инициализация объекта отеля в сессии
+                                  @RequestParam(required = false) Integer roomCapacity,
+                                  //Добавляем параметр housingType)
+                                  @RequestParam(required = false) String housingType) {
+// Инициализация объекта отеля в сессии
         Hotel sessionHotel = initializeHotelInSession(session);
 
+        logger.info("Processing step {}. Hotel in session: {}", step, sessionHotel);
 
-
-        // Проверка, есть ли в сессии авторизованный партнер
+// Проверка, есть ли в сессии авторизованный партнер
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
             logger.error("Partner not found in session. Redirecting to login.");
-            return "redirect:/partner_Account"; // Если партнер не авторизован
+// Если партнер не авторизован
+            return "redirect:/partner_Account";
         }
+// Привязываем партнера к отелю
+        sessionHotel.setOwner(loggedInPartner);
 
-        sessionHotel.setOwner(loggedInPartner); // Привязываем партнера к отелю
-
-        // Обрабатываем обновление данных отеля в зависимости от шага
+// Обрабатываем обновление данных отеля в зависимости от шага
         switch (step) {
-            case 1:
+            case 1://Шаг 1: Проверяет наличие имени отеля и сохраняет его.
                 if (hotel.getName() == null || hotel.getName().isEmpty()) {
                     logger.error("Hotel name is missing at step 1");
                     return "redirect:/hotels/add?step=1&error=name";
                 }
+                if (housingType == null || housingType.isEmpty()) {
+                    logger.error("Housing type is missing at step 1");
+                    return "redirect:/hotels/add?step=1&error=housingType"; // Проверка типа жилья
+                }
+// Сохраняем имя отеля
                 sessionHotel.setName(hotel.getName());
+// Сохраняем тип жилья
+                sessionHotel.setHousingType(housingType);
                 break;
-            case 2:
+            case 2://Шаг 2: Устанавливает город отеля с использованием CityService, а также адрес и координаты.
                 // Добавляем обработку города
                 Optional<City> cityOptional = cityService.getCityById(cityId);
                 if (cityOptional.isEmpty()) {
@@ -131,7 +160,8 @@ public class HotelController {
                     return "redirect:/hotels/add?step=2&error=city";
                 }
                 City city = cityOptional.get();
-                sessionHotel.setCity(city); // Устанавливаем город для отеля
+// Устанавливаем город для отеля
+                hotel.setCity(city);
 
                 if (hotel.getAddressStreet() == null) {
                     logger.error("Address data is incomplete at step 2");
@@ -141,33 +171,54 @@ public class HotelController {
                 sessionHotel.setLatitude(hotel.getLatitude());
                 sessionHotel.setLongitude(hotel.getLongitude());
                 break;
-            case 3:
+            case 3://Шаг 3: Устанавливает цену отеля и добавляет удобства (с помощью AmenityService).
+
+                sessionHotel.setPrice(hotel.getPrice());
+
+                List<Amenity> amenities = amenityService.getAmenitiesByIds(amenityIds);
+                Set<Amenity> amenitySet = new HashSet<>(amenities);
+                sessionHotel.setAmenities(amenitySet);
+
                 if (hotel.getPrice() == null || hotel.getPrice() <= 0) {
                     logger.error("Price is missing or invalid at step 3");
                     return "redirect:/hotels/add?step=3&error=price";
                 }
-                sessionHotel.setPrice(hotel.getPrice());
-                List<Amenity> amenities = amenityService.getAmenitiesByIds(amenityIds);
-                Set<Amenity> amenitySet = new HashSet<>(amenities);
-                sessionHotel.setAmenities(amenitySet);
                 break;
-            case 4:
+
+            case 4://Шаг 4: Устанавливает описание отеля, изображения (с помощью ImageService), и номера (с помощью RoomService).
                 if (hotel.getDescription() == null || hotel.getDescription().isEmpty()) {
                     logger.error("Description is missing at step 4");
                     return "redirect:/hotels/add?step=4&error=description";
                 }
+
                 sessionHotel.setDescription(hotel.getDescription());
-                // Обработка изображений
-                List<Image> images = imageService.getImagesByIds(imageIds);
-                Set<Image> imageSet = new HashSet<>(images);
-                sessionHotel.setImages(imageSet);
+ // Обработка изображений
+//Получение изображений: Идентификаторы изображений (ID) передаются с фронтенда и используются для получения соответствующих объектов Image из базы данных через ImageService.
+//Установка изображений: Изображения добавляются в объект отеля, который хранится в сессии, и затем будет сохранен в базе данных на этапе завершения.
+                // Обработка и сохранение изображений
+                if (imageFiles != null && !imageFiles.isEmpty()) {
+                    Set<Image> imageSet = new HashSet<>();
+                    for (MultipartFile file : imageFiles) {
+                        try {
+                            Image image = new Image();
+                            image.setUrl(file.getOriginalFilename()); // URL или имя файла
+                            image.setPhotoBytes(file.getBytes()); // Байтовое содержимое изображения
+                            image.setHotel(sessionHotel);
+                            imageSet.add(image);
+                            imageService.saveImage(image); // Сохранение изображения в базе данных
+                        } catch (Exception e) {
+                            logger.error("Error saving image: {}", e.getMessage());
+                        }
+                    }
+                    sessionHotel.setImages(imageSet);
+                }
 
                 // Обработка номеров
                 List<Room> rooms = roomService.getRoomsByIds(roomIds);
                 Set<Room> roomSet = new HashSet<>(rooms);
                 sessionHotel.setRooms(roomSet);
                 break;
-            case 5:
+            case 5://Шаг 5: Добавляет номер в отель, если введены данные о номере.
                 //добавлена возможность добавления номера в отель, если переданы его параметры (roomType, roomPrice, roomCapacity).
 
                 if (roomType != null && roomPrice != null && roomCapacity != null) {
@@ -223,6 +274,7 @@ public class HotelController {
 
         return "redirect:/hotels_by_partner";
     }
+
     @GetMapping("/hotels_by_partner")
     public String getHotelsByPartner(HttpSession session, Model model) {
         // Получаем партнера из сессии

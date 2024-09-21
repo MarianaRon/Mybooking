@@ -123,5 +123,40 @@ public class CityController {
         cityService.saveCity(city);
         return "redirect:/cities/city_list";
     }
+    /////////////////////
+    // Новый метод для поиска городов по имени (для Select2)
+    @GetMapping("/search")
+    @ResponseBody
+    public List<City> searchCities(@RequestParam("term") String term) {
+        return cityService.findCitiesByNameContaining(term);
+    }
+
+    // Новый метод для получения координат города по ID
+    @GetMapping("/{cityId}/coordinates")
+    @ResponseBody
+    public ResponseEntity<CityCoordinates> getCityCoordinates(@PathVariable Long cityId) {
+        City city = cityService.getCityById(cityId)
+                .orElseThrow(() -> new RuntimeException("Город не найден"));
+        return ResponseEntity.ok(new CityCoordinates(city.getLatitude(), city.getLongitude()));
+    }
+
+    // Вспомогательный класс для передачи координат
+    public static class CityCoordinates {
+        private Double latitude;
+        private Double longitude;
+
+        public CityCoordinates(Double latitude, Double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public Double getLatitude() {
+            return latitude;
+        }
+
+        public Double getLongitude() {
+            return longitude;
+        }
+    }
 
 }

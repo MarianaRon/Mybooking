@@ -1,13 +1,16 @@
 package com.example.mybooking.controller;
 
+import ch.qos.logback.classic.Logger;
 import com.example.mybooking.model.Amenity;
 import com.example.mybooking.service.AmenityService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,10 +21,20 @@ public class AmenityController {
 
     @Autowired
     private AmenityService amenityService;
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(AmenityController.class);
+
 
     @GetMapping("/amenity_list")
     public String amenityList(Model model) {
         List<Amenity> amenities = amenityService.getAllAmenities();
+// Логируем результат
+        if (amenities.isEmpty()) {
+            logger.warn("Список удобств пуст");
+        } else {
+            logger.info("Загруженные удобства: {}", amenities);
+        }
+
+
         model.addAttribute("amenities", amenities);
         return "amenities/amenity_list";
     }
