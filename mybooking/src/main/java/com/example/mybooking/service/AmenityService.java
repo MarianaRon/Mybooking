@@ -18,17 +18,15 @@ public class AmenityService {
     private static final Logger logger = LoggerFactory.getLogger(AmenityService.class);
 
     public List<Amenity> getAmenitiesByIds(List<Long> amenityIds) {
-        return amenityRepository.findAllById(amenityIds); // Предполагается, что используете JpaRepository
+        return amenityRepository.findAll();
     }
     public List<Amenity> getAllAmenitiesByIds(List<Long> amenityIds) {
         return amenityRepository.findAllById(amenityIds);
     }
     public List<Amenity> getAllAmenities() {
         List<Amenity> amenities = amenityRepository.findAll();
-        if (amenities.isEmpty()) {
-            logger.warn("Список удобств пуст");
-        } else {
-            logger.info("Количество удобств: {}", amenities.size());
+        if (amenities == null || amenities.isEmpty()) {
+            logger.warn("Удобства не найдены в базе данных.");
         }
         return amenities;
     }

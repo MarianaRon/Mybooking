@@ -24,8 +24,17 @@ public class HotelService {
     private IHotelRepository hotelRepository;
     @Autowired
     private AmenityService amenityService; // Подключаем сервис для работы с удобствами
+
+    /**
+     * Сохранение отеля с удобствами и партнером.
+     *
+     * @param hotel объект отеля
+     * @param partner объект партнера
+     * @param amenityIds список ID удобств
+     * @return сохранённый объект отеля
+     */
     @Transactional
-    public Hotel saveHotelWithPartner(Hotel hotel, Partner partner, List<Long> amenityIds) {
+    public Hotel saveHotelWithPartnerAndAmenities(Hotel hotel, Partner partner, List<Long> amenityIds) {
         // Привязываем партнера к отелю
         hotel.setOwner(partner);
 
@@ -37,6 +46,7 @@ public class HotelService {
             Set<Amenity> amenitySet = new HashSet<>(amenities);
             hotel.setAmenities(amenitySet);
         }
+
 
         // Сохраняем отель в базе данных
         try {

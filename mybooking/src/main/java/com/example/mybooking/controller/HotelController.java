@@ -85,13 +85,22 @@ public class HotelController {
     // Показ формы для добавления отеля
     @GetMapping("/add")
     public String showAddHotelForm(HttpSession session, Model model) {
+        // Создаем новый объект отеля
         model.addAttribute("hotel", new Hotel());
 
-        // Загружаем список удобств и городов
-        List<Amenity> amenities = amenityService.getAllAmenities();
-        List<City> cities = cityService.getAllCities();
 
+        // Получаем список удобств
+        List<Amenity> amenities = amenityService.getAllAmenities();
+
+        if (amenities == null || amenities.isEmpty()) {
+            logger.warn("Список удобств пуст или не был загружен.");
+        } else {
+            logger.info("Список удобств загружен: {}", amenities);
+        }
         model.addAttribute("amenities", amenities);
+
+
+        List<City> cities = cityService.getAllCities();
         model.addAttribute("cities", cities);
 
         // Проверяем, авторизован ли партнер
@@ -107,7 +116,7 @@ public class HotelController {
     public String saveHotel(@ModelAttribute Hotel hotel, HttpSession session,
                             @RequestParam("cityId") Long cityId,
                             @RequestParam("addressStreet") String addressStreet,
-                            @RequestParam(value = "amenities", required = false) List<Long> amenityIds,
+                            @RequestParam(value = "amenities",required = false) List<Long> amenityIds,
                             @RequestParam(value = "images", required = false) List<MultipartFile> imageFiles) {
 
         // Получаем текущего авторизованного партнера
@@ -119,6 +128,7 @@ public class HotelController {
 
         // Привязываем партнера к отелю
         hotel.setOwner(loggedInPartner);
+
 
         // Устанавливаем город по переданному cityId
         Optional<City> cityOptional = cityService.getCityById(cityId);

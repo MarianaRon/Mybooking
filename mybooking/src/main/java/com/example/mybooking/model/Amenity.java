@@ -18,6 +18,7 @@ public class Amenity {
 
     // Конструктори, геттери та сеттери
 
+
     public Amenity() {
     }
 

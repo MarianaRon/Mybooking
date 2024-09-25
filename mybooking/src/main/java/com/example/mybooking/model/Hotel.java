@@ -50,11 +50,11 @@ public class Hotel {
 
     @ManyToMany
     @JoinTable(
-            name = "hotel_amenities",
-            joinColumns = @JoinColumn(name = "hotel_id"),
-            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+            name = "hotel_amenities",// Имя промежуточной таблицы
+            joinColumns = @JoinColumn(name = "hotel_id"),// Связь с таблицей Hotel
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")// Связь с таблицей Amenity
     )
-    private Set<Amenity> amenities = new HashSet<>();
+    private Set<Amenity> amenities;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Image> images = new HashSet<>();

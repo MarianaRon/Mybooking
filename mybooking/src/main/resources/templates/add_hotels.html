@@ -24,8 +24,6 @@
     <!-- Подключение скрипта Select2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-
-
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtM422TGS5SjyuYC48tdcOaBN1GKJUQ6E&callback=initMap" async defer></script>
     <style>
         .step {
@@ -421,15 +419,18 @@
         <div class="view-2">
             <p class="text-wrapper-11">Зручності на вашому об’єкті</p>
             <div class="amenities-container">
-                <ul>
-                    <!-- Iterate over amenities -->
-                    <th:block th:each="amenity : ${amenities}">
-                        <li>
-                            <input type="checkbox" name="amenities" th:value="${amenity.id}" />
+                <div th:if="${amenities != null}">
+                    <p>Удобства на объекте:</p>
+                    <ul>
+                        <li th:each="amenity : ${amenities}">
+                            <input type="checkbox" th:value="${amenity.id}" />
                             <span th:text="${amenity.name}"></span>
                         </li>
-                    </th:block>
-                </ul>
+                    </ul>
+                </div>
+                <div th:if="${amenities == null || #lists.size(amenities) == 0}">
+                    <p>Удобства отсутствуют.</p>
+                </div>
             </div>
 
         </div>
