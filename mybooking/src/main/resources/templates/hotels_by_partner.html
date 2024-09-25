@@ -227,31 +227,42 @@
 
 <div class="container mt-5">
     <h1>Мої готелі</h1>
-    <table class="table table-bordered mt-4">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Назва</th>
-            <th>Адреса</th>
-            <th>Опис</th>
-            <th>Ціна</th>
-            <th>Дії</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="hotel : ${hotels}">
-            <td th:text="${hotel.id}"></td>
-            <td th:text="${hotel.name}"></td>
-            <td th:text="${hotel.address}"></td>
-            <td th:text="${hotel.description}"></td>
-            <td th:text="${hotel.price}"></td>
-            <td>
-                <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary btn-sm">Редагувати</a>
-                <a th:href="@{/hotels/delete/{id}(id=${hotel.id})}" class="btn btn-danger btn-sm">Видалити</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
+    <!-- Проверяем, есть ли зарегистрированные отели -->
+    <div th:if="${#lists.isEmpty(hotels)}">
+        <p>Ви ще не зареєстрували жодного готелю.</p>
+    </div>
+
+    <!-- Таблица отображается только если есть зарегистрированные отели -->
+    <div th:if="${!#lists.isEmpty(hotels)}">
+        <table class="table table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва</th>
+                <th>Адреса</th>
+                <th>Опис</th>
+                <th>Ціна</th>
+                <th>Дії</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Цикл по каждому отелю из списка hotels -->
+            <tr th:each="hotel : ${hotels}">
+                <td th:text="${hotel.id}"></td>
+                <td th:text="${hotel.name}"></td>
+                <td th:text="${hotel.addressStreet}"></td> <!-- Адреса теперь соответствует атрибуту addressStreet -->
+                <td th:text="${hotel.description}"></td>
+                <td th:text="${hotel.price} + ' UAH'"></td> <!-- Цена с добавлением валюты -->
+                <td>
+                    <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary btn-sm">Редагувати</a>
+                    <a th:href="@{/hotels/delete/{id}(id=${hotel.id})}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Ви впевнені, що хочете видалити цей готель?')">Видалити</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

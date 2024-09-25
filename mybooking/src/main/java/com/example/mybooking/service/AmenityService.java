@@ -20,6 +20,9 @@ public class AmenityService {
     public List<Amenity> getAmenitiesByIds(List<Long> amenityIds) {
         return amenityRepository.findAllById(amenityIds); // Предполагается, что используете JpaRepository
     }
+    public List<Amenity> getAllAmenitiesByIds(List<Long> amenityIds) {
+        return amenityRepository.findAllById(amenityIds);
+    }
     public List<Amenity> getAllAmenities() {
         List<Amenity> amenities = amenityRepository.findAll();
         if (amenities.isEmpty()) {

@@ -80,8 +80,8 @@ public class HotelService {
      */
     @Transactional
     public Hotel saveHotelWithPartner(Hotel hotel, Partner partner) {
-        logger.debug("Saving hotel: {} with partner: {}", hotel, partner);
-        hotel.setOwner(partner);
+        hotel.setOwner(partner); // Привязываем партнера
+        hotel.setCity(hotel.getCity()); // Привязываем город
 
         try {
             Hotel savedHotel = hotelRepository.save(hotel);
@@ -129,6 +129,7 @@ public class HotelService {
         logger.debug("Fetching hotels for partner: {}", owner.getId());
         return hotelRepository.findByOwner(owner);
     }
+
 
     /**
      * Обновление существующего отеля.

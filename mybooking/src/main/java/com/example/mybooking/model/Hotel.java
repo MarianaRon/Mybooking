@@ -4,52 +4,50 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Название отеля, обязательное поле
     @Column(nullable = false)
     private String name;
 
-    // Адрес улицы отеля, необязательное поле
-    @Column
+    @Column(name = "address_street", nullable = false)
     private String addressStreet;
 
-    // Широта (для картографических целей), необязательное поле
     @Column
-    private Double latitude;
+    private double latitude;
 
-    // Долгота (для картографических целей), необязательное поле
     @Column
-    private Double longitude;
+    private double longitude;
 
-    // Цена за проживание, необязательное поле
-    @Column
+    @Column(nullable = false)
     private Double price;
 
-    // Описание отеля, необязательное поле
     @Column
     private String description;
 
-    // Город, в котором находится отель, необязательное поле
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    // Владелец отеля (партнер), обязательное поле
     @ManyToOne
     @JoinColumn(name = "partner_id", nullable = false)
     private Partner owner;
 
-    // Тип жилья, например гостиница, апартаменты и т.д.
     @Column
     private String housingType;
 
-    // Список удобств, которые предлагает отель
     @ManyToMany
     @JoinTable(
             name = "hotel_amenities",
@@ -58,174 +56,20 @@ public class Hotel {
     )
     private Set<Amenity> amenities = new HashSet<>();
 
-    // Список изображений отеля
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Image> images = new HashSet<>();
 
-    // Список номеров отеля
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Room> rooms = new HashSet<>();
 
-    // Конструктор по умолчанию
-    public Hotel() {
-    }
-
-    // Конструктор с параметрами
-    public Hotel(String name, String addressStreet, Double latitude, Double longitude, Double price, String description, City city, Partner owner, String housingType) {
+    public Hotel(String name, String addressStreet, Double price, City city, Partner owner) {
         this.name = name;
         this.addressStreet = addressStreet;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.price = price;
-        this.description = description;
         this.city = city;
         this.owner = owner;
-        this.housingType = housingType;
     }
-
-    // Геттеры и сеттеры для всех полей
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddressStreet() {
-        return addressStreet;
-    }
-
-    public void setAddressStreet(String addressStreet) {
-        this.addressStreet = addressStreet;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Partner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Partner owner) {
-        this.owner = owner;
-    }
-
-    public String getHousingType() {
-        return housingType;
-    }
-
-    public void setHousingType(String housingType) {
-        this.housingType = housingType;
-    }
-
-    public Set<Amenity> getAmenities() {
-        return amenities;
-    }
-
-    public void setAmenities(Set<Amenity> amenities) {
-        this.amenities = amenities;
-    }
-
-    public Set<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(Set<Image> images) {
-        this.images = images;
-    }
-
-    public Set<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(Set<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-//    // Метод для добавления удобства
-//    public void addAmenity(Amenity amenity) {
-//        amenities.add(amenity);
-//        amenity.getHotels().add(this);
-//    }
-//
-//    // Метод для удаления удобства
-//    public void removeAmenity(Amenity amenity) {
-//        amenities.remove(amenity);
-//        amenity.getHotels().remove(this);
-//    }
-//
-//    // Метод для добавления изображения
-//    public void addImage(Image image) {
-//        images.add(image);
-//        image.setHotel(this);
-//    }
-//
-//    // Метод для удаления изображения
-//    public void removeImage(Image image) {
-//        images.remove(image);
-//        image.setHotel(null);
-//    }
-//
-//    // Метод для добавления номера
-//    public void addRoom(Room room) {
-//        rooms.add(room);
-//        room.setHotel(this);
-//    }
-//
-//    // Метод для удаления номера
-//    public void removeRoom(Room room) {
-//        rooms.remove(room);
-//        room.setHotel(null);
-//    }
 }
-
 
 //package com.example.mybooking.model;
 //

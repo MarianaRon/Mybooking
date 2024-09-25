@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ICityRepository extends JpaRepository<City, Long> {
     // Метод для поиска города по названию
-    City findByName(String name);
+    City searchByName(String name);
     List<City> findByNameContainingIgnoreCase(String name);
 }

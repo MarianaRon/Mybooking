@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cities")
@@ -125,10 +128,23 @@ public class CityController {
     }
     /////////////////////
     // Новый метод для поиска городов по имени (для Select2)
+//    @GetMapping("/search")
+//    @ResponseBody
+//    public List<City> searchCities(@RequestParam("term") String term) {
+//        return cityService.findCitiesByNameContaining(term);
+//    }
     @GetMapping("/search")
     @ResponseBody
-    public List<City> searchCities(@RequestParam("term") String term) {
-        return cityService.findCitiesByNameContaining(term);
+    public List<Map<String, Object>> searchCities(@RequestParam("term") String term) {
+        List<City> cities = cityService.findCitiesByNameContaining(term);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (City city : cities) {
+            Map<String, Object> cityData = new HashMap<>();
+            cityData.put("id", city.getId());
+            cityData.put("name", city.getName());
+            result.add(cityData);
+        }
+        return result;
     }
 
     // Новый метод для получения координат города по ID
@@ -158,5 +174,7 @@ public class CityController {
             return longitude;
         }
     }
+    //////////////
+
 
 }
