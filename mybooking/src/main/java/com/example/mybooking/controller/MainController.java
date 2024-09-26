@@ -143,13 +143,6 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         return "redirect:/"; // Redirect to home if not authorized
     }
 
-
-    @GetMapping("/contacts")
-    public String contacts( Model model ){
-        model.addAttribute("contacts");
-        return "/contacts";
-    }
-//
     @GetMapping("/hotel_search")
     public String hotel_search(Model model ){
    model.addAttribute("hotel_search");

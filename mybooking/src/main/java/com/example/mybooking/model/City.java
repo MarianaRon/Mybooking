@@ -30,6 +30,7 @@ public class City {
     @Column
     private byte[] photoBytes;
 
+
     // Поля широты и долготы, необязательные для заполнения
     @Column
     private Double latitude;
@@ -40,7 +41,11 @@ public class City {
     // Constructors
     public City() {
     }
-
+    //для сортування готелей по місту
+    @Override
+    public String toString() {
+        return this.name + ", " + this.region;
+    }
     public City(String name, String region) {
         this.name = name;
         this.region = region;

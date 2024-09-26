@@ -147,6 +147,33 @@ public class CityController {
         return result;
     }
 
+    //для каруселі міст
+
+
+    //для виведення сортування готелів по назві міста - перехід з головної сторінки за пошуком
+    @PostMapping("/search")
+    public String searchHotels(
+            @RequestParam("city") Long cityId,
+            @RequestParam("date") String date,
+            @RequestParam("guests") int guests,
+            Model model) {
+
+        // Проверяем, существует ли город с указанным ID
+        City city = cityRepository.findById(cityId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid city Id:" + cityId));
+
+        // Получаем список отелей в этом городе
+        List<Hotel> hotels = hotelRepository.findByCity(city);
+
+        // Добавляем город и список отелей в модель
+        model.addAttribute("city", city); // Эта строка добавляет объект city
+        model.addAttribute("hotels", hotels); // Эта строка добавляет список отелей
+
+        return "search_results"; // Возвращаем страницу с результатами
+    }
+
+
+
     // Новый метод для получения координат города по ID
     @GetMapping("/{cityId}/coordinates")
     @ResponseBody

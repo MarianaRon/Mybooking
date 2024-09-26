@@ -117,6 +117,7 @@
                         <option value="">Куди вирушаєте?</option>
                         <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name} + ', ' + ${city.region}"></option>
                     </select>
+
                 </div>
             </div>
             <div class="calendar-picker">
@@ -154,6 +155,24 @@
     </div>
     <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
 </div>
+
+<!--    <h2>Міста України</h2>-->
+<!--    <p>Виберіть, у якому місті України ви хочете відпочити</p>-->
+<!--    <div class="carousel-container">-->
+<!--        <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>-->
+<!--        <div class="carousel-track">-->
+<!--            <div class="carousel-item" th:each="city : ${cities}" style="display: inline-block;">-->
+<!--                <a th:href="@{/city/details/{cityId}(cityId=${city.id})}">-->
+<!--                    <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">-->
+<!--                </a>-->
+<!--                <div class="city-info">-->
+<!--                    <h3 th:text="${city.name}"></h3>-->
+<!--                    <p th:text="${city.region}"></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>-->
+<!--    </div>-->
 
 
 <div th:if="${param.subscriptionError}" style="color: red; font-weight: bold;">

@@ -15,26 +15,30 @@ public class CityService {
     private ICityRepository cityRepository;
 
     public List<City> getAllCities() {
-        return cityRepository.findAll();
+        List<City> cities = cityRepository.findAll();
+        System.out.println("Полученные города: " + cities);  // Логирование списка городов
+        return cities;
     }
 
     public Optional<City> getCityById(Long id) {
-        return cityRepository.findById(id);
+        Optional<City> city = cityRepository.findById(id);
+        System.out.println("Найденный город: " + city);  // Логирование найденного города
+        return city;
     }
 
     public City saveCity(City city) {
+        System.out.println("Сохраняем город: " + city);  // Логирование сохраненного города
         return cityRepository.save(city);
     }
 
     public void deleteCity(Long id) {
+        System.out.println("Удаляем город с ID: " + id);  // Логирование удаления города
         cityRepository.deleteById(id);
     }
 
-    // Метод для поиска городов по части имени
     public List<City> findCitiesByNameContaining(String name) {
-        return cityRepository.findByNameContainingIgnoreCase(name);
+        List<City> cities = cityRepository.findByNameContainingIgnoreCase(name);
+        System.out.println("Найденные города по имени: " + name + " -> " + cities);  // Логирование найденных городов
+        return cities;
     }
-
-
 }
-
