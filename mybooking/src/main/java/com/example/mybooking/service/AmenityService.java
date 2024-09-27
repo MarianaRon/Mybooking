@@ -17,18 +17,12 @@ public class AmenityService {
     private IAmenityRepository amenityRepository;
     private static final Logger logger = LoggerFactory.getLogger(AmenityService.class);
 
-    public List<Amenity> getAmenitiesByIds(List<Long> amenityIds) {
-        return amenityRepository.findAll();
-    }
+
     public List<Amenity> getAllAmenitiesByIds(List<Long> amenityIds) {
         return amenityRepository.findAllById(amenityIds);
     }
     public List<Amenity> getAllAmenities() {
-        List<Amenity> amenities = amenityRepository.findAll();
-        if (amenities == null || amenities.isEmpty()) {
-            logger.warn("Удобства не найдены в базе данных.");
-        }
-        return amenities;
+        return amenityRepository.findAll();  // Запрос всех удобств из базы данных
     }
 //    public List<Amenity> getAllAmenities() {
 //        return amenityRepository.findAll();

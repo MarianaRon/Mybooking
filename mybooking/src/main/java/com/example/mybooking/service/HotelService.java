@@ -25,46 +25,39 @@ public class HotelService {
     @Autowired
     private AmenityService amenityService; // Подключаем сервис для работы с удобствами
 
-    /**
-     * Сохранение отеля с удобствами и партнером.
-     *
-     * @param hotel объект отеля
-     * @param partner объект партнера
-     * @param amenityIds список ID удобств
-     * @return сохранённый объект отеля
-     */
-    @Transactional
-    public Hotel saveHotelWithPartnerAndAmenities(Hotel hotel, Partner partner, List<Long> amenityIds) {
-        // Привязываем партнера к отелю
-        hotel.setOwner(partner);
-
-        // Если есть переданные ID удобств, получаем их из базы данных
-        if (amenityIds != null && !amenityIds.isEmpty()) {
-            // Получаем список удобств по их ID
-            List<Amenity> amenities = amenityService.getAmenitiesByIds(amenityIds);
-            // Добавляем удобства в отель
-            Set<Amenity> amenitySet = new HashSet<>(amenities);
-            hotel.setAmenities(amenitySet);
-        }
-
-
-        // Сохраняем отель в базе данных
-        try {
-            Hotel savedHotel = hotelRepository.save(hotel);
-            logger.info("Hotel saved successfully: {}", savedHotel);
-            return savedHotel;
-        } catch (Exception e) {
-            // Логируем ошибку в случае неудачи сохранения
-            logger.error("Error saving hotel: {}", e.getMessage(), e);
-            throw new RuntimeException("Error saving hotel: " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Получение всех отелей из базы данных.
-     *
-     * @return список всех отелей.
-     */
+    
+//    @Transactional
+//    public Hotel saveHotelWithPartnerAndAmenities(Hotel hotel, Partner partner, List<Long> amenityIds) {
+//        // Привязываем партнера к отелю
+//        hotel.setOwner(partner);
+//
+//        // Если есть переданные ID удобств, получаем их из базы данных
+//        if (amenityIds != null && !amenityIds.isEmpty()) {
+//            // Получаем список удобств по их ID
+//            List<Amenity> amenities = amenityService.getAmenitiesByIds(amenityIds);
+//            // Добавляем удобства в отель
+//            Set<Amenity> amenitySet = new HashSet<>(amenities);
+//            hotel.setAmenities(amenitySet);
+//        }
+//
+//
+//        // Сохраняем отель в базе данных
+//        try {
+//            Hotel savedHotel = hotelRepository.save(hotel);
+//            logger.info("Hotel saved successfully: {}", savedHotel);
+//            return savedHotel;
+//        } catch (Exception e) {
+//            // Логируем ошибку в случае неудачи сохранения
+//            logger.error("Error saving hotel: {}", e.getMessage(), e);
+//            throw new RuntimeException("Error saving hotel: " + e.getMessage(), e);
+//        }
+//    }
+//
+//    /**
+//     * Получение всех отелей из базы данных.
+//     *
+//     * @return список всех отелей.
+//     */
     public List<Hotel> getAllHotels() {
         logger.debug("Fetching all hotels");
         return hotelRepository.findAll();
