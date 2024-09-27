@@ -1,11 +1,262 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <title>Вхід</title>-->
+<!--    <script src="https://accounts.google.com/gsi/client" async defer></script>-->
+<!--    <script>-->
+<!--        function handleCredentialResponse(response) {-->
+<!--            console.log("Encoded JWT ID token: " + response.credential);-->
+<!--            fetch('/google-login', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/x-www-form-urlencoded'-->
+<!--                },-->
+<!--                body: 'idTokenString=' + response.credential-->
+<!--            }).then(response => {-->
+<!--                if (response.redirected) {-->
+<!--                    window.location.href = response.url;-->
+<!--                } else {-->
+<!--                    console.error("Failed to login with Google");-->
+<!--                }-->
+<!--            }).catch(error => {-->
+<!--                console.error("Error during Google login: ", error);-->
+<!--            });-->
+<!--        }-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        .container-fluid {-->
+<!--            background-color: #275271;-->
+<!--            padding: 10px 20px;-->
+<!--        }-->
+<!--        .navbar-top {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        .navbar-nav {-->
+<!--            display: flex;-->
+<!--            justify-content: flex-end;-->
+<!--            align-items: center;-->
+<!--            gap: 20px;-->
+<!--            list-style: none;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        .navbar-nav li {-->
+<!--            list-style: none;-->
+<!--        }-->
+
+<!--        .nav-link {-->
+<!--            color: #fff;-->
+<!--            font-weight: bold;-->
+<!--            text-decoration: none;-->
+<!--            transition: transform 0.3s ease, color 0.3s ease;-->
+<!--        }-->
+
+<!--        .nav-link:hover {-->
+<!--            transform: scale(1.1);-->
+<!--            color: #e7a188;-->
+<!--        }-->
+
+<!--        .dropdown {-->
+<!--            background-color: #fff;-->
+<!--            border: 1px solid #ccc;-->
+<!--            padding: 5px 10px;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .btn-select {-->
+<!--            background-color: #e7a188;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            padding: 5px 10px;-->
+<!--            cursor: pointer;-->
+<!--            border-radius: 5px;-->
+<!--        }-->
+
+<!--        .btn-select:hover {-->
+<!--            background-color: #1b3b51;-->
+<!--        }-->
+
+<!--        .btn-action, .btn-logout {-->
+<!--            background-color: #e7a188;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 5px 15px;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .btn-action:hover, .btn-logout:hover {-->
+<!--            background-color: #1b3b51;-->
+<!--        }-->
+<!--        footer {-->
+<!--            background-color: #275271FF;-->
+<!--            color: white;-->
+<!--            padding: 20px 0;-->
+<!--        }-->
+
+<!--        .footer-container {-->
+<!--            display: flex;-->
+<!--            justify-content: space-around;-->
+<!--            flex-wrap: wrap;-->
+<!--            align-items: center;-->
+<!--        }-->
+
+<!--        .footer-section {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 15px;-->
+<!--        }-->
+
+<!--        .footer-section h4 {-->
+<!--            font-size: 18px;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+
+<!--        .footer-section p, .footer-section a {-->
+<!--            font-size: 14px;-->
+<!--            color: white;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+
+<!--        .footer-section a:hover {-->
+<!--            text-decoration: underline;-->
+<!--        }-->
+
+<!--        .footer-bottom {-->
+<!--            text-align: center;-->
+<!--            margin-top: 20px;-->
+<!--            border-top: 1px solid rgba(255, 255, 255, 0.2);-->
+<!--            padding-top: 10px;-->
+<!--        }-->
+
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container-fluid" style="background-color: #275271;">-->
+<!--    <div class="navbar-top d-flex justify-content-between align-items-center">-->
+<!--        &lt;!&ndash; Логотип зліва &ndash;&gt;-->
+<!--        <div class="frame">-->
+<!--            <a class="nav-link" href="/"><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" /></a>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Посилання праворуч &ndash;&gt;-->
+<!--        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">-->
+<!--            <li>-->
+<!--                &lt;!&ndash; Випадаючий список для вибору валюти &ndash;&gt;-->
+<!--                <form action="#" method="post">-->
+<!--                    <select name="currency" class="dropdown">-->
+<!--                        <option value="UAH">Гривня</option>-->
+<!--                        <option value="USD">Долар</option>-->
+<!--                        <option value="EUR">Євро</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Валюта</button>-->
+<!--                </form>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                &lt;!&ndash; Випадаючий список для вибору мови &ndash;&gt;-->
+<!--                <form method="post">-->
+<!--                    <select name="language" class="dropdown">-->
+<!--                        <option value="uk">Українська</option>-->
+<!--                        <option value="en">English</option>-->
+<!--                        <option value="fr">Français</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Мова</button>-->
+<!--                </form>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item" th:if="${session.currentUser != null}">-->
+<!--                <a class="nav-link" href="/user_account">Кабінет користувача</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item" th:if="${session.currentUser == null}">-->
+<!--                <a class="nav-link btn-action" href="/login">Вхід</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item" th:if="${session.currentUser == null}">-->
+<!--                <a class="nav-link btn-action" href="/registration">Реєстрація</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item" th:if="${session.currentUser != null}">-->
+<!--                <form action="/logout" method="get">-->
+<!--                    <button type="submit" class="btn-logout">Вихід</button>-->
+<!--                </form>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="login">-->
+<!--    <div class="div">-->
+<!--        <div class="login-form">-->
+<!--            <div class="overlap-group">-->
+<!--                <form action="/login" method="post">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="username">Ім'я користувача (логін):</label>-->
+<!--                        <input type="text" class="form-control" id="username" name="username" required>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="password">Пароль:</label>-->
+<!--                        <input type="password" class="form-control" id="password" name="password" required>-->
+<!--                    </div>-->
+<!--                <div class="mt-3">-->
+<!--                    <div id="g_id_onload"-->
+<!--                         data-client_id="123456789012-abc123def456ghi789jkl012mnop3456.apps.googleusercontent.com"-->
+<!--                         data-callback="handleCredentialResponse">-->
+<!--                    </div>-->
+<!--                    <div class="g_id_signin" data-type="standard"></div>-->
+<!--                </div>-->
+<!--                <div class="text-wrapper-6">Забули пароль?</div>-->
+<!--                    <a href="/registration">Зареєструватися</a>-->
+<!--                <div class="button-blue"><button type="submit" class="button-2">Увійти</button></div>-->
+<!--                </form>-->
+<!--                <p class="div-2">-->
+<!--                    <span class="span">Входячи або реєструючись, ви погоджуєтесь з </span>-->
+<!--                    <span class="text-wrapper-9">умовами використання</span>-->
+<!--                    <span class="span"> та </span>-->
+<!--                    <span class="text-wrapper-9">політикою конфіденційності</span>-->
+<!--                </p>-->
+<!--            </div>-->
+<!--            <p class="text-wrapper-12">Увійдіть або зареєструйтесь, щоб отримати більше можливостей для бронювання</p>-->
+<!--            <div class="text-wrapper-13">Вітаємо!</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<footer>-->
+<!--    <div class="footer-container">-->
+<!--        <div class="footer-section">-->
+<!--            <a class="nav-link" href="/support">Тех. підтримка</a>-->
+<!--            <p>Найпопулярніші питання</p>-->
+<!--            <p>+380 97 255 220</p>-->
+<!--            <p>Arrenvi@gmail.com</p>-->
+<!--        </div>-->
+<!--        <div class="footer-section">-->
+<!--            <h4>Для бізнесу</h4>-->
+<!--            <p><a class="nav-link" href="add_hotels">Зареєструвати помешкання</a></p>-->
+<!--        </div>-->
+<!--        <div class="footer-section">-->
+<!--            <a class="nav-link" href="/about_us">Про нас</a>-->
+<!--            <h4>Ми в соц мережах:</h4>-->
+<!--            <a href="#"><img class="img" src="/images/instagram.png" /></a>-->
+<!--            <a href="#"><img class="img" src="/images/facebook.png" /></a>-->
+<!--        </div>-->
+<!--        <div class="footer-section">-->
+<!--            <p><a href="#">Версія для мобільних пристроїв</a></p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="footer-bottom">-->
+<!--        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>-->
+<!--    </div>-->
+<!--</footer>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="/style.login/login_styleguide.css" />
-    <link rel="stylesheet" href="/style.login/login.css" />
     <title>Вхід</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
@@ -36,33 +287,34 @@
 
         .navbar-top {
             display: flex;
-            justify-content: space-between; /* Логотип зліва, інші елементи справа */
+            justify-content: space-between;
             align-items: center;
         }
+
         .navbar-nav {
             display: flex;
-            justify-content: flex-end; /* Вирівнювання посилань справа */
+            justify-content: flex-end;
             align-items: center;
-            gap: 20px; /* Проміжки між елементами */
-            list-style: none; /* Прибираємо маркери списку */
+            gap: 20px;
+            list-style: none;
             margin: 0;
             padding: 0;
         }
 
         .navbar-nav li {
-            list-style: none; /* Прибираємо маркування списку */
+            list-style: none;
         }
 
         .nav-link {
             color: #fff;
-            font-weight: bold; /* Жирний білий текст */
-            text-decoration: none; /* Прибираємо підкреслення */
-            transition: transform 0.3s ease, color 0.3s ease; /* Анімація для масштабування та зміни кольору */
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .nav-link:hover {
-            transform: scale(1.1); /* Збільшуємо при наведенні */
-            color: #e7a188; /* Зміна кольору при наведенні */
+            transform: scale(1.1);
+            color: #e7a188;
         }
 
         .dropdown {
@@ -98,6 +350,34 @@
         .btn-action:hover, .btn-logout:hover {
             background-color: #1b3b51;
         }
+
+        .login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .login-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .text-wrapper-6, .text-wrapper-9 {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
         footer {
             background-color: #275271FF;
             color: white;
@@ -137,21 +417,19 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
-
     </style>
 </head>
 <body>
-<!--<header th:insert="sections/header::header"></header>-->
-<div class="container-fluid" style="background-color: #275271;">
+
+<div class="container-fluid">
     <div class="navbar-top d-flex justify-content-between align-items-center">
         <!-- Логотип зліва -->
         <div class="frame">
             <a class="nav-link" href="/"><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" /></a>
         </div>
         <!-- Посилання праворуч -->
-        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end">
             <li>
-                <!-- Випадаючий список для вибору валюти -->
                 <form action="#" method="post">
                     <select name="currency" class="dropdown">
                         <option value="UAH">Гривня</option>
@@ -162,7 +440,6 @@
                 </form>
             </li>
             <li>
-                <!-- Випадаючий список для вибору мови -->
                 <form method="post">
                     <select name="language" class="dropdown">
                         <option value="uk">Українська</option>
@@ -194,73 +471,40 @@
 </div>
 
 <div class="login">
-    <div class="div">
-        <div class="login-form">
-            <div class="overlap-group">
-                <form action="/login" method="post">
-                    <div class="form-group">
-                        <label for="username">Ім'я користувача (логін):</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-
-
-                <div class="mt-3">
-                    <div id="g_id_onload"
-                         data-client_id="123456789012-abc123def456ghi789jkl012mnop3456.apps.googleusercontent.com"
-                         data-callback="handleCredentialResponse">
-                    </div>
-                    <div class="g_id_signin" data-type="standard"></div>
-                </div>
-                <div class="text-wrapper-6">Забули пароль?</div>
-                    <a href="/registration">Зареєструватися</a>
-                <div class="button-google">
-                    <div class="text-wrapper-7">Увійти за допомогою</div>
-                    <img class="google" src="img/google.svg" />
-                </div>
-                <div class="icons-social">
-                    <img class="img-2" src="img/instagram.svg" /> <img class="img-2" src="img/facebook.svg" />
-                </div>
-                <div class="button-blue"><button type="submit" class="button-2">Увійти</button></div>
-
-                </form>
-
-                <div class="view-5">
-                    <div class="text-wrapper-8">або</div>
-                    <img class="line-2" src="img/line-2.svg" />
-                    <img class="line-3" src="img/line-3.svg" />
-                </div>
-                <p class="p">увійти за допомогою соц мереж</p>
-<!--                <div class="field-with-label-2">-->
-<!--                    <div class="label-wrapper"><div class="label">Пароль</div></div>-->
-<!--                    <div class="field-label">-->
-<!--                        <div class="input-label-wrapper"><div class="input-label">Введіть пароль</div></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <p class="div-2">
-                    <span class="span">Входячи або реєструючись, ви погоджуєтесь з </span>
-                    <span class="text-wrapper-9">умовами використання</span>
-                    <span class="span"> та </span>
-                    <span class="text-wrapper-9">політикою конфіденційності</span>
-                </p>
+    <div class="login-form">
+        <p>Увійдіть або зареєструйтесь, щоб отримати більше можливостей для бронювання</p>
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label for="username">Ім'я користувача (логін):</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
-
-
-
-
-            <p class="text-wrapper-12">Увійдіть або зареєструйтесь, щоб отримати більше можливостей для бронювання</p>
-            <div class="text-wrapper-13">Вітаємо!</div>
-        </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="mt-3">
+                <div id="g_id_onload"
+                     data-client_id="123456789012-abc123def456ghi789jkl012mnop3456.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse">
+                </div>
+                <div class="g_id_signin" data-type="standard"></div>
+            </div>
+            <div class="text-wrapper-6">Забули пароль?</div>
+            <a href="/registration">Зареєструватися</a>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary w-100">Увійти</button>
+            </div>
+        </form>
+        <p>
+            Входячи або реєструючись, ви погоджуєтесь з
+            <a href="#">умовами використання</a> та <a href="#">політикою конфіденційності</a>
+        </p>
     </div>
 </div>
-<!-- Футер -->
+
 <footer>
     <div class="footer-container">
         <div class="footer-section">
-            <!--            <h4>Тех. підтримка</h4>-->
             <a class="nav-link" href="/support">Тех. підтримка</a>
             <p>Найпопулярніші питання</p>
             <p>+380 97 255 220</p>
@@ -281,8 +525,9 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
+        <a class="nav-link" href="/"><p><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/> Всі права захищені 2024</p></a>
     </div>
 </footer>
+
 </body>
 </html>
