@@ -1,15 +1,15 @@
 package com.example.mybooking.controller;
 
 import com.example.mybooking.model.City;
+import com.example.mybooking.model.Hotel;
+import com.example.mybooking.model.Partner;
 import com.example.mybooking.model.User;
 import com.example.mybooking.repository.IUserRepository;
-import com.example.mybooking.service.UserMessageService;
-import com.example.mybooking.service.UserService;
+import com.example.mybooking.service.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.example.mybooking.service.CityService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +35,10 @@ public class MainController {
     private UserService userService;
     @Autowired
     private UserMessageService userMessageService;
+    @Autowired
+    private HotelService hotelService;
+    @Autowired
+    private PartnerService partnerService;
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
@@ -191,10 +195,22 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         return "/supports";
     }
 
-    @GetMapping("/hotels/hotel_list")
-    public String hotel_list(Model model ){
-        return "/hotels/hotel_list";
-    }
+//    @GetMapping("/hotels/hotel_list")
+//    public String hotel_list(Model model ){
+//        List<City> cities = cityService.getAllCities();
+//        model.addAttribute("cities", cities);
+//        return "/hotels/hotel_list";
+//    }
+//    @GetMapping("/hotels/hotel_list")
+//    public String hotelList(Model model) {
+//        List<Hotel> hotels = hotelService.getAllHotels();  // Отримуємо список готелів
+//        List<City> cities = cityService.getAllCities();    // Отримуємо список міст
+//        List<Partner> partners = partnerService.getAllPartners();
+//        model.addAttribute("hotels", hotels);  // Додаємо готелі до моделі
+//        model.addAttribute("cities", cities);  // Додаємо міста до моделі
+//        model.addAttribute("partners", partners);
+//        return "hotels/hotel_list";  // Назва шаблону для списку готелів
+//    }
 
     @GetMapping("/about_us")
     public String about_us(Model model ){

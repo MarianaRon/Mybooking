@@ -31,6 +31,7 @@ public class City {
     private byte[] photoBytes;
 
 
+
     // Поля широты и долготы, необязательные для заполнения
     @Column
     private Double latitude;

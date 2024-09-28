@@ -4,6 +4,7 @@ import com.example.mybooking.model.*;
 import com.example.mybooking.service.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,13 @@ public class HotelController {
 
     @Autowired
     private CityService cityService; // Добавляем CityService для работы с городами
+    @Autowired
+    public HotelController(HotelService hotelService, CityService cityService, PartnerService partnerService) {
+        this.hotelService = hotelService;
+        this.cityService = cityService;
+        this.partnerService = partnerService;
+    }
+
 
     // Метод для инициализации объекта отеля в сессии
     //проверяет, существует ли в сессии объект отеля. Если нет, создается новый объект отеля и сохраняется в сессии для дальнейшего использования.
@@ -370,78 +378,65 @@ public class HotelController {
     }
 
 
-
-    @GetMapping("/edit/{id}")
-    public String editHotel(@PathVariable Long id, Model model) {
-        // Получаем отель по ID или выбрасываем исключение, если отель не найден
-        Hotel hotel = hotelService.getHotelById(id)
-                .orElseThrow(() -> new RuntimeException("Hotel not found"));
-        model.addAttribute("hotel", hotel);
-
-        // Получаем список всех партнеров для выбора владельца отеля
-        List<Partner> partners = partnerService.getAllPartners();
-        if (partners.isEmpty()) {
-            throw new RuntimeException("No partners available");
-        }
-        model.addAttribute("partners", partners);
-
-        return "edit_hotel";
+    // Виведення списку готелів і форма для додавання
+    @GetMapping("/hotel_list")
+    public String showHotelList(Model model) {
+        List<Hotel> hotels = hotelService.getAllHotels();
+        model.addAttribute("hotels", hotels);
+        model.addAttribute("hotel", new Hotel()); // Для форми додавання
+        model.addAttribute("cities", cityService.getAllCities());
+        model.addAttribute("partners", partnerService.getAllPartners());
+        return "/hotels/hotel_list"; // Повертаємо шаблон зі списком та формою
     }
 
-    @PostMapping("/edit/{id}")
-    public String updateHotel(@PathVariable Long id,
-                              @RequestParam String name,
-                              @RequestParam String description,
-                              @RequestParam String address,
-                              @RequestParam(required = false) Double latitude,
-                              @RequestParam(required = false) Double longitude,
-                              @RequestParam Long owner, // Этот параметр теперь должен быть ID партнера
-                              @RequestParam String housingType) {
-
-        // Валидация данных
-        if (name.isEmpty() || address.isEmpty() || housingType.isEmpty()) {
-            throw new IllegalArgumentException("Name, address, and housing type cannot be empty");
-        }
-        if (latitude != null && (latitude < -90 || latitude > 90)) {
-            throw new IllegalArgumentException("Invalid latitude value");
-        }
-        if (longitude != null && (longitude < -180 || longitude > 180)) {
-            throw new IllegalArgumentException("Invalid longitude value");
+    // Додавання нового готелю через форму на тій же сторінці
+    @PostMapping("/add_hotel")
+    public String addHotel(@ModelAttribute("hotel") Hotel hotel, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            // Повертаємо всі дані для форми в разі помилки
+            model.addAttribute("hotels", hotelService.getAllHotels());
+            model.addAttribute("cities", cityService.getAllCities());
+            model.addAttribute("partners", partnerService.getAllPartners());
+            return "/hotels/hotel_list";
         }
 
-        // Получаем отель по ID или выбрасываем исключение, если отель не найден
-        Hotel hotel = hotelService.getHotelById(id)
-                .orElseThrow(() -> new RuntimeException("Hotel not found"));
+        // Отримуємо партнера за ID
+        Partner partner = partnerService.getPartnerById(hotel.getOwner().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Невірний ID партнера: " + hotel.getOwner().getId()));
 
-        // Получаем партнера по ID или выбрасываем исключение, если партнер не найден
-        Partner ownerPartner = partnerService.getPartnerById(owner)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid owner ID"));
-
-        // Обновление данных отеля
-        hotel.setName(name);
-        hotel.setDescription(description);
-       // hotel.setAddress(address);
-        hotel.setLatitude(latitude);
-        hotel.setLongitude(longitude);
-        hotel.setOwner(ownerPartner); // Устанавливаем владельца
-        //hotel.setHousingType(housingType);
-
-        // Сохраняем изменения в базе данных
-        hotelService.saveHotelWithPartner(hotel, ownerPartner);
-
-        // Перенаправляем на страницу списка отелей
+        // Зберігаємо готель з партнером
+        hotelService.saveHotelWithPartner(hotel, partner);
         return "redirect:/hotels/hotel_list";
     }
-    @PostMapping("/delete/{id}")
-    public String deleteHotel(@PathVariable Long id) {
-        // Проверяем, существует ли отель перед удалением
+
+    // Показати форму для редагування готелю
+    @GetMapping("/edit/{id}")
+    public String showEditHotelForm(@PathVariable("id") Long id, Model model) {
         Hotel hotel = hotelService.getHotelById(id)
-                .orElseThrow(() -> new RuntimeException("Hotel not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Невірний ID готелю: " + id));
+        model.addAttribute("hotel", hotel);
+        model.addAttribute("cities", cityService.getAllCities());
+        model.addAttribute("partners", partnerService.getAllPartners());
+        return "/hotels/edit_hotel"; // Thymeleaf шаблон для редагування
+    }
 
-        // Удаляем отель
+    // Оновлення готелю через форму редагування
+    @PostMapping("/edit/{id}")
+    public String editHotel(@PathVariable("id") Long id, @ModelAttribute("hotel") Hotel hotel, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("cities", cityService.getAllCities());
+            model.addAttribute("partners", partnerService.getAllPartners());
+            return "/hotels/edit_hotel";
+        }
+
+        hotelService.updateHotel(id, hotel);
+        return "redirect:/hotels/hotel_list";
+    }
+
+    // Видалення готелю
+    @PostMapping("/delete/{id}")
+    public String deleteHotel(@PathVariable("id") Long id) {
         hotelService.deleteHotel(id);
-
-        // Перенаправляем на страницу списка отелей
         return "redirect:/hotels/hotel_list";
     }
 

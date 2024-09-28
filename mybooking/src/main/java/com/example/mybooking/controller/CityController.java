@@ -31,6 +31,24 @@ public class CityController {
 
     @Autowired
     private IHotelRepository hotelRepository;
+    // Вспомогательный класс для передачи координат
+    public static class CityCoordinates {
+        private Double latitude;
+        private Double longitude;
+
+        public CityCoordinates(Double latitude, Double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public Double getLatitude() {
+            return latitude;
+        }
+
+        public Double getLongitude() {
+            return longitude;
+        }
+    }
 
 
     // метод для сортування готелів за містом
@@ -77,12 +95,17 @@ public class CityController {
                              @RequestParam("name") String name,
                              @RequestParam("region") String region,
                              @RequestParam("photoUrl") String photoUrl,
-                             @RequestParam("photoBytes") MultipartFile photoBytes) {
+                             @RequestParam(value = "latitude", required = false) Double latitude, // Додаємо широту
+                             @RequestParam(value = "longitude", required = false) Double longitude, // Додаємо довготу
+                             @RequestParam("photoBytes") MultipartFile photoBytes
+    ) {
         City city = cityService.getCityById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid city Id: " + id));
         city.setName(name);
         city.setRegion(region);
         city.setPhotoUrl(photoUrl);
+        city.setLatitude(latitude);
+        city.setLongitude(longitude);
         // Перевірка, чи файл не порожній
         if (!photoBytes.isEmpty()) {
             try {
@@ -108,12 +131,16 @@ public class CityController {
             @RequestParam("name") String name,
             @RequestParam("region") String region,
             @RequestParam("photoUrl") String photoUrl,
+            @RequestParam(value = "latitude", required = false) Double latitude, // Додаємо широту
+            @RequestParam(value = "longitude", required = false) Double longitude, // Додаємо довготу
             @RequestParam("photoBytes") MultipartFile photoBytes) {
 
         City city = new City();
         city.setName(name);
         city.setRegion(region);
         city.setPhotoUrl(photoUrl);
+        city.setLatitude(latitude);
+        city.setLongitude(longitude);
 
         if (!photoBytes.isEmpty()) {
             try {
@@ -183,24 +210,7 @@ public class CityController {
         return ResponseEntity.ok(new CityCoordinates(city.getLatitude(), city.getLongitude()));
     }
 
-    // Вспомогательный класс для передачи координат
-    public static class CityCoordinates {
-        private Double latitude;
-        private Double longitude;
 
-        public CityCoordinates(Double latitude, Double longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        public Double getLatitude() {
-            return latitude;
-        }
-
-        public Double getLongitude() {
-            return longitude;
-        }
-    }
     //////////////
 
 

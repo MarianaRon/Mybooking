@@ -180,8 +180,8 @@
         <label for="description">Опис:</label>
         <textarea id="description" name="description" required th:text="${hotel.description}"></textarea>
 
-        <label for="address">Адреса:</label>
-        <input type="text" id="address" name="address" th:value="${hotel.address}" required>
+        <label for="addressStreet">Адреса:</label>
+        <input type="text" id="addressStreet" name="addressStreet" th:value="${hotel.addressStreet}" required>
 
         <label for="latitude">Широта:</label>
         <input type="number" step="0.000001" id="latitude" name="latitude" th:value="${hotel.latitude}">
@@ -191,12 +191,17 @@
 
         <label for="owner">Власник:</label>
         <select id="owner" name="owner" required>
-            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}" th:selected="${hotel.owner.id == user.id}"></option>
+            <option value="" disabled selected>Оберіть власника</option>
+            <option th:each="partner : ${partners}" th:value="${partner.id}" th:text="${partner.email}" th:selected="${hotel.owner.id == user.id}"></option>
         </select>
 
         <label for="housingType">Тип житла:</label>
         <input type="text" id="housingType" name="housingType" th:value="${hotel.housingType}" required>
-
+        <label for="city">Місто:</label>
+        <select id="city" name="cityId" required>
+            <option value="" disabled selected>Оберіть власника</option>
+            <option th:each="city : ${cities}" th:value="${city.id}" th:selected="${city.id == hotel.city.id}" th:text="${city.name + ', ' + city.region}"></option>
+        </select>
         <button type="submit">Зберегти зміни</button>
     </form>
 

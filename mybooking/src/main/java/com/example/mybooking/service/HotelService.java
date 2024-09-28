@@ -153,4 +153,11 @@ public class HotelService {
             logger.info("Hotel with ID: {} successfully updated", id);
         });
     }
+
+    //для виведення готелей по місту
+    // Метод для збереження готелю
+    public void save(Hotel hotel) {
+        hotelRepository.save(hotel);
+    }
+
 }

@@ -182,6 +182,14 @@
         <!-- Поле для байтового потоку фото -->
         <label for="photoBytes">Файл фото:</label>
         <input type="file" id="photoBytes" name="photoBytes">
+        <br>
+        <!-- Поля для редагування широти та довготи -->
+        <label for="latitude">Широта:</label>
+        <input type="number" id="latitude" name="latitude" th:value="${city.latitude}" step="0.000001" placeholder="Введіть широту">
+
+        <label for="longitude">Довгота:</label>
+        <input type="number" id="longitude" name="longitude" th:value="${city.longitude}" step="0.000001" placeholder="Введіть довготу">
+
         <button type="submit">Зберегти</button>
     </form>
 </div>
