@@ -20,6 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 //////////////////////////////////////////////23
 @Controller
 @RequestMapping("/hotels")
@@ -86,9 +88,6 @@ public class HotelController {
         }
     }
 
-    //Многошаговая форма: добавление отеля Методы для добавления отеля разбиты на шаги, где информация сохраняется поэтапно, что позволяет разделить ввод данных на несколько шагов
-
-    // Показ формы для добавления отеля
     //метод отображает форму для добавления отеля. Также осуществляется проверка авторизованного партнера, так как только партнеры могут добавлять отели.
     // Показ формы для добавления отеля
     @GetMapping("/add")
@@ -150,10 +149,15 @@ public class HotelController {
         hotel.setAddressStreet(addressStreet);
 
         // Устанавливаем удобства
+
+        // Привязываем удобства к отелю, если они были выбраны
         if (amenityIds != null && !amenityIds.isEmpty()) {
-            List<Amenity> amenities = amenityService.getAllAmenitiesByIds(amenityIds);
-            hotel.setAmenities(new HashSet<>(amenities));
+            Set<Amenity> amenities = amenityService.getAllAmenitiesByIds(amenityIds).stream().collect(Collectors.toSet());
+            hotel.setAmenities(amenities); // Устанавливаем выбранные удобства
         }
+
+        // Сохраняем выбранные удобства в сессии
+      //  session.setAttribute("amenityIds", amenityIds);
 
         // Обрабатываем изображения, если они есть
         if (imageFiles != null && !imageFiles.isEmpty()) {
@@ -167,10 +171,10 @@ public class HotelController {
         }
 
         // Сохраняем отель
-        hotelService.saveHotelWithPartner(hotel, loggedInPartner);
+        hotelService.saveHotelWithPartner(hotel, loggedInPartner, amenityIds );
         logger.info("Hotel successfully saved for partner: {}", loggedInPartner.getId());
 
-        return "redirect:/hotels_by_partner";  // Перенаправляем на список отелей партнера
+        return "redirect:/hotels/hotels_by_partner";  // Перенаправляем на список отелей партнера
     }
 
     // Метод для обработки изображений
@@ -358,16 +362,21 @@ public class HotelController {
             return "redirect:/partner_Account";
         }
 
+        // Получаем список выбранных удобств из сессии
+        @SuppressWarnings("unchecked")
+        List<Long> amenityIds = (List<Long>) session.getAttribute("amenityIds");
+
         // Логируем данные перед сохранением
         logger.info("Submitting hotel for partner {}: {}", loggedInPartner.getId(), sessionHotel);
 
         try {
             // Сохраняем отель в базе данных
-            hotelService.saveHotelWithPartner(sessionHotel, loggedInPartner);
+            hotelService.saveHotelWithPartner(sessionHotel, loggedInPartner, amenityIds);
             logger.info("Hotel successfully saved in the database with partner: {}", loggedInPartner.getId());
 
             // Удаляем объект отеля из сессии после успешного сохранения
             session.removeAttribute("hotel");// Очищаем объект отеля из сессии
+            session.removeAttribute("amenityIds");  // Удаляем удобства из сессии
             logger.info("Hotel object removed from session after successful save.");
         } catch (Exception e) {
             logger.error("Error while saving hotel: {}", e.getMessage(), e);
@@ -391,7 +400,8 @@ public class HotelController {
 
     // Додавання нового готелю через форму на тій же сторінці
     @PostMapping("/add_hotel")
-    public String addHotel(@ModelAttribute("hotel") Hotel hotel, BindingResult result, Model model) {
+    public String addHotel(@ModelAttribute("hotel") Hotel hotel, BindingResult result, Model model,
+                           @RequestParam(value = "amenities", required = false) List<Long> amenityIds) {
         if (result.hasErrors()) {
             // Повертаємо всі дані для форми в разі помилки
             model.addAttribute("hotels", hotelService.getAllHotels());
@@ -405,7 +415,7 @@ public class HotelController {
                 .orElseThrow(() -> new IllegalArgumentException("Невірний ID партнера: " + hotel.getOwner().getId()));
 
         // Зберігаємо готель з партнером
-        hotelService.saveHotelWithPartner(hotel, partner);
+        hotelService.saveHotelWithPartner(hotel, partner, amenityIds);
         return "redirect:/hotels/hotel_list";
     }
 
@@ -433,12 +443,37 @@ public class HotelController {
         return "redirect:/hotels/hotel_list";
     }
 
-    // Видалення готелю
-    @PostMapping("/delete/{id}")
-    public String deleteHotel(@PathVariable("id") Long id) {
-        hotelService.deleteHotel(id);
-        return "redirect:/hotels/hotel_list";
+//    public void deleteHotel(Long id) {
+//        logger.debug("Deleting hotel with ID: {}", id);
+//        if (hotelRepository.existsById(id)) {
+//            hotelRepository.deleteById(id);
+//            logger.info("Hotel with ID: {} successfully deleted", id);
+//        } else {
+//            logger.warn("Hotel with ID: {} not found", id);
+//        }
+//    }
+
+@PostMapping("/delete/{id}")
+public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
+    // Получаем текущего авторизованного партнера
+    Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+    if (loggedInPartner == null) {
+        return "redirect:/partner_Account"; // Перенаправляем на логин, если не авторизован
     }
+
+    // Удаляем отель
+    boolean deleted = hotelService.deleteHotelById(id);
+
+    if (deleted) {
+        // Логируем успешное удаление
+        logger.info("Hotel with ID: {} successfully deleted by partner ID: {}", id, loggedInPartner.getId());
+    } else {
+        logger.warn("Hotel with ID: {} not found for deletion", id);
+    }
+
+    // Перенаправляем на страницу отелей партнера
+    return "redirect:/hotels/hotels_by_partner";
+}
 
     // Показ форми пошуку готелів
     @GetMapping("/search")
@@ -454,12 +489,5 @@ public class HotelController {
         model.addAttribute("results", results);
         return "search_results";
     }
-//    @PostMapping("/hotels/register")
-//    public String registerHotel(@ModelAttribute Hotel hotel, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "hotel_registration_form"; // верните страницу с формой, если есть ошибки
-//        }
-//        hotelService.saveHotel(hotel);
-//        return "redirect:/hotels_by_partner"; // перенаправление после успешной регистрации
-//    }
+
 }

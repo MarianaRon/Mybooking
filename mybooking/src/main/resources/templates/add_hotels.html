@@ -263,6 +263,40 @@
         .button .next-button:hover {
             background-color: #275271FF;
         }
+        /* Контейнер для всех удобств */
+        .amenities-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Каждая группа удобств (общие, в номере) */
+        .amenities-group {
+            width: 45%;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для заголовка группы */
+        .amenities-group h4 {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Стили для списка чекбоксов */
+        .amenities-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        /* Каждый элемент списка */
+        .amenities-list li {
+            margin-bottom: 10px;
+        }
+
+        /* Стили для чекбоксов и текста */
+        .amenities-list input[type="checkbox"] {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -294,8 +328,8 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
-                                <li><a class="dropdown-item" href="add_hotels">Додати нове помешкання</a></li>
-                                <li><a class="dropdown-item" href="home_partners">Профіль</a></li>
+                                <li><a class="dropdown-item" href="/hotels/add">Додати нове помешкання</a></li>
+                                <li><a class="dropdown-item" href="/home_partners">Профіль</a></li>
                                 <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
                             </ul>
                         </div>
@@ -416,24 +450,26 @@
         <input type="hidden" id="step" name="step" value="3" />
 
         <!-- Динамическое отображение удобств -->
-        <div class="view-2">
-            <p class="text-wrapper-11">Зручності на вашому об’єкті</p>
-            <div class="amenities-container">
-                <div th:if="${amenities != null}">
-                    <p>Удобства на объекте:</p>
-                    <ul>
-                        <li th:each="amenity : ${amenities}">
-                            <input type="checkbox" th:value="${amenity.id}" />
-                            <span th:text="${amenity.name}"></span>
-                        </li>
-                    </ul>
-                </div>
-                <div th:if="${amenities == null || #lists.size(amenities) == 0}">
-                    <p>Удобства отсутствуют.</p>
-                </div>
-            </div>
+    <div class="view-2">
+        <p class="text-wrapper-11">Зручності на вашому об’єкті</p>
+        <div class="amenities-container">
+            <h4>Загальні зручності</h4>
+            <ul>
+                <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'general'}">
+                    <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
+                    <span th:text="${amenity.name}"></span>
+                </li>
+            </ul>
 
+            <h4>Зручності в номері</h4>
+            <ul>
+                <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'room'}">
+                    <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
+                    <span th:text="${amenity.name}"></span>
+                </li>
+            </ul>
         </div>
+    </div>
 
  <!-- Цена -->
     <div class="view-3">

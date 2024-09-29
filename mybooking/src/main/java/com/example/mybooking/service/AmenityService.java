@@ -17,17 +17,20 @@ public class AmenityService {
     private IAmenityRepository amenityRepository;
     private static final Logger logger = LoggerFactory.getLogger(AmenityService.class);
 
-
+    // Возвращаем все удобства по их ID
     public List<Amenity> getAllAmenitiesByIds(List<Long> amenityIds) {
         return amenityRepository.findAllById(amenityIds);
     }
     public List<Amenity> getAllAmenities() {
         return amenityRepository.findAll();  // Запрос всех удобств из базы данных
     }
-//    public List<Amenity> getAllAmenities() {
-//        return amenityRepository.findAll();
-//    }
 
+    // Метод для получения удобств по типу ('general' или 'room')
+    public List<Amenity> getAmenitiesByType(String type) {
+         return amenityRepository.findAll().stream()
+            .filter(amenity -> amenity.getType().equals(type))
+            .toList();
+}
     public Optional<Amenity> getAmenityById(Long id) {
         return amenityRepository.findById(id);
     }

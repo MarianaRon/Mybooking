@@ -12,6 +12,8 @@ public class Amenity {
 
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
+    private String type;  // Поле для хранения типа удобства ('general' или 'room')
 
     @ManyToMany(mappedBy = "amenities")
     private Set<Hotel> hotels;
@@ -22,8 +24,9 @@ public class Amenity {
     public Amenity() {
     }
 
-    public Amenity(String name) {
+    public Amenity(String name, String type) {
         this.name = name;
+        this.type = type;
     }
 
     public Long getId() {
@@ -40,6 +43,13 @@ public class Amenity {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Set<Hotel> getHotels() {

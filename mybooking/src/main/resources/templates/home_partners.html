@@ -226,8 +226,8 @@
                         <span th:text="${session.userName}">User</span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
-                        <li><a class="dropdown-item" href="add_hotels">Додати нове помешкання</a></li>
+                        <li><a class="dropdown-item" href="hotels/hotels_by_partner">Переглянути мої помешкання</a></li>
+                        <li><a class="dropdown-item" href="/hotels/add">Додати нове помешкання</a></li>
                         <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
                     </ul>
                 </div>
@@ -260,11 +260,11 @@
 
             <!-- Условия для залогиненного пользователя -->
             <div th:if="${session.userName != null}">
-                <h2 style="color: #333;">Продовжити реєстрацію</h2>
-                <form action="/hotels_by_partner" method="get" class="d-flex">
-                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Продовжити</button>
+                <h2 style="color: #333;">Зареєстровані помешкання</h2>
+                <form action="/hotels/hotels_by_partner" method="get" class="d-flex">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Переглянути</button>
                 </form>
-                <form action="/add_hotels" method="get" class="d-flex mt-3">
+                <form action="/hotels/add" method="get" class="d-flex mt-3">
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Зареєструвати нове помешкання</button>
                 </form>
             </div>

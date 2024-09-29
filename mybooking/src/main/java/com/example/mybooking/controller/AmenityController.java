@@ -40,8 +40,8 @@ public class AmenityController {
     }
 
     @PostMapping("/create")
-    public String createAmenity(@RequestParam String name) {
-        Amenity amenity = new Amenity(name);
+    public String createAmenity(@RequestParam String name, String type) {
+        Amenity amenity = new Amenity(name, type);
         amenityService.saveAmenity(amenity);
         return "redirect:/amenities/amenity_list";
     }
