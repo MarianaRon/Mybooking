@@ -54,21 +54,38 @@
             color: white;
         }
 
-        .dropdown-menu {
-            display: block;
-            min-width: 160px;
-            z-index: 1000;
+        .auth-buttons .btn-light {
+            color: black;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            padding: 5px 10px;
+            cursor: pointer;
         }
 
-        .dropdown-item:hover {
+        .dropdown-menu {
+            color: #ffffff;
             background-color: #E7A188FF;
-            color: white;
+
+            border: none;
+            max-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: nowrap;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .profile-container {
-            display: flex;
-            flex-direction: row;
-            margin-top: 20px;
+
+
+        .dropdown-menu a {
+            color: #ffffff;
+            background-color: #275271FF;
         }
+        .dropdown-menu a:hover {
+            background-color: #9a9998;
+            color: black;
+        }
+
 
         .profile-sidebar {
             flex-basis: 25%;
@@ -76,18 +93,12 @@
             background-color: #f7f7f7;
         }
 
-        .profile-content {
-            flex-basis: 75%;
-            padding: 20px;
-        }
+
 
         .profile-avatar h3, .profile-avatar p {
             margin-bottom: 15px;
         }
 
-        .form-control {
-            margin-bottom: 10px;
-        }
 
         .btn-primary {
             background-color: #275271FF;
@@ -344,6 +355,18 @@
         <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
     </div>
 </footer>
+<script>
+    // Ensure the dropdown closes when clicking outside
+    document.addEventListener('click', function (event) {
+        var dropdown = document.querySelector('.dropdown-menu');
+        if (dropdown && !event.target.closest('.dropdown')) {
+            var openDropdown = bootstrap.Dropdown.getInstance(document.querySelector('.dropdown-toggle'));
+            if (openDropdown) {
+                openDropdown.hide();
+            }
+        }
+    });
+</script>
 <!-- Подключение Bootstrap JS и Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
