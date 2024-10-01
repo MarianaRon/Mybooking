@@ -194,6 +194,40 @@
     </form>
 </div>
 
+<!--&lt;!&ndash; Виведення списку міст &ndash;&gt;-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>Назва</th>-->
+<!--        <th>Регіон</th>-->
+<!--        <th>Кількість готелів</th>-->
+<!--        <th>Широта</th>-->
+<!--        <th>Довгота</th>-->
+<!--        <th>Фото</th>-->
+<!--        <th>Дії</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="city : ${cities}">-->
+<!--        <td th:text="${city.id}"></td>-->
+<!--        <td th:text="${city.name}"></td>-->
+<!--        <td th:text="${city.region}"></td>-->
+<!--        <td th:text="${city.numberOfHotels}"></td>-->
+<!--        <td th:text="${city.latitude}"></td> &lt;!&ndash; Виведення широти &ndash;&gt;-->
+<!--        <td th:text="${city.longitude}"></td> &lt;!&ndash; Виведення довготи &ndash;&gt;-->
+<!--        <td>-->
+<!--            <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" width="100">-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <a th:href="@{/cities/edit/{id}(id=${city.id})}">Редагувати</a>-->
+<!--            <form th:action="@{/cities/delete/{id}(id=${city.id})}" method="post" style="display:inline;">-->
+<!--                <button type="submit">Видалити</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
 <!-- Виведення списку міст -->
 <table>
     <thead>
@@ -202,6 +236,7 @@
         <th>Назва</th>
         <th>Регіон</th>
         <th>Кількість готелів</th>
+        <th>Назви готелів</th> <!-- Нова колонка -->
         <th>Широта</th>
         <th>Довгота</th>
         <th>Фото</th>
@@ -213,7 +248,13 @@
         <td th:text="${city.id}"></td>
         <td th:text="${city.name}"></td>
         <td th:text="${city.region}"></td>
-        <td th:text="${city.numberOfHotels}"></td>
+        <td th:text="${city.numberOfHotels}"></td> <!-- Виведення кількості готелів -->
+        <td>
+            <!-- Виведення назв готелів у цьому місті -->
+            <ul>
+                <li th:each="hotel : ${city.hotels}" th:text="${hotel.name}"></li>
+            </ul>
+        </td>
         <td th:text="${city.latitude}"></td> <!-- Виведення широти -->
         <td th:text="${city.longitude}"></td> <!-- Виведення довготи -->
         <td>

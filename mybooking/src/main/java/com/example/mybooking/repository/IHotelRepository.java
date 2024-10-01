@@ -24,5 +24,6 @@ public interface IHotelRepository extends JpaRepository<Hotel, Long> {
 
     //для сортуваня готелів по місту
         List<Hotel> findByCity(City city);
+    List<Hotel> findByCity_Id(Long cityId);
 
 }

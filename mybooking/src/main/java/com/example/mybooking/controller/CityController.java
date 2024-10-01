@@ -52,11 +52,26 @@ public class CityController {
 
 
     // метод для сортування готелів за містом
+//    @GetMapping("/sort_hotels_by_city/{cityId}")
+//    public String sortHotelsByCity(@PathVariable Long cityId, Model model) {
+//        // Отримуємо місто по ID
+//        City city = cityRepository.findById(cityId).orElseThrow(() -> new IllegalArgumentException("Invalid city Id:" + cityId));
+//        // Отримуємо список готелів, які належать до цього міста
+//        List<Hotel> hotels = hotelRepository.findByCity(city);
+//
+//        // Додаємо список готелів та місто у модель для відображення на сторінці
+//        model.addAttribute("city", city);
+//        model.addAttribute("hotels", hotels);
+//
+//        return "sort_hotels_by_city"; // Повертаємо назву шаблону сторінки
+//    }
     @GetMapping("/sort_hotels_by_city/{cityId}")
     public String sortHotelsByCity(@PathVariable Long cityId, Model model) {
         // Отримуємо місто по ID
-        City city = cityRepository.findById(cityId).orElseThrow(() -> new IllegalArgumentException("Invalid city Id:" + cityId));
-        // Отримуємо список готелів, які належать до цього міста
+        City city = cityRepository.findById(cityId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid city Id:" + cityId));
+
+        // Використовуємо пошук за об'єктом City
         List<Hotel> hotels = hotelRepository.findByCity(city);
 
         // Додаємо список готелів та місто у модель для відображення на сторінці
@@ -65,6 +80,7 @@ public class CityController {
 
         return "sort_hotels_by_city"; // Повертаємо назву шаблону сторінки
     }
+
 
     @GetMapping("/city_list")
     public String listCities(Model model) {

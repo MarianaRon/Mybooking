@@ -295,6 +295,10 @@
     </div>
 
     <h2 th:if="${city == null}">Місто не знайдено</h2>
+    <!-- Перевірка наявності готелів -->
+    <h3 th:if="${#lists.isEmpty(city.hotels)}">Немає доступних готелів у цьому місті.</h3>
+    <h3 th:if="${!#lists.isEmpty(city.hotels)}" th:text="'Знайдено готелів: ' + ${#lists.size(city.hotels)}"></h3>
+
 
     <!-- Список готелів -->
     <div class="row" style="margin-top: 10px;">
@@ -308,10 +312,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="hotel : ${hotels}">
-                    <td th:text="${hotel.name}"></td>
-                    <td th:text="${hotel.address}"></td>
-                    <td th:text="${hotel.description}"></td>
+                <tr th:each="hotel :  ${city.hotels}">
+                    <td th:text="${hotel.name}">Назва готелю</td>
+                    <td th:text="${hotel.addressStreet}">Адреса</td>
+                    <td th:text="${hotel.description}">Опис</td>
                 </tr>
                 </tbody>
             </table>

@@ -242,6 +242,7 @@
             <th>Назва</th>
             <th>Опис</th>
             <th>Адреса</th>
+            <th>Місто</th>
             <th>Тип житла</th>
             <th>Дії</th>
         </tr>
@@ -252,6 +253,7 @@
             <td th:text="${hotel.name}"></td>
             <td th:text="${hotel.description}"></td>
             <td th:text="${hotel.addressStreet}"></td>
+            <td th:text="${hotel.city.name}"></td>
             <td th:text="${hotel.housingType}"></td>
             <td>
                 <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}">Редагувати</a>
