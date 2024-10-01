@@ -313,7 +313,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="hotel :  ${city.hotels}">
-                    <td th:text="${hotel.name}">Назва готелю</td>
+<!--                    <td th:text="${hotel.name}">Назва готелю</td>-->
+
+                    <td>
+                        <a th:href="@{/hotels/{id}(id=${hotel.id})}" th:text="${hotel.name}">Назва готелю</a>
+                    </td>
                     <td th:text="${hotel.addressStreet}">Адреса</td>
                     <td th:text="${hotel.description}">Опис</td>
                 </tr>

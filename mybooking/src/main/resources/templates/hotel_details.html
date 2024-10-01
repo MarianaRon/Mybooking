@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результати пошуку</title>
+    <title>Опис готеля</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -232,44 +232,28 @@
         </ul>
     </div>
 </div>
-<div class="container">
-    <div class="city-info-container" th:if="${city != null}">
-        <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста">
-        <div class="city-details">
-            <h2>Готелі, що знаходяться у місті <span th:text="${city.name}"></span></h2>
-            <h3 th:text="'Регіон: ' + ${city.region}"></h3>
-        </div>
+<!--<div class="container">-->
+<!--    <div class="city-info-container" th:if="${city != null}">-->
+<!--        <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста">-->
+<!--        <div class="city-details">-->
+<!--            <h2>Готелі, що знаходяться у місті <span th:text="${city.name}"></span></h2>-->
+<!--            <h3 th:text="'Регіон: ' + ${city.region}"></h3>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <h2 th:if="${city == null}">Місто не знайдено</h2>-->
+<!--    &lt;!&ndash; Перевірка наявності готелів &ndash;&gt;-->
+<!--    <h3 th:if="${#lists.isEmpty(city.hotels)}">Немає доступних готелів у цьому місті.</h3>-->
+<!--    <h3 th:if="${!#lists.isEmpty(city.hotels)}" th:text="'Знайдено готелів: ' + ${#lists.size(city.hotels)}"></h3>-->
+<!--    &lt;!&ndash; Список готелів &ndash;&gt;-->
+    <div class="container">
+        <h1 th:text="${hotel.name}">Назва готелю</h1>
+        <p><strong>Опис:</strong> <span th:text="${hotel.description}"></span></p>
+        <p><strong>Адреса:</strong> <span th:text="${hotel.addressStreet}"></span></p>
+        <p><strong>Місто:</strong> <span th:text="${hotel.city.name}"></span></p>
+        <p><strong>Тип житла:</strong> <span th:text="${hotel.housingType}"></span></p>
     </div>
 
-    <h2 th:if="${city == null}">Місто не знайдено</h2>
-    <!-- Перевірка наявності готелів -->
-    <h3 th:if="${#lists.isEmpty(city.hotels)}">Немає доступних готелів у цьому місті.</h3>
-    <h3 th:if="${!#lists.isEmpty(city.hotels)}" th:text="'Знайдено готелів: ' + ${#lists.size(city.hotels)}"></h3>
-    <!-- Список готелів -->
-    <div class="row" style="margin-top: 10px;">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Назва готелю</th>
-                    <th>Адреса</th>
-                    <th>Опис</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="hotel :  ${city.hotels}">
-<!--                    <td th:text="${hotel.name}">Назва готелю</td>-->
-                    <td>
-                        <a th:href="@{/hotels/{id}(id=${hotel.id})}" th:text="${hotel.name}">Назва готелю</a>
-                    </td>
-                    <td th:text="${hotel.addressStreet}">Адреса</td>
-                    <td th:text="${hotel.description}">Опис</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 <footer>
     <div class="footer-container">
         <div class="footer-section">

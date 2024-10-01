@@ -186,5 +186,4 @@ public class HotelService {
     public void save(Hotel hotel) {
         hotelRepository.save(hotel);
     }
-
 }

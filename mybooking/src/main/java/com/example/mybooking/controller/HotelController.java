@@ -490,4 +490,17 @@ public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
         return "search_results";
     }
 
+    //Опис готеля - перехід на окрему сторінку конкретного готеля
+    @GetMapping("/{id}")
+    public String getHotelDetails(@PathVariable("id") Long id, Model model) {
+        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
+
+        if (hotelOptional.isPresent()) {
+            model.addAttribute("hotel", hotelOptional.get());
+            return "hotel_details";
+        } else {
+            return "hotel_not_found"; // Перенаправляємо на сторінку з помилкою або обробляємо іншим способом
+        }
+    }
+
 }
