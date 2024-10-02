@@ -388,6 +388,8 @@
                 <p>Номер в готелі, хостели, ліжко, апарт-готелі</p>
                 <button type="button" onclick="selectHousingType('Готель або Hostel')">Обрати</button>
             </div>
+            <!-- Добавляем скрытое поле для хранения выбранного типа жилья -->
+            <input type="hidden" id="housingType" name="housingType" value="" />
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/Camping_Tent.png" alt="Альтернативні помешкання">
@@ -459,6 +461,11 @@
         <!-- Динамическое отображение удобств -->
     <div class="view-2">
 
+        <!-- Кнопка для добавления номеров, которая будет видна только при выборе типа "Готель або Hostel" -->
+        <div class="text-center mt-3">
+            <a href="/rooms/add_room" id="addRoomButton" class="btn btn-primary" style="display: none;">Добавить номер</a>
+        </div>
+
         <div class="amenities-container">
             <h4 class="text-wrapper-11">Загальні зручності</h4>
             <ul>
@@ -480,7 +487,7 @@
 
  <!-- Цена -->
     <div class="view-3">
-        <p class="text-wrapper-11">Вартість номера</p>
+        <p class="text-wrapper-11">Вартість</p>
         <input type="number" id="price" name="price" class="form-control" placeholder="1000" required />
         <div class="text-wrapper-17">UAH</div>
     </div>
@@ -555,6 +562,7 @@
 <!--        <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>-->
     </div>
 </footer>
+
 <script>
     document.getElementById('hotelForm').addEventListener('submit', function (e) {
         var address = document.getElementById('addressStreet').value;
@@ -575,11 +583,28 @@
 <!--позволяет выбрать тип жилья и установить его в скрытом поле формы.-->
 <script>
     // Функция для выбора типа жилья и автоматического перехода на следующий шаг
+   // function selectHousingType(type) {
+        // Устанавливаем выбранный тип жилья в скрытое поле
+      //  document.getElementById('housingType').value = type;
+
+        // Сохраняем данные формы и переходим на следующий шаг
+     //   nextStep(2);
+  //  }
     function selectHousingType(type) {
+        console.log("Выбранный тип жилья: " + type); // Для проверки в консоли
+
         // Устанавливаем выбранный тип жилья в скрытое поле
         document.getElementById('housingType').value = type;
 
-        // Сохраняем данные формы и переходим на следующий шаг
+        // Проверяем, выбран ли "Готель або Hostel"
+        if (type === 'Готель або Hostel') {
+            document.getElementById('addRoomButton').style.display = 'block'; // Показываем кнопку
+            console.log("Кнопка добавления номеров отображена");
+        } else {
+            document.getElementById('addRoomButton').style.display = 'none'; // Скрываем кнопку
+            console.log("Кнопка добавления номеров скрыта");
+        }
+
         nextStep(2);
     }
 
@@ -653,9 +678,6 @@
 
 
 <script>
-    // Инициализация Select2 для выбора города с использованием AJAX
-
-    //Инициализация Select2 с AJAX:
     //Добавлен JavaScript для инициализации Select2 с поддержкой поиска по AJAX.
     //При выборе города осуществляется AJAX-запрос для получения координат и обновления карты.
     $(document).ready(function() {
@@ -681,7 +703,6 @@
                 cache: true
             }
         });
-
         // Обработка выбора города для обновления карты
         $('#cityId').on('select2:select', function (e) {
             var cityId = e.params.data.id;
@@ -692,7 +713,6 @@
         $('#form-step').on('submit', function(e) {
             var selectedCityId = $('#cityId').val();
             console.log("Город, который будет отправлен:", selectedCityId);
-
             // Если cityId не выбран, остановим отправку формы и выведем сообщение об ошибке
             if (!selectedCityId) {
                 e.preventDefault();  // Останавливаем отправку формы
@@ -700,9 +720,6 @@
             }
         });
     });
-
-
-
     function fetchCityCoordinates(cityId) {
         $.ajax({
             url: '/cities/' + cityId + '/coordinates',
@@ -723,7 +740,6 @@
                         title: 'Selected Location'
                     });
                 }
-
                 // Обновляем скрытые поля
                 document.getElementById('latitude').value = data.latitude;
                 document.getElementById('longitude').value = data.longitude;

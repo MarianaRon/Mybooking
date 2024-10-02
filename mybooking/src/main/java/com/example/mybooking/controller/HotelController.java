@@ -118,25 +118,21 @@ public class HotelController {
 
         return "add_hotels";  // Возвращаем форму для регистрации отеля
     }
-    // Обработка и сохранение данных отеля за один шаг
+    // Обработка и сохранение данных отеля
     @PostMapping("/add")
     public String saveHotel(@ModelAttribute Hotel hotel, HttpSession session,
                             @RequestParam("cityId") Long cityId,
                             @RequestParam("addressStreet") String addressStreet,
                             @RequestParam(value = "amenities",required = false) List<Long> amenityIds,
                             @RequestParam(value = "images", required = false) List<MultipartFile> imageFiles) {
-
         // Получаем текущего авторизованного партнера
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
             logger.error("Partner not found in session. Redirecting to login.");
             return "redirect:/partner_Account";
         }
-
         // Привязываем партнера к отелю
         hotel.setOwner(loggedInPartner);
-
-
         // Устанавливаем город по переданному cityId
         Optional<City> cityOptional = cityService.getCityById(cityId);
         if (cityOptional.isEmpty()) {
@@ -148,16 +144,11 @@ public class HotelController {
         // Устанавливаем адрес
         hotel.setAddressStreet(addressStreet);
 
-        // Устанавливаем удобства
-
         // Привязываем удобства к отелю, если они были выбраны
         if (amenityIds != null && !amenityIds.isEmpty()) {
             Set<Amenity> amenities = amenityService.getAllAmenitiesByIds(amenityIds).stream().collect(Collectors.toSet());
             hotel.setAmenities(amenities); // Устанавливаем выбранные удобства
         }
-
-        // Сохраняем выбранные удобства в сессии
-      //  session.setAttribute("amenityIds", amenityIds);
 
         // Обрабатываем изображения, если они есть
         if (imageFiles != null && !imageFiles.isEmpty()) {

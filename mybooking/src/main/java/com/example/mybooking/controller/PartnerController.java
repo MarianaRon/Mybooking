@@ -155,7 +155,6 @@ public class PartnerController {
         // Проверка авторизации партнера
         if (partnerOpt.isPresent() && loggedInPartner != null && partnerOpt.get().getId().equals(loggedInPartner.getId())) {
             Partner existingPartner = partnerOpt.get();
-
             // Обновляем личные данные
             existingPartner.setFirstName(updatedPartner.getFirstName());
             existingPartner.setLastName(updatedPartner.getLastName());
@@ -174,13 +173,11 @@ public class PartnerController {
                 }
                 existingPartner.setPassword(newPassword); // Обновляем пароль
             }
-
             // Сохраняем обновленные данные
             partnerService.createPartner(existingPartner);
 
             return "redirect:/partners/profile"; // Возвращаемся на страницу профиля после обновления
         }
-
         return "redirect:/partner_Account"; // Перенаправляем, если не авторизован
     }
     // Отображение главной страницы для партнеров

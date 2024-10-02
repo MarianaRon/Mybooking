@@ -58,7 +58,7 @@ public class RoomController {
         roomService.deleteRoom(id);
         return "redirect:/rooms/room_list";
     }
-
+    // Обработка данных формы и сохранение номера
     @PostMapping("/add")
     public String addRoom(@RequestParam String type,
                           @RequestParam Double price,
@@ -111,4 +111,15 @@ public class RoomController {
         roomService.deleteRoom(id);
         return ResponseEntity.noContent().build();
     }
+
+    ///////////////////////////
+    // Отображение формы для добавления номера
+    @GetMapping("/add_room/{hotelId}")
+    public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model) {
+        model.addAttribute("room", new Room());
+        model.addAttribute("hotelId", hotelId); // Передача ID отеля в форму
+        return "add_room"; // возвращает на страницу add_room.html
+    }
+
+
 }

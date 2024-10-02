@@ -182,6 +182,12 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         model.addAttribute("add_hotels");
         return "add_hotels";
     }
+    //форма для додавання номеру партнером (перехід з add_hotel)
+    @GetMapping("/add_room")
+    public String add_room(Model model ){
+        model.addAttribute("add_room");
+        return "add_room";
+    }
 
     @GetMapping("/registration")
     public String registrationForm(Model model) {

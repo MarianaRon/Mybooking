@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додати всі існуючі номери у Вашому готелі або хостелі</title>
+    <link rel="stylesheet" href="/style/5_Business_form/Business_form(add_hotel_styleguide).css" />
+    <link rel="stylesheet" href="/style/5_Business_form/Business_form(add_hotel).css" />
+
+    <link rel="stylesheet" href="/style.header/header_styleguide.css" />
+    <link rel="stylesheet" href="/style.header/header.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.footer/footer_styleguide.css" />
+    <link rel="stylesheet" href="/style.footer/footer.css" />
+
+    <style>
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .button {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button button {
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            background-color: #275271FF;
+            color: white;
+        }
+
+
+        .auth-buttons {
+            color: #ffffff;
+            background-color: #E7A188FF;
+            display: flex;
+            align-items: center;
+            margin-right: 200px;
+
+        }
+
+        /*.logo-component-2 {*/
+        /*    max-width: 150px; !* Настройте размер под нужный *!*/
+        /*    opacity: 1; !* Убедитесь, что прозрачность установлена на 100% *!*/
+        /*    filter: brightness(2); !* Увеличиваем яркость, если логотип слишком тусклый *!*/
+        /*    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); !* Более выраженная тень для лучшей читаемости *!*/
+        /*}*/
+
+        /*.logo-component-2:hover {*/
+        /*    transform: scale(1.1); !* Увеличение логотипа при наведении *!*/
+        /*}*/
+        /*.navbar-brand {*/
+        /*    color: #ffffff; !* Белый цвет текста *!*/
+        /*    font-size: 1.5em;*/
+        /*    font-weight: bold;*/
+        /*    margin-left: 200px;*/
+        /*    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); !* Тень для текста, чтобы сделать его более заметным *!*/
+        /*}*/
+
+        .auth-buttons {
+            color: #ffffff;
+            background-color: #E7A188FF;
+            display: flex;
+            align-items: center;
+            margin-right: 200px;
+
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1em;
+            margin-right: 15px;
+        }
+
+
+        .auth-buttons .btn-light {
+            color: #ffffff;
+            background-color: #275271FF;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            color: #ffffff;
+            background-color: #E7A188FF;
+
+            border: none;
+            max-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+
+
+        .dropdown-menu a {
+            color: #ffffff;
+            background-color: #275271FF;
+        }
+        .dropdown-menu a:hover {
+            background-color: #9a9998;
+            color: black;
+        }
+
+
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .housing-type {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            width: 220px; /* Уменьшено, чтобы уменьшить ширину блока */
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .housing-type img {
+            width: 50px; /* Размер изображения */
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .housing-type h2 {
+            font-size: 18px; /* Уменьшен размер шрифта */
+            margin-bottom: 10px;
+        }
+
+        .housing-type p {
+            font-size: 14px; /* Уменьшен размер шрифта */
+            margin-bottom: 20px;
+        }
+
+        .housing-type button {
+            padding: 10px;
+            font-size: 14px;
+            background-color: #E7A188FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .housing-type button:hover {
+            background-color: #d68c72;
+        }
+        /* Стили для карты */
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+
+        .map-container {
+            margin-top: 30px;
+        }
+        footer {
+            background-color: #275271FF;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .footer-section {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+        }
+
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
+            transition: transform 0.2s;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .button {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button .prev-button, .button .next-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid transparent;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button .prev-button {
+            background-color: transparent;
+            border: 1px solid #275271FF;
+            color: #275271FF;
+            display: flex;
+            align-items: center;
+        }
+
+        .button .prev-button svg {
+            margin-right: 5px;
+        }
+
+        .button .next-button {
+            background-color: #275271FF;
+            color: white;
+        }
+
+        .button .prev-button:hover {
+            background-color: #275271FF;
+            color: white;
+        }
+
+        .button .next-button:hover {
+            background-color: #275271FF;
+        }
+        /* Контейнер для всех удобств */
+        .amenities-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Каждая группа удобств (общие, в номере) */
+        .amenities-group {
+            width: 45%;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для заголовка группы */
+        .amenities-group h4 {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Стили для списка чекбоксов */
+        .amenities-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        /* Каждый элемент списка */
+        .amenities-list li {
+            margin-bottom: 10px;
+        }
+
+        /* Стили для чекбоксов и текста */
+        .amenities-list input[type="checkbox"] {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="HEADER-desktop">
+            <div class="frame">
+                <div class="frame">
+                    <a class="nav-link" href="/"><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 50px;"/></span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/languages"> <img src="/images/ukraine.png" alt="Ukraine"> <span th:text="${session.language}"></span></a>
+                    </li>
+                    <div class="auth-buttons">
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span th:text="${session.userName}"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                                <li><a class="dropdown-item" href="/hotels/add">Додати нове помешкання</a></li>
+                                <li><a class="dropdown-item" href="/home_partners">Профіль</a></li>
+                                <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Додати номер</h2>
+    <form th:action="@{/rooms/add}" method="post">
+        <!-- Поле для ввода типа номера -->
+        <div class="mb-3">
+            <label for="type" class="form-label">Тип</label>
+            <input type="text" class="form-control" id="type" name="type" required>
+        </div>
+
+        <!-- Поле для ввода цены -->
+        <div class="mb-3">
+            <label for="price" class="form-label">Ціна</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+
+        <!-- Поле для вместимости -->
+        <div class="mb-3">
+            <label for="capacity" class="form-label">Вместимість</label>
+            <input type="number" class="form-control" id="capacity" name="capacity" required>
+        </div>
+
+        <!-- Скрытое поле для ID отеля -->
+        <input type="hidden" id="hotelId" name="hotelId" th:value="${hotelId}" />
+
+        <!-- Кнопка отправки формы -->
+        <button type="submit" class="btn btn-primary">Додати номер</button>
+    </form>
+</div>
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <!--            <h4>Тех. підтримка</h4>-->
+            <a class="nav-link" href="/support">Тех. підтримка</a>
+            <p>Найпопулярніші питання</p>
+            <p>+380 97 255 220</p>
+            <p>Arrenvi@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>Для бізнесу</h4>
+            <p><a class="nav-link" href="add_hotels">Зареєструвати помешкання</a></p>
+        </div>
+        <div class="footer-section">
+            <a class="nav-link" href="/about_us">Про нас</a>
+            <h4>Ми в соц мережах:</h4>
+            <a href="#"><img class="img" src="/images/instagram.png" /></a>
+            <a href="#"><img class="img" src="/images/facebook.png" /></a>
+        </div>
+        <div class="footer-section">
+            <p><a href="#">Версія для мобільних пристроїв</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
+    </div>
+</footer>
+</body>
+</html>
