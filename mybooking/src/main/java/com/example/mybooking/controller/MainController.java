@@ -1,9 +1,6 @@
 package com.example.mybooking.controller;
 
-import com.example.mybooking.model.City;
-import com.example.mybooking.model.Hotel;
-import com.example.mybooking.model.Partner;
-import com.example.mybooking.model.User;
+import com.example.mybooking.model.*;
 import com.example.mybooking.repository.IUserRepository;
 import com.example.mybooking.service.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -39,6 +36,8 @@ public class MainController {
     private HotelService hotelService;
     @Autowired
     private PartnerService partnerService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
@@ -75,12 +74,16 @@ public class MainController {
         if (currentUser == null) {
             return "redirect:/login"; // Якщо користувач не залогінений, перенаправити на сторінку входу
         }
-        model.addAttribute("user", currentUser); // Передати користувача в модель
+
+        // Завантажити відгуки користувача, разом з пов'язаними готелями
+        List<Review> reviews = reviewService.findReviewsByUser(currentUser); // або будь-який інший метод для завантаження відгуків
+
+        // Передати користувача і його відгуки в модель
+        model.addAttribute("user", currentUser);
+        model.addAttribute("reviews", reviews); // Додаємо відгуки у модель
+
         return "users/user_account"; // Показати сторінку кабінету користувача
     }
-
-
-
     @PostMapping("/google-login")
     public String googleLogin(@RequestParam String idTokenString, HttpSession session) throws GeneralSecurityException, IOException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory())
@@ -218,10 +221,27 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
 //        return "hotels/hotel_list";  // Назва шаблону для списку готелів
 //    }
 
+//    @GetMapping("/about_us")
+//    public String about_us(Model model ){
+//        return "/about_us";
+//    }
+
     @GetMapping("/about_us")
-    public String about_us(Model model ){
-        return "/about_us";
+    public String aboutUs(Model model) {
+        // Отримуємо всі відгуки
+        List<Review> allReviews = reviewService.getAllReviews();
+
+        // Перша трійка відгуків для початкового відображення
+        List<Review> firstThreeReviews = allReviews.subList(0, Math.min(3, allReviews.size()));
+
+        // Додаємо відгуки в модель для відображення в каруселі
+        model.addAttribute("reviews", firstThreeReviews);
+        model.addAttribute("totalReviews", allReviews.size());
+
+        // Повертаємо сторінку "about_us"
+        return "about_us";
     }
+
 
     @GetMapping("/admin_message_list")
     public String viewMessages(Model model) {

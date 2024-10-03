@@ -204,7 +204,21 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Залишені відгуки</h5>
+            <ul th:if="${#lists.isEmpty(reviews)}">
+                <li>Ви ще не залишили жодного відгуку.</li>
+            </ul>
+            <ul th:each="review : ${reviews}">
+                <li>
+                    <strong>Готель:</strong> <span th:text="${review.hotel.name}"></span> -
+                    <span th:text="${review.content}"></span>
+                    <span>(Рейтинг: <span th:text="${review.rating}"></span>)</span>
+                    <form th:action="@{/reviews/delete/{id}(id=${review.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </form>
+                </li>
+            </ul>
         </div>
+
     </div>
     <div class="card">
         <div class="card-body">

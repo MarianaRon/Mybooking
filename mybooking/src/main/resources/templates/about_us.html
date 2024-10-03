@@ -115,6 +115,51 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
+        .reviews-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden; /* Це важливо для приховування зайвих відгуків поза видимістю */
+        }
+
+        .reviews-wrapper {
+            display: flex;
+            overflow: hidden; /* Приховуємо відгуки, які виходять за межі видимої області */
+            position: relative;
+            width: 100%;
+        }
+
+        .reviews-list {
+            display: flex;
+            transition: transform 0.5s ease; /* Анімація для плавного прокручування */
+            width: 300%; /* Робимо цей блок ширшим для того, щоб уміщалися всі відгуки */
+        }
+
+        .review-item {
+            min-width: 100%; /* Ширина кожного відгуку дорівнює ширині контейнера */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
 
     </style>
 </head>
@@ -223,19 +268,20 @@
         </div>
     </div>
 
-<!--    карусель відгуків-->
+    <!--    Карусель відгуків-->
     <div class="reviews-container">
         <h2>Відгуки наших користувачів</h2>
 
         <!-- Стрілка для попереднього відгуку -->
         <button class="carousel-btn prev" onclick="prevReview()">&#10094;</button>
+
         <!-- Список відгуків -->
         <div class="reviews-wrapper">
             <div class="reviews-list">
                 <!-- Перебір відгуків із моделі -->
                 <div th:each="review : ${reviews}" class="review-item">
                     <p class="review-text" th:text="${review.content}"></p>
-                    <p class="review-author" th:text="${review.user.name}"></p>
+                    <p class="review-author" th:text="${review.user.username}"></p>
                 </div>
             </div>
         </div>
@@ -307,7 +353,7 @@
         if (currentIndex < totalReviews - 1) {
             currentIndex++;
         } else {
-            currentIndex = 0;
+            currentIndex = 0; // Повертаємося до початку, якщо перегорнули всі відгуки
         }
         showReviews();
     }
@@ -317,7 +363,7 @@
         if (currentIndex > 0) {
             currentIndex--;
         } else {
-            currentIndex = totalReviews - 1;
+            currentIndex = totalReviews - 1; // Переходимо до останнього відгуку
         }
         showReviews();
     }

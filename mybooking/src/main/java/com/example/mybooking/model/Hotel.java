@@ -1,7 +1,10 @@
 package com.example.mybooking.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import lombok.Getter;
@@ -61,6 +64,10 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Room> rooms = new HashSet<>();
+
+    // Додаємо зв'язок з відгуками
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews = new HashSet<>();
 
     public Hotel(String name, String addressStreet, Double price, City city, Partner owner) {
         this.name = name;

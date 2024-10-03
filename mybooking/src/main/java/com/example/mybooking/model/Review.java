@@ -8,34 +8,19 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    //private String comment;
-    //Содержимое отзыва. Обязательное поле.
     @Column(nullable = false)
     private String content;
-
-    //Оценка отеля, оставленная пользователем. Обычно находится в диапазоне от 1 до 5. Обязательное поле.
     @Column(nullable = false)
     private Integer rating;
-
-    //Дата и время, когда отзыв был оставлен. Обязательное поле.
     @Column(nullable = false)
     private LocalDateTime reviewDate;
-
-
-    //Отель, к которому относится отзыв. Ссылается на сущность Hotel. Обязательное поле.
     @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
-
-
-    //користувач, який залишив відгук
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
-    // Конструктори, геттери та сеттери
 
     public Review() {
     }
