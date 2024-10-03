@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Додати свое помешкання</title>
 
-
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS (необходим для работы модальных окон) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/style/5_Business_form/Business_form(add_hotel_styleguide).css" />
     <link rel="stylesheet" href="/style/5_Business_form/Business_form(add_hotel).css" />
 
@@ -456,15 +459,11 @@
 <!--Шаг 3: Цена и удобства
 На этом шаге пользователь выбирает удобства и устанавливает цену за номер.-->
 <div id="step-3" class="step">
-        <input type="hidden" id="step" name="step" value="3" />
+
 
         <!-- Динамическое отображение удобств -->
     <div class="view-2">
 
-        <!-- Кнопка для добавления номеров, которая будет видна только при выборе типа "Готель або Hostel" -->
-        <div class="text-center mt-3">
-            <a href="/rooms/add_room" id="addRoomButton" class="btn btn-primary" style="display: none;">Добавить номер</a>
-        </div>
 
         <div class="amenities-container">
             <h4 class="text-wrapper-11">Загальні зручності</h4>
@@ -530,9 +529,29 @@
             </svg>
         </button>
     </div>
-
     <div class="button">
         <button type="button" class="button-2" onclick="submitForm()">Зареєструвати помешкання</button>
+    </div>
+    <!-- Модальное окно для подтверждения добавления номера в отель -->
+    <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Чи бажаєте ви додати номер до цього готелю?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>
+                    <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     </div>
   </div>
 </form>
@@ -580,31 +599,17 @@
     // });
 </script>
 
+
 <!--позволяет выбрать тип жилья и установить его в скрытом поле формы.-->
 <script>
-    // Функция для выбора типа жилья и автоматического перехода на следующий шаг
-   // function selectHousingType(type) {
-        // Устанавливаем выбранный тип жилья в скрытое поле
-      //  document.getElementById('housingType').value = type;
 
-        // Сохраняем данные формы и переходим на следующий шаг
-     //   nextStep(2);
-  //  }
     function selectHousingType(type) {
         console.log("Выбранный тип жилья: " + type); // Для проверки в консоли
 
         // Устанавливаем выбранный тип жилья в скрытое поле
         document.getElementById('housingType').value = type;
 
-        // Проверяем, выбран ли "Готель або Hostel"
-        if (type === 'Готель або Hostel') {
-            document.getElementById('addRoomButton').style.display = 'block'; // Показываем кнопку
-            console.log("Кнопка добавления номеров отображена");
-        } else {
-            document.getElementById('addRoomButton').style.display = 'none'; // Скрываем кнопку
-            console.log("Кнопка добавления номеров скрыта");
-        }
-
+        // Нет необходимости проверять наличие элемента кнопки, поэтому просто идем на следующий шаг
         nextStep(2);
     }
 
@@ -635,6 +640,49 @@
         // Отправляем форму
         document.getElementById('form-step').submit();
     }
+</script>
+<script>
+    // Обработчик для кнопки "Зареєструвати помешкання"
+    document.getElementById('submitHotelButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Останавливаем стандартное поведение кнопки отправки
+
+        var form = document.getElementById('form-step');
+        var selectedHousingType = document.getElementById('housingType').value;
+
+        // AJAX-запрос для отправки формы
+        $.ajax({
+            url: form.action,  // URL для отправки формы
+            method: form.method,  // Метод отправки POST
+            data: $(form).serialize(),  // Сериализация данных формы
+            success: function(response) {
+                // Проверяем, если запрос выполнен успешно и тип жилья - "Готель або Hostel"
+                if (selectedHousingType === 'Готель або Hostel') {
+                    // Показ модального окна с использованием Bootstrap 5
+                    var myModal = new bootstrap.Modal(document.getElementById('confirmAddRoomModal'));
+                    myModal.show(); // Показ модального окна
+                } else {
+                    // Если тип жилья не "Готель або Hostel", перенаправляем на список отелей
+                    window.location.href = '/hotels_by_partner';
+                }
+            },
+            error: function(xhr, status, error) {
+                // Обработка ошибок при отправке
+                alert("Ошибка при сохранении: " + error);
+            }
+        });
+    });
+
+    // Обработчик для кнопки "Так" в модальном окне
+    document.getElementById('yesAddRoomButton').addEventListener('click', function() {
+        // Перенаправляем на страницу добавления номера
+        window.location.href = '/rooms/add';
+    });
+
+    // Обработчик для кнопки "Ні" в модальном окне
+    document.getElementById('noAddRoomButton').addEventListener('click', function() {
+        // Перенаправляем на список отелей партнера
+        window.location.href = '/hotels_by_partner';
+    });
 </script>
 
 <script>

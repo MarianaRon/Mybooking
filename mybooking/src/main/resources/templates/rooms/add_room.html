@@ -338,6 +338,7 @@
 <div class="container">
     <h2>Додати номер</h2>
     <form th:action="@{/rooms/add}" method="post">
+        <input type="hidden" name="hotelId" value="${hotelId}" />
         <!-- Поле для ввода типа номера -->
         <div class="mb-3">
             <label for="type" class="form-label">Тип</label>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додати номер до готелю</title>
+    <script>
+        // Функция для подтверждения добавления номера
+        function confirmAddRoom(hotelId) {
+            let answer = confirm("Чи бажаєте додати номер до готелю?");
+            if (answer) {
+                // Если пользователь согласен, перенаправляем на форму добавления номера
+                window.location.href = "/rooms/add_room/" + hotelId;
+            } else {
+                // Если пользователь отказался, перенаправляем на список отелей
+                window.location.href = "/hotels/hotels_by_partner";
+            }
+        }
+
+        // Автоматически вызываем функцию подтверждения при загрузке страницы
+        window.onload = function() {
+            let hotelId = document.getElementById('hotelId').value;
+            confirmAddRoom(hotelId);
+        };
+    </script>
+</head>
+<body>
+<input type="hidden" id="hotelId" value="${hotelId}" />
+</body>
+</html>
