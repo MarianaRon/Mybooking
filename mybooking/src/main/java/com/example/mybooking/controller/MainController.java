@@ -20,6 +20,8 @@ import java.security.GeneralSecurityException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class MainController {
 
@@ -226,16 +228,29 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
 //        return "/about_us";
 //    }
 
+//    @GetMapping("/about_us")
+//    public String aboutUs(Model model) {
+//        // Отримуємо всі відгуки
+//        List<Review> allReviews = reviewService.getAllReviews();
+//
+//        // Перша трійка відгуків для початкового відображення
+//        List<Review> firstThreeReviews = allReviews.subList(0, Math.min(3, allReviews.size()));
+//
+//        // Додаємо відгуки в модель для відображення в каруселі
+//        model.addAttribute("reviews", firstThreeReviews);
+//        model.addAttribute("totalReviews", allReviews.size());
+//
+//        // Повертаємо сторінку "about_us"
+//        return "about_us";
+//    }
+
     @GetMapping("/about_us")
     public String aboutUs(Model model) {
         // Отримуємо всі відгуки
         List<Review> allReviews = reviewService.getAllReviews();
 
-        // Перша трійка відгуків для початкового відображення
-        List<Review> firstThreeReviews = allReviews.subList(0, Math.min(3, allReviews.size()));
-
-        // Додаємо відгуки в модель для відображення в каруселі
-        model.addAttribute("reviews", firstThreeReviews);
+        // Додаємо всі відгуки в модель для каруселі
+        model.addAttribute("reviews", allReviews);
         model.addAttribute("totalReviews", allReviews.size());
 
         // Повертаємо сторінку "about_us"
@@ -273,4 +288,14 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
         model.addAttribute("subscribers", subscribers);
         return "admin_page";
     }
+
+
+    @GetMapping("/all_hotels")
+    public String showHotels(Model model) {
+        List<Hotel> hotels = hotelService.getAllHotels();
+        model.addAttribute("hotels", hotels);  // Додаємо список готелів у модель
+        return "hotels";  // Повертаємо назву шаблону
+    }
+
+
 }

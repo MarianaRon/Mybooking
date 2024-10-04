@@ -1,128 +1,11 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="uk">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Сортування готелів за обраним містом</title>-->
-<!--    <link rel="stylesheet" href="/style.home/home_styleguide.css" />-->
-<!--    <link rel="stylesheet" href="/style.home/home.css" />-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="container">-->
-<!--    <h1>Результати пошуку</h1>-->
-<!--    <h2 th:if="${city != null}">Готелі, що знаходяться у місті: <span th:text="${city.name}"></span></h2>-->
-<!--    <h2 th:if="${city == null}">Місто не знайдено</h2>-->
-
-<!--    &lt;!&ndash; Виведення фото міста через URL &ndash;&gt;-->
-<!--    &lt;!&ndash;    <div th:if="${photoUrl != null}">&ndash;&gt;-->
-<!--    &lt;!&ndash;        <img th:src="${photoUrl}" alt="Фото міста" width="300" style="margin-top: 20px;">&ndash;&gt;-->
-<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
-
-<!--    &lt;!&ndash; Якщо байтові дані зображення доступні &ndash;&gt;-->
-<!--    <div th:if="${photoBytes != null}">-->
-<!--        <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" width="100">-->
-<!--        &lt;!&ndash;        <img th:src="'data:image/jpeg;base64,' + ${#strings.bytes(photoBytes)}" alt="Фото міста" width="300" style="margin-top: 20px;">&ndash;&gt;-->
-<!--    </div>-->
-
-
-<!--    &lt;!&ndash; Список готелів &ndash;&gt;-->
-<!--&lt;!&ndash;    <div class="row">&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="col-md-12">&ndash;&gt;-->
-<!--&lt;!&ndash;            <table class="table table-bordered">&ndash;&gt;-->
-<!--&lt;!&ndash;                <thead>&ndash;&gt;-->
-<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <th>Назва готелю</th>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <th>Адреса</th>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <th>Опис</th>&ndash;&gt;-->
-<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                </thead>&ndash;&gt;-->
-<!--&lt;!&ndash;                <tbody>&ndash;&gt;-->
-<!--&lt;!&ndash;                <tr th:each="hotel : ${hotels}">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td th:text="${hotel.name}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td th:text="${hotel.address}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td th:text="${hotel.description}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                </tbody>&ndash;&gt;-->
-<!--&lt;!&ndash;            </table>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результати пошуку</title>
+    <title>Список готелів</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            background-color: #275271;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        h1, h2, h3 {
-            color: #fff;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        h2 span {
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .city-info-container {
-            display: flex;
-            align-items: center;
-            margin-top: 30px;
-            justify-content: center;
-        }
-
-        .city-info-container img {
-            width: 450px;
-            height: 300px;
-            border-radius: 10px;
-            margin-right: 30px;
-        }
-
-        .city-info-container .city-details {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .city-details h2 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .city-details p {
-            font-size: 1.2em;
-        }
-
-        .table-bordered {
-            color: #fff;
-        }
-
-        .table thead th, h4 {
-            background-color: #1b3b51;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .table tbody td {
-            background-color: rgba(43, 75, 91, 0.8);
-            color: #fff;
-        }
-
-        .table tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
         .container-fluid {
             background-color: #275271;
             padding: 10px 20px;
@@ -232,7 +115,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
-    </style>
+        </style>
 </head>
 <body>
 <div class="container-fluid" style="background-color: #275271;">
@@ -285,55 +168,40 @@
         </ul>
     </div>
 </div>
-<div class="container">
-    <div class="city-info-container" th:if="${city != null}">
-        <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста">
-        <div class="city-details">
-            <h2>Готелі, що знаходяться у місті <span th:text="${city.name}"></span></h2>
-            <h3 th:text="'Регіон: ' + ${city.region}"></h3>
-        </div>
-    </div>
+<div class="container mt-5">
+    <h2>Усі готелі</h2>
 
-    <h2 th:if="${city == null}">Місто не знайдено</h2>
-    <!-- Перевірка наявності готелів -->
-    <h3 th:if="${#lists.isEmpty(city.hotels)}">Немає доступних готелів у цьому місті.</h3>
-    <h3 th:if="${!#lists.isEmpty(city.hotels)}" th:text="'Знайдено готелів: ' + ${#lists.size(city.hotels)}"></h3>
-
+    <!-- Кнопки сортування -->
     <div class="mb-4">
-<!--        <button class="btn btn-info" onclick="sortTableByCity()">Сортувати по містах</button>-->
+        <button class="btn btn-info" onclick="sortTableByCity()">Сортувати по містах</button>
         <button class="btn btn-info" onclick="sortTableByPrice()">Сортувати по ціні</button>
     </div>
-    <!-- Список готелів -->
-    <div class="row" style="margin-top: 10px;">
-        <div class="col-md-12">
-            <table id="hotelsTable" class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Назва готелю</th>
-                    <th>Адреса</th>
-                    <th>Опис</th>
-                    <th>Місто</th>
-                    <th>Ціна</th>
-                    <th>Тип житла</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="hotel :  ${city.hotels}">
-<!--                    <td th:text="${hotel.name}">Назва готелю</td>-->
 
-                    <td>
-                        <h4><a th:href="@{/hotels/{id}(id=${hotel.id})}" th:text="${hotel.name}">Назва готелю</a></h4>
-                    </td>
-                    <td th:text="${hotel.addressStreet}">Адреса</td>
-                    <td th:text="${hotel.description}">Опис</td>
-                    <td th:text="${hotel.city.name}"></td>
-                    <td th:text="${hotel.price}"></td>
-                    <td th:text="${hotel.housingType}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <!-- Таблиця з переліком готелів -->
+    <table id="hotelsTable" class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Адреса</th>
+            <th>Місто</th>
+            <th>Ціна</th>
+            <th>Тип житла</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hotel : ${hotels}">
+            <td th:text="${hotel.id}"></td>
+            <td th:text="${hotel.name}"></td>
+            <td th:text="${hotel.description}"></td>
+            <td th:text="${hotel.addressStreet}"></td>
+            <td th:text="${hotel.city != null ? hotel.city.name : 'Місто не вказано'}"></td>
+            <td th:text="${hotel.price}"></td>
+            <td th:text="${hotel.housingType}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <footer>
     <div class="footer-container">
@@ -369,11 +237,12 @@
         const rows = Array.from(table.rows);
 
         rows.sort((a, b) => {
-            const cityA = a.cells[3].textContent.trim().toLowerCase();
-            const cityB = b.cells[3].textContent.trim().toLowerCase();
+            const cityA = a.cells[4].textContent.trim().toLowerCase();
+            const cityB = b.cells[4].textContent.trim().toLowerCase();
             return cityA.localeCompare(cityB);
         });
 
+        // Вставляємо відсортовані рядки назад у таблицю
         rows.forEach(row => table.appendChild(row));
     }
 
@@ -383,11 +252,12 @@
         const rows = Array.from(table.rows);
 
         rows.sort((a, b) => {
-            const priceA = parseFloat(a.cells[4].textContent) || 0;
-            const priceB = parseFloat(b.cells[4].textContent) || 0;
+            const priceA = parseFloat(a.cells[5].textContent) || 0;
+            const priceB = parseFloat(b.cells[5].textContent) || 0;
             return priceA - priceB;
         });
 
+        // Вставляємо відсортовані рядки назад у таблицю
         rows.forEach(row => table.appendChild(row));
     }
 </script>

@@ -56,7 +56,7 @@
             color: #fff;
         }
 
-        .table thead th {
+        .table thead th, h4 {
             background-color: #1b3b51;
             color: #fff;
             font-weight: bold;
@@ -245,25 +245,36 @@
     <!-- Перевірка наявності готелів -->
     <h3 th:if="${#lists.isEmpty(city.hotels)}">Немає доступних готелів у цьому місті.</h3>
     <h3 th:if="${!#lists.isEmpty(city.hotels)}" th:text="'Знайдено готелів: ' + ${#lists.size(city.hotels)}"></h3>
+
+    <div class="mb-4">
+<!--        <button class="btn btn-info" onclick="sortTableByCity()">Сортувати по містах</button>-->
+        <button class="btn btn-info" onclick="sortTableByPrice()">Сортувати по ціні</button>
+    </div>
     <!-- Список готелів -->
     <div class="row" style="margin-top: 10px;">
         <div class="col-md-12">
-            <table class="table table-bordered">
+            <table id="hotelsTable" class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Назва готелю</th>
                     <th>Адреса</th>
                     <th>Опис</th>
+                    <th>Місто</th>
+                    <th>Ціна</th>
+                    <th>Тип житла</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="hotel :  ${city.hotels}">
 <!--                    <td th:text="${hotel.name}">Назва готелю</td>-->
                     <td>
-                        <a th:href="@{/hotels/{id}(id=${hotel.id})}" th:text="${hotel.name}">Назва готелю</a>
+                        <h4><a th:href="@{/hotels/{id}(id=${hotel.id})}" th:text="${hotel.name}">Назва готелю</a></h4>
                     </td>
                     <td th:text="${hotel.addressStreet}">Адреса</td>
                     <td th:text="${hotel.description}">Опис</td>
+                    <td th:text="${hotel.city.name}"></td>
+                    <td th:text="${hotel.price}"></td>
+                    <td th:text="${hotel.housingType}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -297,5 +308,35 @@
         <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
     </div>
 </footer>
+<script>
+    // Функція для сортування таблиці по місту
+    function sortTableByCity() {
+        const table = document.getElementById("hotelsTable").getElementsByTagName('tbody')[0];
+        const rows = Array.from(table.rows);
+
+        rows.sort((a, b) => {
+            const cityA = a.cells[3].textContent.trim().toLowerCase();
+            const cityB = b.cells[3].textContent.trim().toLowerCase();
+            return cityA.localeCompare(cityB);
+        });
+
+        rows.forEach(row => table.appendChild(row));
+    }
+
+    // Функція для сортування таблиці по ціні
+    function sortTableByPrice() {
+        const table = document.getElementById("hotelsTable").getElementsByTagName('tbody')[0];
+        const rows = Array.from(table.rows);
+
+        rows.sort((a, b) => {
+            const priceA = parseFloat(a.cells[4].textContent) || 0;
+            const priceB = parseFloat(b.cells[4].textContent) || 0;
+            return priceA - priceB;
+        });
+
+        rows.forEach(row => table.appendChild(row));
+    }
+</script>
+
 </body>
 </html>

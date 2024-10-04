@@ -48,7 +48,13 @@
         border-top: 1px solid rgba(255, 255, 255, 0.2);
         padding-top: 10px;
     }
-
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* Відступ між заголовком і кнопкою */
+        margin-top: 40px;
+    }
 </style>
 </head>
 <body>
@@ -133,7 +139,13 @@
     </div>
 </div>
 
-<h2 style="margin-top: 50px">Або виберіть помешкання на мапі</h2>
+<!--<h2 style="margin-top: 50px">Виберіть помешкання на мапі</h2>-->
+<!-- Секція заголовка та кнопки -->
+<div class="center-content">
+    <h2 class="mr-4">Виберіть помешкання на мапі</h2>
+    <a href="/all_hotels" class="nav-link btn-action">Усі готелі</a>
+</div>
+
 <div id="map" class="map" style="margin-top: 20px"></div>
 <h2 class="" th:text="${welcomeMessage}"></h2>
 

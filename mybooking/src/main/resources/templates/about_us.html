@@ -115,17 +115,66 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
+        /*.reviews-container {*/
+        /*    position: relative;*/
+        /*    width: 100%;*/
+        /*    max-width: 800px;*/
+        /*    margin: 0 auto;*/
+        /*    overflow: hidden; !* Це важливо для приховування зайвих відгуків поза видимістю *!*/
+        /*}*/
+
+        /*.reviews-wrapper {*/
+        /*    display: flex;*/
+        /*    overflow: hidden; !* Приховуємо відгуки, які виходять за межі видимої області *!*/
+        /*    position: relative;*/
+        /*    width: 100%;*/
+        /*}*/
+
+        /*.reviews-list {*/
+        /*    display: flex;*/
+        /*    transition: transform 0.5s ease; !* Анімація для плавного прокручування *!*/
+        /*    width: 300%; !* Робимо цей блок ширшим для того, щоб уміщалися всі відгуки *!*/
+        /*}*/
+
+        /*.review-item {*/
+        /*    min-width: 100%; !* Ширина кожного відгуку дорівнює ширині контейнера *!*/
+        /*    padding: 10px;*/
+        /*    box-sizing: border-box;*/
+        /*}*/
+
+        /*.carousel-btn {*/
+        /*    position: absolute;*/
+        /*    top: 50%;*/
+        /*    transform: translateY(-50%);*/
+        /*    background-color: rgba(0, 0, 0, 0.5);*/
+        /*    color: white;*/
+        /*    border: none;*/
+        /*    padding: 10px;*/
+        /*    cursor: pointer;*/
+        /*}*/
+
+        /*.prev {*/
+        /*    left: 10px;*/
+        /*}*/
+
+        /*.next {*/
+        /*    right: 10px;*/
+        /*}*/
+
         .reviews-container {
             position: relative;
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            overflow: hidden; /* Це важливо для приховування зайвих відгуків поза видимістю */
+            margin: 40px auto; /* Відступ зверху та знизу */
+            overflow: hidden;
+            padding: 20px;
+            background-color: rgba(43, 75, 91, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Додаємо тінь для гарного вигляду */
         }
 
         .reviews-wrapper {
             display: flex;
-            overflow: hidden; /* Приховуємо відгуки, які виходять за межі видимої області */
             position: relative;
             width: 100%;
         }
@@ -137,9 +186,25 @@
         }
 
         .review-item {
-            min-width: 100%; /* Ширина кожного відгуку дорівнює ширині контейнера */
-            padding: 10px;
+            min-width: 100%;
+            padding: 20px;
             box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 15px; /* Відступ між відгуками */
+            color: #fff;
+        }
+
+        .review-text {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .review-author {
+            font-weight: bold;
+            color: #e7a188;
+            font-size: 1.1em;
         }
 
         .carousel-btn {
@@ -151,6 +216,13 @@
             border: none;
             padding: 10px;
             cursor: pointer;
+            z-index: 1; /* Щоб кнопки завжди були на передньому плані */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .prev {
@@ -161,6 +233,17 @@
             right: 10px;
         }
 
+        /* Відступи для мобільних пристроїв */
+        @media (max-width: 768px) {
+            .review-item {
+                padding: 15px;
+                margin: 0 5px; /* Менший відступ між відгуками на мобільних */
+            }
+
+            .carousel-btn {
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -267,8 +350,7 @@
             </div>
         </div>
     </div>
-
-    <!--    Карусель відгуків-->
+    <!-- Карусель відгуків -->
     <div class="reviews-container">
         <h2>Відгуки наших користувачів</h2>
 
@@ -289,6 +371,28 @@
         <!-- Стрілка для наступного відгуку -->
         <button class="carousel-btn next" onclick="nextReview()">&#10095;</button>
     </div>
+
+<!--    &lt;!&ndash;    Карусель відгуків&ndash;&gt;-->
+<!--    <div class="reviews-container">-->
+<!--        <h2>Відгуки наших користувачів</h2>-->
+
+<!--        &lt;!&ndash; Стрілка для попереднього відгуку &ndash;&gt;-->
+<!--        <button class="carousel-btn prev" onclick="prevReview()">&#10094;</button>-->
+
+<!--        &lt;!&ndash; Список відгуків &ndash;&gt;-->
+<!--        <div class="reviews-wrapper">-->
+<!--            <div class="reviews-list">-->
+<!--                &lt;!&ndash; Перебір відгуків із моделі &ndash;&gt;-->
+<!--                <div th:each="review : ${reviews}" class="review-item">-->
+<!--                    <p class="review-text" th:text="${review.content}"></p>-->
+<!--                    <p class="review-author" th:text="${review.user.username}"></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Стрілка для наступного відгуку &ndash;&gt;-->
+<!--        <button class="carousel-btn next" onclick="nextReview()">&#10095;</button>-->
+<!--    </div>-->
 
     <!-- Останній блок з кнопками -->
     <div class="register-section">
@@ -342,35 +446,66 @@
     const reviews = document.querySelectorAll('.review-item');
     const totalReviews = reviews.length;
 
-    // Показуємо поточні відгуки
-    function showReviews() {
-        const offset = -(currentIndex * 100); // Зсуваємо блок відгуків
-        document.querySelector('.reviews-list').style.transform = `translateX(${offset}%)`;
+    // Функція для відображення поточного відгуку
+    function showReviews(index) {
+        const reviewsList = document.querySelector('.reviews-list');
+        reviewsList.style.transition = 'transform 0.5s ease'; // Плавна анімація
+        const offset = -(index * 100); // Зсуваємо блок на ширину одного відгуку
+        reviewsList.style.transform = `translateX(${offset}%)`;
     }
 
     // Наступний відгук
     function nextReview() {
+        const reviewsList = document.querySelector('.reviews-list');
+
         if (currentIndex < totalReviews - 1) {
             currentIndex++;
         } else {
-            currentIndex = 0; // Повертаємося до початку, якщо перегорнули всі відгуки
+            // Коли доходимо до останнього відгуку, плавно переходимо до першого
+            currentIndex = 0;
+            reviewsList.style.transition = 'none'; // Вимикаємо анімацію для миттєвого повернення
+            reviewsList.style.transform = 'translateX(0%)';
+            // Використовуємо таймаут, щоб затримати перехід і включити плавність
+            setTimeout(() => {
+                reviewsList.style.transition = 'transform 0.5s ease'; // Повертаємо плавну анімацію
+                currentIndex = 1;
+                showReviews(currentIndex);
+            }, 50);
+            return;
         }
-        showReviews();
+
+        showReviews(currentIndex);
     }
 
     // Попередній відгук
     function prevReview() {
+        const reviewsList = document.querySelector('.reviews-list');
+
         if (currentIndex > 0) {
             currentIndex--;
         } else {
-            currentIndex = totalReviews - 1; // Переходимо до останнього відгуку
+            // Коли доходимо до першого відгуку, плавно переходимо до останнього
+            currentIndex = totalReviews - 1;
+            reviewsList.style.transition = 'none'; // Вимикаємо анімацію для миттєвого повернення
+            reviewsList.style.transform = `translateX(${-totalReviews * 100}%)`;
+            // Використовуємо таймаут, щоб затримати перехід і включити плавність
+            setTimeout(() => {
+                reviewsList.style.transition = 'transform 0.5s ease'; // Повертаємо плавну анімацію
+                currentIndex = totalReviews - 2;
+                showReviews(currentIndex);
+            }, 50);
+            return;
         }
-        showReviews();
+
+        showReviews(currentIndex);
     }
 
     // Початковий показ відгуків
-    showReviews();
+    showReviews(currentIndex);
 
 </script>
+
+
+
 </body>
 </html>
