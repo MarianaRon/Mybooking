@@ -17,7 +17,7 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
+    private Hotel hotel;// Связь с отелем
 
     @ManyToOne
     @JoinColumn(name = "room_id")

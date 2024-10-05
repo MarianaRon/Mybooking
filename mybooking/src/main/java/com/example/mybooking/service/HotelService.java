@@ -29,35 +29,6 @@ public class HotelService {
     private IAmenityRepository amenityRepository;  // Инжектируем AmenityRepository
 
 
-
-    
-//    @Transactional
-//    public Hotel saveHotelWithPartnerAndAmenities(Hotel hotel, Partner partner, List<Long> amenityIds) {
-//        // Привязываем партнера к отелю
-//        hotel.setOwner(partner);
-//
-//        // Если есть переданные ID удобств, получаем их из базы данных
-//        if (amenityIds != null && !amenityIds.isEmpty()) {
-//            // Получаем список удобств по их ID
-//            List<Amenity> amenities = amenityService.getAmenitiesByIds(amenityIds);
-//            // Добавляем удобства в отель
-//            Set<Amenity> amenitySet = new HashSet<>(amenities);
-//            hotel.setAmenities(amenitySet);
-//        }
-//
-//
-//        // Сохраняем отель в базе данных
-//        try {
-//            Hotel savedHotel = hotelRepository.save(hotel);
-//            logger.info("Hotel saved successfully: {}", savedHotel);
-//            return savedHotel;
-//        } catch (Exception e) {
-//            // Логируем ошибку в случае неудачи сохранения
-//            logger.error("Error saving hotel: {}", e.getMessage(), e);
-//            throw new RuntimeException("Error saving hotel: " + e.getMessage(), e);
-//        }
-//    }
-//
 //    /**
 //     * Получение всех отелей из базы данных.
 //     *
@@ -96,6 +67,10 @@ public class HotelService {
             Set<Amenity> selectedAmenities = amenityRepository.findAllById(amenityIds).stream().collect(Collectors.toSet());
             hotel.setAmenities(selectedAmenities);  // Привязываем удобства к отелю
         }
+        // Сохраняем обложку
+        if (hotel.getCoverImage() != null) {
+            logger.info("Saving cover image for hotel: {}", hotel.getName());
+        }
 
         // Сохраняем отель вместе с удобствами
         hotelRepository.save(hotel);
@@ -115,16 +90,6 @@ public class HotelService {
      *
      * @param id ID отеля для удаления
      */
-//    public void deleteHotel(Long id) {
-//        logger.debug("Deleting hotel with ID: {}", id);
-//        if (hotelRepository.existsById(id)) {
-//            hotelRepository.deleteById(id);
-//            logger.info("Hotel with ID: {} successfully deleted", id);
-//        } else {
-//            logger.warn("Hotel with ID: {} not found", id);
-//        }
-//    }
-
     public boolean deleteHotelById(Long id) {
         logger.debug("Attempting to delete hotel with ID: {}", id);
 

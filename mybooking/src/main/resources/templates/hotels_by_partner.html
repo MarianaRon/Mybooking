@@ -267,6 +267,15 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
+        .other-images {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .other-images img {
+            margin-right: 10px;
+            border-radius: 5px;
+        }
 
     </style>
 </head>
@@ -342,8 +351,15 @@
             <div class="col-md-4" th:each="hotel : ${hotels}">
                 <div class="card hotel-card">
                     <!-- Изображение отеля -->
-                    <img th:src="@{|/images/hotels/${hotel.images.isEmpty() ? 'default-hotel.jpg' : hotel.images[0].url}|}"
-                         alt="Hotel Image" class="hotel-image card-img-top">
+                    <!-- Если есть обложка отеля, показываем её -->
+                    <img th:if="${hotel.coverImage != null}"
+                         th:src="@{/hotel_cover/{id}(id=${hotel.id})}"
+                         alt="Hotel Cover Image" class="hotel-image card-img-top">
+
+                    <!-- Если обложки нет, показываем дефолтное изображение -->
+                    <img th:if="${hotel.coverImage == null}"
+                         src="/img/default-hotel.png"
+                         alt="Default Hotel Image" class="hotel-image card-img-top">
 
                     <!-- Детали отеля -->
                     <div class="hotel-details">
@@ -352,19 +368,20 @@
                         <p th:text="'Price: ' + ${hotel.price} + ' UAH'" class="card-text"></p>
 
                         <!-- Кнопки редактирования и удаления -->
-<!--                        <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Edit</a>-->
-<!--                        <form th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" style="display:inline;">-->
-<!--                            <button class="btn btn-danger delete-btn" type="submit">Delete</button>-->
-<!--                        </form>-->
-                        <!-- Кнопки редактирования и удаления -->
                         <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
-                        <!-- Кнопка для удаления с вызовом модального окна -->
-                        <!-- Кнопка для удаления с вызовом модального окна -->
                         <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
                                 data-hotel-id="${hotel.id}">
-                            Видалити <i class="bi bi-trash"></i> <!-- Иконка корзины -->
+                            Видалити <i class="bi bi-trash"></i>
                         </button>
-
+                        <!-- Галерея изображений -->
+                        <div class="other-images mt-3">
+                            <h6>Другие фотографии:</h6>
+                            <div class="row">
+                                <div th:each="image : ${hotel.images}">
+                                    <img th:src="@{/images/{imageId}(imageId=${image.id})}" alt="Hotel Image" class="col-md-2" style="height: 100px; object-fit: cover; margin-right: 5px;">
+                                </div>
+                            </div>
+                        </div>
 
 
                         <!-- Модальное окно для подтверждения удаления -->

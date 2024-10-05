@@ -21,6 +21,9 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Lob
+    @Column(nullable = true)
+    private byte[] coverImage;  // Обложка отеля в байтовом формате
 
     @Column(nullable = false)
     private String name;
@@ -69,14 +72,16 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
-    public Hotel(String name, String addressStreet, Double price, City city, Partner owner) {
+    public Hotel(String name, String addressStreet, Double price, City city, Partner owner, Set<Image> images) {
         this.name = name;
         this.addressStreet = addressStreet;
         this.price = price;
         this.city = city;
         this.owner = owner;
+        this.images = images != null ? images : new HashSet<>(); // Инициализируем изображения, если они не null
     }
 }
+
 
 //package com.example.mybooking.model;
 //

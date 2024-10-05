@@ -8,13 +8,13 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap JS (необходим для работы модальных окон) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
     <link rel="stylesheet" href="/style/5_Business_form/Business_form(add_hotel_styleguide).css" />
     <link rel="stylesheet" href="/style/5_Business_form/Business_form(add_hotel).css" />
 
     <link rel="stylesheet" href="/style.header/header_styleguide.css" />
     <link rel="stylesheet" href="/style.header/header.css" />
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/style.footer/footer_styleguide.css" />
     <link rel="stylesheet" href="/style.footer/footer.css" />
@@ -27,6 +27,7 @@
     <!-- Подключение скрипта Select2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtM422TGS5SjyuYC48tdcOaBN1GKJUQ6E&callback=initMap" async defer></script>
     <style>
         .step {
@@ -307,6 +308,19 @@
         .amenities-list input[type="checkbox"] {
             margin-right: 10px;
         }
+        .cover-image-preview img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover; /* Избегаем растяжения изображения */
+        }
+
+        #imagePreview img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -353,7 +367,7 @@
 <!--Шаг 1: Имя отеля и тип жилья
 В этом шаге пользователь вводит название отеля и выбирает тип жилья (housingType). Поля обязательны для заполнения, и если какое-то из них не заполнено, будет показано сообщение об ошибке.-->
 <form id="form-step" action="/hotels/add" method="post" enctype="multipart/form-data">
-<div id="step-1" class="step active">
+    <div id="step-1" class="step active">
 
         <input type="hidden" id="step" name="step" value="1" />
         <!-- Название отеля -->
@@ -404,11 +418,11 @@
             <!-- Скрытое поле для хранения выбранного типа жилья -->
             <input type="hidden" id="housingType" name="housingType" value="" />
         </div>
-</div>
+    </div>
 
-<!--Шаг 2: Город и адрес
-Этот шаг позволяет пользователю указать город, адрес и координаты для отеля.-->
-<div id="step-2" class="step">
+    <!--Шаг 2: Город и адрес
+    Этот шаг позволяет пользователю указать город, адрес и координаты для отеля.-->
+    <div id="step-2" class="step">
         <input type="hidden" id="step" name="step" value="2" />
         <p class="text-wrapper-8">Де знаходиться Ваш об’єкт власності?</p>
         <!-- Город -->
@@ -422,21 +436,21 @@
             <select id="cityId" name="cityId" class="form-control" required></select>
 
             <!-- Скрытое поле для сохранения выбранного cityId -->
-<!--            <input type="hidden" id="cityIdHidden" name="cityId" />-->
+            <!--            <input type="hidden" id="cityIdHidden" name="cityId" />-->
         </div>
 
- <!-- Адрес -->
+        <!-- Адрес -->
         <div class="field-with-label-4">
             <div class="label-wrapper">
                 <p class="label">
                     <span class="text-wrapper-4">Вулиця та номер будинку </span> <span class="text-wrapper-5">*</span>
                 </p>
             </div>
-<!--            <input type="text" id="street" name="addressStreet" class="form-control" placeholder=" вул. Вячеслава Лепинського 4Б" required />-->
+            <!--            <input type="text" id="street" name="addressStreet" class="form-control" placeholder=" вул. Вячеслава Лепинського 4Б" required />-->
             <input type="text" id="addressStreet" name="addressStreet" placeholder="Введите адрес" required>
         </div>
 
-<!-- Карта для выбора местоположения -->
+        <!-- Карта для выбора местоположения -->
         <div class="map-container">
             <h4>Зазначте місцерозташування помешкання на мапі</h4>
 
@@ -446,114 +460,133 @@
             <input type="hidden" id="longitude" name="longitude" />
         </div>
 
-    <div class="button">
-        <button type="button" class="prev-button" onclick="prevStep(1)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
-            </svg>
-        </button>
-        <button type="button" class="next-button" onclick="nextStep(3)">Продовжити</button>
-    </div>
-</div>
-
-<!--Шаг 3: Цена и удобства
-На этом шаге пользователь выбирает удобства и устанавливает цену за номер.-->
-<div id="step-3" class="step">
-
-
-        <!-- Динамическое отображение удобств -->
-    <div class="view-2">
-
-
-        <div class="amenities-container">
-            <h4 class="text-wrapper-11">Загальні зручності</h4>
-            <ul>
-                <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'general'}">
-                    <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
-                    <span th:text="${amenity.name}"></span>
-                </li>
-            </ul>
-
-            <h4 class="text-wrapper-11">Зручності в номері</h4>
-            <ul>
-                <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'room'}">
-                    <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
-                    <span th:text="${amenity.name}"></span>
-                </li>
-            </ul>
+        <div class="button">
+            <button type="button" class="prev-button" onclick="prevStep(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
+                </svg>
+            </button>
+            <button type="button" class="next-button" onclick="nextStep(3)">Продовжити</button>
         </div>
     </div>
 
- <!-- Цена -->
-    <div class="view-3">
-        <p class="text-wrapper-11">Вартість</p>
-        <input type="number" id="price" name="price" class="form-control" placeholder="1000" required />
-        <div class="text-wrapper-17">UAH</div>
+    <!--Шаг 3: Цена и удобства
+    На этом шаге пользователь выбирает удобства и устанавливает цену за номер.-->
+    <div id="step-3" class="step">
+
+
+        <!-- Динамическое отображение удобств -->
+        <div class="view-2">
+
+
+            <div class="amenities-container">
+                <h4 class="text-wrapper-11">Загальні зручності</h4>
+                <ul>
+                    <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'general'}">
+                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
+                        <span th:text="${amenity.name}"></span>
+                    </li>
+                </ul>
+
+                <h4 class="text-wrapper-11">Зручності в номері</h4>
+                <ul>
+                    <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'room'}">
+                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
+                        <span th:text="${amenity.name}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Цена -->
+        <div class="view-3">
+            <p class="text-wrapper-11">Вартість</p>
+            <input type="number" id="price" name="price" class="form-control" placeholder="1000" required />
+            <div class="text-wrapper-17">UAH</div>
+        </div>
+        <div class="button">
+            <button type="button" class="prev-button" onclick="prevStep(2)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
+                </svg>
+
+            </button>
+            <button type="button" class="next-button" onclick="nextStep(4)">Продовжити</button>
+        </div>
     </div>
-    <div class="button">
-        <button type="button" class="prev-button" onclick="prevStep(2)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
-            </svg>
-
-        </button>
-        <button type="button" class="next-button" onclick="nextStep(4)">Продовжити</button>
-    </div>
-</div>
 
 
 
-<!--Шаг 4: Изображения и описание
-Пользователь загружает изображения и добавляет описание объекта.-->
-<div id="step-4" class="step">
+
+    <!--Шаг 4: Изображения и описание
+    Пользователь загружает изображения и добавляет описание объекта.-->
+    <div id="step-4" class="step">
 
         <input type="hidden" id="step" name="step" value="4" />
 
 
-<!-- Загрузка изображений -->
-    <div class="frame-10">
-        <p class="text-wrapper-26">Додайте фотографії та опис об’єкта</p>
-        <input type="file" id="imageUpload" name="imageUpload" accept="image/*" class="form-control" />
-<!--        <input type="file" id="image" name="image" accept="image/*" multiple class="form-control" />-->
-    </div>
+        <!-- Загрузка изображений -->
+        <div class="frame-10">
+            <p class="text-wrapper-26">Додайте фотографії та опис об’єкта</p>
+            <form action="/upload-images" method="post" enctype="multipart/form-data">
 
- <!-- Описание -->
-    <div class="frame-10">
-        <textarea id="description" name="description" placeholder="Введите описание" required></textarea>
-<!--        <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5"></textarea>-->
-    </div>
-    <div class="button">
-        <button type="button" class="prev-button" onclick="prevStep(3)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
-            </svg>
-        </button>
-    </div>
-    <div class="button">
-        <button type="button" class="button-2" onclick="submitForm()">Зареєструвати помешкання</button>
-    </div>
-    <!-- Модальное окно для подтверждения добавления номера в отель -->
-    <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Чи бажаєте ви додати номер до цього готелю?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>
-                    <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>
+            <!-- Поле для выбора обложки -->
+            <label for="coverImage">Обложка:</label>
+            <input type="file" id="coverImage" name="coverImage" accept="image/*" class="form-control" onchange="handleCoverImage(this.files)" />
+
+            <!-- Превью для обложки -->
+            <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
+
+            <!-- Поле для выбора остальных изображений -->
+            <label for="imageFiles">Остальные фотографии:</label>
+            <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />
+
+            <!-- Контейнер для отображения загруженных изображений -->
+            <div id="imagePreview" class="row mt-3"></div>
+
+            <!-- Кнопка для загрузки изображений -->
+            <button type="button" onclick="uploadImages()">Загрузить изображения</button>
+            </form>
+        </div>
+
+
+        <!-- Описание -->
+        <div class="frame-10">
+            <textarea id="description" name="description" placeholder="Введите описание" required></textarea>
+            <!--        <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5"></textarea>-->
+        </div>
+        <div class="button">
+            <button type="button" class="prev-button" onclick="prevStep(3)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="button">
+            <button type="button" class="button-2" onclick="submitForm()">Зареєструвати помешкання</button>
+        </div>
+        <!-- Модальное окно для подтверждения добавления номера в отель -->
+        <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Чи бажаєте ви додати номер до цього готелю?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>
+                        <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
     </div>
-  </div>
+    </div>
 </form>
 
 <footer>
@@ -582,6 +615,11 @@
     </div>
 </footer>
 
+<!-- Подключение Bootstrap JS и Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<!-- Bootstrap JS (необходим для работы модальных окон) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     document.getElementById('hotelForm').addEventListener('submit', function (e) {
         var address = document.getElementById('addressStreet').value;
@@ -590,13 +628,73 @@
             console.log("Поле 'addressStreet' не заполнено. Пожалуйста, введите адрес.");
         }
     });
-    // document.querySelector('#form-step').addEventListener('submit', function(e) {
-    //     var description = document.getElementById('description').value;
-    //     if (!description || description.trim() === '') {
-    //         e.preventDefault();  // Останавливаем отправку формы
-    //         alert("Пожалуйста, введите описание.");
-    //     }
-    // });
+
+    // Функция для отображения превью обложки
+    function handleCoverImage(files) {
+        const previewContainer = document.getElementById('coverImagePreview');
+        previewContainer.innerHTML = ''; // Очищаем контейнер перед добавлением нового изображения
+
+        if (files.length === 0) {
+            previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
+        } else {
+            const file = files[0];  // Только одно изображение для обложки
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-thumbnail');
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+
+    // Функция для отображения превью остальных изображений
+    function handleImages(files) {
+        const previewContainer = document.getElementById('imagePreview');
+        if (files.length === 0) {
+            previewContainer.innerHTML = '<p>Нет файлов для отображения</p>';
+        } else {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-thumbnail');
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+    // Функция для загрузки изображений на сервер
+    function uploadImages() {
+        const coverImage = document.getElementById('coverImage').files[0]; // Обложка
+        const imageFiles = document.getElementById('imageFiles').files; // Остальные изображения
+
+        const formData = new FormData();
+        if (coverImage) {
+            formData.append('coverImage', coverImage);  // Добавляем обложку
+        }
+
+        // Добавляем остальные изображения
+        Array.from(imageFiles).forEach(file => {
+            formData.append('imageFiles', file);
+        });
+
+        fetch('/upload-images', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 
 
@@ -641,8 +739,10 @@
         document.getElementById('form-step').submit();
     }
 </script>
+
+<!--Обработчик для кнопки "Зареєструвати помешкання"-->
 <script>
-    // Обработчик для кнопки "Зареєструвати помешкання"
+
     document.getElementById('submitHotelButton').addEventListener('click', function(event) {
         event.preventDefault(); // Останавливаем стандартное поведение кнопки отправки
 
@@ -806,8 +906,6 @@
     }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

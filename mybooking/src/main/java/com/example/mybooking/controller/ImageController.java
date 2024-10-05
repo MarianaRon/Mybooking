@@ -1,10 +1,12 @@
 package com.example.mybooking.controller;
 
+import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Image;
 import com.example.mybooking.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/images")
 public class ImageController {
+
 
     @Autowired
     private ImageService imageService;
@@ -105,4 +110,24 @@ public class ImageController {
         imageService.deleteImage(id);
         return "redirect:/images/image_list";
     }
+
+    @GetMapping("/images/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+        Image image = imageService.getImageById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid image Id:" + id));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(image.getPhotoBytes(), headers, HttpStatus.OK);
+    }
+
+//    @GetMapping("/images/{imageId}")
+//    public ResponseEntity<byte[]> getImage(@PathVariable Long imageId) {
+//        Image image = imageService.getImageById(imageId)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid image Id: " + imageId));
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.IMAGE_JPEG);
+//        return new ResponseEntity<>(image.getPhotoBytes(), headers, HttpStatus.OK);
+//    }
 }
