@@ -368,12 +368,20 @@
             <strong th:text="${review.user.username}"></strong>:
             <span th:text="${review.content}"></span>
             <span>(Рейтинг: <span th:text="${review.rating}"></span>)</span>
+<!--            <form th:if="${session.currentUser != null and session.currentUser.username == review.user.username}"-->
+<!--                  th:action="@{/reviews/hotel/{hotelId}/deleteReview/{id}(hotelId=${hotel.id}, id=${review.id})}">-->
+<!--            <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">-->
+<!--                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>-->
+<!--                </div>-->
+<!--            </form>-->
             <form th:if="${session.currentUser != null and session.currentUser.username == review.user.username}"
-                  th:action="@{/reviews/delete/{id}(id=${review.id})}" method="post" style="display:inline;">
+                  th:action="@{/reviews/hotel/{hotelId}/deleteReview/{id}(hotelId=${hotel.id}, id=${review.id})}"
+                  method="post" style="display:inline;">
                 <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
-                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
                 </div>
             </form>
+
         </li>
     </ul>
 </div>

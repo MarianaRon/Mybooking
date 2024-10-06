@@ -3,11 +3,15 @@ package com.example.mybooking.controller;
 import com.example.mybooking.model.*;
 import com.example.mybooking.repository.IUserRepository;
 import com.example.mybooking.service.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,20 +44,34 @@ public class MainController {
     private PartnerService partnerService;
     @Autowired
     private ReviewService reviewService;
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        List<City> cities = cityService.getAllCities();  // Отримуємо список міст
-        model.addAttribute("cities", cities);  // Додаємо міста в модель
+        List<City> cities = cityService.getAllCities();  // Получаем список городов
+        List<Hotel> hotels = hotelService.getAllHotels(); // Получаем список отелей
+
+        model.addAttribute("cities", cities);
+
+        // Конвертируем список отелей в JSON для передачи на фронт
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            String hotelsJson = mapper.writeValueAsString(hotels);
+//            model.addAttribute("hotelsJson", hotelsJson);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace(); // Логируем ошибку конвертации
+//        }
 
         if (currentUser != null) {
             model.addAttribute("welcomeMessage", "Вітаємо, " + currentUser.getUsername() + "! Спробуйте найпопулярніші напрямки для подорожі");
         } else {
             model.addAttribute("welcomeMessage", "Вітаємо, гість! Спробуйте найпопулярніші напрямки для подорожі");
         }
-        return "home";  
+
+        return "home";
     }
+
     @GetMapping("/login")
     public String loginForm(Model model) {
         return "login";

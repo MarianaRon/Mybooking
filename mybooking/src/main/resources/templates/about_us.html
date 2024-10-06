@@ -115,51 +115,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
-        /*.reviews-container {*/
-        /*    position: relative;*/
-        /*    width: 100%;*/
-        /*    max-width: 800px;*/
-        /*    margin: 0 auto;*/
-        /*    overflow: hidden; !* Це важливо для приховування зайвих відгуків поза видимістю *!*/
-        /*}*/
-
-        /*.reviews-wrapper {*/
-        /*    display: flex;*/
-        /*    overflow: hidden; !* Приховуємо відгуки, які виходять за межі видимої області *!*/
-        /*    position: relative;*/
-        /*    width: 100%;*/
-        /*}*/
-
-        /*.reviews-list {*/
-        /*    display: flex;*/
-        /*    transition: transform 0.5s ease; !* Анімація для плавного прокручування *!*/
-        /*    width: 300%; !* Робимо цей блок ширшим для того, щоб уміщалися всі відгуки *!*/
-        /*}*/
-
-        /*.review-item {*/
-        /*    min-width: 100%; !* Ширина кожного відгуку дорівнює ширині контейнера *!*/
-        /*    padding: 10px;*/
-        /*    box-sizing: border-box;*/
-        /*}*/
-
-        /*.carousel-btn {*/
-        /*    position: absolute;*/
-        /*    top: 50%;*/
-        /*    transform: translateY(-50%);*/
-        /*    background-color: rgba(0, 0, 0, 0.5);*/
-        /*    color: white;*/
-        /*    border: none;*/
-        /*    padding: 10px;*/
-        /*    cursor: pointer;*/
-        /*}*/
-
-        /*.prev {*/
-        /*    left: 10px;*/
-        /*}*/
-
-        /*.next {*/
-        /*    right: 10px;*/
-        /*}*/
 
         .reviews-container {
             position: relative;
@@ -243,6 +198,15 @@
             .carousel-btn {
                 padding: 8px;
             }
+            /*.image-container {*/
+            /*    flex: 1 1 calc(50% - 10px); !* Кожен контейнер займає 50% ширини з урахуванням відступів *!*/
+            /*    box-sizing: border-box;*/
+            /*}*/
+
+            /*.image-container img {*/
+            /*    width: 100%;*/
+            /*    height: auto; !* Масштабування зображення для збереження пропорцій *!*/
+            /*}*/
         }
     </style>
 </head>
@@ -311,6 +275,22 @@
         <p class="text">Компанія Arrenvi.com, молода компанія заснована в 2024 році в Україні. Місія компанії – допомагати людям відкривати світ.</p>
         <p class="text">Інвестуючи в технології, які допомагають подорожувати без клопоту, Arrenvi.com пропонує мільйонам гостей приголомшливі варіанти дозвілля та неймовірні помешкання: від приватних помешкань до готелів і не тільки.</p>
         <p class="text">Платформа пропонує понад 2 мільйони зареєстрованих помешкань, з-поміж яких понад 1 мільйон – це будинки, апартаменти й інші унікальні помешкання.</p>
+    </div>
+
+<!--    блок із картинками офісу-->
+    <div class="frame-container">
+        <div class="frame" style="flex: 1 1 calc(50% - 10px);">
+            <img src="images/8_ofis.jpg" alt="Офіс 4" style="width: 100%; height: auto;">
+        </div>
+<!--        <div class="frame" style="flex: 1 1 calc(50% - 10px);">-->
+<!--            <img src="images/3_ofis.jpg" alt="Офіс 2" style="width: 100%; height: auto;">-->
+<!--        </div>-->
+<!--        <div class="frame" style="flex: 1 1 calc(50% - 10px);">-->
+<!--            <img src="images/5_ofis.jpg" alt="Офіс 3" style="width: 100%; height: auto;">-->
+<!--        </div>-->
+        <div class="frame" style="flex: 1 1 calc(50% - 10px);">
+            <img src="images/1_ofis.jpg" alt="Офіс 1" style="width: 100%; height: auto;">
+        </div>
     </div>
 
     <!-- Блок "Чому саме ми?" -->

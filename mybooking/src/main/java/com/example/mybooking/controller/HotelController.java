@@ -624,5 +624,4 @@ public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
         }
     }
 
-
 }

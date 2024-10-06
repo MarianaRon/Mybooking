@@ -139,11 +139,9 @@
     </div>
 </div>
 
-<!--<h2 style="margin-top: 50px">Виберіть помешкання на мапі</h2>-->
-<!-- Секція заголовка та кнопки -->
 <div class="center-content">
     <h2 class="mr-4">Виберіть помешкання на мапі</h2>
-    <a href="/all_hotels" class="nav-link btn-action">Усі готелі</a>
+    <a href="/all_hotels" class="nav-link btn-action" style="height: 30px; width: 350px; font-size: 34px; font-weight: bold; display: flex; justify-content: center; align-items: center;">Усі готелі</a>
 </div>
 
 <div id="map" class="map" style="margin-top: 20px"></div>
@@ -167,26 +165,6 @@
     </div>
     <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
 </div>
-
-<!--    <h2>Міста України</h2>-->
-<!--    <p>Виберіть, у якому місті України ви хочете відпочити</p>-->
-<!--    <div class="carousel-container">-->
-<!--        <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>-->
-<!--        <div class="carousel-track">-->
-<!--            <div class="carousel-item" th:each="city : ${cities}" style="display: inline-block;">-->
-<!--                <a th:href="@{/city/details/{cityId}(cityId=${city.id})}">-->
-<!--                    <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">-->
-<!--                </a>-->
-<!--                <div class="city-info">-->
-<!--                    <h3 th:text="${city.name}"></h3>-->
-<!--                    <p th:text="${city.region}"></p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>-->
-<!--    </div>-->
-
-
 <div th:if="${param.subscriptionError}" style="color: red; font-weight: bold;">
     Ви повинні бути зареєстровані для підписки на newsletter!
 </div>
@@ -216,15 +194,44 @@
 
 <h2>Найпопулярніші готелі України</h2>
 <p>Забронюйте наші найпопулярніші унікальні помешкання</p>
-
 <script>
-    // Створення карти в елементі з ID 'map'
-    var map = L.map('map').setView([48.3794, 31.1656], 6); // Координати для центра України
+    // Инициализация карты с начальным видом на Украину
+    var map = L.map('map').setView([48.3794, 31.1656], 6);
 
-    // Додавання тайлів карти
+    // Добавление тайлов карты
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    // Массив отелей из сервера (JSON передан через Thymeleaf или другой шаблонизатор)
+    // var hotels = JSON.parse('[[${hotelsJson}]]'); // Thymeleaf вставит данные здесь
+    var hotels =
+        [
+        {
+            "latitude": 50.4501,
+            "longitude": 30.5234,
+            "name": "Готель 1",
+            "description": "Комфортний готель у центрі міста",
+            "price": 1200
+        },
+        {
+            "latitude": 49.8397,
+            "longitude": 24.0297,
+            "name": "Готель 2",
+            "description": "Готель з прекрасним видом",
+            "price": 1500
+        }
+    ];
+
+
+    // Проходим по каждому отелю и добавляем маркер на карту
+    hotels.forEach(function(hotel) {
+        // Создание маркера на карте по координатам отеля
+        var marker = L.marker([hotel.latitude, hotel.longitude]).addTo(map);
+
+        // Добавление всплывающей подсказки с названием и описанием отеля
+        marker.bindPopup("<b>" + hotel.name + "</b><br>" + hotel.description + "<br>Ціна: " + hotel.price + " грн.");
+    });
 </script>
 <script>
     // для каруселі

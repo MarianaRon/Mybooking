@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,12 +55,6 @@ public class ReviewController {
         review.setUser(reviewDetails.getUser());
 
         reviewService.saveReview(review);
-        return "redirect:/reviews/review_list";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String deleteReview1(@PathVariable Long id) {
-        reviewService.deleteReview(id);
         return "redirect:/reviews/review_list";
     }
 
@@ -112,28 +107,6 @@ public class ReviewController {
         return ResponseEntity.ok(updatedReview);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
-        reviewService.deleteReview(id);
-        return ResponseEntity.noContent().build();
-    }
-
-
-
-////    для каруселі на сторінку Про нас
-//@GetMapping("/review_slider")
-//public String getReviewSlider(Model model) {
-//    // Отримуємо всі відгуки
-//    List<Review> allReviews = reviewService.getAllReviews();
-//
-//    // Перша трійка відгуків для початкового відображення
-//    List<Review> firstThreeReviews = allReviews.subList(0, Math.min(3, allReviews.size()));
-//
-//    model.addAttribute("reviews", firstThreeReviews);
-//    model.addAttribute("totalReviews", allReviews.size());
-//    return "about_us";
-//}
-
     @PostMapping("/add")
     public String addReview(@RequestParam("hotelId") Long hotelId, @RequestParam("content") String content,
                             @RequestParam("rating") Integer rating, HttpSession session) {
@@ -167,22 +140,24 @@ public class ReviewController {
         reviewService.addReview(hotelId, content, rating, user);
         return "redirect:/hotels/" + hotelId;
     }
-    @PostMapping("/delete/user_account/{id}")
-    public String deleteReview(@PathVariable("id") Long reviewId, HttpSession session) {
-        User currentUser = (User) session.getAttribute("currentUser");
-        if (currentUser != null) {
-            reviewService.deleteReview(reviewId, currentUser);
-        }
-        return "redirect:/user_account";
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+        reviewService.deleteReview(id);
+        return ResponseEntity.noContent().build();
     }
 
+    // Видалення відгуку із сторінки список відгуків
+    @PostMapping("/delete/{id}")
+    public String deleteReview1(@PathVariable Long id) {
+        reviewService.deleteReview(id);
+        return "redirect:/reviews/review_list";
+    }
 
-//    // Видалення відгуку зі сторінки готелю
-//    @PostMapping("/hotel/{hotelId}/deleteReview/{id}")
-//    public String deleteReviewFromHotel(@PathVariable Long hotelId, @PathVariable Long id) {
-//        reviewService.deleteReview(id);
-//        return "redirect:/hotels/" + hotelId;
-//    }
-
-
+    // Видалення відгуку зі сторінки готелю
+    @PostMapping("/hotel/{hotelId}/deleteReview/{id}")
+    public String deleteReviewFromHotel(@PathVariable Long hotelId, @PathVariable Long id) {
+        reviewService.deleteReview(id);
+        return "redirect:/hotels/" + hotelId;
+    }
 }
