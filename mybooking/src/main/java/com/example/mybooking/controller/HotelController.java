@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,12 +56,12 @@ public class HotelController {
 
     @Autowired
     private CityService cityService; // Добавляем CityService для работы с городами
-    @Autowired
-    public HotelController(HotelService hotelService, CityService cityService, PartnerService partnerService) {
-        this.hotelService = hotelService;
-        this.cityService = cityService;
-        this.partnerService = partnerService;
-    }
+//    @Autowired
+//    public HotelController(HotelService hotelService, CityService cityService, PartnerService partnerService) {
+//        this.hotelService = hotelService;
+//        this.cityService = cityService;
+//        this.partnerService = partnerService;
+//    }
 
 
     // Метод для инициализации объекта отеля в сессии
@@ -78,6 +77,8 @@ public class HotelController {
 //    }
     // Получение всех отелей
     //получает список всех отелей с помощью сервиса HotelService и добавляет его в модель для отображения на странице hotel_list.html.
+
+    // Получение всех отелей
     @GetMapping
     public String getAllHotels(Model model) {
         List<Hotel> hotels = hotelService.getAllHotels();
@@ -98,7 +99,6 @@ public class HotelController {
     }
 
     //метод отображает форму для добавления отеля. Также осуществляется проверка авторизованного партнера, так как только партнеры могут добавлять отели.
-    // Показ формы для добавления отеля
     @GetMapping("/add")
     public String showAddHotelForm(HttpSession session, Model model) {
         // Создаем новый объект отеля
@@ -115,7 +115,7 @@ public class HotelController {
         }
         model.addAttribute("amenities", amenities);
 
-
+// Загружаем список городов
         List<City> cities = cityService.getAllCities();
         model.addAttribute("cities", cities);
 
@@ -133,8 +133,13 @@ public class HotelController {
                             @RequestParam("cityId") Long cityId,
                             @RequestParam("addressStreet") String addressStreet,
                             @RequestParam(value = "amenities",required = false) List<Long> amenityIds,
+                            @RequestParam(value = "latitude", required = false) String latitudeStr,
+                            @RequestParam(value = "longitude", required = false) String longitudeStr,
                             @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
-                            @RequestParam(value = "images", required = false) List<MultipartFile> imageFiles) {
+                            @RequestParam(value = "images", required = false) Set<MultipartFile> imageFiles) {
+
+
+
         // Получаем текущего авторизованного партнера
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
@@ -143,6 +148,9 @@ public class HotelController {
         }
         // Привязываем партнера к отелю
         hotel.setOwner(loggedInPartner);
+
+
+
         // Устанавливаем город по переданному cityId
         Optional<City> cityOptional = cityService.getCityById(cityId);
         if (cityOptional.isEmpty()) {
@@ -154,47 +162,59 @@ public class HotelController {
         // Устанавливаем адрес
         hotel.setAddressStreet(addressStreet);
 
-        // Привязываем удобства к отелю, если они были выбраны
-        if (amenityIds != null && !amenityIds.isEmpty()) {
-            Set<Amenity> amenities = amenityService.getAllAmenitiesByIds(amenityIds).stream().collect(Collectors.toSet());
-            hotel.setAmenities(amenities); // Устанавливаем выбранные удобства
+        // Преобразование latitude и longitude в double
+        try {
+            if (latitudeStr != null && !latitudeStr.isEmpty()) {
+                hotel.setLatitude(Double.parseDouble(latitudeStr));
+            }
+            if (longitudeStr != null && !longitudeStr.isEmpty()) {
+                hotel.setLongitude(Double.parseDouble(longitudeStr));
+            }
+        } catch (NumberFormatException e) {
+            logger.error("Invalid latitude or longitude format: {}", e.getMessage());
+            return "redirect:/hotels/add?error=invalid_coordinates";
         }
 
-        // Проверка и сохранение обложки
+
+        // Привязываем удобства к отелю
+        if (amenityIds != null && !amenityIds.isEmpty()) {
+            Set<Amenity> amenities = amenityService.getAllAmenitiesByIds(amenityIds).stream().collect(Collectors.toSet());
+            hotel.setAmenities(amenities);
+        }
+
+        // Обработка и сохранение обложки
         if (coverImageFile != null && !coverImageFile.isEmpty()) {
             try {
-                hotel.setCoverImage(coverImageFile.getBytes());
+                byte[] coverImageBytes = coverImageFile.getBytes();  // Преобразуем MultipartFile в byte[]
+                hotel.setCoverImage(coverImageBytes);  // Устанавливаем обложку
             } catch (IOException e) {
-                logger.error("Error processing cover image: {}", e.getMessage());
+                logger.error("Error processing cover image file: {}", e.getMessage());
+                return "redirect:/hotels/add?error=image_upload_failed";
             }
         }
 
-
-        // Сохранение других изображений
+        // Обрабатываем дополнительные изображения
         Set<Image> images = new HashSet<>();
         if (imageFiles != null && !imageFiles.isEmpty()) {
             for (MultipartFile file : imageFiles) {
                 if (!file.isEmpty()) {
                     try {
-                        String mimeType = file.getContentType();
-                        if (mimeType != null && mimeType.startsWith("image/")) {
-                            Image image = new Image();
-                            image.setPhotoBytes(file.getBytes());
-                            image.setHotel(hotel);
-                            images.add(image);
-                        } else {
-                            logger.warn("File {} is not an image. MIME type: {}", file.getOriginalFilename(), mimeType);
-                        }
+                        Image image = new Image();
+                        image.setPhotoBytes(file.getBytes());  // Преобразуем MultipartFile в byte[]
+                        image.setHotel(hotel);  // Привязываем изображение к отелю
+                        images.add(image);
                     } catch (IOException e) {
-                        logger.error("Error processing image file {}: {}", file.getOriginalFilename(), e.getMessage());
+                        logger.error("Error processing image file: {}", e.getMessage());
+                        return "redirect:/hotels/add?error=image_upload_failed";
                     }
                 }
             }
         }
-        hotel.setImages(images);
+        hotel.setImages(images);  // Привязываем изображения к отелю
 
+        // Сохраняем отель вместе с изображениями
         hotelService.save(hotel);
-        logger.info("Hotel {} successfully saved.", hotel.getName());
+        logger.info("Hotel {} was successfully saved.", hotel.getName());
 
         return "redirect:/hotels/hotels_by_partner";
     }
@@ -209,8 +229,10 @@ public ResponseEntity<byte[]> getHotelCover(@PathVariable Long hotelId) {
 
     if (coverImage == null) {
         try {
-            Resource resource = new ClassPathResource("static/img/default-hotel.png");
-            byte[] defaultImage = Files.readAllBytes(resource.getFile().toPath());
+            //Resource resource = new ClassPathResource("static/img/default-hotel.png");
+           // byte[] defaultImage = Files.readAllBytes(resource.getFile().toPath());
+
+            byte[] defaultImage = getDefaultImageBytes();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
             return new ResponseEntity<>(defaultImage, headers, HttpStatus.OK);
@@ -223,61 +245,21 @@ public ResponseEntity<byte[]> getHotelCover(@PathVariable Long hotelId) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.IMAGE_JPEG);
     return new ResponseEntity<>(coverImage, headers, HttpStatus.OK);
-}
+    }
 
-///////////1
-//@PostMapping("/upload-images")
-//public ResponseEntity<?> uploadImages(@RequestParam("imageFiles") List<MultipartFile> imageFiles, @RequestParam("hotelId") Long hotelId) {
-//    try {
-//        Optional<Hotel> hotelOptional = hotelService.getHotelById(hotelId);
-//
-//        if (hotelOptional.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Отель не найден.");
-//        }
-//
-//        Hotel hotel = hotelOptional.get();
-//        Set<Image> images = new HashSet<>();
-//
-//        for (MultipartFile file : imageFiles) {
-//            if (!file.isEmpty()) {
-//                try {
-//                    // Создаем новый объект Image
-//                    Image image = new Image();
-//                    image.setPhotoBytes(file.getBytes());  // Сохраняем байтовое представление изображения
-//                    image.setUrl(file.getOriginalFilename());  // Сохраняем имя файла как URL для отслеживания
-//                    image.setHotel(hotel);  // Привязываем изображение к отелю
-//
-//                    // Сохраняем изображение в базу данных через сервис
-//                    imageService.saveImage(image);
-//
-//                    images.add(image);
-//
-//                    // Логирование успешного сохранения изображения
-//                    logger.info("Image {} uploaded successfully for hotel {}", file.getOriginalFilename(), hotel.getName());
-//
-//                } catch (IOException e) {
-//                    logger.error("Error saving image: {}", e.getMessage());
-//                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при сохранении изображения: " + e.getMessage());
-//                }
-//            }
-//        }
-//
-//        // Сохраняем отель с привязанными изображениями
-//        hotel.setImages(images);
-//        hotelService.save(hotel);
-//
-//        return ResponseEntity.ok("Файлы успешно загружены.");
-//    } catch (Exception e) {
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка загрузки файлов: " + e.getMessage());
-//    }
-//}
-///////////////////2
+    // Метод для загрузки изображения по умолчанию
+    private byte[] getDefaultImageBytes() throws IOException {
+        // Путь к изображению по умолчанию
+        var resource = new ClassPathResource("static/img/default-hotel.png");
+        return Files.readAllBytes(resource.getFile().toPath());
+    }
+
 
     // Загрузка изображений
 @PostMapping("/upload-images")
 public ResponseEntity<?> uploadImages(
         @RequestParam("coverImage") MultipartFile coverImage,  // Для обложки
-        @RequestParam("imageFiles") List<MultipartFile> imageFiles,  // Для других изображений
+        @RequestParam("imageFiles") Set<MultipartFile> imageFiles,  // Для других изображений
         HttpSession session) {
 
     try {
@@ -286,11 +268,12 @@ public ResponseEntity<?> uploadImages(
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: hotel not found in session.");
         }
 
+        // Обработка файла обложки
         if (!coverImage.isEmpty()) {
-            hotel.setCoverImage(coverImage.getBytes());
-            hotelService.save(hotel);
+            byte[] coverImageBytes = coverImage.getBytes();  // Преобразование в байты
+            hotel.setCoverImage(coverImageBytes);  // Сохранение обложки в объекте отеля
         }
-
+        // Обработка остальных изображений
         Set<Image> images = new HashSet<>();
         for (MultipartFile file : imageFiles) {
             if (!file.isEmpty()) {
@@ -300,7 +283,8 @@ public ResponseEntity<?> uploadImages(
                 images.add(image);
             }
         }
-        imageService.saveAll(images);
+        hotelService.save(hotel);  // Сохранение объекта отеля
+        imageService.saveAll(images);  // Сохранение изображений
 
         return ResponseEntity.ok("Images successfully uploaded.");
     } catch (IOException e) {

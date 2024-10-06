@@ -1,5 +1,6 @@
 package com.example.mybooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @JsonIgnore
     @Lob
     @Column(nullable = true)
     private byte[] coverImage;  // Обложка отеля в байтовом формате

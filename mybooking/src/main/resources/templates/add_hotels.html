@@ -527,28 +527,25 @@
 
         <!-- Загрузка изображений -->
         <div class="frame-10">
-            <p class="text-wrapper-26">Додайте фотографії та опис об’єкта</p>
-            <form action="/upload-images" method="post" enctype="multipart/form-data">
+            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>
+            <form action="/hotels/add" method="post" enctype="multipart/form-data">
 
-            <!-- Поле для выбора обложки -->
-            <label for="coverImage">Обложка:</label>
-            <input type="file" id="coverImage" name="coverImage" accept="image/*" class="form-control" onchange="handleCoverImage(this.files)" />
+                <!-- Поле для выбора обложки -->
+                <label for="coverImage">Головне фото Вашого помешкання</label>
+                <input type="file" id="coverImage" name="coverImage" accept="image/*" class="form-control" onchange="handleCoverImage(this.files)" />
 
-            <!-- Превью для обложки -->
-            <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
+                <!-- Превью для обложки -->
+                <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
 
-            <!-- Поле для выбора остальных изображений -->
-            <label for="imageFiles">Остальные фотографии:</label>
-            <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />
+                <!-- Поле для выбора остальных изображений -->
+                <label for="imageFiles">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі перевари :</label>
+                <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />
 
-            <!-- Контейнер для отображения загруженных изображений -->
-            <div id="imagePreview" class="row mt-3"></div>
+                <!-- Контейнер для отображения загруженных изображений -->
+                <div id="imagePreview" class="row mt-3"></div>
 
-            <!-- Кнопка для загрузки изображений -->
-            <button type="button" onclick="uploadImages()">Загрузить изображения</button>
             </form>
         </div>
-
 
         <!-- Описание -->
         <div class="frame-10">
@@ -735,8 +732,26 @@
     function submitForm() {
         // Устанавливаем значение шага для отправки формы
         document.getElementById('step').value = 4;
+
         // Отправляем форму
-        document.getElementById('form-step').submit();
+        var form = document.getElementById('form-step');
+        var formData = new FormData(form);
+
+        // AJAX-запрос для отправки формы с изображениями
+        fetch('/hotels/add', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                // Перенаправление после успешной регистрации
+                window.location.href = '/hotels_by_partner';
+            } else {
+                // Обработка ошибки
+                alert("Ошибка при регистрации. Пожалуйста, попробуйте снова.");
+            }
+        }).catch(error => {
+            console.error('Ошибка при отправке формы:', error);
+        });
     }
 </script>
 
