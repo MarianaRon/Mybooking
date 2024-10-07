@@ -39,6 +39,15 @@ public class HotelService {
         return hotelRepository.findAll();
     }
 
+
+    //для роботи з картою на головній сторінці
+    public List<Hotel> get_AllHotels() {
+        logger.debug("Fetching all hotels");
+        List<Hotel> hotels = hotelRepository.findAll();
+        logger.debug("Hotels found: " + hotels.size()); // Додаємо лог для перевірки
+        return hotels;
+    }
+
     /**
      * Получение отеля по ID.
      *

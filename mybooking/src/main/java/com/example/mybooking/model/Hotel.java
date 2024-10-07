@@ -48,6 +48,7 @@ public class Hotel {
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
+    @JsonIgnore  // Ігноруємо це поле при серіалізації
     private City city;
 
     @ManyToOne

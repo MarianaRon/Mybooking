@@ -55,6 +55,39 @@
         gap: 20px; /* Відступ між заголовком і кнопкою */
         margin-top: 40px;
     }
+
+    .map {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        background-size: cover;
+    }
+
+    .hotel-marker {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .hotel-marker a {
+        display: none;
+        position: absolute;
+        left: 25px;
+        top: -10px;
+        color: white;
+        text-decoration: none;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .hotel-marker:hover a {
+        display: inline-block;
+    }
+
 </style>
 </head>
 <body>
@@ -143,8 +176,15 @@
     <h2 class="mr-4">Виберіть помешкання на мапі</h2>
     <a href="/all_hotels" class="nav-link btn-action" style="height: 30px; width: 350px; font-size: 34px; font-weight: bold; display: flex; justify-content: center; align-items: center;">Усі готелі</a>
 </div>
+<div id="map" class="map" style="position: relative; width: 100%; height: 400px; margin-top: 20px;">
+    <!-- Маркери готелів (координати в data-атрибутах) -->
+    <div th:each="hotel : ${hotels}"
+         class="hotel-marker"
+         th:attr="data-lat=${hotel.latitude}, data-lng=${hotel.longitude}, data-id=${hotel.id}, data-name=${hotel.name}"
+         style="position: absolute; border-radius: 50%; width: 20px; height: 20px;">
+    </div>
+</div>
 
-<div id="map" class="map" style="margin-top: 20px"></div>
 <h2 class="" th:text="${welcomeMessage}"></h2>
 
 <h2>Міста України</h2>
@@ -194,43 +234,22 @@
 
 <h2>Найпопулярніші готелі України</h2>
 <p>Забронюйте наші найпопулярніші унікальні помешкання</p>
-<script>
-    // Инициализация карты с начальным видом на Украину
+<script type="text/javascript">
     var map = L.map('map').setView([48.3794, 31.1656], 6);
-
-    // Добавление тайлов карты
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-    // Массив отелей из сервера (JSON передан через Thymeleaf или другой шаблонизатор)
-    // var hotels = JSON.parse('[[${hotelsJson}]]'); // Thymeleaf вставит данные здесь
-    var hotels =
-        [
-        {
-            "latitude": 50.4501,
-            "longitude": 30.5234,
-            "name": "Готель 1",
-            "description": "Комфортний готель у центрі міста",
-            "price": 1200
-        },
-        {
-            "latitude": 49.8397,
-            "longitude": 24.0297,
-            "name": "Готель 2",
-            "description": "Готель з прекрасним видом",
-            "price": 1500
-        }
-    ];
-
-
-    // Проходим по каждому отелю и добавляем маркер на карту
-    hotels.forEach(function(hotel) {
-        // Создание маркера на карте по координатам отеля
-        var marker = L.marker([hotel.latitude, hotel.longitude]).addTo(map);
-
-        // Добавление всплывающей подсказки с названием и описанием отеля
-        marker.bindPopup("<b>" + hotel.name + "</b><br>" + hotel.description + "<br>Ціна: " + hotel.price + " грн.");
+    document.addEventListener("DOMContentLoaded", function() {
+        const hotelMarkers = document.querySelectorAll(".hotel-marker");
+        hotelMarkers.forEach(markerDiv => {
+            const lat = parseFloat(markerDiv.getAttribute("data-lat"));
+            const lng = parseFloat(markerDiv.getAttribute("data-lng"));
+            const hotelName = markerDiv.getAttribute("data-name");
+            const hotelId = markerDiv.getAttribute("data-id");
+            var marker = L.marker([lat, lng]).addTo(map);
+            const hotelUrl = `/hotels/${hotelId}`;
+            marker.bindPopup(`<a href="${hotelUrl}" style="text-decoration: none;">${hotelName}</a>`);
+        });
     });
 </script>
 <script>
