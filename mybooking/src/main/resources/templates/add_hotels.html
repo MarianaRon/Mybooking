@@ -528,7 +528,6 @@
         <!-- Загрузка изображений -->
         <div class="frame-10">
             <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>
-            <form action="/hotels/add" method="post" enctype="multipart/form-data">
 
                 <!-- Поле для выбора обложки -->
                 <label for="coverImage">Головне фото Вашого помешкання</label>
@@ -544,7 +543,6 @@
                 <!-- Контейнер для отображения загруженных изображений -->
                 <div id="imagePreview" class="row mt-3"></div>
 
-            </form>
         </div>
 
         <!-- Описание -->
@@ -560,7 +558,7 @@
             </button>
         </div>
         <div class="button">
-            <button type="button" class="button-2" onclick="submitForm()">Зареєструвати помешкання</button>
+            <button type="button" class="button-2" onclick="submitForm()" >Зареєструвати помешкання</button>
         </div>
         <!-- Модальное окно для подтверждения добавления номера в отель -->
         <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">
@@ -625,7 +623,6 @@
             console.log("Поле 'addressStreet' не заполнено. Пожалуйста, введите адрес.");
         }
     });
-
     // Функция для отображения превью обложки
     function handleCoverImage(files) {
         const previewContainer = document.getElementById('coverImagePreview');
@@ -633,6 +630,8 @@
 
         if (files.length === 0) {
             previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
+        } else if (files.length > 1) {
+            alert('Пожалуйста, выберите только одно изображение для обложки.');
         } else {
             const file = files[0];  // Только одно изображение для обложки
             const reader = new FileReader();
@@ -640,58 +639,45 @@
                 const img = document.createElement('img');
                 img.src = e.target.result;
                 img.classList.add('img-thumbnail');
+                img.style.maxHeight = '400px'; // Ограничение высоты изображения
+                img.style.objectFit = 'cover';
                 previewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         }
     }
-
-
-    // Функция для отображения превью остальных изображений
+    // Функция для отображения превью дополнительных изображений
     function handleImages(files) {
         const previewContainer = document.getElementById('imagePreview');
-        if (files.length === 0) {
-            previewContainer.innerHTML = '<p>Нет файлов для отображения</p>';
-        } else {
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('img-thumbnail');
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-    }
-    // Функция для загрузки изображений на сервер
-    function uploadImages() {
-        const coverImage = document.getElementById('coverImage').files[0]; // Обложка
-        const imageFiles = document.getElementById('imageFiles').files; // Остальные изображения
+        const currentImages = previewContainer.getElementsByTagName('img').length;
 
-        const formData = new FormData();
-        if (coverImage) {
-            formData.append('coverImage', coverImage);  // Добавляем обложку
+        // Проверяем, не превышает ли общее количество изображений лимит в 5 штук.
+        if (currentImages + files.length > 5) {
+            alert('Вы можете загрузить не более 5 изображений.');
+            return;
         }
 
-        // Добавляем остальные изображения
-        Array.from(imageFiles).forEach(file => {
-            formData.append('imageFiles', file);
+        // Обрабатываем каждое новое изображение.
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-thumbnail');
+                img.style.width = '150px';
+                img.style.height = '150px';
+                img.style.objectFit = 'cover';
+                img.style.marginRight = '10px';
+
+                // Добавляем изображение в контейнер.
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
         });
 
-        fetch('/upload-images', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+
     }
+
 </script>
 
 
@@ -728,7 +714,7 @@
         document.getElementById('step').value = step;
     }
 
-    // Функция для отправки формы на последнем шаге (4 шаг)
+    /////// Функция для отправки формы на последнем шаге (4 шаг)
     function submitForm() {
         // Устанавливаем значение шага для отправки формы
         document.getElementById('step').value = 4;
@@ -743,14 +729,17 @@
             body: formData
         }).then(response => {
             if (response.ok) {
-                // Перенаправление после успешной регистрации
                 window.location.href = '/hotels_by_partner';
             } else {
-                // Обработка ошибки
-                alert("Ошибка при регистрации. Пожалуйста, попробуйте снова.");
+                return response.json().then(data => {
+                    alert("Ошибка при регистрации: " + (data.message || "Пожалуйста, попробуйте снова."));
+                }).catch(() => {
+                    alert("Произошла ошибка при регистрации. Пожалуйста, попробуйте снова.");
+                });
             }
         }).catch(error => {
             console.error('Ошибка при отправке формы:', error);
+            alert("Ошибка при отправке формы. Проверьте подключение к интернету и попробуйте снова.");
         });
     }
 </script>
@@ -799,7 +788,7 @@
         window.location.href = '/hotels_by_partner';
     });
 </script>
-
+<!--Инициализация карты-->
 <script>
     // Инициализация карты
     var map;
@@ -839,7 +828,8 @@
     }
 </script>
 
-
+<!--//Добавлен JavaScript для инициализации Select2 с поддержкой поиска по AJAX.-->
+<!--//При выборе города осуществляется AJAX-запрос для получения координат и обновления карты.-->
 <script>
     //Добавлен JavaScript для инициализации Select2 с поддержкой поиска по AJAX.
     //При выборе города осуществляется AJAX-запрос для получения координат и обновления карты.

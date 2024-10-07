@@ -2,6 +2,7 @@ package com.example.mybooking.service;
 
 import com.example.mybooking.model.Amenity;
 import com.example.mybooking.model.Hotel;
+import com.example.mybooking.model.Image;
 import com.example.mybooking.model.Partner;
 import com.example.mybooking.repository.IAmenityRepository;
 import com.example.mybooking.repository.IHotelRepository;
@@ -10,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +70,8 @@ public class HotelService {
      * @return сохранённый объект отеля
      */
     @Transactional
-    public Hotel saveHotelWithPartner(Hotel hotel, Partner partner, List<Long> amenityIds) {
+    public Hotel saveHotelWithPartner(Hotel hotel, Partner partner, List<Long> amenityIds,
+                                      MultipartFile coverImageFile, Set<MultipartFile> imageFiles) {
         hotel.setOwner(partner); // Привязываем партнера
         hotel.setCity(hotel.getCity()); // Привязываем город
 
@@ -76,18 +80,39 @@ public class HotelService {
             Set<Amenity> selectedAmenities = amenityRepository.findAllById(amenityIds).stream().collect(Collectors.toSet());
             hotel.setAmenities(selectedAmenities);  // Привязываем удобства к отелю
         }
+
         // Сохраняем обложку
-        if (hotel.getCoverImage() != null) {
-            logger.info("Saving cover image for hotel: {}", hotel.getName());
+        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+            try {
+                hotel.setCoverImage(coverImageFile.getBytes());
+                logger.info("Saving cover image for hotel: {}", hotel.getName());
+            } catch (IOException e) {
+                logger.error("Error processing cover image file: {}", e.getMessage());
+            }
         }
+        // Обрабатываем дополнительные изображения
+        Set<Image> images = new HashSet<>();
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            for (MultipartFile file : imageFiles) {
+                if (!file.isEmpty()) {
+                    try {
+                        Image image = new Image();
+                        image.setPhotoBytes(file.getBytes());
+                        image.setHotel(hotel);
+                        images.add(image);
+                    } catch (IOException e) {
+                        logger.error("Error processing image file: {}", e.getMessage());
+                    }
+                }
+            }
+        }
+        hotel.setImages(images);
 
         // Сохраняем отель вместе с удобствами
-        hotelRepository.save(hotel);
+
 
         try {
-            Hotel savedHotel = hotelRepository.save(hotel);
-            logger.info("Hotel saved successfully: {}", savedHotel);
-            return savedHotel;
+            return hotelRepository.save(hotel);
         } catch (Exception e) {
             logger.error("Error while saving hotel: {}", e.getMessage(), e);
             throw e;  // Перебрасываем исключение для обработки на уровне контроллера

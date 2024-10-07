@@ -385,26 +385,26 @@
 
 
                         <!-- Модальное окно для подтверждения удаления -->
-                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Чи це точно?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Ви впевнені що бажаєте видалити дане помешкання?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відмінити</button>
-                                        <form id="deleteForm" th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" >
-                                            <button type="submit" class="btn btn-danger">Видалити</button>
-                                        </form>
+<!--                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">-->
+<!--                            <div class="modal-dialog">-->
+<!--                                <div class="modal-content">-->
+<!--                                    <div class="modal-header">-->
+<!--                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Чи це точно?</h5>-->
+<!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-body">-->
+<!--                                        Ви впевнені що бажаєте видалити дане помешкання?-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-footer">-->
+<!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відмінити</button>-->
+<!--                                        <form id="deleteForm" th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" >-->
+<!--                                            <button type="submit" class="btn btn-danger">Видалити</button>-->
+<!--                                        </form>-->
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
