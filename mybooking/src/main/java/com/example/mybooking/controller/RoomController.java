@@ -16,13 +16,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
-
-    @Autowired
+   @Autowired
     private RoomService roomService;
-
     @Autowired
     private HotelService hotelService;
-
     @GetMapping("/room_list")
     public String listRooms(Model model) {
         model.addAttribute("rooms", roomService.getAllRooms());
@@ -120,6 +117,26 @@ public class RoomController {
         model.addAttribute("hotelId", hotelId); // Передача ID отеля в форму
         return "add_room"; // возвращает на страницу add_room.html
     }
+
+    @GetMapping("/roomDetails/{roomId}")
+    public String getRoomDetails(@PathVariable("roomId") Long roomId, Model model) {
+        Optional<Room> roomOpt = roomService.getRoomById(roomId);
+
+        if (roomOpt.isPresent()) {
+            Room room = roomOpt.get();
+            model.addAttribute("room", room);
+
+            // Отримуємо готель, до якого належить кімната
+            Hotel hotel = room.getHotel();
+            model.addAttribute("hotel", hotel);
+
+            return "rooms/roomDetails"; // Повертаємо назву шаблону для сторінки з деталями кімнати
+        } else {
+            return "redirect:/error"; // Якщо кімната не знайдена, перенаправляємо на сторінку помилки
+        }
+    }
+
+
 
 
 }

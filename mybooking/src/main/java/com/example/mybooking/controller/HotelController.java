@@ -417,6 +417,8 @@ public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
 
         if (hotelOptional.isPresent()) {
             model.addAttribute("hotel", hotelOptional.get());
+            model.addAttribute("city", hotelOptional.get().getCity());
+            model.addAttribute("rooms", hotelOptional.get().getRooms()); // Список кімнат
             return "hotel_details";
         } else {
             return "hotel_not_found"; // Перенаправляємо на сторінку з помилкою або обробляємо іншим способом

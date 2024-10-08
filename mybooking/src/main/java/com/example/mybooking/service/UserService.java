@@ -2,6 +2,7 @@ package com.example.mybooking.service;
 
 import com.example.mybooking.model.User;
 import com.example.mybooking.repository.IUserRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,5 @@ public class UserService {
                 .map(User::getEmail)  // Витягуємо лише email користувачів
                 .collect(Collectors.toList());
     }
-
 
 }

@@ -6,26 +6,27 @@ import com.example.mybooking.model.Room;
 import com.example.mybooking.service.ReservationService;
 import com.example.mybooking.service.UserService;
 import com.example.mybooking.service.RoomService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/reservations")
 public class ReservationController {
-
     @Autowired
     private ReservationService reservationService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private RoomService roomService;
 
@@ -40,10 +41,6 @@ public class ReservationController {
         model.addAttribute("rooms", rooms);
         return "reservations/reservation_list";
     }
-
-
-
-
 
     @PostMapping("/create")
     public String createReservation(
@@ -147,5 +144,50 @@ public class ReservationController {
     public ResponseEntity<Void> deleteReservationRest(@PathVariable Long id) {
         reservationService.deleteReservation(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/book")
+    public String bookRoom(@RequestParam("selectedRooms") List<Long> selectedRoomIds,
+                           @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                           @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+                           HttpSession session,
+                           Model model) {
+
+        // Перевірка, чи користувач залогінений
+        User user = (User) session.getAttribute("currentUser");
+        if (user == null) {
+            return "redirect:/login"; // Якщо не залогінений, перенаправляємо на сторінку входу
+        }
+
+        // Перевіряємо, чи дати коректні
+        if (checkInDate.isAfter(checkOutDate)) {
+            model.addAttribute("error", "Дата виїзду повинна бути пізніше дати заїзду");
+            return "redirect:/hotels"; // Можна додати обробку помилок
+        }
+
+        // Отримуємо список вибраних кімнат
+        List<Room> selectedRooms = roomService.getRoomsByIds(selectedRoomIds);
+
+        for (Room room : selectedRooms) {
+            // Створюємо нове бронювання для кожної вибраної кімнати
+            Reservation reservation = new Reservation();
+            reservation.setUser(user);  // Користувач з сесії
+            reservation.setRoom(room);
+            reservation.setCheckInDate(checkInDate.atStartOfDay());
+            reservation.setCheckOutDate(checkOutDate.atStartOfDay());
+            reservation.setReservationDate(LocalDateTime.now());
+
+            // Рахуємо загальну вартість бронювання
+            long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+            double totalPrice = room.getPrice() * daysBetween;
+            reservation.setTotalPrice(totalPrice);
+
+            // Зберігаємо бронювання
+            reservationService.saveReservation(reservation);
+        }
+
+        // Після успішного бронювання відображаємо повідомлення
+        model.addAttribute("message", "Бронювання успішно оформлено!");
+        return "hotel_details";
     }
 }
