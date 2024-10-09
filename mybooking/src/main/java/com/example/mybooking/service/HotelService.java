@@ -32,7 +32,7 @@ public class HotelService {
     private IAmenityRepository amenityRepository;  // Инжектируем AmenityRepository
 
 
-//    /**
+    //    /**
 //     * Получение всех отелей из базы данных.
 //     *
 //     * @return список всех отелей.

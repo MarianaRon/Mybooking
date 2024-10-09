@@ -150,6 +150,28 @@ public class HotelController {
         hotel.setOwner(loggedInPartner);
 
 
+        // Логируем входные данные
+        logger.info("Received hotel data: {}", hotel);
+        logger.info("Received cityId: {}", cityId);
+        logger.info("Received addressStreet: {}", addressStreet);
+        logger.info("Received latitude: {}", latitudeStr);
+        logger.info("Received longitude: {}", longitudeStr);
+
+        // Логируем информацию о полученных файлах
+        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+            logger.info("Received cover image: {} (size: {} bytes)", coverImageFile.getOriginalFilename(), coverImageFile.getSize());
+        } else {
+            logger.warn("Cover image not received or is empty.");
+        }
+
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            logger.info("Received {} additional image(s).", imageFiles.size());
+            for (MultipartFile file : imageFiles) {
+                logger.info("Received additional image: {} (size: {} bytes)", file.getOriginalFilename(), file.getSize());
+            }
+        } else {
+            logger.warn("No additional images received.");
+        }
 
         // Устанавливаем город по переданному cityId
         Optional<City> cityOptional = cityService.getCityById(cityId);
@@ -188,13 +210,14 @@ public class HotelController {
         return "redirect:/hotels/hotels_by_partner";
     }
 
+
     // Просмотр отелей, добавленных партнером
     @GetMapping("/hotels_by_partner")
     public String getHotelsByPartner(HttpSession session, Model model) {
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
 
         if (loggedInPartner == null) {
-            return "redirect:/home_partner";  // Перенаправляем на страницу логина
+            return "redirect:/home_partners";  // Перенаправляем на страницу логина
         }
 
         // Логируем идентификатор партнера
@@ -209,52 +232,6 @@ public class HotelController {
         return "hotels_by_partner";  // Отображаем отели, зарегистрированные партнером
     }
 
-//    @PostMapping("/update_images/{id}")
-//    public String updateHotelImages(@PathVariable("id") Long id,
-//                                    @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
-//                                    @RequestParam(value = "images", required = false) Set<MultipartFile> imageFiles) {
-//        // Получаем существующий отель по ID
-//        Optional<Hotel> existingHotelOpt = hotelService.getHotelById(id);
-//        if (existingHotelOpt.isPresent()) {
-//            Hotel existingHotel = existingHotelOpt.get();
-//
-//            // Обновляем обложку, если новая обложка загружена
-//            if (coverImageFile != null && !coverImageFile.isEmpty()) {
-//                try {
-//                    existingHotel.setCoverImage(coverImageFile.getBytes());
-//                    logger.info("Cover image updated for hotel ID: {}", id);
-//                } catch (IOException e) {
-//                    logger.error("Error processing cover image file: {}", e.getMessage());
-//                }
-//            }
-//
-//            // Обновляем дополнительные изображения, если они предоставлены
-//            if (imageFiles != null && !imageFiles.isEmpty()) {
-//                Set<Image> images = new HashSet<>();
-//                for (MultipartFile file : imageFiles) {
-//                    if (!file.isEmpty()) {
-//                        try {
-//                            Image image = new Image();
-//                            image.setPhotoBytes(file.getBytes());
-//                            image.setHotel(existingHotel);
-//                            images.add(image);
-//                        } catch (IOException e) {
-//                            logger.error("Error processing image file: {}", e.getMessage());
-//                        }
-//                    }
-//                }
-//                existingHotel.setImages(images);
-//                logger.info("Additional images updated for hotel ID: {}", id);
-//            }
-//
-//            // Сохраняем обновления через сервис
-//            hotelService.save(existingHotel);
-//            return "redirect:/hotels/hotel_list";
-//        } else {
-//            logger.warn("Hotel with ID {} not found for update", id);
-//            return "redirect:/hotels";
-//        }
-//    }
 
     @PostMapping("/submit")
     public String submitHotel(HttpSession session,
@@ -356,7 +333,7 @@ public class HotelController {
         return "redirect:/hotels/hotel_list";
     }
 
-//@PostMapping("/delete/{id}")
+    //@PostMapping("/delete/{id}")
 //public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
 //    // Получаем текущего авторизованного партнера
 //    Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
@@ -378,22 +355,22 @@ public class HotelController {
 //    return "redirect:/hotels/hotels_by_partner";
 //}
 // Удаление отеля
-@PostMapping("/delete/{id}")
-public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
-    Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
-    if (loggedInPartner == null) {
-        return "redirect:/partner_Account";
-    }
+    @PostMapping("/delete/{id}")
+    public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/partner_Account";
+        }
 
-    boolean deleted = hotelService.deleteHotelById(id);
-    if (deleted) {
-        logger.info("Hotel with ID: {} successfully deleted by partner ID: {}", id, loggedInPartner.getId());
-    } else {
-        logger.warn("Hotel with ID: {} not found for deletion", id);
-    }
+        boolean deleted = hotelService.deleteHotelById(id);
+        if (deleted) {
+            logger.info("Hotel with ID: {} successfully deleted by partner ID: {}", id, loggedInPartner.getId());
+        } else {
+            logger.warn("Hotel with ID: {} not found for deletion", id);
+        }
 
-    return "redirect:/hotels/hotels_by_partner";
-}
+        return "redirect:/hotels/hotels_by_partner";
+    }
 
     // Показ форми пошуку готелів
     @GetMapping("/search")
