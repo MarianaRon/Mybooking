@@ -9,33 +9,23 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     // Пользователь, который сделал бронирование
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
     // Номер, который был забронирован
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
-
     // Дата и время заезда
     @Column(nullable = false)
     private LocalDateTime checkInDate;
-
     // Дата и время выезда
     @Column(nullable = false)
     private LocalDateTime checkOutDate;
-
-
     // Дата и время создания бронирования
     @Column(nullable = false)
     private LocalDateTime reservationDate;
-
-    //дата створення запиту
-    //private LocalDate dateDeparture;
-    //private Boolean isApproved;
 
     //дата підтвердження запиту
     private LocalDate approvalDate;

@@ -205,31 +205,45 @@
 </div>
 <div class="container">
     <h2>Деталі кімнати</h2>
-
     <div class="room-details">
-        <!-- Відображення назви готелю -->
         <p><strong>Готель:</strong> <span th:text="${hotel.name}">Назва готелю</span></p>
-        <!-- Відображення адреси готелю -->
         <p><strong>Адреса готелю:</strong> <span th:text="${hotel.addressStreet}">Адреса готелю</span></p>
-        <!-- Відображення типу кімнати -->
         <p><strong>Тип кімнати:</strong> <span th:text="${room.type}">Тип кімнати</span></p>
-        <!-- Відображення ціни за ніч -->
-        <p><strong>Ціна за ніч:</strong> <span th:text="${room.price}">Ціна кімнати</span></p>
-        <!-- Відображення місткості кімнати -->
+        <p><strong>Ціна за ніч:</strong> <span th:text="${room.price}">Ціна кімнати</span> грн</p>
         <p><strong>Місткість:</strong> <span th:text="${room.capacity}">Місткість кімнати</span></p>
     </div>
-
-    <!-- Відображення фотографій кімнати -->
     <div class="room-images" th:if="${room.images != null && !room.images.isEmpty()}">
         <h3>Фото кімнати:</h3>
         <div th:each="image : ${room.images}">
             <img th:src="@{/images/{id}(id=${image.id})}" alt="Фото кімнати" style="width:200px;height:auto;">
         </div>
     </div>
+    <div class="login-message" th:if="${currentUser == null}">
+        <p>Для бронювання потрібно <a href="/login">увійти</a> або <a href="/register">зареєструватися</a>!</p>
+    </div>
 
-     Посилання назад до готелю
+    <div th:if="${currentUser != null}">
+        <form action="/reservations/book" method="post">
+            <label for="user">Хто бронює:</label>
+            <input type="text" id="user" name="username" th:value="${currentUser.username}" readonly>
+            <input type="hidden" name="userId" th:value="${currentUser.id}">
+            <input type="hidden" name="roomId" th:value="${room.id}">
+            <input type="hidden" id="totalPriceInput" name="totalPrice">
+            <label for="checkInDate">Дата заїзду:</label>
+            <input type="datetime-local" id="checkInDate" name="checkInDate" required>
+
+            <label for="checkOutDate">Дата виїзду:</label>
+            <input type="datetime-local" id="checkOutDate" name="checkOutDate" required>
+            <button type="submit" class="btn btn-primary">Оформити бронювання!</button>
+        </form>
+        <div th:if="${message}" class="alert alert-success">
+            <p th:text="${message}"></p>
+        </div>
+    </div>
+
     <a th:href="@{/hotels/{id}(id=${hotel.id})}">Назад до готелю</a>
 </div>
+
 
 <footer>
     <div class="footer-container">

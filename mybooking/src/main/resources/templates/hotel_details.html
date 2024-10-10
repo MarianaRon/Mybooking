@@ -322,27 +322,16 @@
         <p><strong>Місто:</strong> <span th:text="${hotel.city.name}"></span></p>
         <p><strong>Тип житла:</strong> <span th:text="${hotel.housingType}"></span></p>
     </div>
-<div class="login-message" th:if="${session.currentUser == null}">
-    <p>Для для бронювання потрібно <a href="/login">увійти</a> або <a href="/register">зареєструватися</a>!</p>
-</div>
-<!-- Новий розділ для відображення кімнат -->
+
+
+
 <div class="rooms-info-container" th:if="${city != null && !#lists.isEmpty(city.hotels)}">
-        <!-- Якщо є повідомлення про успішне бронювання, відображаємо його -->
-        <div th:if="${message != null}" class="alert alert-success" role="alert">
-            <p th:text="${message}">Бронювання успішно оформлено!</p>
-        </div>
-
-        <!-- Таблиця з кімнатами -->
-        <form th:action="@{/reservation/book}" method="post">
-            <input type="hidden" name="hotelId" th:value="${hotel.id}" /> <!-- Передаємо ID готелю -->
-
             <table id="roomsTable" class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Тип кімнати</th>
                     <th>Ціна за ніч</th>
                     <th>Місткість</th>
-                    <th>Вибір</th>
                     <th>Переглянути</th>
                 </tr>
                 </thead>
@@ -352,30 +341,12 @@
                     <td th:text="${room.price}">Ціна за ніч</td>
                     <td th:text="${room.capacity}">Місткість</td>
                     <td>
-                        <input type="checkbox" name="selectedRooms" th:value="${room.id}"> Вибрати
-                    </td>
-                    <td>
                         <a th:href="@{/rooms/roomDetails/{id}(id=${room.id})}">Переглянути деталі</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <!-- Вибір дати заїзду та виїзду -->
-            <div class="form-group">
-                <label for="checkInDate">Дата заїзду:</label>
-                <input type="date" id="checkInDate" name="checkInDate" required>
-            </div>
-            <div class="form-group">
-                <label for="checkOutDate">Дата виїзду:</label>
-                <input type="date" id="checkOutDate" name="checkOutDate" required>
-            </div>
-
-            <!-- Кнопка для підтвердження бронювання -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Оформити бронювання!</button>
-            </div>
-        </form>
-    </div>
+</div>
     <div class="reviews-section">
     <h3>Відгуки:</h3>
     <ul class="reviews-list" th:if="${#lists.isEmpty(hotel.reviews)}">

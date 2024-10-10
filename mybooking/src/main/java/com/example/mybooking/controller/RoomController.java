@@ -2,8 +2,10 @@ package com.example.mybooking.controller;
 
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Room;
+import com.example.mybooking.model.User;
 import com.example.mybooking.service.HotelService;
 import com.example.mybooking.service.RoomService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -118,8 +120,26 @@ public class RoomController {
         return "add_room"; // возвращает на страницу add_room.html
     }
 
+//    @GetMapping("/roomDetails/{roomId}")
+//    public String getRoomDetails(@PathVariable("roomId") Long roomId, Model model) {
+//        Optional<Room> roomOpt = roomService.getRoomById(roomId);
+//
+//        if (roomOpt.isPresent()) {
+//            Room room = roomOpt.get();
+//            model.addAttribute("room", room);
+//
+//            // Отримуємо готель, до якого належить кімната
+//            Hotel hotel = room.getHotel();
+//            model.addAttribute("hotel", hotel);
+//
+//            return "rooms/roomDetails"; // Повертаємо назву шаблону для сторінки з деталями кімнати
+//        } else {
+//            return "redirect:/error"; // Якщо кімната не знайдена, перенаправляємо на сторінку помилки
+//        }
+//    }
+
     @GetMapping("/roomDetails/{roomId}")
-    public String getRoomDetails(@PathVariable("roomId") Long roomId, Model model) {
+    public String getRoomDetails(@PathVariable("roomId") Long roomId, Model model, HttpSession session) {
         Optional<Room> roomOpt = roomService.getRoomById(roomId);
 
         if (roomOpt.isPresent()) {
@@ -130,12 +150,15 @@ public class RoomController {
             Hotel hotel = room.getHotel();
             model.addAttribute("hotel", hotel);
 
+            // Додаємо поточного користувача в модель, якщо він є
+            User user = (User) session.getAttribute("currentUser");
+            model.addAttribute("currentUser", user);
+
             return "rooms/roomDetails"; // Повертаємо назву шаблону для сторінки з деталями кімнати
         } else {
             return "redirect:/error"; // Якщо кімната не знайдена, перенаправляємо на сторінку помилки
         }
     }
-
 
 
 
