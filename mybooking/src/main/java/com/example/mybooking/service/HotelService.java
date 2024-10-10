@@ -76,20 +76,28 @@ public class HotelService {
         hotel.setCity(hotel.getCity()); // Привязываем город
 
         // Проверяем, что список ID удобств не пуст
+//        if (amenityIds != null && !amenityIds.isEmpty()) {
+//            Set<Amenity> selectedAmenities = amenityRepository.findAllById(amenityIds).stream().collect(Collectors.toSet());
+//            hotel.setAmenities(selectedAmenities);  // Привязываем удобства к отелю
+//        }
+        // Привязываем удобства к отелю по списку их ID
         if (amenityIds != null && !amenityIds.isEmpty()) {
-            Set<Amenity> selectedAmenities = amenityRepository.findAllById(amenityIds).stream().collect(Collectors.toSet());
-            hotel.setAmenities(selectedAmenities);  // Привязываем удобства к отелю
+            // Получаем объекты удобств из базы данных по их ID
+            Set<Amenity> amenities = new HashSet<>(amenityRepository.findAllById(amenityIds));
+            // Устанавливаем удобства для отеля
+            hotel.setAmenities(amenities);
         }
 
         // Сохраняем обложку
         if (coverImageFile != null && !coverImageFile.isEmpty()) {
             try {
                 hotel.setCoverImage(coverImageFile.getBytes());
-                logger.info("Saving cover image for hotel: {}", hotel.getName());
+                logger.info("Сохранение обложки для отеля: {}", hotel.getName());
             } catch (IOException e) {
-                logger.error("Error processing cover image file: {}", e.getMessage());
+                logger.error("Ошибка при обработке файла обложки: {}", e.getMessage());
             }
         }
+
         // Обрабатываем дополнительные изображения
         Set<Image> images = new HashSet<>();
         if (imageFiles != null && !imageFiles.isEmpty()) {

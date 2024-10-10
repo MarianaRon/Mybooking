@@ -156,12 +156,14 @@ public class HotelController {
         logger.info("Received addressStreet: {}", addressStreet);
         logger.info("Received latitude: {}", latitudeStr);
         logger.info("Received longitude: {}", longitudeStr);
+        logger.info("Полученные идентификаторы удобств: {}", amenityIds);
 
-        // Логируем информацию о полученных файлах
         if (coverImageFile != null && !coverImageFile.isEmpty()) {
-            logger.info("Received cover image: {} (size: {} bytes)", coverImageFile.getOriginalFilename(), coverImageFile.getSize());
-        } else {
-            logger.warn("Cover image not received or is empty.");
+            try {
+                hotel.setCoverImage(coverImageFile.getBytes());
+            } catch (IOException e) {
+                logger.error("Error processing cover image file: {}", e.getMessage());
+            }
         }
 
         if (imageFiles != null && !imageFiles.isEmpty()) {
@@ -198,13 +200,6 @@ public class HotelController {
         }
 
 
-        // Привязываем удобства к отелю
-        if (amenityIds != null && !amenityIds.isEmpty()) {
-            Set<Amenity> amenities = amenityService.getAllAmenitiesByIds(amenityIds).stream().collect(Collectors.toSet());
-            hotel.setAmenities(amenities);
-        }
-
-
         // Сохраняем отель с обложкой и изображениями
         hotelService.saveHotelWithPartner(hotel, loggedInPartner, amenityIds, coverImageFile, imageFiles);
         return "redirect:/hotels/hotels_by_partner";
@@ -229,7 +224,7 @@ public class HotelController {
         logger.info("Hotels retrieved: {}", hotels);
 
         model.addAttribute("hotels", hotels);
-        return "hotels_by_partner";  // Отображаем отели, зарегистрированные партнером
+        return "redirect:/hotels/hotels_by_partner";  // Отображаем отели, зарегистрированные партнером
     }
 
 
