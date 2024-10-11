@@ -1,6 +1,7 @@
 package com.example.mybooking.service;
 
 import com.example.mybooking.model.Reservation;
+import com.example.mybooking.model.User;
 import com.example.mybooking.repository.IReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,8 @@ public class ReservationService {
 
     public void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
+    }
+    public List<Reservation> findReservationsByUser(User user) {
+        return reservationRepository.findByUser(user);
     }
 }

@@ -193,14 +193,27 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Інформація про збережені готелі</h5>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
             <h5 class="card-title">Перегляд бронювань</h5>
+            <ul th:if="${#lists.isEmpty(reservations)}">
+                <li>Ви ще не зробили жодного бронювання.</li>
+            </ul>
+            <ul th:each="reservation : ${reservations}">
+                <li>
+                    <strong>Готель:</strong> <span th:text="${reservation.room.hotel.name}"></span> -
+                    <strong>Кімната:</strong> <span th:text="${reservation.room.type}"></span> -
+                    <strong>Місткість:</strong> <span th:text="${reservation.room.capacity}"></span> осіб -
+                    <strong>Ціна за ніч:</strong> <span th:text="${reservation.room.price}"></span> грн
+                    <br>
+                    <strong>Дата заїзду:</strong> <span th:text="${#temporals.format(reservation.checkInDate, 'yyyy-MM-dd HH:mm')}"></span>
+                    <br>
+                    <strong>Дата виїзду:</strong> <span th:text="${#temporals.format(reservation.checkOutDate, 'yyyy-MM-dd HH:mm')}"></span>
+                    <br>
+                    <strong>Загальна сума:</strong> <span th:text="${reservation.totalPrice}"></span> грн
+                </li>
+            </ul>
         </div>
     </div>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Залишені відгуки</h5>

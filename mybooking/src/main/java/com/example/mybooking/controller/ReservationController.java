@@ -193,7 +193,7 @@ public class ReservationController {
 
         // Додаємо повідомлення про успішне бронювання
         model.addAttribute("message", "Бронювання успішно оформлено!");
-        redirectAttributes.addFlashAttribute("message", "Бронювання успішно оформлено!");
+        redirectAttributes.addFlashAttribute("message", "Бронювання успішно оформлено! Деталі можна переглянути в кабінеті користувача. Оплату треба здійснити протягом доби.");
 
         // Повертаємо на ту саму сторінку з повідомленням
         return "redirect:/rooms/roomDetails/" + roomId;

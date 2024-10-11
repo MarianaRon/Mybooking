@@ -46,6 +46,8 @@ public class MainController {
     private PartnerService partnerService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private ReservationService reservationService;
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @GetMapping("/")
@@ -83,15 +85,14 @@ public class MainController {
     public String userAccount(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null) {
-            return "redirect:/login"; // Якщо користувач не залогінений, перенаправити на сторінку входу
+            return "redirect:/login";
         }
+        List<Review> reviews = reviewService.findReviewsByUser(currentUser);
+        List<Reservation> reservations = reservationService.findReservationsByUser(currentUser);
 
-        // Завантажити відгуки користувача, разом з пов'язаними готелями
-        List<Review> reviews = reviewService.findReviewsByUser(currentUser); // або будь-який інший метод для завантаження відгуків
-
-        // Передати користувача і його відгуки в модель
         model.addAttribute("user", currentUser);
-        model.addAttribute("reviews", reviews); // Додаємо відгуки у модель
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("reservations", reservations);
 
         return "users/user_account"; // Показати сторінку кабінету користувача
     }

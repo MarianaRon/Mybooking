@@ -120,24 +120,8 @@ public class RoomController {
         return "add_room"; // возвращает на страницу add_room.html
     }
 
-//    @GetMapping("/roomDetails/{roomId}")
-//    public String getRoomDetails(@PathVariable("roomId") Long roomId, Model model) {
-//        Optional<Room> roomOpt = roomService.getRoomById(roomId);
-//
-//        if (roomOpt.isPresent()) {
-//            Room room = roomOpt.get();
-//            model.addAttribute("room", room);
-//
-//            // Отримуємо готель, до якого належить кімната
-//            Hotel hotel = room.getHotel();
-//            model.addAttribute("hotel", hotel);
-//
-//            return "rooms/roomDetails"; // Повертаємо назву шаблону для сторінки з деталями кімнати
-//        } else {
-//            return "redirect:/error"; // Якщо кімната не знайдена, перенаправляємо на сторінку помилки
-//        }
-//    }
 
+//    перехід на сторінку з описом кімнати
     @GetMapping("/roomDetails/{roomId}")
     public String getRoomDetails(@PathVariable("roomId") Long roomId, Model model, HttpSession session) {
         Optional<Room> roomOpt = roomService.getRoomById(roomId);
@@ -154,9 +138,9 @@ public class RoomController {
             User user = (User) session.getAttribute("currentUser");
             model.addAttribute("currentUser", user);
 
-            return "rooms/roomDetails"; // Повертаємо назву шаблону для сторінки з деталями кімнати
+            return "rooms/roomDetails";
         } else {
-            return "redirect:/error"; // Якщо кімната не знайдена, перенаправляємо на сторінку помилки
+            return "redirect:/error";
         }
     }
 
