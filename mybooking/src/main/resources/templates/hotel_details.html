@@ -322,7 +322,15 @@
         <p><strong>Місто:</strong> <span th:text="${hotel.city.name}"></span></p>
         <p><strong>Тип житла:</strong> <span th:text="${hotel.housingType}"></span></p>
     </div>
-
+    <div class="container">
+        <h2><strong>Зручності в готелі</strong></h2>
+        <ul>
+            <li th:each="amenity : ${amenities}">
+                <span th:text="${amenity.name}">Назва зручності</span> -
+                <span th:text="${amenity.type}">Тип зручності</span>
+            </li>
+        </ul>
+    </div>
 
 
 <div class="rooms-info-container" th:if="${city != null && !#lists.isEmpty(city.hotels)}">
@@ -352,22 +360,37 @@
     <ul class="reviews-list" th:if="${#lists.isEmpty(hotel.reviews)}">
         <li>Немає відгуків</li>
     </ul>
-    <ul class="reviews-list" th:each="review : ${hotel.reviews}">
-        <li class="review-item">
-            <strong th:text="${review.user.username}"></strong>:
-            <span th:text="${review.content}"></span>
-            <span>(Рейтинг: <span th:text="${review.rating}"></span>)</span>
-            <form th:if="${session.currentUser != null and session.currentUser.username == review.user.username}"
-                  th:action="@{/reviews/hotel/{hotelId}/deleteReview/{id}(hotelId=${hotel.id}, id=${review.id})}"
-                  method="post" style="display:inline;">
-                <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
-                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
-                </div>
-            </form>
+<!--    <ul class="reviews-list" th:each="review : ${hotel.reviews}">-->
+<!--        <li class="review-item">-->
+<!--            <strong th:text="${review.user.username}"></strong>:-->
+<!--            <span th:text="${review.content}"></span>-->
+<!--            <span>(Рейтинг: <span th:text="${review.rating}"></span>)</span>-->
+<!--            <form th:if="${session.currentUser != null and session.currentUser.username == review.user.username}"-->
+<!--                  th:action="@{/reviews/hotel/{hotelId}/deleteReview/{id}(hotelId=${hotel.id}, id=${review.id})}"-->
+<!--                  method="post" style="display:inline;">-->
+<!--                <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">-->
+<!--                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>-->
+<!--                </div>-->
+<!--            </form>-->
 
-        </li>
-    </ul>
-</div>
+<!--        </li>-->
+<!--    </ul>-->
+
+        <ul class="reviews-list" th:each="review : ${hotel.reviews}">
+            <li class="review-item">
+                <strong th:text="${review.user.username}"></strong>:
+                <span th:text="${review.content}"></span>
+                <span>(Рейтинг: <span th:text="${review.rating}"></span>)</span>
+                <form th:action="@{/reviews/hotel/{hotelId}/deleteReview/{id}(hotelId=${hotel.id}, id=${review.id})}"
+                      method="post" style="display:inline;">
+                    <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+
+    </div>
 
 <!-- Форма для додавання відгуку -->
 <div class="review-form" th:if="${session.currentUser != null}">

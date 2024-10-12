@@ -388,9 +388,11 @@ public class HotelController {
         Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
 
         if (hotelOptional.isPresent()) {
+            Hotel hotel = hotelOptional.get();
             model.addAttribute("hotel", hotelOptional.get());
             model.addAttribute("city", hotelOptional.get().getCity());
-            model.addAttribute("rooms", hotelOptional.get().getRooms()); // Список кімнат
+            model.addAttribute("rooms", hotelOptional.get().getRooms());
+            model.addAttribute("amenities", hotel.getAmenities());
             return "hotel_details";
         } else {
             return "hotel_not_found"; // Перенаправляємо на сторінку з помилкою або обробляємо іншим способом
