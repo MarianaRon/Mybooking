@@ -399,7 +399,7 @@
                 <button type="button" onclick="selectHousingType('Готель або Hostel')">Обрати</button>
             </div>
             <!-- Добавляем скрытое поле для хранения выбранного типа жилья -->
-            <input type="hidden" id="housingType" name="housingType" value="" />
+<!--            <input type="hidden" id="housingType" name="housingType" value="" />-->
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/Camping_Tent.png" alt="Альтернативні помешкання">
@@ -615,49 +615,50 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    document.getElementById('hotelForm').addEventListener('submit', function (e) {
-        var address = document.getElementById('addressStreet').value;
-        if (!address) {
-            e.preventDefault();
-            console.log("Поле 'addressStreet' не заполнено. Пожалуйста, введите адрес.");
-        }
-    });
+
     // Функция для отображения превью обложки
     function handleCoverImage(files) {
         const previewContainer = document.getElementById('coverImagePreview');
-        previewContainer.innerHTML = ''; // Очищаем контейнер перед добавлением нового изображения
+        previewContainer.innerHTML = ''; // Очищаем контейнер
 
         if (files.length === 0) {
             previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
         } else if (files.length > 1) {
             alert('Пожалуйста, выберите только одно изображение для обложки.');
         } else {
-            const file = files[0];  // Только одно изображение для обложки
+            const file = files[0];
+            if (file.size > 5 * 1024 * 1024) { // Ограничение на 5 МБ
+                alert('Размер файла не должен превышать 5 МБ.');
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
                 img.classList.add('img-thumbnail');
-                img.style.maxHeight = '400px'; // Ограничение высоты изображения
-                img.style.objectFit = 'cover';
+                img.style.maxHeight = '400px'; // Ограничение по высоте
                 previewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         }
     }
-    // Функция для отображения превью дополнительных изображений
+
     function handleImages(files) {
         const previewContainer = document.getElementById('imagePreview');
-        const currentImages = previewContainer.getElementsByTagName('img').length;
+        previewContainer.innerHTML = ''; // Очищаем контейнер
 
-        // Проверяем, не превышает ли общее количество изображений лимит в 5 штук.
-        if (currentImages + files.length > 5) {
+        if (files.length > 5) { // Ограничение на количество изображений
             alert('Вы можете загрузить не более 5 изображений.');
             return;
         }
 
-        // Обрабатываем каждое новое изображение.
         Array.from(files).forEach(file => {
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Размер каждого файла не должен превышать 5 МБ.');
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 const img = document.createElement('img');
@@ -667,13 +668,10 @@
                 img.style.height = '150px';
                 img.style.objectFit = 'cover';
                 img.style.marginRight = '10px';
-
-                // Добавляем изображение в контейнер.
                 previewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         });
-
 
     }
 
@@ -898,6 +896,13 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching city coordinates:', error);
+            }
+        });
+        document.getElementById('hotelForm').addEventListener('submit', function (e) {
+            var address = document.getElementById('addressStreet').value;
+            if (!address) {
+                e.preventDefault();
+                console.log("Поле 'addressStreet' не заполнено. Пожалуйста, введите адрес.");
             }
         });
         $('#form-step').on('submit', function(e) {

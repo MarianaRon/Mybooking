@@ -5,7 +5,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('/images/logo1.png'); /* Путь к вашему логотипу */
+            background-repeat: repeat; /* Логотип будет повторяться */
+            background-size: 150px 150px; /* Размер логотипа */
+            background-color: rgba(240, 244, 248, 0.9); /* Полупрозрачный фон */
+            background-blend-mode: lighten; /* Эффект наложения */
+            background-attachment: fixed;
+            background-position: center;
             margin: 0;
             padding: 0;
             display: flex;
@@ -13,12 +19,15 @@
             align-items: center;
             height: 100vh;
         }
+
         .form-container {
             width: 400px;
             background: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
         }
         .form-step {
             display: none;

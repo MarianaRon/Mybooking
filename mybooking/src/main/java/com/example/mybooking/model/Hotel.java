@@ -23,10 +23,6 @@ public class Hotel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @JsonIgnore
-    @Lob
-    @Column(nullable = true)
-    private byte[] coverImage;  // Обложка отеля в байтовом формате
 
     @Column(nullable = false)
     private String name;
@@ -42,6 +38,13 @@ public class Hotel {
 
     @Column(nullable = false)
     private Double price;
+
+    @JsonIgnore
+    @Lob
+    @Column(nullable = true)
+    private byte[] coverImage;  // Обложка отеля в байтовом формате
+    @Transient
+    private String coverImageBase64; // Новое поле для хранения изображения в Base64
 
     @Column
     private String description;

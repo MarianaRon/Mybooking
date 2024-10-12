@@ -352,8 +352,9 @@
                 <div class="card hotel-card">
                     <!-- Изображение отеля -->
                     <!-- Если есть обложка отеля, показываем её -->
-                    <img th:if="${hotel.coverImage != null}"
-                         th:src="@{/hotel_cover/{id}(id=${hotel.id})}"
+                    <!-- Отображение обложки -->
+                    <img th:if="${hotel.coverImageBase64 != null}"
+                         th:src="'data:image/jpeg;base64,' + ${hotel.coverImageBase64}"
                          alt="Hotel Cover Image" class="hotel-image card-img-top">
 
                     <!-- Если обложки нет, показываем дефолтное изображение -->

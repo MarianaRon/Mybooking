@@ -127,14 +127,16 @@ public class PartnerController {
             return "redirect:/partner_Account"; // Перенаправляем, если не авторизован
         }
     }
+
     // Отображение страницы редактирования профиля
-    @GetMapping("/profile")
+    @GetMapping("/profile_Partner")
     public String showProfilePage(HttpSession session, Model model) {
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
 
         if (loggedInPartner != null) {
             model.addAttribute("partner", loggedInPartner);
-            return "partners/edit_profile"; // шаблон для редактирования профиля
+            model.addAttribute("welcomeMessage", "Вітаю, " + loggedInPartner.getFirstName() + "!");
+            return "profile_Partner"; // шаблон для редактирования профиля
         } else {
             return "redirect:/exit_Account"; // перенаправление если партнер не залогинен
         }
@@ -180,6 +182,8 @@ public class PartnerController {
         }
         return "redirect:/partner_Account"; // Перенаправляем, если не авторизован
     }
+
+
     // Отображение главной страницы для партнеров
     @GetMapping("/home_partners")
     public String showHomePage(HttpSession session, Model model) {
@@ -230,5 +234,15 @@ public class PartnerController {
         List<Hotel> hotels = hotelService.getHotelsByOwner(loggedInPartner);
         model.addAttribute("hotels", hotels);
         return "hotels_by_partner"; // Отображаем отели партнера
+    }
+    @PostMapping("/Profile_Partner/save")
+    public String saveProfilePartner(@ModelAttribute Partner partner, HttpSession session) {
+        // Обновляем информацию о партнере в базе данных
+        partnerService.updatePartner(partner);
+
+        // Обновляем объект в сессии
+        session.setAttribute("loggedInPartner", partner);
+
+        return "redirect:/home_partners";  // Перенаправляем после сохранения на домашнюю страницу
     }
 }

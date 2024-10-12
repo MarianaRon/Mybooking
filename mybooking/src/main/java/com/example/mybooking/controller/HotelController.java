@@ -23,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //////////////////////////////////////////////23
@@ -122,11 +119,14 @@ public class HotelController {
         // Проверяем, авторизован ли партнер
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
-            return "redirect:/partner_Account";  // Перенаправляем на логин, если не авторизован
+            return "redirect:/home_partners";  // Перенаправляем на логин, если не авторизован
         }
 
         return "add_hotels";  // Возвращаем форму для регистрации отеля
     }
+
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
     // Обработка и сохранение данных отеля
     @PostMapping("/add")
     public String saveHotel(@ModelAttribute Hotel hotel, HttpSession session,
@@ -146,45 +146,52 @@ public class HotelController {
             logger.error("Partner not found in session. Redirecting to login.");
             return "redirect:/partner_Account";
         }
-        // Привязываем партнера к отелю
-        hotel.setOwner(loggedInPartner);
 
-
-        // Логируем входные данные
-        logger.info("Received hotel data: {}", hotel);
-        logger.info("Received cityId: {}", cityId);
-        logger.info("Received addressStreet: {}", addressStreet);
-        logger.info("Received latitude: {}", latitudeStr);
-        logger.info("Received longitude: {}", longitudeStr);
-        logger.info("Полученные идентификаторы удобств: {}", amenityIds);
-
-        if (coverImageFile != null && !coverImageFile.isEmpty()) {
-            try {
-                hotel.setCoverImage(coverImageFile.getBytes());
-            } catch (IOException e) {
-                logger.error("Error processing cover image file: {}", e.getMessage());
-            }
-        }
-
-        if (imageFiles != null && !imageFiles.isEmpty()) {
-            logger.info("Received {} additional image(s).", imageFiles.size());
-            for (MultipartFile file : imageFiles) {
-                logger.info("Received additional image: {} (size: {} bytes)", file.getOriginalFilename(), file.getSize());
-            }
-        } else {
-            logger.warn("No additional images received.");
-        }
-
-        // Устанавливаем город по переданному cityId
+        // Проверяем, существует ли город с указанным ID
         Optional<City> cityOptional = cityService.getCityById(cityId);
         if (cityOptional.isEmpty()) {
             logger.error("City with id {} not found", cityId);
             return "redirect:/hotels/add?error=city_not_found";
         }
+
+        // Устанавливаем город для отеля
         hotel.setCity(cityOptional.get());
 
-        // Устанавливаем адрес
+        // Устанавливаем адрес для отеля
         hotel.setAddressStreet(addressStreet);
+
+        // Логируем входные данные
+//        logger.info("Received hotel data: {}", hotel);
+//        logger.info("Received cityId: {}", cityId);
+//        logger.info("Received addressStreet: {}", addressStreet);
+//        logger.info("Received latitude: {}", latitudeStr);
+//        logger.info("Received longitude: {}", longitudeStr);
+//        logger.info("Полученные идентификаторы удобств: {}", amenityIds);
+// Логирование пути временных файлов
+        // Логирование пути временных файлов
+        logger.info("Временная директория для хранения файлов: {}", System.getProperty("java.io.tmpdir"));
+
+        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+            String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + coverImageFile.getOriginalFilename();
+            if (Files.exists(Paths.get(tempFilePath))) {
+                logger.info("Обложка найдена в временной директории: {}", tempFilePath);
+            } else {
+                logger.error("Обложка не найдена в временной директории: {}", tempFilePath);
+            }
+        }
+
+        // Аналогично для других файлов
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            imageFiles.forEach(file -> {
+                String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename();
+                if (Files.exists(Paths.get(tempFilePath))) {
+                    logger.info("Изображение найдено в временной директории: {}", tempFilePath);
+                } else {
+                    logger.error("Изображение не найдено в временной директории: {}", tempFilePath);
+                }
+            });
+        }
+
 
         // Преобразование latitude и longitude в double
         try {
@@ -223,10 +230,16 @@ public class HotelController {
         // Логируем список отелей
         logger.info("Hotels retrieved: {}", hotels);
 
+        // Преобразование обложек в Base64
+        hotels.forEach(hotel -> {
+            if (hotel.getCoverImage() != null) {
+                String coverImageBase64 = Base64.getEncoder().encodeToString(hotel.getCoverImage());
+                hotel.setCoverImageBase64(coverImageBase64); // Добавляем поле для хранения Base64 в модель
+            }
+        });
         model.addAttribute("hotels", hotels);
-        return "redirect:/hotels/hotels_by_partner";  // Отображаем отели, зарегистрированные партнером
+        return "hotels_by_partner";  // Отображаем отели, зарегистрированные партнером
     }
-
 
     @PostMapping("/submit")
     public String submitHotel(HttpSession session,
