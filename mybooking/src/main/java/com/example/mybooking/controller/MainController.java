@@ -57,6 +57,16 @@ public class MainController {
         model.addAttribute("cities", cities);
         List<Hotel> hotels = hotelService.get_AllHotels();
         model.addAttribute("hotels", hotels);
+        // Визначаємо топ-3 готелі за рейтингом
+        List<Hotel> topHotels = hotels.stream()
+                .sorted((h1, h2) -> Double.compare(
+                        h2.getReviews().stream().mapToDouble(Review::getRating).average().orElse(0.0),
+                        h1.getReviews().stream().mapToDouble(Review::getRating).average().orElse(0.0)
+                ))
+                .limit(3)
+                .toList();
+
+        model.addAttribute("topHotels", topHotels);  // Додаємо топ-3 готелі до моделі
         if (currentUser != null) {
             model.addAttribute("welcomeMessage", "Вітаємо, " + currentUser.getUsername() + "! Спробуйте найпопулярніші напрямки для подорожі");
         } else {

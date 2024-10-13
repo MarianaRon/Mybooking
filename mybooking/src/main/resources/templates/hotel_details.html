@@ -321,6 +321,7 @@
         <p><strong>Адреса:</strong> <span th:text="${hotel.addressStreet}"></span></p>
         <p><strong>Місто:</strong> <span th:text="${hotel.city.name}"></span></p>
         <p><strong>Тип житла:</strong> <span th:text="${hotel.housingType}"></span></p>
+        <p><strong>Загальний рейтинг:</strong> <span th:text="${averageRating}">0.0</span></p>
     </div>
     <div class="container">
         <h2><strong>Зручності в готелі</strong></h2>
@@ -331,8 +332,6 @@
             </li>
         </ul>
     </div>
-
-
 <div class="rooms-info-container" th:if="${city != null && !#lists.isEmpty(city.hotels)}">
             <table id="roomsTable" class="table table-bordered">
                 <thead>
@@ -360,22 +359,6 @@
     <ul class="reviews-list" th:if="${#lists.isEmpty(hotel.reviews)}">
         <li>Немає відгуків</li>
     </ul>
-<!--    <ul class="reviews-list" th:each="review : ${hotel.reviews}">-->
-<!--        <li class="review-item">-->
-<!--            <strong th:text="${review.user.username}"></strong>:-->
-<!--            <span th:text="${review.content}"></span>-->
-<!--            <span>(Рейтинг: <span th:text="${review.rating}"></span>)</span>-->
-<!--            <form th:if="${session.currentUser != null and session.currentUser.username == review.user.username}"-->
-<!--                  th:action="@{/reviews/hotel/{hotelId}/deleteReview/{id}(hotelId=${hotel.id}, id=${review.id})}"-->
-<!--                  method="post" style="display:inline;">-->
-<!--                <div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">-->
-<!--                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>-->
-<!--                </div>-->
-<!--            </form>-->
-
-<!--        </li>-->
-<!--    </ul>-->
-
         <ul class="reviews-list" th:each="review : ${hotel.reviews}">
             <li class="review-item">
                 <strong th:text="${review.user.username}"></strong>:
@@ -389,10 +372,7 @@
                 </form>
             </li>
         </ul>
-
     </div>
-
-<!-- Форма для додавання відгуку -->
 <div class="review-form" th:if="${session.currentUser != null}">
     <h3>Додати відгук</h3>
     <form th:action="@{/reviews/add}" method="post">
@@ -402,7 +382,6 @@
         <button type="submit" class="btn btn-primary">Додати відгук</button>
     </form>
 </div>
-<!-- Повідомлення для незареєстрованих користувачів -->
 <div class="login-message" th:if="${session.currentUser == null}">
     <p>Для написання відгуку, потрібно <a href="/login">увійти</a> або <a href="/register">зареєструватися</a>!</p>
 </div>

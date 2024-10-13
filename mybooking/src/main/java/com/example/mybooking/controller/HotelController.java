@@ -396,20 +396,59 @@ public class HotelController {
     }
 
     //Опис готеля - перехід на окрему сторінку конкретного готеля
+//    @GetMapping("/{id}")
+//    public String getHotelDetails(@PathVariable("id") Long id, Model model) {
+//        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
+//        double averageRating = 0.0;
+//        if (!reviews.isEmpty()) {
+//            averageRating = reviews.stream()
+//                    .mapToDouble(Review::getRating)
+//                    .average()
+//                    .orElse(0.0);  // обчислення середнього
+//        }
+//        if (hotelOptional.isPresent()) {
+//            Hotel hotel = hotelOptional.get();
+//            model.addAttribute("hotel", hotelOptional.get());
+//            model.addAttribute("city", hotelOptional.get().getCity());
+//            model.addAttribute("rooms", hotelOptional.get().getRooms());
+//            model.addAttribute("amenities", hotel.getAmenities());
+//            model.addAttribute("averageRating", averageRating);
+//            return "hotel_details";
+//        } else {
+//            return "hotel_not_found"; // Перенаправляємо на сторінку з помилкою або обробляємо іншим способом
+//        }
+//    }
+
     @GetMapping("/{id}")
     public String getHotelDetails(@PathVariable("id") Long id, Model model) {
-        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
+        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);  // Отримання готелю за ID
 
         if (hotelOptional.isPresent()) {
             Hotel hotel = hotelOptional.get();
-            model.addAttribute("hotel", hotelOptional.get());
-            model.addAttribute("city", hotelOptional.get().getCity());
-            model.addAttribute("rooms", hotelOptional.get().getRooms());
+            Set<Review> reviews = hotel.getReviews();  // Отримання списку відгуків
+
+            // Обчислення середнього рейтингу
+            double averageRating = 0.0;
+            if (!reviews.isEmpty()) {
+                averageRating = reviews.stream()
+                        .mapToDouble(Review::getRating)
+                        .average()
+                        .orElse(0.0);  // Обчислення середнього рейтингу
+                averageRating = Math.round(averageRating * 10.0) / 10.0;
+            }
+
+            // Додавання атрибутів до моделі
+            model.addAttribute("hotel", hotel);
+            model.addAttribute("city", hotel.getCity());
+            model.addAttribute("rooms", hotel.getRooms());
             model.addAttribute("amenities", hotel.getAmenities());
-            return "hotel_details";
+            model.addAttribute("averageRating", averageRating);
+
+            return "hotel_details";  // Повернення шаблону сторінки з деталями готелю
         } else {
-            return "hotel_not_found"; // Перенаправляємо на сторінку з помилкою або обробляємо іншим способом
+            return "hotel_not_found";  // Сторінка помилки, якщо готель не знайдено
         }
     }
+
 
 }
