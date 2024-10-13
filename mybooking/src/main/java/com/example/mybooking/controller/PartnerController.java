@@ -134,14 +134,45 @@ public class PartnerController {
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
 
         if (loggedInPartner != null) {
+            System.out.println("Logged in partner: " + loggedInPartner.getFirstName()); // Отладочное сообщение
             model.addAttribute("partner", loggedInPartner);
-            model.addAttribute("welcomeMessage", "Вітаю, " + loggedInPartner.getFirstName() + "!");
+//            model.addAttribute("welcomeMessage", "Вітаю, " + loggedInPartner.getFirstName() + "!");
             return "profile_Partner"; // шаблон для редактирования профиля
         } else {
             return "redirect:/exit_Account"; // перенаправление если партнер не залогинен
         }
     }
+    // Обновление данных партнера в его личном кабинете
+    @PostMapping("/update_profile/{id}")
+    public String updateProfilePartner(@PathVariable Long id,
+                                @ModelAttribute Partner updatedPartner,
+                                @RequestParam(value = "newPassword", required = false) String newPassword,
+                                @RequestParam(value = "confirmPassword", required = false) String confirmPassword,
+                                HttpSession session,
+                                Model model) {
 
+
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        // Проверяем, авторизован ли пользователь и соответствует ли ID в запросе
+        if (loggedInPartner != null && loggedInPartner.getId().equals(id)) {
+            // Передаем обработку логики в сервис
+            String errorMessage = partnerService.updatePartnerProfile(loggedInPartner, updatedPartner, newPassword, confirmPassword);
+
+            if (errorMessage != null) {
+                // Если возникла ошибка (например, пароли не совпадают), возвращаемся на страницу профиля с ошибкой
+                model.addAttribute("errorMessage", errorMessage);
+                //model.addAttribute("partner", loggedInPartner); // Добавляем партнера для Thymeleaf
+                return "profile_Partner"; // Возврат на страницу профиля
+            }
+
+            // Обновляем объект в сессии после успешного сохранения
+            session.setAttribute("loggedInPartner", loggedInPartner);
+            return "redirect:/partners/profile_Partner"; // Перенаправляем на страницу профиля
+        }
+
+        return "redirect:/partner_Account"; // Перенаправляем, если пользователь не авторизован
+    }
     // Обновление данных партнера
     @PostMapping("/update/{id}")
     public String updatePartner(@PathVariable Long id,
@@ -235,14 +266,14 @@ public class PartnerController {
         model.addAttribute("hotels", hotels);
         return "hotels_by_partner"; // Отображаем отели партнера
     }
-    @PostMapping("/Profile_Partner/save")
-    public String saveProfilePartner(@ModelAttribute Partner partner, HttpSession session) {
-        // Обновляем информацию о партнере в базе данных
-        partnerService.updatePartner(partner);
-
-        // Обновляем объект в сессии
-        session.setAttribute("loggedInPartner", partner);
-
-        return "redirect:/home_partners";  // Перенаправляем после сохранения на домашнюю страницу
-    }
+//    @PostMapping("/profile_Partner/save")
+//    public String saveProfilePartner(@ModelAttribute Partner partner, HttpSession session) {
+//        // Обновляем информацию о партнере в базе данных
+//        partnerService.update_profile_Partner(partner);
+//
+//        // Обновляем объект в сессии
+//        session.setAttribute("loggedInPartner", partner);
+//
+//        return "redirect:/home_partners";  // Перенаправляем после сохранения на домашнюю страницу
+//    }
 }
