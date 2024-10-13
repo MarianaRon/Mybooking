@@ -230,10 +230,33 @@
 </div>
 
 <h2>Спробуйте найпопулярніші напрямки для подорожі</h2>
-<p>Популярні напрямки для подорожі</p>
-
 <h2>Найпопулярніші готелі України</h2>
 <p>Забронюйте наші найпопулярніші унікальні помешкання</p>
+
+<div class="top-hotels-container" style="display: flex; justify-content: space-between;">
+    <div th:each="hotel : ${topHotels}" style="flex: 1; text-align: center;">
+        <span class="hotel-name"
+              th:text="${hotel.name}"
+              th:attr="data-id=${hotel.id}"
+              style="display: block; cursor: pointer; text-decoration: underline;">
+        </span>
+    </div>
+</div>
+
+<!-- JavaScript для обробки кліків на назві готелю -->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const hotelNames = document.querySelectorAll(".hotel-name");
+        hotelNames.forEach(hotelName => {
+            hotelName.addEventListener("click", function() {
+                const hotelId = this.getAttribute("data-id");
+                const hotelUrl = `/hotels/${hotelId}`;
+                window.location.href = hotelUrl;  // Перехід на сторінку готеля
+            });
+        });
+    });
+</script>
+
 <script type="text/javascript">
     var map = L.map('map').setView([48.3794, 31.1656], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
