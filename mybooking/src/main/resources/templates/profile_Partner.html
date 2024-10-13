@@ -212,6 +212,12 @@
         .profile-edit-input {
             display: none;
         }
+        .user-name {
+            text-align: center;     /* Выравнивание по центру */
+            font-size: 36px;        /* Увеличиваем размер шрифта */
+            font-weight: bold;      /* Делаем текст жирным */
+            margin-bottom: 20px;    /* Добавляем отступ снизу для гармонии */
+        }
         /*///////////////////////////////*/
         footer {
             background-color: #275271FF;
@@ -310,8 +316,7 @@
     <div class="sidebar">
         <!-- Имя пользователя с  -->
         <div class="partner-info">
-            <h4 class="user-name" th:text="${session.userName}">User</h4>
-            <p class="user-description">Розширюйте свій бізнес, додавши ці помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
+            <h4 class="user-name" style="font-size: 34px;" th:text="'Вітаю ' + ${session.userName}">User</h4>
         </div>
         <div class="sidebar-menu">
             <!-- Кнопка для добавления нового отеля -->
@@ -323,16 +328,11 @@
         </div>
     </div>
     <div class="content">
-        <h1 class="mb-4">Ваш профіль, який розміщено на Arrenvi.com!</h1>
-
         <!-- Отображение форми редактирования профиля-->
         <form th:action="@{/partners/update_profile/{id}(id=${partner.id})}" th:object="${partner}" method="post">
 <!--            <form th:action="@{|/partners/update_profile/${partner.id}|}" th:object="${partner}" method="post">-->
-
         <div class="row">
-
-            <h2>Редактирование профиля партнера</h2>
-
+            <h1>Редагування прафілю</h1>
             <!-- Имя -->
             <div class="profile-row">
                 <div class="profile-label">Ім'я</div>
@@ -375,21 +375,20 @@
 
             <!-- Новый пароль -->
             <div class="profile-row">
-                <div class="profile-label">Новый пароль</div>
+                <div class="profile-label">Новий пароль</div>
                 <input type="password" class="form-control" id="newPasswordEdit" placeholder="Введите новый пароль">
             </div>
 
             <!-- Подтверждение пароля -->
             <div class="profile-row">
-                <div class="profile-label">Подтвердите пароль</div>
+                <div class="profile-label">Підтвердити новий пароль</div>
                 <input type="password" class="form-control" id="confirmPasswordEdit" placeholder="Подтвердите новый пароль">
             </div>
 
             <!-- Кнопки сохранения и отмены -->
             <div class="mt-4">
-<!--                <button class="btn btn-success" onclick="saveChanges()">Сохранить изменения</button>-->
-                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                <a href="/home_partners" class="btn btn-secondary">Отменить</a>
+                <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+                <a href="/home_partners" class="btn btn-secondary">Відмінити</a>
             </div>
         </div>
         </form>
@@ -400,7 +399,7 @@
 <footer>
     <div class="footer-container">
         <div class="footer-section">
-            <h4>Тех. підтримка</h4>
+            <h4><a class="nav-link" href="/support">Тех. підтримка</a></h4>
             <p>Найпопулярніші питання</p>
             <p>+380 97 255 220</p>
             <p>Arrenvi@gmail.com</p>
@@ -410,6 +409,7 @@
             <p><a href="/hotels/add">Зареєструвати помешкання</a></p>
         </div>
         <div class="footer-section">
+            <h2><a class="nav-link" href="/about_us">Про нас</a></h2>
             <h4>Ми в соц мережах:</h4>
             <a href="#"><img class="img" src="/images/instagram.png" /></a>
             <a href="#"><img class="img" src="/images/facebook.png" /></a>
@@ -419,7 +419,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
+        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
     </div>
 </footer>
 <script>
