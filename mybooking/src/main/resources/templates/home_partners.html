@@ -188,7 +188,7 @@
             font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 5px;
-            color: #275271;
+            color: #275271FF;
         }
 
         .benefit-text {
@@ -284,23 +284,23 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
-        .btn-about-us {
-            display: block;
-            padding: 15px 20px;
-            background-color: #1f4e78; /* Темно-синий цвет фона */
-            color: white; /* Белый текст */
-            text-align: center;
-            text-decoration: none; /* Убираем подчеркивание */
-            border-radius: 8px; /* Скругленные углы */
-            font-size: 16px; /* Размер шрифта */
-            font-weight: bold; /* Жирный шрифт */
-            transition: background-color 0.3s ease; /* Анимация при наведении */
-            margin-bottom: 20px; /* Отступ снизу */
-        }
+        /*.nav-link {*/
+        /*    display: block;*/
+        /*    padding: 15px 20px;*/
+        /*    background-color: #275271FF; !* Темно-синий цвет фона *!*/
+        /*    color: white; !* Белый текст *!*/
+        /*    text-align: center;*/
+        /*    text-decoration: none; !* Убираем подчеркивание *!*/
+        /*    border-radius: 8px; !* Скругленные углы *!*/
+        /*    font-size: 16px; !* Размер шрифта *!*/
+        /*    font-weight: bold; !* Жирный шрифт *!*/
+        /*    transition: background-color 0.3s ease; !* Анимация при наведении *!*/
+        /*    margin-bottom: 20px; !* Отступ снизу *!*/
+        /*}*/
 
-        .btn-about-us:hover {
-            background-color: #163d5c; /* Цвет при наведении */
-        }
+        /*.nav-link:hover {*/
+        /*    background-color: #275271FF; !* Цвет при наведении *!*/
+        /*}*/
 
 
     </style>
@@ -390,13 +390,19 @@
     <div class="container mt-5">
         <!-- Левая часть: боковая панель с данными партнера -->
         <div class="sidebar">
-            <div class="partner-info">
-                <p class="user-description">Розширюйте свій бізнес, додавши ці помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
+            <div class="benefit-item">
+                <img class="benefit-icon" src="/img/Business.png" alt="Business">
+                <div>
+                    <h2 class="section-title">Реєструйтеся та почніть зустрічати гостей уже сьогодні!</h2>
+                    <h3 class="benefit-heading">Розширюйте свій бізнес, додавши свої помешкання на найбільший в Україні веб-сайт у сфері онлайн туризму, Arrenvi.com.</h3>
+                    <p class="benefit-text">Arrenvi.com – найбільший в Україні веб-сайт у сфері онлайн туризму. Зареєструйте своє житло для оренди вже сьогодні та відкрийте нові можливості для доходу! З нами ви легко зможете здавати своє помешкання туристам і розвивати свій бізнес у світі подорожей..</p>
+                </div>
+                    <a href="/about_us" style="display: flex; justify-content: center; align-items: center;">
+                        <img class="benefit-icon" src="/img/Info1.png" alt="Info1">
+                    </a>
+
             </div>
-            <div class="sidebar-menu">
-                <!-- Кнопка для перехода на страницу "О нас" -->
-                <a class="btn-about-us" href="/about_us" >Дізнайся дещо цікаве про Arrenvi.com</a>
-            </div>
+
             <div class="container benefits-section">
                 <h2 class="section-title">Реєструйтеся без зайвих хвилювань</h2>
                 <div class="benefits-grid">
@@ -465,13 +471,13 @@
             <div class="col-md-4 sidebar">
                 <div class="partner-info">
                     <h4 class="user-name" style="font-size: 34px;" th:text="'Вітаю ' + ${session.userName}">User</h4>
-                    <p class="user-description" style="font-size: 20px; text-align: center;">Розширюйте свій бізнес, додавши ці помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
+                    <p class="user-description" style="font-size: 20px; text-align: center;">Розширюйте свій бізнес, додавши свої помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
                 </div>
                 <div class="sidebar-menu">
+                    <a href="/partners/profile_Partner" class="btn btn-success">Редагування профілю</a>
                     <a href="/hotels/add" class="btn btn-success">Зареєструвати нове помешкання</a>
-                    <a href="/partners/profile_Partner">Редагування профілю</a>
-                    <a href="#">Перегляд бронювань</a>
-                    <a href="#">Видалити аккаунт</a>
+                    <a href="hotels/hotels_by_partner" class="btn btn-success">Переглянути мої помешкання</a>
+                    <a href="#" class="btn btn-success">Видалити аккаунт</a>
                 </div>
             </div>
 
@@ -535,23 +541,7 @@
         </div>
     </div>
 </div>
-<!--    <div class="container mt-5">-->
-<!--        &lt;!&ndash; Левая часть: боковая панель с данными партнера &ndash;&gt;-->
-<!--        <div class="sidebar">-->
-<!--            &lt;!&ndash; Имя пользователя с красивой стилизацией и тенями &ndash;&gt;-->
-<!--            <div class="partner-info">-->
-<!--                <h4 class="user-name" th:text="${session.userName}">User</h4>-->
-<!--                <p class="user-description">Розширюйте свій бізнес, додавши ці помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>-->
-<!--            </div>-->
-<!--            <div class="sidebar-menu">-->
-<!--                &lt;!&ndash; Кнопка для добавления нового отеля &ndash;&gt;-->
-<!--                <a href="/hotels/add" class="btn btn-success">Зареєструвати нове помешкання</a>-->
-<!--                <a href="/partners/profile_Partner">Редагування профілю</a>-->
-<!--                <a href="#">Перегляд бронювань</a>-->
-<!--                <a href="#">Видалити аккаунт</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+
 </div>
 
 

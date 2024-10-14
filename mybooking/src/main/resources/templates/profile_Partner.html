@@ -218,6 +218,37 @@
             font-weight: bold;      /* Делаем текст жирным */
             margin-bottom: 20px;    /* Добавляем отступ снизу для гармонии */
         }
+        /* Стили для кнопки "Зберегти" */
+        .btn-save {
+            background-color: #275271FF;
+            color: white;
+            border: none;
+            margin-right: 10px; /* Добавляем отступ справа */
+        }
+
+        .btn-save:hover {
+            background-color: #163d5c; /* Темнее при наведении */
+            color: white;
+        }
+
+        /* Стили для кнопки "Відмінити" */
+        .btn-cancel {
+            background-color: white;
+            color: #275271FF;
+            border: 2px solid #275271FF;
+            font-weight: bold;
+        }
+
+        .btn-cancel:hover {
+            background-color: #f0f0f0; /* Светлый фон при наведении */
+            color: #275271FF;
+        }
+
+        /* Отступ между кнопками для полей ввода */
+        .button-group {
+            display: flex;
+            gap: 10px; /* Отступ между кнопками */
+        }
         /*///////////////////////////////*/
         footer {
             background-color: #275271FF;
@@ -317,83 +348,91 @@
         <!-- Имя пользователя с  -->
         <div class="partner-info">
             <h4 class="user-name" style="font-size: 34px;" th:text="'Вітаю ' + ${session.userName}">User</h4>
+            <p class="user-description" style="font-size: 20px; text-align: center;">Розширюйте свій бізнес, додавши свої помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
         </div>
         <div class="sidebar-menu">
-            <!-- Кнопка для добавления нового отеля -->
             <a href="/hotels/add" class="btn btn-success">Зареєструвати нове помешкання</a>
-            <a href="/home_partners">Редагування профілю</a>
-            <a href="#">Перегляд бронювань</a>
-            <a href="#">Видалити аккаунт</a>
-
+            <a href="hotels/hotels_by_partner" class="btn btn-success">Переглянути мої помешкання</a>
+            <a href="#" class="btn btn-success">Видалити аккаунт</a>
+            <a  href="/home_partners" class="btn btn-success">Вийти</a>
         </div>
     </div>
     <div class="content">
-        <!-- Отображение форми редактирования профиля-->
+        <!-- Отображение формы редактирования профиля -->
         <form th:action="@{/partners/update_profile/{id}(id=${partner.id})}" th:object="${partner}" method="post">
-<!--            <form th:action="@{|/partners/update_profile/${partner.id}|}" th:object="${partner}" method="post">-->
-        <div class="row">
-            <h1>Редагування прафілю</h1>
-            <!-- Имя -->
-            <div class="profile-row">
-                <div class="profile-label">Ім'я</div>
-                <div class="profile-value" id="firstNameDisplay" th:text="${partner.firstName}">[Ім'я]</div>
-                <div class="profile-actions">
-                    <button class="btn btn-primary" onclick="editField('firstName')">Змінити</button>
+            <div class="row">
+                <h1>Редагування профілю</h1>
+
+                <!-- Имя -->
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Ім'я</div>
+                    <input type="text" class="form-control" id="firstNameEdit" th:value="${partner.firstName}" name="firstName" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="firstNameDisplay" th:text="${partner.firstName}" style="flex-grow: 1;">[Ім'я]</div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" id="firstNameEditBtn" onclick="editField('firstName')">Змінити</button>
+                        <button type="submit" class="btn btn-save" id="firstNameSaveBtn" style="display: none;">Зберегти</button>
+                        <button type="button" class="btn btn-cancel" id="firstNameCancelBtn" style="display: none;" onclick="cancelEdit('firstName')">Відмінити</button>
+                    </div>
                 </div>
-                <input type="text" class="form-control profile-edit-input" id="firstNameEdit" th:value="${partner.firstName}">
-            </div>
 
-            <!-- Фамилия -->
-            <div class="profile-row">
-                <div class="profile-label">Прізвище</div>
-                <div class="profile-value" id="lastNameDisplay" th:text="${partner.lastName}">[Прізвище]</div>
-                <div class="profile-actions">
-                    <button class="btn btn-primary" onclick="editField('lastName')">Змінити</button>
+                <!-- Прізвище -->
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Прізвище</div>
+                    <input type="text" class="form-control" id="lastNameEdit" th:value="${partner.lastName}" name="lastName" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="lastNameDisplay" th:text="${partner.lastName}" style="flex-grow: 1;">[Прізвище]</div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" id="lastNameEditBtn" onclick="editField('lastName')">Змінити</button>
+                        <button type="submit" class="btn btn-save" id="lastNameSaveBtn" style="display: none;">Зберегти</button>
+                        <button type="button" class="btn btn-cancel" id="lastNameCancelBtn" style="display: none;" onclick="cancelEdit('lastName')">Відмінити</button>
+                    </div>
                 </div>
-                <input type="text" class="form-control profile-edit-input" id="lastNameEdit" th:value="${partner.lastName}">
-            </div>
 
-            <!-- Email -->
-            <div class="profile-row">
-                <div class="profile-label">Email</div>
-                <div class="profile-value" id="emailDisplay" th:text="${partner.email}">[Email]</div>
-                <div class="profile-actions">
-                    <button class="btn btn-primary" onclick="editField('email')">Змінити</button>
+                <!-- Email -->
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Email</div>
+                    <input type="email" class="form-control" id="emailEdit" th:value="${partner.email}" name="email" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="emailDisplay" th:text="${partner.email}" style="flex-grow: 1;">[Email]</div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" id="emailEditBtn" onclick="editField('email')">Змінити</button>
+                        <button type="submit" class="btn btn-save" id="emailSaveBtn" style="display: none;">Зберегти</button>
+                        <button type="button" class="btn btn-cancel" id="emailCancelBtn" style="display: none;" onclick="cancelEdit('email')">Відмінити</button>
+                    </div>
                 </div>
-                <input type="email" class="form-control profile-edit-input" id="emailEdit" th:value="${partner.email}">
-            </div>
 
-            <!-- Телефон -->
-            <div class="profile-row">
-                <div class="profile-label">Телефон</div>
-                <div class="profile-value" id="phoneDisplay" th:text="${partner.phone}">[Телефон]</div>
-                <div class="profile-actions">
-                    <button class="btn btn-primary" onclick="editField('phone')">Змінити</button>
+                <!-- Телефон -->
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Телефон</div>
+                    <input type="text" class="form-control" id="phoneEdit" th:value="${partner.phone}" name="phone" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="phoneDisplay" th:text="${partner.phone}" style="flex-grow: 1;">[Телефон]</div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" id="phoneEditBtn" onclick="editField('phone')">Змінити</button>
+                        <button type="submit" class="btn btn-save" id="phoneSaveBtn" style="display: none;">Зберегти</button>
+                        <button type="button" class="btn btn-cancel" id="phoneCancelBtn" style="display: none;" onclick="cancelEdit('phone')">Відмінити</button>
+                    </div>
                 </div>
-                <input type="text" class="form-control profile-edit-input" id="phoneEdit" th:value="${partner.phone}">
-            </div>
 
-            <!-- Новый пароль -->
-            <div class="profile-row">
-                <div class="profile-label">Новий пароль</div>
-                <input type="password" class="form-control" id="newPasswordEdit" placeholder="Введите новый пароль">
-            </div>
 
-            <!-- Подтверждение пароля -->
-            <div class="profile-row">
-                <div class="profile-label">Підтвердити новий пароль</div>
-                <input type="password" class="form-control" id="confirmPasswordEdit" placeholder="Подтвердите новый пароль">
-            </div>
+                <!-- Новый пароль и Подтверждение пароля -->
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Новий пароль</div>
+                    <input type="password" class="form-control" id="newPasswordEdit" name="newPassword" placeholder="Введіть новий пароль" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="newPasswordDisplay" style="flex-grow: 1;">[Введіть новий пароль]</div>
+                </div>
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Підтвердити новий пароль</div>
+                    <input type="password" class="form-control" id="confirmPasswordEdit" name="confirmPassword" placeholder="Підтвердіть новий пароль" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="confirmPasswordDisplay" style="flex-grow: 1;">[Підтвердіть новий пароль]</div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" id="passwordEditBtn" onclick="editField('password')">Змінити</button>
+                        <button type="submit" class="btn btn-save" id="passwordSaveBtn" style="display: none;">Зберегти</button>
+                        <button type="button" class="btn btn-cancel" id="passwordCancelBtn" style="display: none;" onclick="cancelEdit('password')">Відмінити</button>
+                    </div>
+                </div>
 
-            <!-- Кнопки сохранения и отмены -->
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Зберегти зміни</button>
-                <a href="/home_partners" class="btn btn-secondary">Відмінити</a>
             </div>
-        </div>
         </form>
-        </div>
     </div>
+
 </div>
 
 <footer>
@@ -423,22 +462,50 @@
     </div>
 </footer>
 <script>
-    function editField(field) {
-        // Показать поле для редактирования и скрыть текстовое представление
-        document.getElementById(field + 'Edit').style.display = 'block';
-        document.getElementById(field + 'Display').style.display = 'none';
+    function editField(fieldId) {
+        if (fieldId === 'password') {
+            // Отображаем поля для нового пароля и подтверждения пароля
+            document.getElementById('newPasswordEdit').style.display = 'block';
+            document.getElementById('confirmPasswordEdit').style.display = 'block';
+            document.getElementById('newPasswordDisplay').style.display = 'none';
+            document.getElementById('confirmPasswordDisplay').style.display = 'none';
+
+            // Отображаем кнопки
+            document.getElementById('passwordEditBtn').style.display = 'none';
+            document.getElementById('passwordSaveBtn').style.display = 'inline-block';
+            document.getElementById('passwordCancelBtn').style.display = 'inline-block';
+        } else {
+            // Обрабатываем редактирование других полей
+            document.getElementById(fieldId + 'Edit').style.display = 'block';
+            document.getElementById(fieldId + 'Display').style.display = 'none';
+            document.getElementById(fieldId + 'EditBtn').style.display = 'none';
+            document.getElementById(fieldId + 'SaveBtn').style.display = 'inline-block';
+            document.getElementById(fieldId + 'CancelBtn').style.display = 'inline-block';
+        }
     }
 
-    function saveChanges() {
-        // Логика для сохранения изменений через форму (отправка на сервер)
-        // Тут вы можете собрать все значения и сделать отправку через форму или Ajax
-        alert('Изменения сохранены');
+    function cancelEdit(fieldId) {
+        if (fieldId === 'password') {
+            // Скрываем поля для нового пароля и подтверждения пароля
+            document.getElementById('newPasswordEdit').style.display = 'none';
+            document.getElementById('confirmPasswordEdit').style.display = 'none';
+            document.getElementById('newPasswordDisplay').style.display = 'block';
+            document.getElementById('confirmPasswordDisplay').style.display = 'block';
+
+            // Скрываем кнопки
+            document.getElementById('passwordEditBtn').style.display = 'inline-block';
+            document.getElementById('passwordSaveBtn').style.display = 'none';
+            document.getElementById('passwordCancelBtn').style.display = 'none';
+        } else {
+            // Обрабатываем отмену редактирования других полей
+            document.getElementById(fieldId + 'Edit').style.display = 'none';
+            document.getElementById(fieldId + 'Display').style.display = 'block';
+            document.getElementById(fieldId + 'EditBtn').style.display = 'inline-block';
+            document.getElementById(fieldId + 'SaveBtn').style.display = 'none';
+            document.getElementById(fieldId + 'CancelBtn').style.display = 'none';
+        }
     }
 
-    function cancelChanges() {
-        // Логика для отмены изменений
-        window.location.reload();
-    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
