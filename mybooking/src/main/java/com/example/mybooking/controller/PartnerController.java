@@ -214,23 +214,6 @@ public class PartnerController {
         return "redirect:/partner_Account"; // Перенаправляем, если не авторизован
     }
 
-
-    // Отображение главной страницы для партнеров
-//    @GetMapping("/home_partners")
-//    public String showHomePage(HttpSession session, Model model) {
-//        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
-//
-//        // Проверяем, авторизован ли партнер
-//        if (loggedInPartner != null) {
-//            model.addAttribute("partner", loggedInPartner); // Добавляем объект partner в модель
-//            model.addAttribute("welcomeMessage", "Вітаю, " + loggedInPartner.getFirstName() + "!");
-//            return "home_partners";
-//        } else {
-//            model.addAttribute("errorMessage", "Пожалуйста, войдите в систему.");
-//            return "redirect:/partner_Account"; // Перенаправляем, если партнер не авторизован
-//        }
-//    }
-
     @GetMapping("/home_partners")
     public String showHomePage(HttpSession session, Model model) {
         // Получаем объект Partner из сессии, если пользователь залогинен

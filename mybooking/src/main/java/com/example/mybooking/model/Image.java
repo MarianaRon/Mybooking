@@ -12,7 +12,7 @@ public class Image {
     private String url;
 
     @Lob
-    @Column
+    @Column 
     private byte[] photoBytes; // Додавання поля для зберігання байтових даних
 
     @ManyToOne

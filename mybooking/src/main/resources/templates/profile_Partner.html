@@ -331,7 +331,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
                                 <li><a class="dropdown-item" href="/hotels/add">Додати нове помешкання</a></li>
-                                <li><a class="dropdown-item" href="/home_partners">Профіль</a></li>
+                                <li><a class="dropdown-item" href="/home_partners">На головну сторінку</a></li>
                                 <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
                             </ul>
                         </div>
@@ -347,14 +347,17 @@
     <div class="sidebar">
         <!-- Имя пользователя с  -->
         <div class="partner-info">
-            <h4 class="user-name" style="font-size: 34px;" th:text="'Вітаю ' + ${session.userName}">User</h4>
-            <p class="user-description" style="font-size: 20px; text-align: center;">Розширюйте свій бізнес, додавши свої помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
+            <h4 class="user-name" style="font-size: 34px;" th:text="${session.userName}">User</h4>
+            <p class="user-description" style="font-size: 18px; text-align: center;">
+                На Arrenvi.com легко змінити персональні дані. Просто обирай, які конкретні дані бажаєш відкоригувати, тисни "Змінити",
+                внеси необхідні зміни та натисни "Зберегти". Ваші дані будуть оновлені миттєво! Якщо передумав — просто натисни "Відміна".</p>
         </div>
         <div class="sidebar-menu">
-            <a href="/hotels/add" class="btn btn-success">Зареєструвати нове помешкання</a>
+
             <a href="hotels/hotels_by_partner" class="btn btn-success">Переглянути мої помешкання</a>
+            <a href="/hotels/add" class="btn btn-success">Додати нове помешкання</a>
             <a href="#" class="btn btn-success">Видалити аккаунт</a>
-            <a  href="/home_partners" class="btn btn-success">Вийти</a>
+            <a  href="/home_partners" class="btn btn-success">Головна</a>
         </div>
     </div>
     <div class="content">
@@ -417,16 +420,17 @@
                     <div class="profile-label" style="width: 150px;">Новий пароль</div>
                     <input type="password" class="form-control" id="newPasswordEdit" name="newPassword" placeholder="Введіть новий пароль" style="flex-grow: 1; display: none;">
                     <div class="profile-value" id="newPasswordDisplay" style="flex-grow: 1;">[Введіть новий пароль]</div>
-                </div>
-                <div class="profile-row" style="display: flex; align-items: center;">
-                    <div class="profile-label" style="width: 150px;">Підтвердити новий пароль</div>
-                    <input type="password" class="form-control" id="confirmPasswordEdit" name="confirmPassword" placeholder="Підтвердіть новий пароль" style="flex-grow: 1; display: none;">
-                    <div class="profile-value" id="confirmPasswordDisplay" style="flex-grow: 1;">[Підтвердіть новий пароль]</div>
                     <div class="button-group">
                         <button type="button" class="btn btn-primary" id="passwordEditBtn" onclick="editField('password')">Змінити</button>
                         <button type="submit" class="btn btn-save" id="passwordSaveBtn" style="display: none;">Зберегти</button>
                         <button type="button" class="btn btn-cancel" id="passwordCancelBtn" style="display: none;" onclick="cancelEdit('password')">Відмінити</button>
                     </div>
+                </div>
+                <div class="profile-row" style="display: flex; align-items: center;">
+                    <div class="profile-label" style="width: 150px;">Підтвердити новий пароль</div>
+                    <input type="password" class="form-control" id="confirmPasswordEdit" name="confirmPassword" placeholder="Підтвердіть новий пароль" style="flex-grow: 1; display: none;">
+                    <div class="profile-value" id="confirmPasswordDisplay" style="flex-grow: 1;">[Підтвердіть новий пароль]</div>
+
                 </div>
 
             </div>

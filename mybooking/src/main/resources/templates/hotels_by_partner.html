@@ -307,9 +307,8 @@
                                 <span th:text="${session.userName}"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                                <li><a class="dropdown-item" href="/home_partners">Головна</a></li>
                                 <li><a class="dropdown-item" href="/hotels/add">Додати нове помешкання</a></li>
-                                <li><a class="dropdown-item" href="/home_partners">Профіль</a></li>
                                 <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
                             </ul>
                         </div>
@@ -326,14 +325,13 @@
         <!-- Имя пользователя с красивой стилизацией и тенями -->
         <div class="partner-info">
             <h4 class="user-name" th:text="${session.userName}">User</h4>
-            <p class="user-description">Розширюйте свій бізнес, додавши ці помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
+            <p class="user-description">Розширюйте свій бізнес, додавши свої помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
         </div>
         <div class="sidebar-menu">
             <!-- Кнопка для добавления нового отеля -->
-            <a href="/hotels/add" class="btn btn-success">Зареєструвати нове помешкання</a>
-            <a href="/home_partners">Редагування профілю</a>
-            <a href="#">Перегляд бронювань</a>
-            <a href="#">Видалити аккаунт</a>
+            <a href="/hotels/add" class="btn btn-success">Додати нове помешкання</a>
+            <a href="/home_partners" class="btn btn-success">Головна</a>
+
 
 
 

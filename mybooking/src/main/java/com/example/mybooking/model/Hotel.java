@@ -39,10 +39,11 @@ public class Hotel {
     @Column(nullable = false)
     private Double price;
 
-    @JsonIgnore
+
     @Lob
     @Column(nullable = true)
     private byte[] coverImage;  // Обложка отеля в байтовом формате
+
     @Transient
     private String coverImageBase64; // Новое поле для хранения изображения в Base64
 
@@ -73,7 +74,7 @@ public class Hotel {
     private Set<Image> images = new HashSet<>();
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Room> rooms = new HashSet<>();
+    private Set<Room> rooms = new HashSet<>(); // Связанные изображения
 
     // Додаємо зв'язок з відгуками
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
