@@ -76,6 +76,80 @@ public class HotelService {
 
 
     ////////////////////////////////
+//    @Transactional
+//    public Hotel saveHotelWithPartner(Hotel hotel, Partner partner, List<Long> amenityIds,
+//                                      MultipartFile coverImageFile, Set<MultipartFile> imageFiles) {
+//
+//        // Привязываем партнера к отелю
+//        hotel.setOwner(partner);
+//
+//        // Привязываем удобства к отелю по списку их ID
+//        if (amenityIds != null && !amenityIds.isEmpty()) {
+//            // Получаем объекты удобств из базы данных по их ID
+//            Set<Amenity> amenities = new HashSet<>(amenityRepository.findAllById(amenityIds));
+//            // Устанавливаем удобства для отеля
+//            hotel.setAmenities(amenities);
+//            logger.info("Удобства добавлены к отелю: {}", amenities);
+//        } else {
+//            logger.warn("Удобства не были добавлены, так как список был пуст.");
+//        }
+//
+//        // Логирование временной директории
+//        logger.info("Временная директория для хранения файлов: {}", System.getProperty("java.io.tmpdir"));
+//
+//
+//        // Сохраняем обложку
+//        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+//            try {
+//                // Преобразуем обложку в массив байтов
+//                byte[] coverImageBytes = coverImageFile.getBytes();
+//                hotel.setCoverImage(coverImageBytes); // Сохраняем в поле coverImage
+//                logger.info("Обложка сохранена для отеля: {}", hotel.getName());
+//            } catch (IOException e) {
+//                logger.error("Ошибка при обработке файла обложки: " + e.getMessage());
+//                throw new RuntimeException("Ошибка при загрузке обложки", e);
+//            }
+//        }
+//
+//        // Обрабатываем дополнительные изображения
+//        if (imageFiles != null && !imageFiles.isEmpty()) {
+//            Set<Image> images = new HashSet<>();
+//            for (MultipartFile file : imageFiles) {
+//                if (!file.isEmpty()) {
+//                    try {
+//                        Image image = new Image();
+//                        image.setPhotoBytes(file.getBytes());
+//                        image.setHotel(hotel);
+//                        images.add(image);
+//
+//                        // Логирование пути сохранения временного файла
+//                        logger.info("Временный файл для изображения: {}", file.getOriginalFilename());
+//                        // Проверка существования временного файла перед обработкой
+//                        String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename();
+//                        if (Files.exists(Paths.get(tempFilePath))) {
+//                            logger.info("Файл найден в временной директории: {}", tempFilePath);
+//                        } else {
+//                            logger.error("Файл не найден в временной директории: {}", tempFilePath);
+//                        }
+//
+//                        logger.info("Дополнительное изображение добавлено: {}", file.getOriginalFilename());
+//                    } catch (IOException e) {
+//                        logger.error("Ошибка при обработке дополнительного изображения: {}", e.getMessage());
+//                    }
+//                }
+//            }
+//            hotel.setImages(images);
+//        } else {
+//            logger.warn("Дополнительные изображения не были загружены.");
+//        }
+//
+//        // Сохраняем отель в базе данных
+//        try {
+//            return hotelRepository.save(hotel);
+//        } catch (Exception e) {
+//            logger.error("Ошибка при сохранении отеля: {}", e.getMessage());
+//            throw e;
+//        }
     @Transactional
     public Hotel saveHotelWithPartner(Hotel hotel, Partner partner, List<Long> amenityIds,
                                       MultipartFile coverImageFile, Set<MultipartFile> imageFiles) {
@@ -83,37 +157,25 @@ public class HotelService {
         // Привязываем партнера к отелю
         hotel.setOwner(partner);
 
-
-
         // Привязываем удобства к отелю по списку их ID
+
         if (amenityIds != null && !amenityIds.isEmpty()) {
-            // Получаем объекты удобств из базы данных по их ID
             Set<Amenity> amenities = new HashSet<>(amenityRepository.findAllById(amenityIds));
-            // Устанавливаем удобства для отеля
             hotel.setAmenities(amenities);
             logger.info("Удобства добавлены к отелю: {}", amenities);
-        } else {
-            logger.warn("Удобства не были добавлены, так как список был пуст.");
         }
 
-        // Логирование временной директории
-        logger.info("Временная директория для хранения файлов: {}", System.getProperty("java.io.tmpdir"));
-
-
-        // Сохраняем обложку
+        // Обработка обложки
         if (coverImageFile != null && !coverImageFile.isEmpty()) {
             try {
-                // Преобразуем обложку в массив байтов
                 byte[] coverImageBytes = coverImageFile.getBytes();
-                hotel.setCoverImage(coverImageBytes); // Сохраняем в поле coverImage
-                logger.info("Обложка сохранена для отеля: {}", hotel.getName());
+                hotel.setCoverImage(coverImageBytes);
             } catch (IOException e) {
-                logger.error("Ошибка при обработке файла обложки: " + e.getMessage());
                 throw new RuntimeException("Ошибка при загрузке обложки", e);
             }
         }
 
-        // Обрабатываем дополнительные изображения
+        // Обработка дополнительных изображений
         if (imageFiles != null && !imageFiles.isEmpty()) {
             Set<Image> images = new HashSet<>();
             for (MultipartFile file : imageFiles) {
@@ -123,35 +185,16 @@ public class HotelService {
                         image.setPhotoBytes(file.getBytes());
                         image.setHotel(hotel);
                         images.add(image);
-
-                        // Логирование пути сохранения временного файла
-                        logger.info("Временный файл для изображения: {}", file.getOriginalFilename());
-                        // Проверка существования временного файла перед обработкой
-                        String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename();
-                        if (Files.exists(Paths.get(tempFilePath))) {
-                            logger.info("Файл найден в временной директории: {}", tempFilePath);
-                        } else {
-                            logger.error("Файл не найден в временной директории: {}", tempFilePath);
-                        }
-
-                        logger.info("Дополнительное изображение добавлено: {}", file.getOriginalFilename());
                     } catch (IOException e) {
-                        logger.error("Ошибка при обработке дополнительного изображения: {}", e.getMessage());
+                        throw new RuntimeException("Ошибка при загрузке изображения", e);
                     }
                 }
             }
             hotel.setImages(images);
-        } else {
-            logger.warn("Дополнительные изображения не были загружены.");
         }
 
         // Сохраняем отель в базе данных
-        try {
-            return hotelRepository.save(hotel);
-        } catch (Exception e) {
-            logger.error("Ошибка при сохранении отеля: {}", e.getMessage());
-            throw e;
-        }
+        return hotelRepository.save(hotel);
 
 }
 

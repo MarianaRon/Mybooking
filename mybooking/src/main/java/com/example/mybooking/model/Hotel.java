@@ -41,7 +41,7 @@ public class Hotel {
 
 
     @Lob
-    @Column(nullable = true)
+    @Column(nullable = false)
     private byte[] coverImage;  // Обложка отеля в байтовом формате
 
     @Transient
@@ -80,12 +80,14 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
-    public Hotel(String name, String addressStreet, Double price, City city, Partner owner, Set<Image> images) {
+    public Hotel(String name, String addressStreet, Double price, City city, Partner owner,Set<Amenity> amenities, byte[] coverImage, Set<Image> images) {
         this.name = name;
         this.addressStreet = addressStreet;
         this.price = price;
         this.city = city;
         this.owner = owner;
+        this.amenities = amenities != null ? amenities : new HashSet<>();
+        this.coverImage = coverImage;
         this.images = images != null ? images : new HashSet<>(); // Инициализируем изображения, если они не null
     }
 }

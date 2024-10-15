@@ -47,12 +47,11 @@ public class HotelController {
     @Autowired
     private AmenityService amenityService;
 
-    @Autowired
-    private ImageService imageService;
-
 
     @Autowired
     private CityService cityService; // Добавляем CityService для работы с городами
+
+
 //    @Autowired
 //    public HotelController(HotelService hotelService, CityService cityService, PartnerService partnerService) {
 //        this.hotelService = hotelService;
@@ -96,6 +95,35 @@ public class HotelController {
     }
 
     //метод отображает форму для добавления отеля. Также осуществляется проверка авторизованного партнера, так как только партнеры могут добавлять отели.
+//    @GetMapping("/add")
+//    public String showAddHotelForm(HttpSession session, Model model) {
+//        // Создаем новый объект отеля
+//        model.addAttribute("hotel", new Hotel());
+//
+//
+//        // Получаем список удобств
+//        List<Amenity> amenities = amenityService.getAllAmenities();
+//
+//        if (amenities == null || amenities.isEmpty()) {
+//            logger.warn("Список удобств пуст или не был загружен.");
+//        } else {
+//            logger.info("Список удобств загружен: {}", amenities);
+//        }
+//        model.addAttribute("amenities", amenities);
+//
+//// Загружаем список городов
+//        List<City> cities = cityService.getAllCities();
+//        model.addAttribute("cities", cities);
+//
+//        // Проверяем, авторизован ли партнер
+//        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+//        if (loggedInPartner == null) {
+//            return "redirect:/home_partners";  // Перенаправляем на логин, если не авторизован
+//        }
+//
+//        return "add_hotels";  // Возвращаем форму для регистрации отеля
+//    }
+    //Обработчик для отображения формы добавления отеля
     @GetMapping("/add")
     public String showAddHotelForm(HttpSession session, Model model) {
         // Создаем новый объект отеля
@@ -128,6 +156,89 @@ public class HotelController {
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
     // Обработка и сохранение данных отеля
+//    @PostMapping("/add")
+//    public String saveHotel(@ModelAttribute Hotel hotel, HttpSession session,
+//                            @RequestParam("cityId") Long cityId,
+//                            @RequestParam("addressStreet") String addressStreet,
+//                            @RequestParam(value = "amenities",required = false) List<Long> amenityIds,
+//                            @RequestParam(value = "latitude", required = false) String latitudeStr,
+//                            @RequestParam(value = "longitude", required = false) String longitudeStr,
+//                            @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
+//                            @RequestParam(value = "imageFiles", required = false) Set<MultipartFile> imageFiles) {
+//
+//
+//
+//        // Получаем текущего авторизованного партнера
+//        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+//        if (loggedInPartner == null) {
+//            logger.error("Partner not found in session. Redirecting to login.");
+//            return "redirect:/partner_Account";
+//        }
+//
+//        // Проверяем, существует ли город с указанным ID
+//        Optional<City> cityOptional = cityService.getCityById(cityId);
+//        if (cityOptional.isEmpty()) {
+//            logger.error("City with id {} not found", cityId);
+//            return "redirect:/hotels/add?error=city_not_found";
+//        }
+//
+//        // Устанавливаем город для отеля
+//        hotel.setCity(cityOptional.get());
+//
+//        // Устанавливаем адрес для отеля
+//        hotel.setAddressStreet(addressStreet);
+//
+//        // Логируем входные данные
+////        logger.info("Received hotel data: {}", hotel);
+////        logger.info("Received cityId: {}", cityId);
+////        logger.info("Received addressStreet: {}", addressStreet);
+////        logger.info("Received latitude: {}", latitudeStr);
+////        logger.info("Received longitude: {}", longitudeStr);
+////        logger.info("Полученные идентификаторы удобств: {}", amenityIds);
+//// Логирование пути временных файлов
+//        // Логирование пути временных файлов
+//        logger.info("Временная директория для хранения файлов: {}", System.getProperty("java.io.tmpdir"));
+//
+//        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+//            String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + coverImageFile.getOriginalFilename();
+//            if (Files.exists(Paths.get(tempFilePath))) {
+//                logger.info("Обложка найдена в временной директории: {}", tempFilePath);
+//            } else {
+//                logger.error("Обложка не найдена в временной директории: {}", tempFilePath);
+//            }
+//        }
+//
+//        // Аналогично для других файлов
+//        if (imageFiles != null && !imageFiles.isEmpty()) {
+//            imageFiles.forEach(file -> {
+//                String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename();
+//                if (Files.exists(Paths.get(tempFilePath))) {
+//                    logger.info("Изображение найдено в временной директории: {}", tempFilePath);
+//                } else {
+//                    logger.error("Изображение не найдено в временной директории: {}", tempFilePath);
+//                }
+//            });
+//        }
+//
+//
+//        // Преобразование latitude и longitude в double
+//        try {
+//            if (latitudeStr != null && !latitudeStr.isEmpty()) {
+//                hotel.setLatitude(Double.parseDouble(latitudeStr));
+//            }
+//            if (longitudeStr != null && !longitudeStr.isEmpty()) {
+//                hotel.setLongitude(Double.parseDouble(longitudeStr));
+//            }
+//        } catch (NumberFormatException e) {
+//            logger.error("Invalid latitude or longitude format: {}", e.getMessage());
+//            return "redirect:/hotels/add?error=invalid_coordinates";
+//        }
+//
+//
+//        // Сохраняем отель с обложкой и изображениями
+//        hotelService.saveHotelWithPartner(hotel, loggedInPartner, amenityIds, coverImageFile, imageFiles);
+//        return "redirect:/hotels/hotels_by_partner";
+//    }
     @PostMapping("/add")
     public String saveHotel(@ModelAttribute Hotel hotel, HttpSession session,
                             @RequestParam("cityId") Long cityId,
@@ -160,39 +271,6 @@ public class HotelController {
         // Устанавливаем адрес для отеля
         hotel.setAddressStreet(addressStreet);
 
-        // Логируем входные данные
-//        logger.info("Received hotel data: {}", hotel);
-//        logger.info("Received cityId: {}", cityId);
-//        logger.info("Received addressStreet: {}", addressStreet);
-//        logger.info("Received latitude: {}", latitudeStr);
-//        logger.info("Received longitude: {}", longitudeStr);
-//        logger.info("Полученные идентификаторы удобств: {}", amenityIds);
-// Логирование пути временных файлов
-        // Логирование пути временных файлов
-        logger.info("Временная директория для хранения файлов: {}", System.getProperty("java.io.tmpdir"));
-
-        if (coverImageFile != null && !coverImageFile.isEmpty()) {
-            String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + coverImageFile.getOriginalFilename();
-            if (Files.exists(Paths.get(tempFilePath))) {
-                logger.info("Обложка найдена в временной директории: {}", tempFilePath);
-            } else {
-                logger.error("Обложка не найдена в временной директории: {}", tempFilePath);
-            }
-        }
-
-        // Аналогично для других файлов
-        if (imageFiles != null && !imageFiles.isEmpty()) {
-            imageFiles.forEach(file -> {
-                String tempFilePath = System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename();
-                if (Files.exists(Paths.get(tempFilePath))) {
-                    logger.info("Изображение найдено в временной директории: {}", tempFilePath);
-                } else {
-                    logger.error("Изображение не найдено в временной директории: {}", tempFilePath);
-                }
-            });
-        }
-
-
         // Преобразование latitude и longitude в double
         try {
             if (latitudeStr != null && !latitudeStr.isEmpty()) {
@@ -212,14 +290,13 @@ public class HotelController {
         return "redirect:/hotels/hotels_by_partner";
     }
 
-
     // Просмотр отелей, добавленных партнером
     @GetMapping("/hotels_by_partner")
     public String getHotelsByPartner(HttpSession session, Model model) {
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
 
         if (loggedInPartner == null) {
-            return "redirect:/home_partners";  // Перенаправляем на страницу логина
+            return "redirect:/exit_Account";  // Перенаправляем на страницу логина
         }
 
         // Логируем идентификатор партнера

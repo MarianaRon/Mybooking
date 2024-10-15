@@ -465,12 +465,28 @@
     <!--Шаг 3: Цена и удобства
     На этом шаге пользователь выбирает удобства и устанавливает цену за номер.-->
     <div id="step-3" class="step">
+<!--        &lt;!&ndash; Динамическое отображение удобств &ndash;&gt;-->
+<!--        <div class="view-2">-->
+<!--            <div class="amenities-container">-->
+<!--                <h4 class="text-wrapper-11">Загальні зручності</h4>-->
+<!--                <ul>-->
+<!--                    <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'general'}">-->
+<!--                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />-->
+<!--                        <span th:text="${amenity.name}"></span>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-
+<!--                <h4 class="text-wrapper-11">Зручності в номері</h4>-->
+<!--                <ul>-->
+<!--                    <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'room'}">-->
+<!--                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />-->
+<!--                        <span th:text="${amenity.name}"></span>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
         <!-- Динамическое отображение удобств -->
         <div class="view-2">
-
-
             <div class="amenities-container">
                 <h4 class="text-wrapper-11">Загальні зручності</h4>
                 <ul>
@@ -489,7 +505,6 @@
                 </ul>
             </div>
         </div>
-
         <!-- Цена -->
         <div class="view-3">
             <p class="text-wrapper-11">Вартість</p>
@@ -518,12 +533,31 @@
 
 
         <!-- Загрузка изображений -->
+<!--        <div class="frame-10">-->
+<!--            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>-->
+
+<!--            &lt;!&ndash; Поле для выбора обложки &ndash;&gt;-->
+<!--            <label for="coverImage">Головне фото Вашого помешкання</label>-->
+<!--            <input type="file" id="coverImage" name="coverImage" accept="image/*"  class="form-control" onchange="handleCoverImage(this.files)" />-->
+
+<!--            &lt;!&ndash; Превью для обложки &ndash;&gt;-->
+<!--            <div id="coverImagePreview" class="cover-image-preview mt-3"></div>-->
+
+<!--            &lt;!&ndash; Поле для выбора остальных изображений &ndash;&gt;-->
+<!--            <label for="imageFiles">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі перевари :</label>-->
+<!--            <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />-->
+
+<!--            &lt;!&ndash; Контейнер для отображения загруженных изображений &ndash;&gt;-->
+<!--            <div id="imagePreview" class="row mt-3"></div>-->
+
+<!--        </div>-->
+        <!-- Загрузка изображений -->
         <div class="frame-10">
             <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>
 
             <!-- Поле для выбора обложки -->
             <label for="coverImage">Головне фото Вашого помешкання</label>
-            <input type="file" id="coverImage" name="coverImage" accept="image/*"  class="form-control" onchange="handleCoverImage(this.files)" />
+            <input type="file" id="coverImage" name="coverImage" accept="image/*" class="form-control" onchange="handleCoverImage(this.files)" />
 
             <!-- Превью для обложки -->
             <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
@@ -534,9 +568,7 @@
 
             <!-- Контейнер для отображения загруженных изображений -->
             <div id="imagePreview" class="row mt-3"></div>
-
         </div>
-
         <!-- Описание -->
         <div class="frame-10">
             <textarea id="description" name="description" placeholder="Введите описание" required></textarea>
@@ -617,9 +649,68 @@
 <script>
 
     // Функция для отображения превью обложки
+    // function handleCoverImage(files) {
+    //     const previewContainer = document.getElementById('coverImagePreview');
+    //     previewContainer.innerHTML = ''; // Очищаем контейнер
+    //
+    //     if (files.length === 0) {
+    //         previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
+    //     } else if (files.length > 1) {
+    //         alert('Пожалуйста, выберите только одно изображение для обложки.');
+    //     } else {
+    //         const file = files[0];
+    //         if (file.size > 5 * 1024 * 1024) { // Ограничение на 5 МБ
+    //             alert('Размер файла не должен превышать 5 МБ.');
+    //             return;
+    //         }
+    //
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             const img = document.createElement('img');
+    //             img.src = e.target.result;
+    //             img.classList.add('img-thumbnail');
+    //             img.style.maxHeight = '400px'; // Ограничение по высоте
+    //             previewContainer.appendChild(img);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // }
+    //
+    // function handleImages(files) {
+    //     const previewContainer = document.getElementById('imagePreview');
+    //     previewContainer.innerHTML = ''; // Очищаем контейнер
+    //
+    //     if (files.length > 5) { // Ограничение на количество изображений
+    //         alert('Вы можете загрузить не более 5 изображений.');
+    //         return;
+    //     }
+    //
+    //     Array.from(files).forEach(file => {
+    //         if (file.size > 5 * 1024 * 1024) {
+    //             alert('Размер каждого файла не должен превышать 5 МБ.');
+    //             return;
+    //         }
+    //
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             const img = document.createElement('img');
+    //             img.src = e.target.result;
+    //             img.classList.add('img-thumbnail');
+    //             img.style.width = '150px';
+    //             img.style.height = '150px';
+    //             img.style.objectFit = 'cover';
+    //             img.style.marginRight = '10px';
+    //             previewContainer.appendChild(img);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     });
+    //
+    // }
+    // Функция для отображения превью обложки
+    // Функция для отображения превью обложки
     function handleCoverImage(files) {
         const previewContainer = document.getElementById('coverImagePreview');
-        previewContainer.innerHTML = ''; // Очищаем контейнер
+        previewContainer.innerHTML = ''; // Очищаем контейнер перед загрузкой новой обложки
 
         if (files.length === 0) {
             previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
@@ -644,17 +735,19 @@
         }
     }
 
+    // Функция для отображения превью дополнительных изображений
     function handleImages(files) {
         const previewContainer = document.getElementById('imagePreview');
-        previewContainer.innerHTML = ''; // Очищаем контейнер
 
-        if (files.length > 5) { // Ограничение на количество изображений
+        // Ограничение на количество загружаемых изображений (5 штук)
+        if (files.length > 5) {
             alert('Вы можете загрузить не более 5 изображений.');
             return;
         }
 
+        // Добавляем новые изображения без очистки предыдущих
         Array.from(files).forEach(file => {
-            if (file.size > 5 * 1024 * 1024) {
+            if (file.size > 5 * 1024 * 1024) { // Ограничение на 5 МБ
                 alert('Размер каждого файла не должен превышать 5 МБ.');
                 return;
             }
@@ -668,11 +761,12 @@
                 img.style.height = '150px';
                 img.style.objectFit = 'cover';
                 img.style.marginRight = '10px';
+
+                // Добавляем изображение в контейнер, не очищая его
                 previewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         });
-
     }
 
 </script>

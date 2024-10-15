@@ -2,6 +2,7 @@ package com.example.mybooking.controller;
 
 import com.example.mybooking.model.Hotel;
 import com.example.mybooking.model.Image;
+import com.example.mybooking.service.HotelService;
 import com.example.mybooking.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,8 @@ import java.util.Set;
 @Controller
 @RequestMapping("/images")
 public class ImageController {
+    @Autowired
+    private HotelService hotelService;  // Инжектируем HotelService
 
 
     @Autowired
@@ -49,6 +52,17 @@ public class ImageController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        /////////////////////////////
+        // Найти отель по hotelId
+        Optional<Hotel> hotelOptional = hotelService.getHotelById(hotelId);
+        if (hotelOptional.isPresent()) {
+            // Устанавливаем отель для изображения
+            Hotel hotel = hotelOptional.get();
+            image.setHotel(hotel);
+        } else {
+            // Обработка ошибки, если отель не найден
+            return "redirect:/hotels/add?error=hotel_not_found";
         }
 
         // Збереження зображення
