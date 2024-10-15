@@ -195,7 +195,6 @@
     </form>
 </div>
 
-<!-- Виведення списку зображень -->
 <table>
     <thead>
     <tr>
@@ -211,15 +210,10 @@
     <tr th:each="image : ${images}">
         <td th:text="${image.id}"></td>
         <td th:text="${image.url}"></td>
-<!--        <td>-->
-<!--            <img th:src="@{/images/photo/{id}(id=${image.id})}" alt="Фото" width="100">-->
-<!--        </td>-->
-
         <td>
             <img th:if="${image.photoBytes != null}" th:src="@{/images/photo/{id}(id=${image.id})}" alt="Фото" width="100">
             <img th:if="${image.photoBytes == null}" th:src="${image.url}" alt="Фото" width="100">
         </td>
-
         <td th:text="${image.hotel != null ? image.hotel.id : 'N/A'}"></td>
         <td th:text="${image.room != null ? image.room.id : 'N/A'}"></td>
         <td>

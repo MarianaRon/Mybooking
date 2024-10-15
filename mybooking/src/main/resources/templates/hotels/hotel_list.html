@@ -171,48 +171,21 @@
 
 <div class="container">
     <h1>Робота з таблицею ГОТЕЛІ</h1>
-
-<!--    <form action="/hotels/add_hotel" method="post">-->
-<!--        <label for="name">Назва:</label>-->
-<!--        <input type="text" id="name" name="name" required>-->
-<!--        <label for="description">Опис:</label>-->
-<!--        <textarea id="description" name="description" required></textarea>-->
-<!--        <label for="address">Адреса:</label>-->
-<!--        <input type="text" th:field="*{address}" placeholder="Введіть адресу" required />-->
-<!--        <label for="latitude">Широта:</label>-->
-<!--        <input type="number" step="0.000001" id="latitude" name="latitude">-->
-<!--        <label for="longitude">Довгота:</label>-->
-<!--        <input type="number" step="0.000001" id="longitude" name="longitude">-->
-<!--        <label for="owner">Власник:</label>-->
-<!--        <select id="owner" name="owner" required>-->
-<!--            <option value="" disabled selected>Оберіть власника</option>-->
-<!--            <option th:each="partner : ${partners}" th:value="${partner.id}" th:text="${partner.email}"></option>-->
-<!--        </select>-->
-<!--        <label for="housingType">Тип житла:</label>-->
-<!--        <input type="text" id="housingType" name="housingType" required>-->
-<!--        <label for="city">Місто:</label>-->
-<!--        <select id="city" name="cityId" required>-->
-<!--            <option value="" disabled selected>Оберіть місто</option>-->
-<!--            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name + ', ' + city.region}"></option>-->
-<!--        </select>-->
-<!--        <button type="submit">Додати готель</button>-->
-<!--    </form>-->
-
-    <form action="/hotels/add_hotel" method="post">
+    <form action="/hotels/add_hotel" method="post" enctype="multipart/form-data">
         <label for="name">Назва:</label>
-        <input type="text" id="name" placeholder="Назва готелю" th:value="${hotel.name}" required>
+        <input type="text" id="name" name="name" placeholder="Назва готелю" th:value="${hotel.name}" required>
 
         <label for="description">Опис:</label>
-        <textarea id="description" placeholder="Опис готелю" th:text="${hotel.description}" required></textarea>
+        <textarea id="description" name="description" placeholder="Опис готелю" th:text="${hotel.description}" required></textarea>
 
         <label for="addressStreet">Адреса:</label>
-        <input type="text" id="addressStreet" placeholder="Введіть адресу" th:value="${hotel.addressStreet}"  required>
+        <input type="text" id="addressStreet" name="addressStreet" placeholder="Введіть адресу" th:value="${hotel.addressStreet}" required>
 
         <label for="latitude">Широта:</label>
-        <input type="number" step="0.000001" id="latitude" placeholder="Широта" th:value="${hotel.latitude}" required>
+        <input type="number" step="0.000001" id="latitude" name="latitude" placeholder="Широта" th:value="${hotel.latitude}" required>
 
         <label for="longitude">Довгота:</label>
-        <input type="number"  step="0.000001" id="longitude" placeholder="Довгота" th:value="${hotel.longitude}" required>
+        <input type="number" step="0.000001" id="longitude" name="longitude" placeholder="Довгота" th:value="${hotel.longitude}" required>
 
         <label for="owner">Власник:</label>
         <select id="owner" name="owner" required>
@@ -220,21 +193,21 @@
             <option th:each="partner : ${partners}" th:value="${partner.id}" th:text="${partner.email}"></option>
         </select>
 
-
         <label for="housingType">Тип житла:</label>
-        <input type="text" id="housingType" placeholder="Тип житла" required>
+        <input type="text" id="housingType" name="housingType" placeholder="Тип житла" th:value="${hotel.housingType}" required>
 
         <label for="city">Місто:</label>
-        <select id="city" required>
+        <select id="city" name="city" required>
             <option value="" disabled selected>Оберіть місто</option>
             <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name + ', ' + city.region}"></option>
         </select>
 
+        <label for="coverImage">Зображення обкладинки:</label>
+        <input type="file" id="coverImage" name="coverImage" accept="image/*" required>
+
         <button type="submit">Додати готель</button>
     </form>
 
-
-    <!-- Таблиця з переліком готелів -->
     <table>
         <thead>
         <tr>
@@ -244,6 +217,7 @@
             <th>Адреса</th>
             <th>Місто</th>
             <th>Тип житла</th>
+            <th>Зображення</th>
             <th>Дії</th>
         </tr>
         </thead>
@@ -255,6 +229,9 @@
             <td th:text="${hotel.addressStreet}"></td>
             <td th:text="${hotel.city.name}"></td>
             <td th:text="${hotel.housingType}"></td>
+            <td>
+                <img th:src="@{/hotels/coverImage/{id}(id=${hotel.id})}" alt="Обкладинка" width="100">
+            </td>
             <td>
                 <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}">Редагувати</a>
                 <form th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" style="display:inline;">

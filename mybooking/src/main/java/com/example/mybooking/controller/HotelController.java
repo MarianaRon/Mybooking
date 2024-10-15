@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,6 +38,8 @@ public class HotelController {
 
     @Autowired
     private PartnerService partnerService;
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private RoomService roomService;
@@ -472,29 +475,53 @@ public class HotelController {
         return "search_results";
     }
 
-    //Опис готеля - перехід на окрему сторінку конкретного готеля
-//    @GetMapping("/{id}")
-//    public String getHotelDetails(@PathVariable("id") Long id, Model model) {
-//        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
-//        double averageRating = 0.0;
-//        if (!reviews.isEmpty()) {
-//            averageRating = reviews.stream()
-//                    .mapToDouble(Review::getRating)
-//                    .average()
-//                    .orElse(0.0);  // обчислення середнього
-//        }
-//        if (hotelOptional.isPresent()) {
-//            Hotel hotel = hotelOptional.get();
-//            model.addAttribute("hotel", hotelOptional.get());
-//            model.addAttribute("city", hotelOptional.get().getCity());
-//            model.addAttribute("rooms", hotelOptional.get().getRooms());
-//            model.addAttribute("amenities", hotel.getAmenities());
-//            model.addAttribute("averageRating", averageRating);
-//            return "hotel_details";
-//        } else {
-//            return "hotel_not_found"; // Перенаправляємо на сторінку з помилкою або обробляємо іншим способом
-//        }
-//    }
+    @PostMapping("/add_hotel")
+    public String addHotel(@ModelAttribute Hotel hotel,
+                           @RequestParam("coverImage") MultipartFile coverImageFile,
+                           @RequestParam("city") Long cityId,
+                           @RequestParam("owner") Long partnerId,
+                           RedirectAttributes redirectAttributes) throws IOException {
+
+        // Отримуємо місто та власника за їх ідентифікаторами
+        Optional<City> cityOptional = cityService.getCityById(cityId);
+        Optional<Partner> partnerOptional = partnerService.getPartnerById(partnerId);
+
+        // Перевіряємо, чи знайдені місто і власник
+        if (cityOptional.isPresent() && partnerOptional.isPresent()) {
+            hotel.setCity(cityOptional.get());
+            hotel.setOwner(partnerOptional.get());
+
+            // Зберігаємо зображення як байтовий масив
+            if (!coverImageFile.isEmpty()) {
+                byte[] coverImageBytes = coverImageFile.getBytes();
+                hotel.setCoverImage(coverImageBytes);
+            }
+
+            // Зберігаємо готель
+            hotelService.save(hotel);
+            return "redirect:/hotels/hotel_list";
+        } else {
+            // Якщо місто або власник не знайдені, відображаємо помилку
+            redirectAttributes.addFlashAttribute("error", "Місто або власник не знайдені");
+            return "redirect:/hotels/hotel_list";
+        }
+    }
+
+    @GetMapping("/hotels/coverImage/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getHotelCoverImage(@PathVariable("id") Long hotelId) {
+        Optional<Hotel> hotelOptional = hotelService.getHotelById(hotelId);
+        if (hotelOptional.isPresent() && hotelOptional.get().getCoverImage() != null) {
+            byte[] image = hotelOptional.get().getCoverImage();
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) // або IMAGE_PNG залежно від типу зображення
+                    .body(image);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
     @GetMapping("/{id}")
     public String getHotelDetails(@PathVariable("id") Long id, Model model) {
@@ -513,6 +540,11 @@ public class HotelController {
                         .orElse(0.0);  // Обчислення середнього рейтингу
                 averageRating = Math.round(averageRating * 10.0) / 10.0;
             }
+            // Додаємо зображення (обкладинку) готелю, якщо воно є
+            List<Image> images = imageService.getImagesByHotelId(id);
+            if (!images.isEmpty()) {
+                hotel.setCoverImage(images.get(0).getPhotoBytes());  // Використовуємо перше зображення як обкладинку
+            }
 
             // Додавання атрибутів до моделі
             model.addAttribute("hotel", hotel);
@@ -525,7 +557,6 @@ public class HotelController {
         } else {
             return "hotel_not_found";  // Сторінка помилки, якщо готель не знайдено
         }
+
     }
-
-
 }

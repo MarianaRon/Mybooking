@@ -15,17 +15,21 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -48,6 +52,8 @@ public class MainController {
     private ReviewService reviewService;
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private ImageService imageService;
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @GetMapping("/")
@@ -65,7 +71,13 @@ public class MainController {
                 ))
                 .limit(3)
                 .toList();
-
+        for (Hotel hotel : topHotels) {
+            List<Image> images = imageService.getImagesByHotelId(hotel.getId());
+            if (!images.isEmpty()) {
+                // Якщо є хоча б одне зображення, використовуємо його як головне
+                hotel.setCoverImage(images.get(0).getPhotoBytes());  // Припустимо, що це поле для обкладинки
+            }
+        }
         model.addAttribute("topHotels", topHotels);  // Додаємо топ-3 готелі до моделі
         if (currentUser != null) {
             model.addAttribute("welcomeMessage", "Вітаємо, " + currentUser.getUsername() + "! Спробуйте найпопулярніші напрямки для подорожі");
@@ -73,6 +85,20 @@ public class MainController {
             model.addAttribute("welcomeMessage", "Вітаємо, гість! Спробуйте найпопулярніші напрямки для подорожі");
         }
         return "home";
+    }
+
+    @GetMapping("/hotels/photo/{id}")
+    public ResponseEntity<byte[]> getHotelCoverImage(@PathVariable Long id) {
+        List<Image> images = imageService.getImagesByHotelId(id);
+
+        if (!images.isEmpty()) {
+            byte[] imageBytes = images.get(0).getPhotoBytes();  // Беремо перше зображення
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // Або інший формат зображення, залежно від даних
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Якщо зображення не знайдено
+        }
     }
 
     @GetMapping("/login")

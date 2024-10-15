@@ -53,5 +53,9 @@ public class ImageService {
         imageRepository.saveAll(images);
     }
 
+    public List<Image> getImagesByHotelId(Long hotelId) {
+        return imageRepository.findByHotelId(hotelId);
+    }
+
 
 }
