@@ -557,17 +557,15 @@
 
             <!-- Поле для выбора обложки -->
             <label for="coverImage">Головне фото Вашого помешкання</label>
-            <input type="file" id="coverImage" name="coverImage" accept="image/*" class="form-control" onchange="handleCoverImage(this.files)" />
+            <input type="file" name="coverImage" accept="image/*" required>
 
-            <!-- Превью для обложки -->
-            <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
 
-            <!-- Поле для выбора остальных изображений -->
-            <label for="imageFiles">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі перевари :</label>
-            <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />
 
-            <!-- Контейнер для отображения загруженных изображений -->
-            <div id="imagePreview" class="row mt-3"></div>
+            <!-- Загрузка дополнительных изображений -->
+            <label for="imageFiles">Дополнительные изображения</label>
+            <input type="file" name="imageFiles" accept="image/*" multiple>
+
+
         </div>
         <!-- Описание -->
         <div class="frame-10">
@@ -582,26 +580,26 @@
             </button>
         </div>
         <div class="button">
-            <button type="button" id="submitHotelButton" onclick="submitForm()" >Зареєструвати помешкання</button>
+            <button type="submit">Сохранить</button>
         </div>
         <!-- Модальное окно для подтверждения добавления номера в отель -->
-        <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Чи бажаєте ви додати номер до цього готелю?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>
-                        <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        Чи бажаєте ви додати номер до цього готелю?-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>-->
+<!--                        <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
     </div>
@@ -718,7 +716,7 @@
             alert('Пожалуйста, выберите только одно изображение для обложки.');
         } else {
             const file = files[0];
-            if (file.size > 5 * 1024 * 1024) { // Ограничение на 5 МБ
+            if (file.size > 10 * 1024 * 1024) { // Ограничение на 5 МБ
                 alert('Размер файла не должен превышать 5 МБ.');
                 return;
             }
@@ -747,7 +745,7 @@
 
         // Добавляем новые изображения без очистки предыдущих
         Array.from(files).forEach(file => {
-            if (file.size > 5 * 1024 * 1024) { // Ограничение на 5 МБ
+            if (file.size > 10 * 1024 * 1024) { // Ограничение на 5 МБ
                 alert('Размер каждого файла не должен превышать 5 МБ.');
                 return;
             }
@@ -805,23 +803,35 @@
         document.getElementById('step').value = step;
     }
 
-    /////// Функция для отправки формы на последнем шаге (4 шаг)
+
+</script>
+
+<!--Обработчик для кнопки "Зареєструвати помешкання"-->
+<script>
+
+    // Функция для отправки формы на последнем шаге (4 шаг)
     function submitForm() {
         // Устанавливаем значение шага для отправки формы
         document.getElementById('step').value = 4;
 
-        // Отправляем форму
+        // Получаем форму по ID
         var form = document.getElementById('form-step');
+        if (!form) {
+            alert("Форма не найдена. Проверьте правильность ID формы.");
+            return;
+        }
+
         var formData = new FormData(form);
 
         // AJAX-запрос для отправки формы с изображениями
         fetch('/hotels/add', {
-            method: 'POST',
+            method: 'POST', // Уберите лишнюю точку
             body: formData
         }).then(response => {
             if (response.ok) {
-                window.location.href = '/hotels_by_partner';
+                window.location.href = '/hotels/hotels_by_partner';
             } else {
+                // Попытка обработать ошибку и показать сообщение пользователю
                 return response.json().then(data => {
                     alert("Ошибка при регистрации: " + (data.message || "Пожалуйста, попробуйте снова."));
                 }).catch(() => {
@@ -833,51 +843,6 @@
             alert("Ошибка при отправке формы. Проверьте подключение к интернету и попробуйте снова.");
         });
     }
-</script>
-
-<!--Обработчик для кнопки "Зареєструвати помешкання"-->
-<script>
-
-    document.getElementById('submitHotelButton').addEventListener('click', function(event) {
-        event.preventDefault(); // Останавливаем стандартное поведение кнопки отправки
-
-        var form = document.getElementById('form-step');
-        var selectedHousingType = document.getElementById('housingType').value;
-
-        // AJAX-запрос для отправки формы
-        $.ajax({
-            url: form.action,  // URL для отправки формы
-            method: form.method,  // Метод отправки POST
-            data: $(form).serialize(),  // Сериализация данных формы
-            success: function(response) {
-                // Проверяем, если запрос выполнен успешно и тип жилья - "Готель або Hostel"
-                if (selectedHousingType === 'Готель або Hostel') {
-                    // Показ модального окна с использованием Bootstrap 5
-                    var myModal = new bootstrap.Modal(document.getElementById('confirmAddRoomModal'));
-                    myModal.show(); // Показ модального окна
-                } else {
-                    // Если тип жилья не "Готель або Hostel", перенаправляем на список отелей
-                    window.location.href = '/hotels_by_partner';
-                }
-            },
-            error: function(xhr, status, error) {
-                // Обработка ошибок при отправке
-                alert("Ошибка при сохранении: " + error);
-            }
-        });
-    });
-
-    // Обработчик для кнопки "Так" в модальном окне
-    document.getElementById('yesAddRoomButton').addEventListener('click', function() {
-        // Перенаправляем на страницу добавления номера
-        window.location.href = '/rooms/add';
-    });
-
-    // Обработчик для кнопки "Ні" в модальном окне
-    document.getElementById('noAddRoomButton').addEventListener('click', function() {
-        // Перенаправляем на список отелей партнера
-        window.location.href = '/hotels_by_partner';
-    });
 </script>
 <!--Инициализация карты-->
 <script>

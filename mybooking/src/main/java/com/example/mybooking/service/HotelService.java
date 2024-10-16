@@ -6,6 +6,7 @@ import com.example.mybooking.model.Image;
 import com.example.mybooking.model.Partner;
 import com.example.mybooking.repository.IAmenityRepository;
 import com.example.mybooking.repository.IHotelRepository;
+import com.example.mybooking.repository.IImageRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,8 @@ import java.util.stream.Collectors;
 public class HotelService {
 
     private static final Logger logger = LoggerFactory.getLogger(HotelService.class);
-
+    @Autowired
+    private IImageRepository imageRepository;
     @Autowired
     private IHotelRepository hotelRepository;
 
@@ -151,53 +153,60 @@ public class HotelService {
 //            throw e;
 //        }
     @Transactional
-    public Hotel saveHotelWithPartner(Hotel hotel, Partner partner, List<Long> amenityIds,
-                                      MultipartFile coverImageFile, Set<MultipartFile> imageFiles) {
-
-        // Привязываем партнера к отелю
-        hotel.setOwner(partner);
-
-        // Привязываем удобства к отелю по списку их ID
-
-        if (amenityIds != null && !amenityIds.isEmpty()) {
-            Set<Amenity> amenities = new HashSet<>(amenityRepository.findAllById(amenityIds));
-            hotel.setAmenities(amenities);
-            logger.info("Удобства добавлены к отелю: {}", amenities);
-        }
-
-        // Обработка обложки
-        if (coverImageFile != null && !coverImageFile.isEmpty()) {
-            try {
-                byte[] coverImageBytes = coverImageFile.getBytes();
-                hotel.setCoverImage(coverImageBytes);
-            } catch (IOException e) {
-                throw new RuntimeException("Ошибка при загрузке обложки", e);
-            }
-        }
-
-        // Обработка дополнительных изображений
-        if (imageFiles != null && !imageFiles.isEmpty()) {
-            Set<Image> images = new HashSet<>();
-            for (MultipartFile file : imageFiles) {
-                if (!file.isEmpty()) {
-                    try {
-                        Image image = new Image();
-                        image.setPhotoBytes(file.getBytes());
-                        image.setHotel(hotel);
-                        images.add(image);
-                    } catch (IOException e) {
-                        throw new RuntimeException("Ошибка при загрузке изображения", e);
-                    }
-                }
-            }
-            hotel.setImages(images);
-        }
-
-        // Сохраняем отель в базе данных
+    public Hotel saveHotelWithPartner(Hotel hotel) {
         return hotelRepository.save(hotel);
-
-}
-
+        //        // Привязываем партнера к отелю
+//        hotel.setOwner(partner);
+//
+//        // Добавляем удобства, если список не пуст
+//        if (amenityIds != null && !amenityIds.isEmpty()) {
+//            Set<Amenity> amenities = new HashSet<>(amenityRepository.findAllById(amenityIds));
+//            hotel.setAmenities(amenities);
+//            logger.info("Удобства добавлены к отелю: {}", amenities);
+//        } else {
+//            logger.warn("Удобства не были добавлены, так как список был пуст.");
+//        }
+//
+//        // Обработка обложки отеля
+//        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+//            try {
+//                byte[] coverImageBytes = coverImageFile.getBytes();
+//                hotel.setCoverImage(coverImageBytes);
+//                hotel.setCoverUrl(null); // Если используется байтовое изображение, обнуляем URL
+//                logger.info("Изображение обложки сохранено для отеля: {}", hotel.getName());
+//            } catch (IOException e) {
+//                logger.error("Ошибка при сохранении изображения обложки: {}", e.getMessage());
+//                throw new RuntimeException("Не удалось сохранить изображение обложки", e);
+//            }
+//        } else {
+//            logger.warn("Изображение обложки не было предоставлено.");
+//        }
+//
+//        // Сохраняем отель в базе данных
+//        Hotel savedHotel = hotelRepository.save(hotel);
+//
+//        // Обработка дополнительных изображений отеля, если они есть
+//        if (imageFiles != null && !imageFiles.isEmpty()) {
+//            for (MultipartFile imageFile : imageFiles) {
+//                if (!imageFile.isEmpty()) {
+//                    try {
+//                        byte[] imageBytes = imageFile.getBytes();
+//                        Image image = new Image();
+//                        image.setPhotoBytes(imageBytes);
+//                        image.setHotel(savedHotel);
+//                        imageRepository.save(image);
+//                        logger.info("Дополнительное изображение сохранено для отеля: {}", savedHotel.getName());
+//                    } catch (IOException e) {
+//                        logger.error("Ошибка при сохранении дополнительного изображения: {}", e.getMessage());
+//                    }
+//                }
+//            }
+//        } else {
+//            logger.warn("Дополнительные изображения не были предоставлены.");
+//        }
+//
+//        return savedHotel;
+    }
     /**
      * Удаление отеля по ID.
      *

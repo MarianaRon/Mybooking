@@ -342,70 +342,79 @@
     <div class="content">
         <h1 class="mb-4">Ваше помешкання, яке розміщено на Arrenvi.com </h1>
 
-
-
-        <!-- Отображение отелей, зарегистрированных партнером -->
-        <div class="row">
-            <div class="col-md-4" th:each="hotel : ${hotels}">
-                <div class="card hotel-card">
-                    <!-- Изображение отеля -->
-                    <!-- Если есть обложка отеля, показываем её -->
-                    <!-- Отображение обложки -->
-                    <img th:if="${hotel.coverImageBase64 != null}"
-                         th:src="'data:image/jpeg;base64,' + ${hotel.coverImageBase64}"
-                         alt="Hotel Cover Image" class="hotel-image card-img-top">
-
-                    <!-- Если обложки нет, показываем дефолтное изображение -->
-                    <img th:if="${hotel.coverImage == null}"
-                         src="/img/default-hotel.png"
-                         alt="Default Hotel Image" class="hotel-image card-img-top">
-
-                    <!-- Детали отеля -->
-                    <div class="hotel-details">
-                        <h5 th:text="${hotel.name}" class="card-title"></h5>
-                        <p th:text="${hotel.city.name + ', ' + hotel.addressStreet}" class="card-text"></p>
-                        <p th:text="'Price: ' + ${hotel.price} + ' UAH'" class="card-text"></p>
-
-                        <!-- Кнопки редактирования и удаления -->
-                        <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
-                        <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                data-hotel-id="${hotel.id}">
-                            Видалити <i class="bi bi-trash"></i>
-                        </button>
-                        <!-- Галерея изображений -->
-                        <div class="other-images mt-3">
-                            <h6>Другие фотографии:</h6>
-                            <div class="row">
-                                <div th:each="image : ${hotel.images}">
-                                    <img th:src="@{/photo/{id}(id=${image.id})}" alt="Hotel Image" class="col-md-2" style="height: 100px; object-fit: cover; margin-right: 5px;">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Чи це точно?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Ви впевнені що бажаєте видалити дане помешкання?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відмінити</button>
-                                        <form id="deleteForm" th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" >
-                                            <button type="submit" class="btn btn-danger">Видалити</button>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <h2>Мои отели</h2>
+        <div th:each="hotel : ${hotels}">
+            <h3 th:text="${hotel.name}"></h3>
+            <p th:text="${hotel.addressStreet}"></p>
+            <img th:src="@{/images/{hotelId}}" th:attr="{hotelId=${hotel.id}}" alt="Обложка">
+            <!-- Выводим дополнительные изображения -->
+            <div th:each="image : ${hotel.images}">
+                <img th:src="@{/image/{imageId}}" th:attr="{imageId=${image.id}}" alt="Изображение">
             </div>
         </div>
+
+        <!-- Отображение отелей, зарегистрированных партнером -->
+<!--        <div class="row">-->
+<!--            <div class="col-md-4" th:each="hotel : ${hotels}">-->
+<!--                <div class="card hotel-card">-->
+<!--                    &lt;!&ndash; Изображение отеля &ndash;&gt;-->
+<!--                    &lt;!&ndash; Если есть обложка отеля, показываем её &ndash;&gt;-->
+<!--                    &lt;!&ndash; Отображение обложки &ndash;&gt;-->
+<!--                    <img th:if="${hotel.coverImageBase64 != null}"-->
+<!--                         th:src="'data:image/jpeg;base64,' + ${hotel.coverImageBase64}"-->
+<!--                         alt="Hotel Cover Image" class="hotel-image card-img-top">-->
+
+<!--                    &lt;!&ndash; Если обложки нет, показываем дефолтное изображение &ndash;&gt;-->
+<!--                    <img th:if="${hotel.coverImage == null}"-->
+<!--                         src="/img/default-hotel.png"-->
+<!--                         alt="Default Hotel Image" class="hotel-image card-img-top">-->
+
+<!--                    &lt;!&ndash; Детали отеля &ndash;&gt;-->
+<!--                    <div class="hotel-details">-->
+<!--                        <h5 th:text="${hotel.name}" class="card-title"></h5>-->
+<!--                        <p th:text="${hotel.city.name + ', ' + hotel.addressStreet}" class="card-text"></p>-->
+<!--                        <p th:text="'Price: ' + ${hotel.price} + ' UAH'" class="card-text"></p>-->
+
+<!--                        &lt;!&ndash; Кнопки редактирования и удаления &ndash;&gt;-->
+<!--                        <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>-->
+<!--                        <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"-->
+<!--                                data-hotel-id="${hotel.id}">-->
+<!--                            Видалити <i class="bi bi-trash"></i>-->
+<!--                        </button>-->
+<!--                        &lt;!&ndash; Галерея изображений &ndash;&gt;-->
+<!--                        <div class="other-images mt-3">-->
+<!--                            <h6>Другие фотографии:</h6>-->
+<!--                            <div class="row">-->
+<!--                                <div th:each="image : ${hotel.images}">-->
+<!--                                    <img th:src="@{/photo/{id}(id=${image.id})}" alt="Hotel Image" class="col-md-2" style="height: 100px; object-fit: cover; margin-right: 5px;">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        -->
+<!--                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">-->
+<!--                            <div class="modal-dialog">-->
+<!--                                <div class="modal-content">-->
+<!--                                    <div class="modal-header">-->
+<!--                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Чи це точно?</h5>-->
+<!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-body">-->
+<!--                                        Ви впевнені що бажаєте видалити дане помешкання?-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-footer">-->
+<!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відмінити</button>-->
+<!--                                        <form id="deleteForm" th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" >-->
+<!--                                            <button type="submit" class="btn btn-danger">Видалити</button>-->
+<!--                                        </form>-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 <footer>
