@@ -146,6 +146,7 @@ public class ImageController {
         return "redirect:/images/image_list";
     }
 
+    //предполагает работу с любыми изображениями и с фотографиями.
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         Image image = imageService.getImageById(id)
@@ -156,13 +157,4 @@ public class ImageController {
         return new ResponseEntity<>(image.getPhotoBytes(), headers, HttpStatus.OK);
     }
 
-//    @GetMapping("/images/{imageId}")
-//    public ResponseEntity<byte[]> getImage(@PathVariable Long imageId) {
-//        Image image = imageService.getImageById(imageId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid image Id: " + imageId));
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.IMAGE_JPEG);
-//        return new ResponseEntity<>(image.getPhotoBytes(), headers, HttpStatus.OK);
-//    }
 }

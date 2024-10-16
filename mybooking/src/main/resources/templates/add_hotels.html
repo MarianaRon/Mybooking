@@ -533,40 +533,40 @@
 
 
         <!-- Загрузка изображений -->
-<!--        <div class="frame-10">-->
-<!--            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>-->
-
-<!--            &lt;!&ndash; Поле для выбора обложки &ndash;&gt;-->
-<!--            <label for="coverImage">Головне фото Вашого помешкання</label>-->
-<!--            <input type="file" id="coverImage" name="coverImage" accept="image/*"  class="form-control" onchange="handleCoverImage(this.files)" />-->
-
-<!--            &lt;!&ndash; Превью для обложки &ndash;&gt;-->
-<!--            <div id="coverImagePreview" class="cover-image-preview mt-3"></div>-->
-
-<!--            &lt;!&ndash; Поле для выбора остальных изображений &ndash;&gt;-->
-<!--            <label for="imageFiles">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі перевари :</label>-->
-<!--            <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />-->
-
-<!--            &lt;!&ndash; Контейнер для отображения загруженных изображений &ndash;&gt;-->
-<!--            <div id="imagePreview" class="row mt-3"></div>-->
-
-<!--        </div>-->
-        <!-- Загрузка изображений -->
         <div class="frame-10">
             <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>
 
             <!-- Поле для выбора обложки -->
             <label for="coverImage">Головне фото Вашого помешкання</label>
-            <input type="file" name="coverImage" accept="image/*" required>
+            <input type="file" id="coverImage" name="coverImage" accept="image/*"  class="form-control" onchange="handleCoverImage(this.files)" />
+
+            <!-- Превью для обложки -->
+            <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
+
+            <!-- Поле для выбора остальных изображений -->
+            <label for="imageFiles">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі перевари :</label>
+            <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />
+
+            <!-- Контейнер для отображения загруженных изображений -->
+            <div id="imagePreview" class="row mt-3"></div>
+
+<!--        </div>-->
+        <!-- Загрузка изображений -->
+<!--        <div class="frame-10">-->
+<!--            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>-->
+
+<!--            &lt;!&ndash; Поле для выбора обложки &ndash;&gt;-->
+<!--            <label for="coverImage">Головне фото Вашого помешкання</label>-->
+<!--            <input type="file" name="coverImage" accept="image/*" required>-->
 
 
 
-            <!-- Загрузка дополнительных изображений -->
-            <label for="imageFiles">Дополнительные изображения</label>
-            <input type="file" name="imageFiles" accept="image/*" multiple>
+<!--            &lt;!&ndash; Загрузка дополнительных изображений &ndash;&gt;-->
+<!--            <label for="imageFiles">Дополнительные изображения</label>-->
+<!--            <input type="file" name="imageFiles" accept="image/*" multiple>-->
 
 
-        </div>
+<!--        </div>-->
         <!-- Описание -->
         <div class="frame-10">
             <textarea id="description" name="description" placeholder="Введите описание" required></textarea>
@@ -583,25 +583,23 @@
             <button type="submit">Сохранить</button>
         </div>
         <!-- Модальное окно для подтверждения добавления номера в отель -->
-<!--        <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">-->
-<!--            <div class="modal-dialog">-->
-<!--                <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                        Чи бажаєте ви додати номер до цього готелю?-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>-->
-<!--                        <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
+        <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Чи бажаєте ви додати номер до цього готелю?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>
+                        <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
 </form>
@@ -646,66 +644,6 @@
 
 <script>
 
-    // Функция для отображения превью обложки
-    // function handleCoverImage(files) {
-    //     const previewContainer = document.getElementById('coverImagePreview');
-    //     previewContainer.innerHTML = ''; // Очищаем контейнер
-    //
-    //     if (files.length === 0) {
-    //         previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
-    //     } else if (files.length > 1) {
-    //         alert('Пожалуйста, выберите только одно изображение для обложки.');
-    //     } else {
-    //         const file = files[0];
-    //         if (file.size > 5 * 1024 * 1024) { // Ограничение на 5 МБ
-    //             alert('Размер файла не должен превышать 5 МБ.');
-    //             return;
-    //         }
-    //
-    //         const reader = new FileReader();
-    //         reader.onload = function (e) {
-    //             const img = document.createElement('img');
-    //             img.src = e.target.result;
-    //             img.classList.add('img-thumbnail');
-    //             img.style.maxHeight = '400px'; // Ограничение по высоте
-    //             previewContainer.appendChild(img);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // }
-    //
-    // function handleImages(files) {
-    //     const previewContainer = document.getElementById('imagePreview');
-    //     previewContainer.innerHTML = ''; // Очищаем контейнер
-    //
-    //     if (files.length > 5) { // Ограничение на количество изображений
-    //         alert('Вы можете загрузить не более 5 изображений.');
-    //         return;
-    //     }
-    //
-    //     Array.from(files).forEach(file => {
-    //         if (file.size > 5 * 1024 * 1024) {
-    //             alert('Размер каждого файла не должен превышать 5 МБ.');
-    //             return;
-    //         }
-    //
-    //         const reader = new FileReader();
-    //         reader.onload = function (e) {
-    //             const img = document.createElement('img');
-    //             img.src = e.target.result;
-    //             img.classList.add('img-thumbnail');
-    //             img.style.width = '150px';
-    //             img.style.height = '150px';
-    //             img.style.objectFit = 'cover';
-    //             img.style.marginRight = '10px';
-    //             previewContainer.appendChild(img);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     });
-    //
-    // }
-    // Функция для отображения превью обложки
-    // Функция для отображения превью обложки
     function handleCoverImage(files) {
         const previewContainer = document.getElementById('coverImagePreview');
         previewContainer.innerHTML = ''; // Очищаем контейнер перед загрузкой новой обложки
@@ -820,9 +758,7 @@
             alert("Форма не найдена. Проверьте правильность ID формы.");
             return;
         }
-
         var formData = new FormData(form);
-
         // AJAX-запрос для отправки формы с изображениями
         fetch('/hotels/add', {
             method: 'POST', // Уберите лишнюю точку
