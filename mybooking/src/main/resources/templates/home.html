@@ -8,87 +8,87 @@
     <link rel="stylesheet" href="/style.home/home.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<style>
-    footer {
-        background-color: #275271FF;
-        color: white;
-        padding: 20px 0;
-    }
+<!--<style>-->
+<!--    footer {-->
+<!--        background-color: #275271FF;-->
+<!--        color: white;-->
+<!--        padding: 20px 0;-->
+<!--    }-->
 
-    .footer-container {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        align-items: center;
-    }
+<!--    .footer-container {-->
+<!--        display: flex;-->
+<!--        justify-content: space-around;-->
+<!--        flex-wrap: wrap;-->
+<!--        align-items: center;-->
+<!--    }-->
 
-    .footer-section {
-        text-align: center;
-        margin-bottom: 15px;
-    }
+<!--    .footer-section {-->
+<!--        text-align: center;-->
+<!--        margin-bottom: 15px;-->
+<!--    }-->
 
-    .footer-section h4 {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
+<!--    .footer-section h4 {-->
+<!--        font-size: 18px;-->
+<!--        margin-bottom: 10px;-->
+<!--    }-->
 
-    .footer-section p, .footer-section a {
-        font-size: 14px;
-        color: white;
-        text-decoration: none;
-    }
+<!--    .footer-section p, .footer-section a {-->
+<!--        font-size: 14px;-->
+<!--        color: white;-->
+<!--        text-decoration: none;-->
+<!--    }-->
 
-    .footer-section a:hover {
-        text-decoration: underline;
-    }
+<!--    .footer-section a:hover {-->
+<!--        text-decoration: underline;-->
+<!--    }-->
 
-    .footer-bottom {
-        text-align: center;
-        margin-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        padding-top: 10px;
-    }
-    .center-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px; /* Відступ між заголовком і кнопкою */
-        margin-top: 40px;
-    }
+<!--    .footer-bottom {-->
+<!--        text-align: center;-->
+<!--        margin-top: 20px;-->
+<!--        border-top: 1px solid rgba(255, 255, 255, 0.2);-->
+<!--        padding-top: 10px;-->
+<!--    }-->
+<!--    .center-content {-->
+<!--        display: flex;-->
+<!--        justify-content: center;-->
+<!--        align-items: center;-->
+<!--        gap: 20px; /* Відступ між заголовком і кнопкою */-->
+<!--        margin-top: 40px;-->
+<!--    }-->
 
-    .map {
-        width: 100%;
-        height: 400px;
-        position: relative;
-        background-size: cover;
-    }
+<!--    .map {-->
+<!--        width: 100%;-->
+<!--        height: 400px;-->
+<!--        position: relative;-->
+<!--        background-size: cover;-->
+<!--    }-->
 
-    .hotel-marker {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: red;
-        border-radius: 50%;
-        cursor: pointer;
-    }
+<!--    .hotel-marker {-->
+<!--        position: absolute;-->
+<!--        width: 20px;-->
+<!--        height: 20px;-->
+<!--        background-color: red;-->
+<!--        border-radius: 50%;-->
+<!--        cursor: pointer;-->
+<!--    }-->
 
-    .hotel-marker a {
-        display: none;
-        position: absolute;
-        left: 25px;
-        top: -10px;
-        color: white;
-        text-decoration: none;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 5px;
-        border-radius: 5px;
-    }
+<!--    .hotel-marker a {-->
+<!--        display: none;-->
+<!--        position: absolute;-->
+<!--        left: 25px;-->
+<!--        top: -10px;-->
+<!--        color: white;-->
+<!--        text-decoration: none;-->
+<!--        background-color: rgba(0, 0, 0, 0.7);-->
+<!--        padding: 5px;-->
+<!--        border-radius: 5px;-->
+<!--    }-->
 
-    .hotel-marker:hover a {
-        display: inline-block;
-    }
+<!--    .hotel-marker:hover a {-->
+<!--        display: inline-block;-->
+<!--    }-->
 
-</style>
+<!--</style>-->
 </head>
 <body>
 <div class="container-fluid" style="background-color: #275271;">
@@ -99,27 +99,21 @@
         </div>
         <!-- Посилання праворуч -->
         <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+<!--            <li>-->
+<!--                &lt;!&ndash; Випадаючий список для вибору валюти &ndash;&gt;-->
+<!--                <form action="#" method="post">-->
+<!--                    <select name="currency" class="dropdown">-->
+<!--                        <option value="UAH">Гривня</option>-->
+<!--                        <option value="USD">Долар</option>-->
+<!--                        <option value="EUR">Євро</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Валюта</button>-->
+<!--                </form>-->
+<!--            </li>-->
             <li>
-                <!-- Випадаючий список для вибору валюти -->
-                <form action="#" method="post">
-                    <select name="currency" class="dropdown">
-                        <option value="UAH">Гривня</option>
-                        <option value="USD">Долар</option>
-                        <option value="EUR">Євро</option>
-                    </select>
-                    <button type="submit" class="btn-select">Валюта</button>
-                </form>
-            </li>
-            <li>
-                <!-- Випадаючий список для вибору мови -->
-                <form method="post">
-                    <select name="language" class="dropdown">
-                        <option value="uk">Українська</option>
-                        <option value="en">English</option>
-                        <option value="fr">Français</option>
-                    </select>
-                    <button type="submit" class="btn-select">Мова</button>
-                </form>
+                <div style="display: flex; align-items: center; margin-right: 20px;">
+                    <a class="nav-link" href="/languages"> <img class="ukraine" src="images/Ukraine.png"/> <span th:text="${session.language}"></span></a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
@@ -238,14 +232,14 @@
             <img th:if="${hotel.coverImage != null}"
                  th:src="@{/hotels/photo/{id}(id=${hotel.id})}"
                  alt="Зображення готелю"
-                 width="200"
-                 style="display: block; margin-bottom: 10px; margin-left: 120px;" />
+                 width=400px; height=280px;
+                 style="display: block; margin: 10px;" />
 
-            <h2 class="hotel-name"
+            <p class="hotel-name"
               th:text="${hotel.name}"
               th:attr="data-id=${hotel.id}"
               style="display: block; cursor: pointer; text-decoration: underline;">
-        </h2>
+        </p>
     </div>
 </div>
 
@@ -335,9 +329,16 @@
             <p><a href="#">Версія для мобільних пристроїв</a></p>
         </div>
     </div>
+<!--    <div class="footer-bottom">-->
+<!--        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>-->
+<!--    </div>-->
     <div class="footer-bottom">
-        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
+        <a class="nav-link" href="/">
+            <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/>
+            <span>Всі права захищені 2024</span>
+        </a>
     </div>
+
 </footer>
 </body>
 </html>

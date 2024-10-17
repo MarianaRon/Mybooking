@@ -133,27 +133,30 @@
         </div>
         <!-- Посилання праворуч -->
         <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
-            <li>
-                <!-- Випадаючий список для вибору валюти -->
-                <form action="#" method="post">
-                    <select name="currency" class="dropdown">
-                        <option value="UAH">Гривня</option>
-                        <option value="USD">Долар</option>
-                        <option value="EUR">Євро</option>
-                    </select>
-                    <button type="submit" class="btn-select">Валюта</button>
-                </form>
-            </li>
+<!--            <li>-->
+<!--                &lt;!&ndash; Випадаючий список для вибору валюти &ndash;&gt;-->
+<!--                <form action="#" method="post">-->
+<!--                    <select name="currency" class="dropdown">-->
+<!--                        <option value="UAH">Гривня</option>-->
+<!--                        <option value="USD">Долар</option>-->
+<!--                        <option value="EUR">Євро</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Валюта</button>-->
+<!--                </form>-->
+<!--            </li>-->
             <li>
                 <!-- Випадаючий список для вибору мови -->
-                <form method="post">
-                    <select name="language" class="dropdown">
-                        <option value="uk">Українська</option>
-                        <option value="en">English</option>
-                        <option value="fr">Français</option>
-                    </select>
-                    <button type="submit" class="btn-select">Мова</button>
-                </form>
+<!--                <form method="post">-->
+<!--                    <select name="language" class="dropdown">-->
+<!--                        <option value="uk">Українська</option>-->
+<!--                        <option value="en">English</option>-->
+<!--                        <option value="fr">Français</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Мова</button>-->
+<!--                </form>-->
+                <div style="display: flex; align-items: center; margin-right: 20px;">
+                    <a class="nav-link" href="/languages"> <img class="ukraine" src="images/Ukraine.png"/> <span th:text="${session.language}"></span></a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
