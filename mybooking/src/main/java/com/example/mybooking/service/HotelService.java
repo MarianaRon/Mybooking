@@ -64,64 +64,15 @@ public class HotelService {
      * @return Optional с отелем, если найден
      */
     public Optional<Hotel> getHotelById(Long id) {
+
         logger.debug("Fetching hotel with ID: {}", id);
         return hotelRepository.findById(id);
     }
 
+
     @Transactional
     public Hotel saveHotelWithPartner(Hotel hotel) {
         return hotelRepository.save(hotel);
-        //        // Привязываем партнера к отелю
-//        hotel.setOwner(partner);
-//
-//        // Добавляем удобства, если список не пуст
-//        if (amenityIds != null && !amenityIds.isEmpty()) {
-//            Set<Amenity> amenities = new HashSet<>(amenityRepository.findAllById(amenityIds));
-//            hotel.setAmenities(amenities);
-//            logger.info("Удобства добавлены к отелю: {}", amenities);
-//        } else {
-//            logger.warn("Удобства не были добавлены, так как список был пуст.");
-//        }
-//
-//        // Обработка обложки отеля
-//        if (coverImageFile != null && !coverImageFile.isEmpty()) {
-//            try {
-//                byte[] coverImageBytes = coverImageFile.getBytes();
-//                hotel.setCoverImage(coverImageBytes);
-//                hotel.setCoverUrl(null); // Если используется байтовое изображение, обнуляем URL
-//                logger.info("Изображение обложки сохранено для отеля: {}", hotel.getName());
-//            } catch (IOException e) {
-//                logger.error("Ошибка при сохранении изображения обложки: {}", e.getMessage());
-//                throw new RuntimeException("Не удалось сохранить изображение обложки", e);
-//            }
-//        } else {
-//            logger.warn("Изображение обложки не было предоставлено.");
-//        }
-//
-//        // Сохраняем отель в базе данных
-//        Hotel savedHotel = hotelRepository.save(hotel);
-//
-//        // Обработка дополнительных изображений отеля, если они есть
-//        if (imageFiles != null && !imageFiles.isEmpty()) {
-//            for (MultipartFile imageFile : imageFiles) {
-//                if (!imageFile.isEmpty()) {
-//                    try {
-//                        byte[] imageBytes = imageFile.getBytes();
-//                        Image image = new Image();
-//                        image.setPhotoBytes(imageBytes);
-//                        image.setHotel(savedHotel);
-//                        imageRepository.save(image);
-//                        logger.info("Дополнительное изображение сохранено для отеля: {}", savedHotel.getName());
-//                    } catch (IOException e) {
-//                        logger.error("Ошибка при сохранении дополнительного изображения: {}", e.getMessage());
-//                    }
-//                }
-//            }
-//        } else {
-//            logger.warn("Дополнительные изображения не были предоставлены.");
-//        }
-//
-//        return savedHotel;
     }
     /**
      * Удаление отеля по ID.

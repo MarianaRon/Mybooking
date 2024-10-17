@@ -146,15 +146,4 @@ public class ImageController {
         return "redirect:/images/image_list";
     }
 
-    //предполагает работу с любыми изображениями и с фотографиями.
-    @GetMapping("/images/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
-        Image image = imageService.getImageById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid image Id:" + id));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(image.getPhotoBytes(), headers, HttpStatus.OK);
-    }
-
 }

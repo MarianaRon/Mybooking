@@ -135,8 +135,43 @@ public class HotelController {
 
         return "add_hotels";  // Возвращаем форму для регистрации отеля
     }
+    @GetMapping("/details/{id}")
+    public String getPartnerHotelDetails(@PathVariable("id") Long id, Model model) {
+        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);  // Отримання готелю за ID
 
-    @GetMapping("/hotels/{id}/cover")
+        if (hotelOptional.isPresent()) {
+            Hotel hotel = hotelOptional.get();
+            Set<Review> reviews = hotel.getReviews();  // Отримання списку відгуків
+
+            // Обчислення середнього рейтингу
+            double averageRating = 0.0;
+            if (!reviews.isEmpty()) {
+                averageRating = reviews.stream()
+                        .mapToDouble(Review::getRating)
+                        .average()
+                        .orElse(0.0);  // Обчислення середнього рейтингу
+                averageRating = Math.round(averageRating * 10.0) / 10.0;
+            }
+            // Додаємо зображення (обкладинку) готелю, якщо воно є
+            List<Image> images = imageService.getImagesByHotelId(id);
+            if (!images.isEmpty()) {
+                hotel.setCoverImage(images.get(0).getPhotoBytes());  // Використовуємо перше зображення як обкладинку
+            }
+
+            // Додавання атрибутів до моделі
+            model.addAttribute("hotel", hotel);
+            model.addAttribute("city", hotel.getCity());
+            model.addAttribute("rooms", hotel.getRooms());
+            model.addAttribute("amenities", hotel.getAmenities());
+            model.addAttribute("averageRating", averageRating);
+
+            return "hotel_details";  // Повернення шаблону сторінки з деталями готелю
+        } else {
+            return "hotel_not_found";  // Сторінка помилки, якщо готель не знайдено
+        }
+
+    }
+    @GetMapping("/cover/{id}")
     @ResponseBody
     public ResponseEntity<byte[]> getHotelCover(@PathVariable Long id) {
         Hotel hotel = hotelService.getHotelById(id)
@@ -149,6 +184,7 @@ public class HotelController {
         return new ResponseEntity<>(coverImage, headers, HttpStatus.OK);
     }
 
+
     @PostMapping("/add")
     public String saveHotel(HttpSession session,
                             @RequestParam("name") String name, // Добавьте поле name
@@ -160,7 +196,8 @@ public class HotelController {
                             @RequestParam(value = "amenities",required = false) List<Long> amenityIds,
                             @RequestParam(value = "latitude", required = false) String latitudeStr,
                             @RequestParam(value = "longitude", required = false) String longitudeStr,
-                            @RequestParam("coverImage") MultipartFile coverImageFile, // Вместо привязки к модели
+                            @RequestParam(value = "coverUrl", required = false) String coverUrl,
+                            @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile, // Вместо привязки к модели
                             @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles) {
         Hotel hotel = new Hotel();
         // Устанавливаем имя отеля
@@ -171,6 +208,8 @@ public class HotelController {
         hotel.setDescription(description);
         // Устанавливаем тип жилья
         hotel.setHousingType(housingType);
+        // Устанавливаем coverUrl
+        hotel.setCoverUrl(coverUrl);
 
         // Получаем текущего авторизованного партнера
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
@@ -212,6 +251,7 @@ public class HotelController {
             Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
             hotel.setAmenities(amenities);
         }
+
 
         // Обработка файла обложки отеля
         try {
@@ -333,24 +373,21 @@ public class HotelController {
     }
 
 // Удаление отеля
-    @PostMapping("/hotels_delete/{id}")
+
+    @PostMapping("/delete/{id}")
     public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
-        logger.info("Attempting to delete hotel with ID: {}", id);
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
-            return "redirect:/partner_Account"; // Перенаправляем на логин, если не авторизован
+            return "redirect:/partner_Account";
         }
-        // Удаляем отель
-        boolean deleted = hotelService.deleteHotelById(id);
 
+        boolean deleted = hotelService.deleteHotelById(id);
         if (deleted) {
-            // Логируем успешное удаление
             logger.info("Hotel with ID: {} successfully deleted by partner ID: {}", id, loggedInPartner.getId());
         } else {
             logger.warn("Hotel with ID: {} not found for deletion", id);
         }
 
-        // Перенаправляем на страницу отелей партнера
         return "redirect:/hotels/hotels_by_partner";
     }
 

@@ -29,11 +29,11 @@ public class Hotel {
     @Column(nullable = false)
     private Double price;
 
-//    @Column
-//    private String coverUrl;
+    @Column
+    private String coverUrl;
 
     @Lob
-    @Column(nullable = false)
+    @Column
     private byte[] coverImage;
 
 
@@ -81,6 +81,7 @@ public class Hotel {
         this.city = city;
         this.owner = owner;
         this.amenities = amenities != null ? amenities : new HashSet<>();
+
 
     }
 
@@ -132,14 +133,14 @@ public class Hotel {
     public void setPrice(Double price) {
         this.price = price;
     }
-//
-//    public String getCoverUrl() {
-//        return coverUrl;
-//    }
-//
-//    public void setCoverUrl(String coverUrl) {
-//        this.coverUrl = coverUrl;
-//    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
 
     public byte[] getCoverImage() {
         return coverImage;
