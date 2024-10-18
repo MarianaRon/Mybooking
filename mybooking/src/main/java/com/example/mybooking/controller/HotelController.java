@@ -184,7 +184,7 @@ public class HotelController {
         return new ResponseEntity<>(coverImage, headers, HttpStatus.OK);
     }
 
-
+//ДОДАВАННЯ НОВОГО ПОМЕШКАННЯ ПАРТНЕРОМ
     @PostMapping("/add")
     public String saveHotel(HttpSession session,
                             @RequestParam("name") String name, // Добавьте поле name
@@ -374,7 +374,7 @@ public class HotelController {
 
 // Удаление отеля
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/delete_hotels/{id}")
     public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {

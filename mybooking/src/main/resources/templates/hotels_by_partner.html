@@ -363,11 +363,12 @@
                         <p th:text="${hotel.city.name + ', ' + hotel.addressStreet}" class="card-text"></p>
                         <p th:text="'Ціна: ' + ${hotel.price} + ' UAH'" class="card-text"></p>
                         <p th:text="${hotel.description}" class="card-text"></p>
+                        <div th:text="${hotel.id}">Hotel ID</div>
 
                         <!-- Кнопки редактирования и удаления -->
                         <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
                         <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                data-hotel-id="${hotel.id}">
+                                th:attr="data-hotel-id=${hotel.id}">
                             <img class="benefit-icon" src="/img/Trash.png" alt="Trash">
                         </button>
                     </div>
@@ -395,6 +396,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Модальное окно для подтверждения удаления -->
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -407,22 +410,22 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відмінити</button>
-
-                        <!-- Форма для удаления, которая динамически обновляется с нужным ID отеля -->
                         <form id="deleteForm" method="post">
                             <button type="submit" class="btn btn-danger">Видалити</button>
                         </form>
+
+                        <!-- Форма для удаления, которая динамически обновляется с нужным ID отеля -->
+<!--                        <form id="deleteForm" th:action="@{/delete_hotels/{id}(id=${hotel.id})}" method="post">-->
+<!--                            <button type="submit" class="btn btn-danger">Видалити</button>-->
+<!--                        </form>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<footer>
+
+    <footer>
     <div class="footer-container">
         <div class="footer-section">
             <h4>Тех. підтримка</h4>
@@ -448,7 +451,6 @@
     </div>
 </footer>
 <script>
-    // Когда модальное окно будет открыто
     const deleteModal = document.getElementById('confirmDeleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
         // Кнопка, которая вызвала модальное окно
@@ -457,9 +459,14 @@
         // Извлечение ID отеля из data-hotel-id атрибута
         const hotelId = button.getAttribute('data-hotel-id');
 
-        // Найти форму внутри модального окна и обновить ее action
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = `/hotels/delete/${hotelId}`;
+        // Проверка на корректность извлеченного ID
+        if (hotelId) {
+            // Найти форму внутри модального окна и обновить ее action
+            const deleteForm = document.getElementById('deleteForm');
+            deleteForm.action = `/delete_hotels/${hotelId}`;  // корректно обновляем action
+        } else {
+            console.error('ID отеля не найден!');
+        }
     });
 </script>
 
