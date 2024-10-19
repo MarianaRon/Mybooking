@@ -174,29 +174,31 @@
 </div>
 
 <div>
-  <h1>Редагування ОГЛЯДУ</h1>
+  <h1>Редагування Відгук</h1>
 </div>
 
 <form th:action="@{/reviews/edit_review/{id}(id=${review.id})}" method="post">
-  <label for="content">Огляд:</label>
+  <label for="content">Відгук:</label>
   <input type="text" id="content" name="content" th:value="${review.content}" required />
 
   <label for="rating">Рейтинг:</label>
   <input type="number" id="rating" name="rating" min="1" max="5" th:value="${review.rating}" required />
 
+<!--  <label for="reviewDate">Дата огляду:</label>-->
+<!--<input type="datetime-local" id="reviewDate" name="reviewDate"-->
+<!--       th:value="${#dates.format(review.reviewDate, 'yyyy-MM-dd\'T\'HH:mm')}" required />-->
   <label for="reviewDate">Дата огляду:</label>
-  <input type="datetime-local" id="reviewDate" name="reviewDate" th:value="${#dates.format(review.reviewDate, 'yyyy-MM-dd\'T\'HH:mm')}" required />
+  <input type="datetime-local" id="reviewDate" name="reviewDate" required />
 
-  <label for="hotel">Готель:</label>
-  <select id="hotel" name="hotel" th:field="*{hotel}">
+<label for="hotel">Готель: </label>
+<select id="hotel" name="hotel" required>
     <option th:each="hotel : ${hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
   </select>
 
-  <label for="user">Користувач:</label>
-  <select id="user" name="user" th:field="*{user}">
+  <label for="user">Користувач: </label>
+  <select id="user" name="user" required>
     <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
   </select>
-
   <button type="submit">Зберегти зміни</button>
 </form>
 

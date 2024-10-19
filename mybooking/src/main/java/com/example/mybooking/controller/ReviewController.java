@@ -42,7 +42,6 @@ public class ReviewController {
         model.addAttribute("users", userService.getAllUsers());
         return "reviews/edit_review";
     }
-
     @PostMapping("/edit_review/{id}")
     public String updateReview1(@PathVariable Long id, @ModelAttribute Review reviewDetails) {
         Review review = reviewService.getReviewById(id)
@@ -76,16 +75,12 @@ public class ReviewController {
         model.addAttribute("reviews", reviewService.getAllReviews());
         return "reviews/review_list";
     }
-
-    // REST API методи
-
     @GetMapping("/{id}")
     public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
         Optional<Review> review = reviewService.getReviewById(id);
         return review.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
     @PostMapping
     public ResponseEntity<Review> createReview(@RequestBody Review review) {
         Review savedReview = reviewService.saveReview(review);

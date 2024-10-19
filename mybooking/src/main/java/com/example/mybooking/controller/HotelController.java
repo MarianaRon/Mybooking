@@ -413,25 +413,22 @@ public class HotelController {
                            @RequestParam("owner") Long partnerId,
                            RedirectAttributes redirectAttributes) throws IOException {
 
-        // Отримуємо місто та власника за їх ідентифікаторами
         Optional<City> cityOptional = cityService.getCityById(cityId);
         Optional<Partner> partnerOptional = partnerService.getPartnerById(partnerId);
 
-        // Перевіряємо, чи знайдені місто і власник
         if (cityOptional.isPresent() && partnerOptional.isPresent()) {
             hotel.setCity(cityOptional.get());
             hotel.setOwner(partnerOptional.get());
 
-            // Зберігаємо зображення як байтовий масив
+            // Перетворення MultipartFile у байтовий масив
             if (!coverImageFile.isEmpty()) {
                 byte[] coverImageBytes = coverImageFile.getBytes();
                 hotel.setCoverImage(coverImageBytes);
             }
-            // Зберігаємо готель
+
             hotelService.save(hotel);
             return "redirect:/hotels/hotel_list";
         } else {
-            // Якщо місто або власник не знайдені, відображаємо помилку
             redirectAttributes.addFlashAttribute("error", "Місто або власник не знайдені");
             return "redirect:/hotels/hotel_list";
         }
