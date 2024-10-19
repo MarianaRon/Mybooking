@@ -120,34 +120,38 @@
             position: relative;
             width: 100%;
             max-width: 800px;
-            margin: 40px auto; /* Відступ зверху та знизу */
-            overflow: hidden;
+            margin: 40px auto;
             padding: 20px;
             background-color: rgba(43, 75, 91, 0.9);
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Додаємо тінь для гарного вигляду */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
 
         .reviews-wrapper {
             display: flex;
-            position: relative;
+            overflow: hidden;
             width: 100%;
+            position: relative;
         }
 
         .reviews-list {
             display: flex;
-            transition: transform 0.5s ease; /* Анімація для плавного прокручування */
-            width: 300%; /* Робимо цей блок ширшим для того, щоб уміщалися всі відгуки */
+            transition: transform 0.5s ease;
+            gap: 0;
+            width: 100%; /* Однаковий розмір для прокручувальної області */
         }
 
         .review-item {
-            min-width: 100%;
+            min-width: 100%; /* Кожен відгук займає весь простір каруселі */
             padding: 20px;
             box-sizing: border-box;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            margin: 0 15px; /* Відступ між відгуками */
             color: #fff;
+            flex-shrink: 0;
+            overflow-wrap: break-word; /* Дозволяє переносити довгі слова */
+            white-space: normal; /* Дозволяє перенос рядків */
         }
 
         .review-text {
@@ -171,7 +175,7 @@
             border: none;
             padding: 10px;
             cursor: pointer;
-            z-index: 1; /* Щоб кнопки завжди були на передньому плані */
+            z-index: 1;
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
@@ -179,6 +183,7 @@
         .carousel-btn:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
+
 
         .prev {
             left: 10px;
@@ -198,15 +203,6 @@
             .carousel-btn {
                 padding: 8px;
             }
-            /*.image-container {*/
-            /*    flex: 1 1 calc(50% - 10px); !* Кожен контейнер займає 50% ширини з урахуванням відступів *!*/
-            /*    box-sizing: border-box;*/
-            /*}*/
-
-            /*.image-container img {*/
-            /*    width: 100%;*/
-            /*    height: auto; !* Масштабування зображення для збереження пропорцій *!*/
-            /*}*/
         }
     </style>
 </head>
@@ -330,47 +326,17 @@
     <!-- Карусель відгуків -->
     <div class="reviews-container">
         <h2>Відгуки наших користувачів</h2>
-
-        <!-- Стрілка для попереднього відгуку -->
         <button class="carousel-btn prev" onclick="prevReview()">&#10094;</button>
-
-        <!-- Список відгуків -->
         <div class="reviews-wrapper">
             <div class="reviews-list">
-                <!-- Перебір відгуків із моделі -->
                 <div th:each="review : ${reviews}" class="review-item">
                     <p class="review-text" th:text="${review.content}"></p>
                     <p class="review-author" th:text="${review.user.username}"></p>
                 </div>
             </div>
         </div>
-
-        <!-- Стрілка для наступного відгуку -->
         <button class="carousel-btn next" onclick="nextReview()">&#10095;</button>
     </div>
-
-<!--    &lt;!&ndash;    Карусель відгуків&ndash;&gt;-->
-<!--    <div class="reviews-container">-->
-<!--        <h2>Відгуки наших користувачів</h2>-->
-
-<!--        &lt;!&ndash; Стрілка для попереднього відгуку &ndash;&gt;-->
-<!--        <button class="carousel-btn prev" onclick="prevReview()">&#10094;</button>-->
-
-<!--        &lt;!&ndash; Список відгуків &ndash;&gt;-->
-<!--        <div class="reviews-wrapper">-->
-<!--            <div class="reviews-list">-->
-<!--                &lt;!&ndash; Перебір відгуків із моделі &ndash;&gt;-->
-<!--                <div th:each="review : ${reviews}" class="review-item">-->
-<!--                    <p class="review-text" th:text="${review.content}"></p>-->
-<!--                    <p class="review-author" th:text="${review.user.username}"></p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Стрілка для наступного відгуку &ndash;&gt;-->
-<!--        <button class="carousel-btn next" onclick="nextReview()">&#10095;</button>-->
-<!--    </div>-->
-
     <!-- Останній блок з кнопками -->
     <div class="register-section">
         <img class="backgrnd-header" src="/images/about_us_2.jpg" alt="Реєстрація"/>
@@ -481,8 +447,5 @@
     showReviews(currentIndex);
 
 </script>
-
-
-
 </body>
 </html>
