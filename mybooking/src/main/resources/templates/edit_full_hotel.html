@@ -1,58 +1,352 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редактирование полной информации об отеле</title>
-    <link rel="stylesheet" href="/css/style.css"> <!-- Добавь свой CSS файл -->
+    <title>Редактирование отеля</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #275271FF;
+            color: white;
+        }
+
+        .auth-buttons {
+            color: #ffffff;
+            background-color: #E7A188FF;
+            display: flex;
+            align-items: center;
+            margin-right: 200px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1em;
+            margin-right: 15px;
+        }
+
+        .auth-buttons .btn-light {
+            color: #ffffff;
+            background-color: #275271FF;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            color: #ffffff;
+            background-color: #E7A188FF;
+            border: none;
+            max-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a {
+            color: #ffffff;
+            background-color: #275271FF;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #9a9998;
+            color: black;
+        }
+
+
+
+        /*//////////////////*/
+        .container {
+            display: flex;
+            margin-top: 50px;
+        }
+
+        .sidebar {
+            width: 25%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+        }
+
+        .partner-info h4 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .partner-info p {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 10px 20px;
+            background-color: #275271FF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #d68c72;
+        }
+
+        .content {
+            width: 75%;
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-label {
+            width: 200px;
+            font-weight: bold;
+        }
+
+        .profile-value {
+            flex-grow: 1;
+        }
+
+        .btn-save, .btn-cancel {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .btn-save {
+            background-color: #275271FF;
+            color: white;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .btn-save:hover {
+            background-color: #163d5c;
+            color: white;
+        }
+
+        .btn-cancel {
+            background-color: white;
+            color: #275271FF;
+            border: 2px solid #275271FF;
+            font-weight: bold;
+        }
+
+        .btn-cancel:hover {
+            background-color: #f0f0f0;
+            color: #275271FF;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+        }
+
+        .amenities-group {
+            margin-bottom: 20px;
+        }
+
+        .amenities-group label {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+
+        .cover-image-preview img {
+            width: 200px;
+            height: auto;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2>Редактирование полной информации об отеле</h2>
-
-    <form th:action="@{/hotels/edit_full/{id}(id=${hotel.id})}" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="name">Назва</label>
-            <input type="text" id="name" name="name" th:value="${hotel.name}" required>
-        </div>
-
-        <div>
-            <label for="city">Місто</label>
-            <select id="city" name="cityId">
-                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" th:selected="${hotel.city.id == city.id}"></option>
-            </select>
-        </div>
-
-        <div>
-            <label for="addressStreet">Адреса</label>
-            <input type="text" id="addressStreet" name="addressStreet" th:value="${hotel.addressStreet}" required>
-        </div>
-
-        <div>
-            <label for="price">Вартість</label>
-            <input type="number" id="price" name="price" th:value="${hotel.price}" required>
-        </div>
-
-        <div>
-            <label for="description">Опис</label>
-            <textarea id="description" name="description" th:text="${hotel.description}" required></textarea>
-        </div>
-
-        <div>
-            <label>Зручності</label>
-            <div th:each="amenity : ${amenities}">
-                <input type="checkbox" th:value="${amenity.id}" th:name="amenities" th:checked="${hotel.amenities.contains(amenity)}">
-                <span th:text="${amenity.name}"></span>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="HEADER-desktop">
+            <div class="frame">
+                <div class="frame">
+                    <a class="nav-link" href="/"><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 50px;"/></span></a>
+                </div>
             </div>
         </div>
 
-        <div>
-            <label for="coverImage">Обложка отеля</label>
-            <input type="file" id="coverImage" name="coverImage">
-        </div>
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
 
-        <button type="submit">Сохранить изменения</button>
-    </form>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/languages"> <img src="/images/ukraine.png" alt="Ukraine"> <span th:text="${session.language}"></span></a>
+                    </li>
+                    <div class="auth-buttons">
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span th:text="${session.userName}"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                                <li><a class="dropdown-item" href="/hotels/add">Додати нове помешкання</a></li>
+                                <li><a class="dropdown-item" href="/home_partners">На головну сторінку</a></li>
+                                <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-5">
+    <!-- Левая часть: боковая панель -->
+    <div class="sidebar">
+        <div class="partner-info">
+            <h4 class="user-name" style="font-size: 34px;" th:text="${session.userName}">User</h4>
+            <p>Здесь вы можете изменить данные вашего отеля. Просто выберите поле для изменения, внесите новые данные и нажмите "Сохранить".</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="hotels/hotels_by_partner" class="btn btn-success">Переглянути мої помешкання</a>
+            <a href="/hotels/add" class="btn btn-success">Додати нове помешкання</a>
+            <a href="/home_partners" class="btn btn-success">Головна</a>
+        </div>
+    </div>
+
+    <!-- Правая часть: форма редактирования отеля -->
+    <div class="content">
+        <form th:action="@{/hotels/edit_full/{id}(id=${hotel.id})}" method="post" enctype="multipart/form-data">
+            <h1>Редагування готелю</h1>
+
+            <!-- Название отеля -->
+            <div class="profile-row">
+                <div class="profile-label">Назва готелю</div>
+                <input type="text" class="form-control" name="name" th:value="${hotel.name}" required>
+            </div>
+
+            <!-- Город -->
+            <div class="profile-row">
+                <div class="profile-label">Місто</div>
+                <select class="form-control" name="cityId">
+                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+                </select>
+            </div>
+
+            <!-- Адрес -->
+            <div class="profile-row">
+                <div class="profile-label">Адреса</div>
+                <input type="text" class="form-control" name="addressStreet" th:value="${hotel.addressStreet}" required>
+            </div>
+
+            <!-- Цена -->
+            <div class="profile-row">
+                <div class="profile-label">Ціна</div>
+                <input type="number" class="form-control" name="price" th:value="${hotel.price}" required>
+            </div>
+
+            <!-- Описание -->
+            <div class="profile-row">
+                <div class="profile-label">Опис</div>
+                <textarea class="form-control" name="description" required th:text="${hotel.description}"></textarea>
+            </div>
+
+            <!-- Удобства по категориям -->
+            <div class="profile-row">
+                <div class="profile-label">Зручності</div>
+                <div class="amenities-group">
+                    <h5>Основні зручності</h5>
+                    <label th:each="amenity : ${amenities}" th:if="${amenity.type == 'general'}">
+                        <input type="checkbox" name="amenities" th:value="${amenity.id}" th:checked="${hotel.amenities.contains(amenity)}">
+                        <span th:text="${amenity.name}"></span>
+                    </label>
+
+                    <h5>Зручності в номері</h5>
+                    <label th:each="amenity : ${amenities}" th:if="${amenity.type == 'room'}">
+                        <input type="checkbox" name="amenities" th:value="${amenity.id}" th:checked="${hotel.amenities.contains(amenity)}">
+                        <span th:text="${amenity.name}"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Изменение обложки -->
+            <div class="profile-row">
+                <div class="profile-label">Обложка готелю</div>
+                <div>
+                    <div class="cover-image-preview">
+                        <img id="currentCover" th:if="${hotel.coverImage != null}" th:src="@{/hotels/coverImage/{id}(id=${hotel.id})}" alt="Текущая обложка">
+                    </div>
+                    <input type="file" class="form-control" name="coverImage" accept="image/*" id="coverImageInput" onchange="previewCoverImage(this)">
+                    <div class="cover-image-preview">
+                        <img id="newCoverPreview" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="button-group">
+                <button type="submit" class="btn btn-save">Зберегти</button>
+                <a href="/hotels/hotels_by_partner" class="btn btn-cancel">Відмінити</a>
+            </div>
+        </form>
+    </div>
 </div>
+
+<footer>
+    <div class="footer-container">
+        <!-- Футер -->
+    </div>
+</footer>
+
+<script>
+    function handleCoverImage(files) {
+        const previewContainer = document.getElementById('coverImagePreview');
+        previewContainer.innerHTML = ''; // Очищаем контейнер перед загрузкой новой обложки
+
+        if (files.length === 0) {
+            previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
+        } else if (files.length > 1) {
+            alert('Пожалуйста, выберите только одно изображение для обложки.');
+        } else {
+            const file = files[0];
+            if (file.size > 10 * 1024 * 1024) { // Ограничение на 5 МБ
+                alert('Размер файла не должен превышать 5 МБ.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-thumbnail');
+                img.style.maxHeight = '400px'; // Ограничение по высоте
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
