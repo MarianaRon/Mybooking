@@ -374,21 +374,19 @@ public class HotelController {
 
 // Удаление отеля
 
-    @PostMapping("/delete_hotels/{id}")
-    public String deleteHotel(@PathVariable("id") Long id, HttpSession session) {
+    @DeleteMapping("/delete_hotels/{id}")
+    public ResponseEntity<?> deleteHotel(@PathVariable Long id, HttpSession session) {
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
-            return "redirect:/partner_Account";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
 
         boolean deleted = hotelService.deleteHotelById(id);
         if (deleted) {
-            logger.info("Hotel with ID: {} successfully deleted by partner ID: {}", id, loggedInPartner.getId());
+            return ResponseEntity.ok().body("Hotel deleted");
         } else {
-            logger.warn("Hotel with ID: {} not found for deletion", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hotel not found");
         }
-
-        return "redirect:/hotels/hotels_by_partner";
     }
 
     // Показ форми пошуку готелів

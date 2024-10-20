@@ -365,8 +365,9 @@
                         <p th:text="${hotel.description}" class="card-text"></p>
                         <div th:text="${hotel.id}">Hotel ID</div>
 
+
                         <!-- Кнопки редактирования и удаления -->
-                        <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
+                        <a th:href="@{/hotels/edit_full/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
                         <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
                                 th:attr="data-hotel-id=${hotel.id}">
                             <img class="benefit-icon" src="/img/Trash.png" alt="Trash">
@@ -410,14 +411,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відмінити</button>
-                        <form id="deleteForm" method="post">
-                            <button type="submit" class="btn btn-danger">Видалити</button>
-                        </form>
-
-                        <!-- Форма для удаления, которая динамически обновляется с нужным ID отеля -->
-<!--                        <form id="deleteForm" th:action="@{/delete_hotels/{id}(id=${hotel.id})}" method="post">-->
-<!--                            <button type="submit" class="btn btn-danger">Видалити</button>-->
-<!--                        </form>-->
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Видалити</button>
                     </div>
                 </div>
             </div>
@@ -451,23 +445,40 @@
     </div>
 </footer>
 <script>
-    const deleteModal = document.getElementById('confirmDeleteModal');
-    deleteModal.addEventListener('show.bs.modal', function (event) {
-        // Кнопка, которая вызвала модальное окно
-        const button = event.relatedTarget;
+    document.addEventListener('DOMContentLoaded', function () {
+        // Сохраняем ссылку на кнопку подтверждения удаления
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
-        // Извлечение ID отеля из data-hotel-id атрибута
-        const hotelId = button.getAttribute('data-hotel-id');
+        // Добавляем обработчик событий для каждой кнопки удаления
+        document.querySelectorAll('.delete-btn').forEach(function (deleteBtn) {
+            deleteBtn.addEventListener('click', function () {
+                const hotelId = this.getAttribute('data-hotel-id'); // Получаем ID отеля
 
-        // Проверка на корректность извлеченного ID
-        if (hotelId) {
-            // Найти форму внутри модального окна и обновить ее action
-            const deleteForm = document.getElementById('deleteForm');
-            deleteForm.action = `/delete_hotels/${hotelId}`;  // корректно обновляем action
-        } else {
-            console.error('ID отеля не найден!');
-        }
+                // Устанавливаем действие для кнопки "Видалити" в модальном окне
+                confirmDeleteBtn.onclick = function () {
+                    deleteHotel(hotelId); // Вызываем функцию удаления
+                };
+            });
+        });
     });
+
+    // Функция удаления отеля
+    function deleteHotel(hotelId) {
+        console.log('Deleting hotel with ID:', hotelId); // Логируем ID перед отправкой запроса
+        fetch(`/hotels/delete_hotels/${hotelId}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                // Успешное удаление, перенаправляем пользователя
+                window.location.href = '/hotels/hotels_by_partner';
+            } else {
+                // Обработка ошибки, например, вывести сообщение пользователю
+                alert('Error deleting hotel');
+            }
+        }).catch(error => {
+            console.error('There was an error:', error);
+        });
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

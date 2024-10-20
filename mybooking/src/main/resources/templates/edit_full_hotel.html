@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование полной информации об отеле</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Добавь свой CSS файл -->
+</head>
+<body>
+<div class="container">
+    <h2>Редактирование полной информации об отеле</h2>
+
+    <form th:action="@{/hotels/edit_full/{id}(id=${hotel.id})}" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="name">Назва</label>
+            <input type="text" id="name" name="name" th:value="${hotel.name}" required>
+        </div>
+
+        <div>
+            <label for="city">Місто</label>
+            <select id="city" name="cityId">
+                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" th:selected="${hotel.city.id == city.id}"></option>
+            </select>
+        </div>
+
+        <div>
+            <label for="addressStreet">Адреса</label>
+            <input type="text" id="addressStreet" name="addressStreet" th:value="${hotel.addressStreet}" required>
+        </div>
+
+        <div>
+            <label for="price">Вартість</label>
+            <input type="number" id="price" name="price" th:value="${hotel.price}" required>
+        </div>
+
+        <div>
+            <label for="description">Опис</label>
+            <textarea id="description" name="description" th:text="${hotel.description}" required></textarea>
+        </div>
+
+        <div>
+            <label>Зручності</label>
+            <div th:each="amenity : ${amenities}">
+                <input type="checkbox" th:value="${amenity.id}" th:name="amenities" th:checked="${hotel.amenities.contains(amenity)}">
+                <span th:text="${amenity.name}"></span>
+            </div>
+        </div>
+
+        <div>
+            <label for="coverImage">Обложка отеля</label>
+            <input type="file" id="coverImage" name="coverImage">
+        </div>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+</div>
+</body>
+</html>
