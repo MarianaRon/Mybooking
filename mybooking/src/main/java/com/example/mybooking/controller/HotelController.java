@@ -105,6 +105,96 @@ public class HotelController {
             return "redirect:/hotels";
         }
     }
+    /////////////////////////////
+    @GetMapping("/edit_full/{id}")
+    public String showFullEditHotelForm(@PathVariable("id") Long id, HttpSession session, Model model) {
+        // Проверяем, авторизован ли партнер
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";  // Перенаправляем на страницу логина
+        }
+
+        // Получаем отель по ID
+        Hotel hotel = hotelService.getHotelById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid hotel ID: " + id));
+
+        // Проверяем, что партнёр является владельцем отеля
+        if (!hotel.getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:/hotels/hotels_by_partner";  // Перенаправляем, если партнёр не владелец
+        }
+
+        // Добавляем данные отеля в модель для отображения
+        model.addAttribute("hotel", hotel);  // Основные данные отеля (name, description, и т.д.)
+
+        // Добавляем список всех городов для выпадающего списка
+        model.addAttribute("cities", cityService.getAllCities());
+
+        // Добавляем список всех удобств для редактирования
+        model.addAttribute("amenities", amenityService.getAllAmenities());
+
+        // Добавляем текущие изображения отеля (если есть)
+        model.addAttribute("images", hotel.getImages());
+
+        return "edit_full_hotel";  // Thymeleaf шаблон для редактирования полной информации
+    }
+    // Обработчик для сохранения изменений полной информации об отеле
+    @PostMapping("/edit_full/{id}")
+    public String saveFullHotelEdit(@PathVariable("id") Long id,
+                                    @RequestParam("name") String name,
+                                    @RequestParam("cityId") Long cityId,
+                                    @RequestParam("addressStreet") String addressStreet,
+                                    @RequestParam("price") Double price,
+                                    @RequestParam("description") String description,
+                                    @RequestParam(value = "amenities", required = false) List<Long> amenityIds,
+                                    @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
+                                    HttpSession session,
+                                    RedirectAttributes redirectAttributes) {
+
+
+        // Проверяем, авторизован ли партнёр
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";
+        }
+
+        // Получаем отель по ID
+        Hotel hotel = hotelService.getHotelById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid hotel ID: " + id));
+
+        // Проверяем, что партнёр является владельцем отеля
+        if (!hotel.getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:/hotels/hotels_by_partner";
+        }
+
+        // Обновляем данные отеля
+        hotel.setName(name);
+        hotel.setDescription(description);
+        hotel.setPrice(price);
+        hotel.setCity(cityService.getCityById(cityId).orElseThrow(() -> new IllegalArgumentException("Invalid city ID")));
+        hotel.setAddressStreet(addressStreet);
+
+        // Привязываем удобства
+        if (amenityIds != null) {
+            Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
+            hotel.setAmenities(amenities);
+        }
+
+        // Обработка файла обложки (если файл был загружен)
+        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+            try {
+                hotel.setCoverImage(coverImageFile.getBytes());  // Преобразуем MultipartFile в byte[]
+            } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("error", "Error uploading cover image");
+                return "redirect:/hotels/edit_full/" + id;
+            }
+        }
+
+        // Сохранение обновленного отеля
+        hotelService.save(hotel);
+
+        // Перенаправляем обратно на список отелей партнёра
+        return "redirect:/hotels/hotels_by_partner";
+    }
 
     //Обработчик для отображения формы добавления отеля
     @GetMapping("/add")
