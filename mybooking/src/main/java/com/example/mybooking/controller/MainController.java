@@ -183,6 +183,7 @@ public String registerUser(@ModelAttribute("user") User user, HttpSession sessio
 
 
     //головна сторінка для партнера після реєстрації
+//    @GetMapping("/home_partners")
     @GetMapping("/home_partners")
     public String home_partners( Model model ){
         model.addAttribute("home_partners");

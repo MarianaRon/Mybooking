@@ -202,16 +202,17 @@ public class HotelController {
         // Создаем новый объект отеля
         model.addAttribute("hotel", new Hotel());
 
-
+        // Добавляем список всех удобств для редактирования
+        model.addAttribute("amenities", amenityService.getAllAmenities());
         // Получаем список удобств
-        List<Amenity> amenities = amenityService.getAllAmenities();
+//        List<Amenity> amenities = amenityService.getAllAmenities();
 
-        if (amenities == null || amenities.isEmpty()) {
-            logger.warn("Список удобств пуст или не был загружен.");
-        } else {
-            logger.info("Список удобств загружен: {}", amenities);
-        }
-        model.addAttribute("amenities", amenities);
+//        if (amenities == null || amenities.isEmpty()) {
+//            logger.warn("Список удобств пуст или не был загружен.");
+//        } else {
+//            logger.info("Список удобств загружен: {}", amenities);
+//        }
+//        model.addAttribute("amenities", amenities);
 
 // Загружаем список городов
         List<City> cities = cityService.getAllCities();
@@ -220,7 +221,7 @@ public class HotelController {
         // Проверяем, авторизован ли партнер
         Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
         if (loggedInPartner == null) {
-            return "redirect:/home_partners";  // Перенаправляем на логин, если не авторизован
+            return "redirect:/exit_Account";  // Перенаправляем на логин, если не авторизован
         }
 
         return "add_hotels";  // Возвращаем форму для регистрации отеля
@@ -337,11 +338,15 @@ public class HotelController {
         }
 
         // Привязываем удобства
-        if (amenityIds != null && !amenityIds.isEmpty()) {
+//        if (amenityIds != null && !amenityIds.isEmpty()) {
+//            Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
+//            hotel.setAmenities(amenities);
+//        }
+        // Привязываем удобства
+        if (amenityIds != null) {
             Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
             hotel.setAmenities(amenities);
         }
-
 
         // Обработка файла обложки отеля
         try {
