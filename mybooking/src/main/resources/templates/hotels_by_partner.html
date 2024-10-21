@@ -101,25 +101,7 @@
         .button .prev-button svg {
             margin-right: 5px;
         }
-        /* Стили для карточек отелей */
-        /*.hotel-card {*/
-        /*    border: 1px solid #ddd;*/
-        /*    border-radius: 8px;*/
-        /*    margin-bottom: 20px;*/
-        /*    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);*/
-        /*}*/
-        /*.hotel-image {*/
-        /*    height: 200px;*/
-        /*    object-fit: cover;*/
-        /*    border-radius: 8px 8px 0 0;*/
-        /*}*/
-        /*.hotel-details {*/
-        /*    padding: 15px;*/
-        /*}*/
 
-        /*.edit-btn, .delete-btn {*/
-        /*    margin-top: 10px;*/
-        /*}*/
         /* Стили для главного контейнера */
         .container {
             display: flex;
@@ -135,17 +117,22 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-right: 20px;
         }
-
-
+        .user-name {
+            text-align: center;     /* Выравнивание по центру */
+            font-size: 36px;        /* Увеличиваем размер шрифта */
+            font-weight: bold;      /* Делаем текст жирным */
+            margin-bottom: 20px;    /* Добавляем отступ снизу для гармонии */
+        }
 
         /* Стили для информации о партнере */
         .partner-info h4 {
-            font-size: 18px;
+            font-size: 25px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .partner-info p {
+            text-align: center;
             font-size: 14px;
             margin-bottom: 15px;
         }
@@ -330,8 +317,8 @@
     <div class="sidebar">
         <!-- Имя пользователя  -->
         <div class="partner-info">
-            <h4 class="user-name" th:text="${session.userName}">User</h4>
-            <p class="user-description">Розширюйте свій бізнес, додавши свої помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
+            <h4 class="user-name" style="align-content: center;" th:text="${session.userName}">User</h4>
+            <p class="user-description">На Arrenvi.com легко керувати, редагувати та переглядати вже зареєстровані Вами помешкання. Розширюйте свій бізнес комфортно без зусиль!</p>
         </div>
         <div class="sidebar-menu">
             <!-- Кнопка для добавления нового отеля -->

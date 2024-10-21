@@ -470,7 +470,7 @@
                 <h4 class="text-wrapper-11">Загальні зручності</h4>
                 <ul>
                     <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'general'}">
-                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
+                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" th:checked="${hotel.amenities.contains(amenity)}" />
                         <span th:text="${amenity.name}"></span>
                     </li>
                 </ul>
@@ -478,7 +478,7 @@
                 <h4 class="text-wrapper-11">Зручності в номері</h4>
                 <ul>
                     <li th:each="amenity : ${amenities}" th:if="${amenity.type == 'room'}">
-                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" />
+                        <input type="checkbox" name="amenityIds" th:value="${amenity.id}" th:checked="${hotel.amenities.contains(amenity)}" />
                         <span th:text="${amenity.name}"></span>
                     </li>
                 </ul>
