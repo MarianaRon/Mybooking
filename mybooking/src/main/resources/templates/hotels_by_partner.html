@@ -19,6 +19,9 @@
         .button button {
             padding: 10px 20px;
         }
+        .mb-4 {
+            color: #275271FF;
+        }
         h4 {
             /*font-style: italic;*/
             font-weight: bold; /* Жирное начертание */
@@ -189,7 +192,7 @@
         }
         .rating-box {
             border-radius: 0 0 0 8px;
-            background-color: #007bff; /* You can adjust the color */
+            background-color: #275271FF; /* You can adjust the color */
             color: white;
             text-align: center;
             padding: 10px;
@@ -366,7 +369,7 @@
 
     <!-- Правая часть: контент с зарегистрированными отелями -->
     <div class="content">
-        <h1 class="mb-4">Ваше помешкання, яке розміщено на Arrenvi.com</h1>
+        <h2 class="mb-4">Ваше помешкання, яке розміщено на Arrenvi.com</h2>
 
         <!-- Отображение отелей, зарегистрированных партнером -->
         <div class="row">
@@ -393,6 +396,27 @@
                                 <span class="d-block fs-4 fw-bold"  th:text="${hotel.averageRating}">0.0</span> <!-- Здесь отображается реальный рейтинг -->
                                 <!-- Ссылка на отзывы -->
                                 <a th:href="@{/hotels/{id}/reviews(id=${hotel.id})}" class="text-white text-decoration-underline d-block" th:text="'Відгуки: ' + ${hotel.reviews.size()}">Відгуки</a>
+                            </div>
+
+                            <!-- Карусель для дополнительных изображений -->
+                            <div id="carousel-${hotel.id}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div th:each="image, iterStat : ${hotel.images}" class="carousel-item"
+                                         th:classappend="${iterStat.index == 0} ? 'active'">
+                                        <img th:src="@{/hotels/photo/{id}(id=${hotel.id})}"
+                                             class="d-block w-100" alt="Фотография отеля">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                        th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
                             <!-- Детали отеля -->
                             <div class="card-body">
@@ -425,26 +449,7 @@
                                 </button>
                             </div>
 
-                            <!-- Карусель для дополнительных изображений -->
-                            <div id="carousel-${hotel.id}" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div th:each="image, iterStat : ${hotel.images}" class="carousel-item"
-                                         th:classappend="${iterStat.index == 0} ? 'active'">
-                                        <img th:src="@{/hotels/photo/{id}(id=${hotel.id})}"
-                                              class="d-block w-100" alt="Фотография отеля">
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button"
-                                        th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                        th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+
                         </div>
                     </div>
                 </div>
