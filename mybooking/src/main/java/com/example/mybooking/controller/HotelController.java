@@ -62,30 +62,6 @@ public class HotelController {
     @Autowired
     private CityService cityService; // Добавляем CityService для работы с городами
 
-
-
-//    @Autowired
-//    public HotelController(HotelService hotelService, CityService cityService, PartnerService partnerService) {
-//        this.hotelService = hotelService;
-//        this.cityService = cityService;
-//        this.partnerService = partnerService;
-//    }
-
-
-    // Метод для инициализации объекта отеля в сессии
-    //проверяет, существует ли в сессии объект отеля. Если нет, создается новый объект отеля и сохраняется в сессии для дальнейшего использования.
-//    private Hotel initializeHotelInSession(HttpSession session) {
-//        Hotel sessionHotel = (Hotel) session.getAttribute("hotel");
-//        if (sessionHotel == null) {
-//            sessionHotel = new Hotel();
-//            session.setAttribute("hotel", sessionHotel);
-//            logger.info("New hotel object created and saved in session");
-//        }
-//        return sessionHotel;
-//    }
-    // Получение всех отелей
-    //получает список всех отелей с помощью сервиса HotelService и добавляет его в модель для отображения на странице hotel_list.html.
-
     // Получение всех отелей
     @GetMapping
     public String getAllHotels(Model model) {
@@ -204,17 +180,8 @@ public class HotelController {
 
         // Добавляем список всех удобств для редактирования
         model.addAttribute("amenities", amenityService.getAllAmenities());
-        // Получаем список удобств
-//        List<Amenity> amenities = amenityService.getAllAmenities();
 
-//        if (amenities == null || amenities.isEmpty()) {
-//            logger.warn("Список удобств пуст или не был загружен.");
-//        } else {
-//            logger.info("Список удобств загружен: {}", amenities);
-//        }
-//        model.addAttribute("amenities", amenities);
-
-// Загружаем список городов
+        // Загружаем список городов
         List<City> cities = cityService.getAllCities();
         model.addAttribute("cities", cities);
 
@@ -226,28 +193,45 @@ public class HotelController {
 
         return "add_hotels";  // Возвращаем форму для регистрации отеля
     }
+    // Обработчик запросов на отзывы
+    @GetMapping("/{id}/reviews")
+    public String showHotelReviews(@PathVariable("id") Long id, Model model) {
+        Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
+
+        if (hotelOptional.isPresent()) {
+            Hotel hotel = hotelOptional.get();
+            model.addAttribute("hotel", hotel);
+            model.addAttribute("reviews", hotel.getReviews()); // Передаем отзывы в модель
+            return "reviews_partner"; // Это должно быть имя вашего Thymeleaf-шаблона
+        } else {
+            return "error/404"; // Страница ошибки, если отель не найден
+        }
+
+    }
     @GetMapping("/details/{id}")
     public String getPartnerHotelDetails(@PathVariable("id") Long id, Model model) {
         Optional<Hotel> hotelOptional = hotelService.getHotelById(id);  // Отримання готелю за ID
 
         if (hotelOptional.isPresent()) {
             Hotel hotel = hotelOptional.get();
-            Set<Review> reviews = hotel.getReviews();  // Отримання списку відгуків
 
-            // Обчислення середнього рейтингу
+            // Получаем список отзывов для данного отеля
+            Set<Review> reviews = hotel.getReviews();
+
+            // Рассчитываем средний рейтинг
             double averageRating = 0.0;
             if (!reviews.isEmpty()) {
                 averageRating = reviews.stream()
-                        .mapToDouble(Review::getRating)
-                        .average()
-                        .orElse(0.0);  // Обчислення середнього рейтингу
-                averageRating = Math.round(averageRating * 10.0) / 10.0;
+                        .mapToDouble(Review::getRating)  // Извлекаем рейтинг из каждого отзыва
+                        .average()  // Рассчитываем среднее значение
+                        .orElse(0.0);  // Если отзывов нет, возвращаем 0.0
+                averageRating = Math.round(averageRating * 10.0) / 10.0;  // Округляем до одного знака после запятой
             }
-            // Додаємо зображення (обкладинку) готелю, якщо воно є
-            List<Image> images = imageService.getImagesByHotelId(id);
-            if (!images.isEmpty()) {
-                hotel.setCoverImage(images.get(0).getPhotoBytes());  // Використовуємо перше зображення як обкладинку
-            }
+//            // Додаємо зображення (обкладинку) готелю, якщо воно є
+//            List<Image> images = imageService.getImagesByHotelId(id);
+//            if (!images.isEmpty()) {
+//                hotel.setCoverImage(images.get(0).getPhotoBytes());  // Використовуємо перше зображення як обкладинку
+//            }
 
             // Додавання атрибутів до моделі
             model.addAttribute("hotel", hotel);
@@ -402,13 +386,48 @@ public class HotelController {
         // Логируем идентификатор партнера
         logger.info("Logged in partner ID: {}", loggedInPartner.getId());
 
+        // Получаем список отелей, принадлежащих партнеру
         List<Hotel> hotels = hotelService.getHotelsByOwner(loggedInPartner);
 
         // Логируем список отелей
         logger.info("Hotels retrieved: {}", hotels);
 
+// Проверяем, есть ли отели, и передаем их в модель
+        if (!hotels.isEmpty()) {
+        // Для каждого отеля вычисляем средний рейтинг и добавляем отзывы
+        for (Hotel hotel : hotels) {
+            // Получаем отзывы для отеля
+            Set<Review> reviews = hotel.getReviews();
+
+            // Рассчитываем средний рейтинг
+            double averageRating = 0.0;
+            if (!reviews.isEmpty()) {
+                averageRating = reviews.stream()
+                        .mapToDouble(Review::getRating)
+                        .average()
+                        .orElse(0.0);
+                averageRating = Math.round(averageRating * 10.0) / 10.0;
+            }
+
+            // Добавляем средний рейтинг в модель
+            hotel.setAverageRating(averageRating);  // Допустим, у вас есть поле averageRating в классе Hotel
+
+            // Получаем список удобств (amenities) для каждого отеля и добавляем в модель
+            Set<Amenity> amenities = hotel.getAmenities();
+            model.addAttribute("amenities", amenities);
+
+            // Добавляем список отзывов в модель
+            model.addAttribute("reviews", reviews);
+        }
+
+        // Добавляем список отелей в модель для отображения на странице
         model.addAttribute("hotels", hotels);
-        return "hotels_by_partner";  // Отображаем отели, зарегистрированные партнером
+        } else {
+            model.addAttribute("error", "No hotels found for this partner.");
+        }
+
+        // Возвращаем страницу hotels_by_partner.html
+        return "hotels_by_partner";
     }
 
     // Виведення списку готелів і форма для додавання

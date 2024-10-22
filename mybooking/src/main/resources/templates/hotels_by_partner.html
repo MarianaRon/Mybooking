@@ -19,6 +19,12 @@
         .button button {
             padding: 10px 20px;
         }
+        h4 {
+            /*font-style: italic;*/
+            font-weight: bold; /* Жирное начертание */
+            /*text-decoration: underline; !* Подчеркивание *!*/
+            color: #275271FF;
+        }
         .navbar {
             background-color: #275271FF;
             color: white;
@@ -160,22 +166,60 @@
 
         /* Стили для карточек отелей */
         .hotel-card {
+            width: 100%; /* Сделать карточку занимать всю ширину столбца */
+            max-width: 800px; /* Ограничить максимальную ширину */
+            margin-bottom: 30px; /* Добавить расстояние между карточками */
             border: 1px solid #ddd;
             border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавим тени для визуальной глубины */
         }
 
         .hotel-cover-img {
-            max-height: 300px;
+            height: 400px; /* Увеличим высоту главного изображения */
             object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+        /* Карточки будут расположены по центру */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .rating-box {
+            border-radius: 0 0 0 8px;
+            background-color: #007bff; /* You can adjust the color */
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .rating-box .fs-4 {
+            font-size: 1.5rem; /* Размер текста для рейтинга */
+            font-weight: bold; /* Жирный текст */
+        }
+
+        .rating-box a {
+            font-size: 0.875rem; /* Размер текста для ссылки на отзывы */
+            text-decoration: underline;
+            color: white;
         }
 
         .hotel-card {
             border: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .other-images img {
+            margin-right: 10px;
+            width: calc(50% - 5px); /* Smaller images */
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+        }
 
+        .other-images img:last-child {
+            margin-right: 0;
+        }
         .carousel-item img {
             max-height: 400px;
             object-fit: cover;
@@ -203,11 +247,6 @@
 
         .btn-primary:hover {
             background-color: #1f3d53;
-        }
-        .hotel-image {
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px 8px 0 0;
         }
 
         .btn-danger {
@@ -260,10 +299,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 10px;
         }
-        .other-images {
-            display: flex;
-            flex-wrap: wrap;
-        }
+
 
         .other-images img {
             margin-right: 10px;
@@ -334,52 +370,82 @@
 
         <!-- Отображение отелей, зарегистрированных партнером -->
         <div class="row">
-            <div class="col-md-6" th:each="hotel : ${hotels}">
-                <div class="card hotel-card mb-4">
-                    <!-- Если есть обложка отеля, показываем её -->
-                    <img th:if="${hotel.coverImage != null}"
-                         th:src="@{/hotels/cover/{id}(id=${hotel.id})}"
-                         alt="Обложка" class="card-img-top hotel-cover-img">
-                    <!-- Если обложки нет, показываем дефолтное изображение -->
-                    <img th:if="${hotel.coverImage == null}"
-                         src="/img/default-hotel.png"
-                         alt="Default Hotel Image" class="hotel-image card-img-top">
-                    <!-- Детали отеля -->
-                    <div class="card-body">
-                        <h5 th:text="${hotel.name}" class="card-title"></h5>
-                        <p th:text="${hotel.city.name + ', ' + hotel.addressStreet}" class="card-text"></p>
-                        <p th:text="'Ціна: ' + ${hotel.price} + ' UAH'" class="card-text"></p>
-                        <p th:text="${hotel.description}" class="card-text"></p>
-                        <div th:text="${hotel.id}">Hotel ID</div>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6" th:each="hotel : ${hotels}">
+                        <div class="card hotel-card mb-4 position-relative">
+                            <div> <h2> «<span th:text="${hotel.name}"></span>»</h2></div>
+                            <!-- обложка отеля, показываем её -->
+                            <img th:if="${hotel.coverImage != null}"
+                                 th:src="@{/hotels/cover/{id}(id=${hotel.id})}"
+                                 alt="Обложка" class="card-img-top hotel-cover-img">
+                            <!-- Блок с рейтингом -->
+                            <div class="rating-box position-absolute top-0 end-0 p-2 bg-primary text-white">
+                                <!-- Условие для отображения текста в зависимости от рейтинга -->
+                                <span class="d-block" th:text="
+                                    ${hotel.averageRating >= 4.5} ? 'Відмінно' :
+                                    (${hotel.averageRating >= 4.0} ? 'Супер' :
+                                     (${hotel.averageRating >= 0.0} ? 'Відсутні' :
+                                    (${hotel.averageRating >= 3.0} ? 'Добре' :
+                                    (${hotel.averageRating >= 2.0} ?'Непогано'))))">
+
+                                </span>
+                                <span class="d-block fs-4 fw-bold"  th:text="${hotel.averageRating}">0.0</span> <!-- Здесь отображается реальный рейтинг -->
+                                <!-- Ссылка на отзывы -->
+                                <a th:href="@{/hotels/{id}/reviews(id=${hotel.id})}" class="text-white text-decoration-underline d-block" th:text="'Відгуки: ' + ${hotel.reviews.size()}">Відгуки</a>
+                            </div>
+                            <!-- Детали отеля -->
+                            <div class="card-body">
+                                <h4>Адреса:</h4>
+                                <div><p th:text="${hotel.city.name + ', ' + hotel.addressStreet}" class="card-text"></p></div>
+                                <h4>Ціна (вказана за ніч):</h4>
+                                <div> <p th:text="${hotel.price} + ' UAH'" class="card-text"></p></div>
+                                <h4>Опис помешкання</h4>
+                                <div> <p th:text="${hotel.description}" class="card-text"></p></div>
+
+<!--                                <p th:text="${hotel.city.name + ', ' + hotel.addressStreet}" class="card-text"></p>-->
+<!--                                <p th:text="'Ціна: ' + ${hotel.price} + ' UAH'" class="card-text"></p>-->
+<!--                                <p th:text="${hotel.description}" class="card-text"></p>-->
+                                <!-- Вывод удобств отеля -->
+                                <div>
+                                    <h4>Зручності:</h4>
+                                    <ul>
+                                        <li th:each="amenity : ${hotel.amenities}" th:text="${amenity.name}"></li>
+                                    </ul>
+                                </div>
+
+<!--                                <div th:text="${hotel.id}">Hotel ID</div>-->
 
 
-                        <!-- Кнопки редактирования и удаления -->
-                        <a th:href="@{/hotels/edit_full/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
-                        <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                th:attr="data-hotel-id=${hotel.id}">
-                            <img class="benefit-icon" src="/img/Trash.png" alt="Trash">
-                        </button>
-                    </div>
+                                <!-- Кнопки редактирования и удаления -->
+                                <a th:href="@{/hotels/edit_full/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
+                                <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                                        th:attr="data-hotel-id=${hotel.id}">
+                                    <img class="benefit-icon" src="/img/Trash.png" alt="Trash">
+                                </button>
+                            </div>
 
-                    <!-- Карусель для дополнительных изображений -->
-                    <div id="carousel-${hotel.id}" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div th:each="image, iterStat : ${hotel.images}" class="carousel-item"
-                                 th:classappend="${iterStat.index == 0} ? 'active'">
-                                <img th:src="@{/hotels/photo/{id}(id=${hotel.id})}"
-                                      class="d-block w-100" alt="Фотография отеля">
+                            <!-- Карусель для дополнительных изображений -->
+                            <div id="carousel-${hotel.id}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div th:each="image, iterStat : ${hotel.images}" class="carousel-item"
+                                         th:classappend="${iterStat.index == 0} ? 'active'">
+                                        <img th:src="@{/hotels/photo/{id}(id=${hotel.id})}"
+                                              class="d-block w-100" alt="Фотография отеля">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                        th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button"
-                                th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button"
-                                th:attr="data-bs-target='#carousel-${hotel.id}'" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
                 </div>
             </div>

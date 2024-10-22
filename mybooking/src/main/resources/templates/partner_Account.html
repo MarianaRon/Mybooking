@@ -20,6 +20,9 @@
             align-items: center;
             height: 100vh;
         }
+        h2 {
+            color: #275271FF;
+        }
 
         .form-container {
             width: 400px;
@@ -62,13 +65,14 @@
             border-radius: 4px;
             cursor: pointer;
             margin-bottom: 16px; /* Добавляем отступ между кнопками */
-            transition: background-color 0.3s ease, border 0.3s ease; /* Плавный переход */
+            transition: background-color 0.3s;
         }
         .form-step button:hover {
-            background: #d57c5d;
+            background: #E7A188FF;
             color: #fff;
             border: 2px solid #275271FF; /* Синяя рамка при наведении */
         }
+
         .form-step .link-button {
             display: inline-block;
             width: 100%; /* Делаем кнопку такого же размера, как и кнопка формы */
@@ -172,7 +176,7 @@
     <form id="partner-form" action="/partners" method="post">
         <!-- Step 1: Enter Email -->
         <div class="form-step active" id="step-1">
-            <h2>Створення акаунта партнера</h2>
+            <h2>Зареэструйся на Arrenvi.com та почни заробляти вже сьогодні</h2>
             <label for="email">Електронна адреса:</label>
             <input type="email" id="email" name="email" required>
 

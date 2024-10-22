@@ -20,6 +20,9 @@
             align-items: center;
             height: 100vh;
         }
+        h2 {
+            color: #275271FF;
+        }
 
         .form-container {
             width: 400px;
@@ -56,19 +59,20 @@
             width: 100%;
             padding: 10px;
             background: #275271FF;
-            font-size: 16px;
+            font-size: 20px;
             color: #fff;
             border: 2px solid transparent; /* Добавляем фиксированную рамку */
             border-radius: 4px;
             cursor: pointer;
             margin-bottom: 16px; /* Добавляем отступ между кнопками */
-            transition: background-color 0.3s ease, border 0.3s ease; /* Плавный переход */
+            transition: background-color 0.3s;
         }
         .form-step button:hover {
-            background: #d57c5d;
+            background: #E7A188FF;
             color: #fff;
             border: 2px solid #275271FF; /* Синяя рамка при наведении */
         }
+
         .form-step .link-button {
             display: inline-block;
             width: 100%; /* Делаем кнопку такого же размера, как и кнопка формы */
@@ -142,11 +146,11 @@
     <form id="partner-login-form" action="/partners/login" method="post">
         <!-- Step 1: Enter Email -->
         <div class="form-step active" id="step-1">
-            <h2>Увійдіть, щоб керувати своїми помешканнями, які ви здаєте/бажаєте здати в оренду</h2>
+            <h2>Увійдіть, щоб керувати своїми помешканнями на Arrenvi.com</h2>
             <label for="email">Електронна адреса:</label>
             <input type="email" id="email" name="email" required>
             <button type="button" onclick="nextStep(2)">Продовжити</button>
-            <a href="/partner_Account" class="link-button">Створіть обліковій запис партнера на Arrenvi.com</a>
+            <a href="/partner_Account" class="link-button">Створити обліковій запис партнера на Arrenvi.com</a>
             <footer>
                 <div class="footer-container">
                     <div class="footer-section">
@@ -165,7 +169,7 @@
 
         <!-- Step 2: Enter Password -->
         <div class="form-step" id="step-2">
-            <h2>Введіть пароль</h2>
+            <h2>Введіть Ваш пароль</h2>
             <label for="password">Пароль:</label>
             <input type="password" id="password" name="password" minlength="6" required>
             <button type="submit">Увійти</button>

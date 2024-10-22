@@ -39,6 +39,8 @@ public class Hotel {
 
     @Column
     private String description;
+    // Новое поле для среднего рейтинга
+    private double averageRating;
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
@@ -212,6 +214,15 @@ public class Hotel {
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+    // Геттер для среднего рейтинга
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    // Сеттер для среднего рейтинга
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
     }
 }
 //package com.example.mybooking.model;
