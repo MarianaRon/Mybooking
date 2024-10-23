@@ -69,16 +69,7 @@ public class HotelService {
         return hotelRepository.findById(id);
     }
 
-
-    @Transactional
-    public Hotel saveHotelWithPartner(Hotel hotel) {
-        return hotelRepository.save(hotel);
-    }
-    /**
-     * Удаление отеля по ID.
-     *
-     * @param id ID отеля для удаления
-     */
+    /* Удаление отеля по ID.*/
     public boolean deleteHotelById(Long id) {
         logger.debug("Attempting to delete hotel with ID: {}", id);
 
@@ -92,35 +83,20 @@ public class HotelService {
         }
     }
 
-    /**
-     * Поиск отелей по названию или описанию.
-     *
-     * @param searchTerm поисковый запрос
-     * @return список отелей, соответствующих запросу
-     */
+    /* Поиск отелей по названию или описанию. */
     public List<Hotel> searchHotelsByNameOrDescription(String searchTerm) {
         logger.debug("Searching for hotels by name or description with term: {}", searchTerm);
         return hotelRepository.findByNameContainingOrDescriptionContaining(searchTerm, searchTerm);
     }
 
-    /**
-     * Получение всех отелей, принадлежащих партнеру.
-     *
-     * @param owner объект партнера (владельца)
-     * @return список отелей, принадлежащих партнеру
-     */
+    /* Получение всех отелей, принадлежащих партнеру.*/
     public List<Hotel> getHotelsByOwner(Partner owner) {
         logger.debug("Fetching hotels for partner: {}", owner.getId());
         return hotelRepository.findByOwner(owner);
     }
 
 
-    /**
-     * Обновление существующего отеля.
-     *
-     * @param id ID отеля для обновления
-     * @param hotelDetails объект с новыми данными для отеля
-     */
+    /* Обновление существующего отеля.*/
     public void updateHotel(Long id, Hotel hotelDetails) {
         hotelRepository.findById(id).ifPresent(hotel -> {
             logger.debug("Updating hotel with ID: {}", id);

@@ -159,13 +159,104 @@
                 margin-bottom: 30px; /* Отступ от кнопок до футера */
                 justify-content: flex-end; /* Выравнивание кнопок вправо */
             }
-
+            /*обкладинка*/
             .cover-image-preview img {
                 width: 200px;
                 height: auto;
                 object-fit: cover;
                 margin-bottom: 15px;
             }
+
+        /* Стили для отображения изображений в строку */
+        .additional-images {
+            margin-top: 15px;
+        }
+
+        .images-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .image-item {
+            text-align: center;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+
+        .additional-image {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Стили для кнопки выбора файла */
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Стили для модального окна */
+        .modal {
+            display: none; /* Скрываем модальное окно по умолчанию */
+            position: fixed;
+            z-index: 1000; /* Убедитесь, что модальное окно выше других элементов */
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Разрешаем прокрутку в случае необходимости */
+            background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%; /* Ограничиваем максимальную ширину до 80% от экрана */
+            max-height: 80%; /* Ограничиваем максимальную высоту до 80% от экрана */
+            object-fit: contain; /* Сохраняем пропорции изображения */
+            border-radius: 10px; /* Немного закругляем углы */
+        }
+
+
+        .modal-content:hover {
+            transform: scale(1.05); /* Увеличиваем изображение при наведении */
+            transition: transform 0.3s ease;
+        }
+
+        /* Кнопка для закрытия модального окна */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001; /* Убедимся, что крестик выше изображения */
+        }
+
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
             /*///////////////////////////////////////////////*/
             .amenities-container {
                 display: flex;
@@ -313,7 +404,7 @@
         </div>
     </div>
 
-    <!-- Правая часть: форма редактирования отеля -->
+    <!--Форма редагування помешкання -->
     <div class="content">
         <form th:action="@{/hotels/edit_full/{id}(id=${hotel.id})}" method="post" enctype="multipart/form-data">
             <h1>Редагування інформації щодо помешкання</h1>
@@ -350,7 +441,7 @@
                 <textarea class="form-control" name="description" required th:text="${hotel.description}"></textarea>
             </div>
 
-            <!-- Удобства по категориям -->
+            <!-- Зручності по категоріям -->
             <div class="profile-row">
                 <div class="profile-label">Зручності</div>
                 <div class="amenities-container">
@@ -382,7 +473,8 @@
                 <div class="profile-label">Обкладинка готелю</div>
                 <div>
                     <div class="cover-image-preview">
-                        <img id="currentCover" th:if="${hotel.coverImage != null}" th:src="@{/hotels/coverImage/{id}(id=${hotel.id})}" alt="Текущая обложка">
+                        <img th:if="${hotel.coverImage != null}"  th:src="@{/hotels/cover/{id}(id=${hotel.id})}"
+                             alt="Наявна обкладинка" class="card-img-top hotel-cover-img" onclick="openModal(this)">
                     </div>
                     <input type="file" class="form-control" name="coverImage" accept="image/*" id="coverImageInput" onchange="previewCoverImage(this)">
                     <div class="cover-image-preview">
@@ -390,6 +482,45 @@
                     </div>
                 </div>
             </div>
+            <!-- Отображение и редактирование дополнительных изображений -->
+            <div class="profile-row">
+                <div class="profile-label">Додаткові фотографії</div>
+                <div class="additional-images">
+<!--                    <div class="current-images">-->
+                        <h5>Поточні зображення</h5>
+                    <div class="images-list d-flex flex-wrap">
+                            <div th:each="image : ${images}"
+                                 class="image-item me-3 text-center">
+                                <!-- Відображення поточного зображення -->
+                                <img th:if="${image.photoBytes != null}"
+                                     th:src="@{/images/photo/{id}(id=${image.id})}"
+                                     alt="Фото" class="additional-image" onclick="openModal(this)">
+                                <img th:if="${image.photoBytes == null}"
+                                     th:src="${image.url}"
+                                     alt="Фото" class="additional-image" onclick="openModal(this)">
+                                <br>
+                                <label>
+                                    <input type="checkbox" name="deleteImages" th:value="${image.id}"> Видалити
+                                </label>
+                            </div>
+<!--                        </div>-->
+                    </div>
+
+                    <!-- Загрузка новых изображений -->
+                    <div class="new-images">
+                        <h5>Додати нові фотографії</h5>
+                        <input type="file" class="file" name="imageFiles" multiple accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <!-- Модальное окно для отображения увеличенного изображения -->
+            <div id="imageModal" class="modal" onclick="closeModal()">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img class="modal-content" id="modalImage">
+                <div id="caption"></div>
+            </div>
+
+
 
             <!-- Кнопки -->
             <div class="button-group">
@@ -425,35 +556,23 @@
         <p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p>
     </div>
 </footer>
-
 <script>
-    function handleCoverImage(files) {
-        const previewContainer = document.getElementById('coverImagePreview');
-        previewContainer.innerHTML = ''; // Очищаем контейнер перед загрузкой новой обложки
+    // Открытие модального окна при клике на изображение
+    function openModal(imgElement) {
+        var modal = document.getElementById("imageModal");
+        var modalImg = document.getElementById("modalImage");
+        var captionText = document.getElementById("caption");
 
-        if (files.length === 0) {
-            previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
-        } else if (files.length > 1) {
-            alert('Пожалуйста, выберите только одно изображение для обложки.');
-        } else {
-            const file = files[0];
-            if (file.size > 10 * 1024 * 1024) { // Ограничение на 5 МБ
-                alert('Размер файла не должен превышать 5 МБ.');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('img-thumbnail');
-                img.style.maxHeight = '400px'; // Ограничение по высоте
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        }
+        modal.style.display = "block"; // Показываем модальное окно
+        modalImg.src = imgElement.src; // Устанавливаем источник изображения
+        captionText.innerHTML = imgElement.alt; // Устанавливаем подпись (если она есть)
     }
 
+    // Закрытие модального окна
+    function closeModal() {
+        var modal = document.getElementById("imageModal");
+        modal.style.display = "none"; // Скрываем модальное окно
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

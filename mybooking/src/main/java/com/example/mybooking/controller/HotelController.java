@@ -123,6 +123,8 @@ public class HotelController {
                                     @RequestParam("description") String description,
                                     @RequestParam(value = "amenities", required = false) List<Long> amenityIds,
                                     @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
+                                    @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,
+                                    @RequestParam(value = "deleteImages", required = false) List<Long> deleteImageIds,
                                     HttpSession session,
                                     RedirectAttributes redirectAttributes) {
 
@@ -164,6 +166,17 @@ public class HotelController {
                 return "redirect:/hotels/edit_full/" + id;
             }
         }
+        // Удаление выбранных изображений
+        if (deleteImageIds != null && !deleteImageIds.isEmpty()) {
+            for (Long imageId : deleteImageIds) {
+                imageService.deleteImage(imageId);
+                logger.info("Изображение с ID {} было удалено", imageId);
+            }
+        }
+        // Обработка дополнительных изображений (если они были загружены)
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            processImages(imageFiles, hotel);
+        }
 
         // Сохранение обновленного отеля
         hotelService.save(hotel);
@@ -178,7 +191,7 @@ public class HotelController {
         // Создаем новый объект отеля
         model.addAttribute("hotel", new Hotel());
 
-        // Добавляем список всех удобств для редактирования
+        // Добавляем список всех удобств
         model.addAttribute("amenities", amenityService.getAllAmenities());
 
         // Загружаем список городов
@@ -345,33 +358,45 @@ public class HotelController {
             return "redirect:/hotels/add?error=cover_image_upload_failed"; // Обработка ошибки
         }
 
-        // Обработка дополнительных изображений
-        Set<Image> images = new HashSet<>();
+        // Сохраняем отель
+        hotelService.save(hotel);
+        logger.info("Отель {} был успешно сохранен с ID: {}", hotel.getName(), hotel.getId());
+
+        // Обрабатываем дополнительные изображения с помощью выделенного метода
         if (imageFiles != null) {
-            for (MultipartFile imageFile : imageFiles) {
-                if (!imageFile.isEmpty()) {
-                    try {
-                        Image image = new Image();
-                        image.setPhotoBytes(imageFile.getBytes());
+            processImages(imageFiles, hotel);
+        }
+        return "redirect:/hotels/hotels_by_partner";
+    }
 
-                        // Устанавливаем URL для изображения
-                        String imageUrl = "/images/" + imageFile.getOriginalFilename(); // Замените это на вашу логику
-                        image.setUrl(imageUrl); // Устанавливаем URL
+    /**
+     * Метод для обработки и сохранения изображений
+     */
+    private void processImages(List<MultipartFile> imageFiles, Hotel hotel) {
+        for (MultipartFile imageFile : imageFiles) {
+            if (!imageFile.isEmpty()) {
+                try {
+                    Image image = new Image();
+                    image.setPhotoBytes(imageFile.getBytes());
 
-                        image.setHotel(hotel);
-                        images.add(image);
-                    } catch (IOException e) {
-                        logger.error("Error processing image file: {}", e.getMessage());
-                        return "redirect:/hotels/add?error=image_upload_failed";
-                    }
+                    // Устанавливаем URL для изображения
+                    String imageUrl = "/images/" + imageFile.getOriginalFilename();
+                    image.setUrl(imageUrl);
+
+                    // Привязываем изображение к отелю
+                    image.setHotel(hotel);
+
+                    // Сохраняем изображение в базе данных
+                    imageService.saveImage(image);
+                    logger.info("Изображение {} сохранено для отеля ID: {}", imageFile.getOriginalFilename(), hotel.getId());
+
+                } catch (IOException e) {
+                    logger.error("Error processing image file: {}", e.getMessage());
                 }
+            } else {
+                logger.warn("Пустой файл изображения: {}", imageFile.getOriginalFilename());
             }
         }
-        hotel.setImages(images); // Устанавливаем изображения в отель
-
-        // Сохранение отеля
-        hotelService.save(hotel);
-        return "redirect:/hotels/hotels_by_partner";
     }
 
     // Просмотр отелей, добавленных партнером
