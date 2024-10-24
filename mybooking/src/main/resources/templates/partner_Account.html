@@ -177,8 +177,8 @@
         <!-- Step 1: Enter Email -->
         <div class="form-step active" id="step-1">
             <h2>Зареэструйся на Arrenvi.com та почни заробляти вже сьогодні</h2>
-            <label for="email">Електронна адреса:</label>
-            <input type="email" id="email" name="email" required>
+<!--            <label for="email">Електронна адреса:</label>-->
+            <input type="email" id="email" name="email"  placeholder="Електронна адреса" required>
 
             <button type="button" onclick="nextStep(2)">Продовжити</button>
             <a href="/exit_Account" class="link-button">Увійти! Якщо Ви вже Наш партнер!</a>
@@ -201,12 +201,12 @@
         <!-- Step 2: Enter Contact Information -->
         <div class="form-step" id="step-2">
             <h2>Контактні дані</h2>
-            <label for="first-name">Ім'я:</label>
-            <input type="text" id="first-name" name="firstName" required>
-            <label for="last-name">Прізвище:</label>
-            <input type="text" id="last-name" name="lastName" required>
-            <label for="phone">Номер телефону:</label>
-            <input type="tel" id="phone" name="phone" required>
+<!--            <label for="first-name">Ім'я:</label>-->
+            <input type="text" id="first-name" name="firstName"  placeholder="Введіть своє ім'я" required>
+<!--            <label for="last-name">Прізвище:</label>-->
+            <input type="text" id="last-name" name="lastName" placeholder="Введіть своє прізвище"  required>
+<!--            <label for="phone">Номер телефону:</label>-->
+            <input type="tel" id="phone" name="phone"  placeholder="Введіть свій номер телефону" required>
             <button type="button" onclick="nextStep(3)">Продовжити</button>
             <a href="/exit_Account" class="link-button">Увійти! Якщо Ви вже Наш партнер!</a>
             <footer>
@@ -228,10 +228,10 @@
         <!-- Step 3: Create Password -->
         <div class="form-step" id="step-3">
             <h2>Створіть пароль</h2>
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" minlength="6" required>
-            <label for="confirm-password">Підтвердити пароль:</label>
-            <input type="password" id="confirm-password" name="confirmPassword" minlength="6" required>
+<!--            <label for="password">Пароль:</label>-->
+            <input type="password" id="password" name="password" minlength="6" placeholder="Введіть пароль"  required>
+<!--            <label for="confirm-password">Підтвердити пароль:</label>-->
+            <input type="password" id="confirm-password" name="confirmPassword" minlength="6" placeholder="Підтвердіть свій пароль"  required>
             <div id="error-message"></div>
             <button type="submit">Створити акаунт партнера</button>
             <a href="/exit_Account" class="link-button">Увійти! Якщо Ви вже Наш партнер!</a>

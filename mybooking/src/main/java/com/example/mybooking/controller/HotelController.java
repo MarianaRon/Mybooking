@@ -240,11 +240,6 @@ public class HotelController {
                         .orElse(0.0);  // Если отзывов нет, возвращаем 0.0
                 averageRating = Math.round(averageRating * 10.0) / 10.0;  // Округляем до одного знака после запятой
             }
-//            // Додаємо зображення (обкладинку) готелю, якщо воно є
-//            List<Image> images = imageService.getImagesByHotelId(id);
-//            if (!images.isEmpty()) {
-//                hotel.setCoverImage(images.get(0).getPhotoBytes());  // Використовуємо перше зображення як обкладинку
-//            }
 
             // Додавання атрибутів до моделі
             model.addAttribute("hotel", hotel);

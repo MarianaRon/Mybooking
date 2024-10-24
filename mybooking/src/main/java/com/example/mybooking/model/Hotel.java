@@ -39,6 +39,8 @@ public class Hotel {
 
     @Column
     private String description;
+
+
     // Новое поле для среднего рейтинга
     private double averageRating;
 

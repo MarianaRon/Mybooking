@@ -179,8 +179,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавим тени для визуальной глубины */
         }
 
+
         .hotel-cover-img {
-            height: 400px; /* Увеличим высоту главного изображения */
+            height: 400px; /*  высота главного изображения */
             object-fit: cover;
             border-bottom: 1px solid #ddd;
         }
@@ -192,7 +193,7 @@
         }
         .rating-box {
             border-radius: 0 0 0 8px;
-            background-color: #275271FF; /* You can adjust the color */
+            background-color: #275271FF;
             color: white;
             text-align: center;
             padding: 10px;
@@ -232,24 +233,33 @@
             padding: 15px;
         }
 
-        .edit-btn, .delete-btn {
-            margin-right: 5px;
-        }
-
-        .edit-btn, .delete-btn {
-            margin-top: 10px;
-        }
 
         /* Стили для кнопок редактирования и удаления */
-        .btn-primary {
-            background-color: #275271FF;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+        /* Кнопка редактирования */
+        .btn_edit {
+            background-color: white;
+            color: #275271FF;
+            border: 2px solid #275271FF;
+            border-radius: 5px; /* Скругляем углы */
+            font-weight: bold;
+            padding: 10px 20px; /* Увеличиваем внутренние отступы для выравнивания с кнопкой удаления */
+            /*transition: all 0.3s ease;*/
+            /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+            display: inline-flex; /* Выравниваем содержимое по центру */
+            justify-content: center;
+            align-items: center;
         }
 
-        .btn-primary:hover {
-            background-color: #1f3d53;
+        .btn_edit img {
+            width: 28px; /* Задаем размер иконки */
+            height: auto;
+        }
+
+        .btn_edit:hover {
+            background-color: #d7d5d5;
+            /*color: white;*/
+            /*box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);*/
+            /*transform: scale(1.05);*/
         }
 
         .btn-danger {
@@ -257,10 +267,28 @@
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
-        }
 
+        }
+        .btn-danger img {
+            width: 30px; /* Задаем размер иконки */
+            height: auto;
+        }
         .btn-danger:hover {
             background-color: #d57c5d;;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #275271FF;
+            border: 2px solid #275271FF;
+            border-radius: 5px; /* Скругляем углы */
+            font-weight: bold;
+            padding: 10px 20px;
+
+        }
+
+        .btn-primary:hover {
+            background-color: #1f3d53;
         }
 
         .hotel-cover-img {
@@ -466,6 +494,19 @@
                     <div class="col-md-6" th:each="hotel : ${hotels}">
                         <div class="card hotel-card mb-4 position-relative">
                             <div> <h2> «<span th:text="${hotel.name}"></span>»</h2></div>
+<!--                            <div class="button-group" style="display: flex; gap: 10px; align-items: center;">-->
+<!--                                &lt;!&ndash; Кнопка редактирования &ndash;&gt;-->
+<!--                                <a th:href="@{/hotels/edit_full/{id}(id=${hotel.id})}" class="btn_edit" style="flex-shrink: 0;">-->
+<!--                                    <img class="benefit-icon" src="/img/edit(1).png" alt="edit(1)">-->
+<!--                                </a>-->
+<!--                                &lt;!&ndash; Кнопка удаления &ndash;&gt;-->
+<!--                                <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"-->
+<!--                                        th:attr="data-hotel-id=${hotel.id}" style="flex-shrink: 0;">-->
+<!--                                    <img class="benefit-icon" src="/img/Trash.png" alt="Trash">-->
+<!--                                </button>-->
+<!--                               -->
+<!--                            </div>-->
+
                             <!-- обложка отеля, показываем её -->
                             <img th:if="${hotel.coverImage != null}"
                                  th:src="@{/hotels/cover/{id}(id=${hotel.id})}"
@@ -497,6 +538,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="button-group" style="display: flex; gap: 10px; align-items: center;">
+                                <!-- Кнопка "Додати номер"  -->
+                                <a th:href="@{/rooms/add/{hotelId}(hotelId=${hotel.id})}" class="btn btn-primary mt-2" style="flex-grow: 1;">
+                                    Додати номер
+                                </a>
+                                <!-- Кнопка "Перегляд номерів" -->
+                                <a th:href="@{/rooms/add/{hotelId}(hotelId=${hotel.id})}" class="btn btn-primary mt-2" style="flex-grow: 1;">
+                                    Перегляд номерів
+                                </a>
+                            </div>
                             <!-- Детали отеля -->
                             <div class="card-body">
                                 <h4>Адреса:</h4>
@@ -519,13 +570,18 @@
 
 <!--                                <div th:text="${hotel.id}">Hotel ID</div>-->
 
+                                <div class="button-group" style="display: flex; gap: 10px; align-items: center;">
+                                    <!-- Кнопка редактирования -->
+                                    <a th:href="@{/hotels/edit_full/{id}(id=${hotel.id})}" class="btn_edit" style="flex-shrink: 0;">
+                                        <img class="benefit-icon" src="/img/edit(1).png" alt="edit(1)">
+                                    </a>
 
-                                <!-- Кнопки редактирования и удаления -->
-                                <a th:href="@{/hotels/edit_full/{id}(id=${hotel.id})}" class="btn btn-primary edit-btn">Редагувати</a>
-                                <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                        th:attr="data-hotel-id=${hotel.id}">
-                                    <img class="benefit-icon" src="/img/Trash.png" alt="Trash">
-                                </button>
+                                    <!-- Кнопка удаления -->
+                                    <button type="button" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                                            th:attr="data-hotel-id=${hotel.id}" style="flex-shrink: 0;">
+                                        <img class="benefit-icon" src="/img/Trash.png" alt="Trash">
+                                    </button>
+                                </div>
                             </div>
                             <!-- Модальное окно для отображения увеличенного изображения -->
                             <div id="imageModal" class="modal" onclick="closeModal()">
