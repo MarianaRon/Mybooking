@@ -221,6 +221,7 @@ public class HotelController {
         }
 
     }
+    ///не исп
     @GetMapping("/details/{id}")
     public String getPartnerHotelDetails(@PathVariable("id") Long id, Model model) {
         Optional<Hotel> hotelOptional = hotelService.getHotelById(id);  // Отримання готелю за ID
@@ -254,6 +255,8 @@ public class HotelController {
         }
 
     }
+
+
     @GetMapping("/cover/{id}")
     @ResponseBody
     public ResponseEntity<byte[]> getHotelCover(@PathVariable Long id) {
@@ -330,11 +333,6 @@ public class HotelController {
         }
 
         // Привязываем удобства
-//        if (amenityIds != null && !amenityIds.isEmpty()) {
-//            Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
-//            hotel.setAmenities(amenities);
-//        }
-        // Привязываем удобства
         if (amenityIds != null) {
             Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
             hotel.setAmenities(amenities);
@@ -409,6 +407,10 @@ public class HotelController {
         // Получаем список отелей, принадлежащих партнеру
         List<Hotel> hotels = hotelService.getHotelsByOwner(loggedInPartner);
 
+        // Добавляем тип жилья перед названием отеля
+        for (Hotel hotel : hotels) {
+            hotel.setName(hotel.getHousingType() + " " + hotel.getName());
+        }
         // Логируем список отелей
         logger.info("Hotels retrieved: {}", hotels);
 
@@ -449,6 +451,25 @@ public class HotelController {
         // Возвращаем страницу hotels_by_partner.html
         return "hotels_by_partner";
     }
+
+    // Удаление отеля
+
+    @DeleteMapping("/delete_hotels/{id}")
+    public ResponseEntity<?> deleteHotel(@PathVariable Long id, HttpSession session) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
+        boolean deleted = hotelService.deleteHotelById(id);
+        if (deleted) {
+            return ResponseEntity.ok().body("Hotel deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hotel not found");
+        }
+    }
+
+   ///////////////////////////////////////////////
 
     // Виведення списку готелів і форма для додавання
     @GetMapping("/hotel_list")
@@ -506,22 +527,7 @@ public class HotelController {
         return "redirect:/hotels/hotel_list";
     }
 
-// Удаление отеля
 
-    @DeleteMapping("/delete_hotels/{id}")
-    public ResponseEntity<?> deleteHotel(@PathVariable Long id, HttpSession session) {
-        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
-        if (loggedInPartner == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-        }
-
-        boolean deleted = hotelService.deleteHotelById(id);
-        if (deleted) {
-            return ResponseEntity.ok().body("Hotel deleted");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hotel not found");
-        }
-    }
 
     // Показ форми пошуку готелів
     @GetMapping("/search")
