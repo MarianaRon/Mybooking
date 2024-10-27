@@ -399,7 +399,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="/home_partners">Головна</a></li>
-                                <li><a class="dropdown-item" href="hotels_by_partner">Переглянути мої помешкання</a></li>
+                                <li><a class="dropdown-item" href="/hotels/hotels_by_partner" >Переглянути мої помешкання</a></li>
                                 <li><a class="dropdown-item" href="/partners/logout">Вийти</a></li>
                             </ul>
                         </div>
@@ -417,13 +417,13 @@
 
     <input type="hidden" id="hotelId" name="hotelId" th:value="${hotelId}"  />
     <div id="step-1" class="step active">
-        <div th:text="${hotel.id}">Hotel ID</div>
+<!--        <div th:text="${hotel.id}">Hotel ID</div>-->
 
 <!--        <input type="hidden" id="type" name="type" value="1" />-->
         <!-- Название отеля -->
         <div class="field-with-label">
-            <h2 class="mb-4">Обери тип номеру який бажаєш зареєструвати на Arrenvi.com</h2>
-            <p class="text-wrapper-35">Додайте номери/ кімнати до свого помешкання</p>
+            <h2 class="mb-4">Обери тип номеру який бажаєш зареєструвати</h2>
+            <p class="text-wrapper-35">Додайте номер до свого помешкання</p>
         </div>
         <!-- Тип номера -->
         <div class="container">
@@ -542,7 +542,7 @@
         <!-- Динамическое отображение удобств -->
         <!-- Удобства по категориям -->
         <div class="profile-row">
-            <div class="profile-label"><h3>Додайте зручності до Вашого помешкання</h3></div>
+            <div class="profile-label"><h3>Додайте зручності</h3></div>
             <div class="amenities-container">
                 <!-- Колонка для зручностей в номері -->
                 <div class="amenities-group">
@@ -565,7 +565,7 @@
 
         <!-- Добавляем поле для вместимости номера -->
         <div class="view-3 mt-3">
-            <p class="text-wrapper-11">Вместимість (вкажіть кількість осіб)</p>
+            <p class="text-wrapper-11">Вмістимість (вкажіть кількість осіб)</p>
             <input type="number" id="capacity" name="capacity" class="form-control" placeholder="2" required />
         </div>
         <div class="button">
@@ -587,10 +587,10 @@
 
         <!-- Загрузка изображений -->
         <div class="frame-10">
-            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>
+            <p class="text-wrapper-26">Додайте фотографії та опис </p>
 
             <!-- Поле для выбора обложки -->
-            <label for="coverImage">Головне фото Вашого помешкання</label>
+            <label for="coverImage">Головне фото </label>
             <input type="file" id="coverImage" name="coverImage" accept="image/*"  class="form-control" onchange="handleCoverImage(this.files)" />
 
             <!-- Превью для обложки -->
@@ -606,7 +606,7 @@
 
             <!-- Описание -->
             <div class="frame-10">
-                <textarea id="description" name="description" placeholder="Введите описание" required></textarea>
+                <textarea class="form-control" id="description" name="description" placeholder="Додайте короткий опис (до 2500 символів)" rows="5" required></textarea>
                 <!--        <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5"></textarea>-->
             </div>
             <div class="button">
@@ -617,7 +617,7 @@
                 </button>
             </div>
             <div class="button">
-                <button type="submit">Сохранить</button>
+                <button type="submit">Зберегти</button>
             </div>
         </div>
     </div>

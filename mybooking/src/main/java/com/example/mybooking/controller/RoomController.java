@@ -9,6 +9,9 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,15 +126,6 @@ public class RoomController {
         roomService.deleteRoom(id);
         return ResponseEntity.noContent().build();
     }
-
-    ///////////////////////////
-    // Отображение формы для добавления номера
-//    @GetMapping("/add_room/{hotelId}")
-//    public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model) {
-//        model.addAttribute("room", new Room());
-//        model.addAttribute("hotelId", hotelId); // Передача ID отеля в форму
-//        return "add_room"; // возвращает на страницу add_room.html
-//    }
 
 
 //    перехід на сторінку з описом кімнати
@@ -290,4 +284,176 @@ public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model
             }
         }
     }
+
+    // Получить номера, связанные с партнером
+    @GetMapping("/room_by_partner/{hotelId}")
+    public String getRoomsByPartner(@PathVariable("hotelId") Long hotelId, HttpSession session, Model model) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";  // Перенаправить на страницу входа, если партнер не авторизован
+        }
+
+        // Получить отель по ID и проверить его владельца
+        Hotel hotel = hotelService.getHotelById(hotelId)
+                .orElseThrow(() -> new IllegalArgumentException("Некорректный ID отеля: " + hotelId));
+
+        // Проверяем, что текущий партнер является владельцем отеля
+        if (!hotel.getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:/hotels/hotels_by_partner";  // Перенаправляем на список отелей партнера, если не владелец
+        }
+
+        // Получаем список номеров, связанных с отелем
+        List<Room> rooms = roomService.getRoomsByHotel(hotelId);
+
+
+        model.addAttribute("rooms", rooms);  // Передаем список номеров в модель
+        model.addAttribute("hotel", hotel);  // Передаем информацию об отеле в модель
+
+        return "room_by_partner";  // Возвращаем шаблон для отображения номеров
+    }
+
+    @GetMapping("/cover/{roomId}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getRoomCover(@PathVariable Long roomId) {
+        // Получаем комнату по её ID
+        Room room = roomService.getRoomById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid room Id: " + roomId));
+
+        // Получаем изображение обложки комнаты
+        byte[] coverImage = room.getCoverImage();
+
+        if (coverImage == null || coverImage.length == 0) {
+            throw new IllegalArgumentException("Room does not have a cover image");
+        }
+
+        // Устанавливаем заголовки для комнати
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Предположим, что изображение в формате JPEG
+
+        // Возвращаем изображение с соответствующими заголовками
+        return new ResponseEntity<>(coverImage, headers, HttpStatus.OK);
+    }
+    @GetMapping("/edit_full/{id}") // Изменяем маршрут для другого метода
+    public String showEditRoomForm(@PathVariable("id") Long id, HttpSession session, Model model) {
+        // Проверяем, авторизован ли партнер
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";  // Перенаправляем на страницу логина
+        }
+
+        // Получаем номер по ID
+        Room room = roomService.getRoomById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + id));
+
+        // Проверяем, что партнёр является владельцем номера (через отель)
+        if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:rooms/room_by_partner/" + room.getHotel().getId();  // Перенаправляем, если партнёр не владелец
+        }
+
+        // Добавляем данные номера в модель для отображения
+        model.addAttribute("room", room);
+
+        // Добавляем список всех удобств для редактирования
+        model.addAttribute("amenities", amenityService.getAllAmenities());
+
+        // Добавляем текущие изображения номера (если есть)
+        model.addAttribute("images", room.getImages());
+
+        return "edit_full_room";  // Thymeleaf шаблон для редактирования данных номера
+    }
+    // Обработчик для сохранения изменений полной информации об номере
+
+    @PostMapping("/edit_full/{id}")
+    public String saveRoomEdit(@PathVariable("id") Long id,
+                               @RequestParam("price") Double price,
+                               @RequestParam("description") String description,
+                               @RequestParam(value = "amenities", required = false) List<Long> amenityIds,
+                               @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
+                               @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,
+                               @RequestParam(value = "deleteImages", required = false) List<Long> deleteImageIds,
+                               HttpSession session,
+                               RedirectAttributes redirectAttributes) {
+
+        // Проверяем, авторизован ли партнёр
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";
+        }
+
+        // Получаем номер по ID
+        Room room = roomService.getRoomById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + id));
+
+        // Проверяем, что партнёр является владельцем номера
+        if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:/rooms/room_by_partner/" + room.getHotel().getId();
+        }
+        // Выводим ID отеля в консоль для проверки
+        System.out.println("Hotel ID: " + room.getHotel().getId());
+        // Обновляем данные номера
+
+        room.setDescription(description);
+        room.setPrice(price);
+
+        // Привязываем удобства
+        if (amenityIds != null) {
+            Set<Amenity> amenities = new HashSet<>(amenityService.getAllAmenitiesByIds(amenityIds));
+            room.setAmenities(amenities);
+        }
+
+        // Обработка файла обложки (если файл был загружен)
+        if (coverImageFile != null && !coverImageFile.isEmpty()) {
+            try {
+                room.setCoverImage(coverImageFile.getBytes());  // Преобразуем MultipartFile в byte[]
+            } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("error", "Error uploading cover image");
+                return "redirect:/rooms/edit_full/" + id;
+            }
+        }
+
+        // Удаление выбранных изображений
+        if (deleteImageIds != null && !deleteImageIds.isEmpty()) {
+            for (Long imageId : deleteImageIds) {
+                imageService.deleteImage(imageId);
+                logger.info("Изображение с ID {} было удалено", imageId);
+            }
+        }
+
+        // Обработка дополнительных изображений (если они были загружены)
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            processImages(imageFiles, room);
+        }
+
+        // Сохранение обновленного номера
+        roomService.saveRoom(room);
+
+        // Перенаправляем обратно на список номеров партнёра
+        return "redirect:/rooms/room_by_partner/" + room.getHotel().getId();
+    }
+
+    @PostMapping("/deleteRoom/{id}")
+    public String deleteRoomPartner(@PathVariable("id") Long roomId, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Получаем текущего авторизованного партнера
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        // Проверяем, авторизован ли партнёр
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";  // Перенаправляем на страницу входа, если партнёр не авторизован
+        }
+        // Получаем номер по ID
+        Room room = roomService.getRoomById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Неправильный ID номера: " + roomId));
+        // Проверяем, что партнёр является владельцем отеля, к которому относится номер
+        if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:/exit_Account";  // Перенаправляем, если партнёр не владелец номера
+        }
+        // Удаляем номер
+        roomService.deleteRoomById(roomId, loggedInPartner.getId());
+        // Добавляем сообщение об успешном удалении
+        redirectAttributes.addFlashAttribute("success", "Номер успешно удалён.");
+        // Перенаправляем на список номеров партнёра
+        return "redirect:/rooms/room_by_partner/" + room.getHotel().getId();
+    }
+
 }

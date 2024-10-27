@@ -575,19 +575,13 @@
         </div>
     </div>
 
-
-
-
     <!--Шаг 4: Изображения и описание
     Пользователь загружает изображения и добавляет описание объекта.-->
     <div id="step-4" class="step">
-
         <input type="hidden" id="step" name="step" value="4" />
-
-
         <!-- Загрузка изображений -->
         <div class="frame-10">
-            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>
+            <div class="profile-label"><h3>Додайте фотографії та опис Вашого помешкання</h3></div>
 
             <!-- Поле для выбора обложки -->
             <label for="coverImage">Головне фото Вашого помешкання</label>
@@ -603,26 +597,9 @@
             <!-- Контейнер для отображения загруженных изображений -->
             <div id="imagePreview" class="row mt-3"></div>
 
-<!--        </div>-->
-        <!-- Загрузка изображений -->
-<!--        <div class="frame-10">-->
-<!--            <p class="text-wrapper-26">Додайте фотографії та опис Вашого помешкання</p>-->
-
-<!--            &lt;!&ndash; Поле для выбора обложки &ndash;&gt;-->
-<!--            <label for="coverImage">Головне фото Вашого помешкання</label>-->
-<!--            <input type="file" name="coverImage" accept="image/*" required>-->
-
-
-
-<!--            &lt;!&ndash; Загрузка дополнительных изображений &ndash;&gt;-->
-<!--            <label for="imageFiles">Дополнительные изображения</label>-->
-<!--            <input type="file" name="imageFiles" accept="image/*" multiple>-->
-
-
-<!--        </div>-->
         <!-- Описание -->
         <div class="frame-10">
-            <textarea id="description" name="description" placeholder="Введите описание" required></textarea>
+            <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5" required></textarea>
             <!--        <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5"></textarea>-->
         </div>
         <div class="button">
@@ -633,26 +610,8 @@
             </button>
         </div>
         <div class="button">
-            <button type="submit">Сохранить</button>
+            <button type="submit">Зберегти</button>
         </div>
-        <!-- Модальное окно для подтверждения добавления номера в отель -->
-<!--        <div class="modal fade" id="confirmAddRoomModal" tabindex="-1" aria-labelledby="confirmAddRoomLabel" aria-hidden="true">-->
-<!--            <div class="modal-dialog">-->
-<!--                <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title" id="confirmAddRoomLabel">Додати номер до готелю</h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                        Чи бажаєте ви додати номер до цього готелю?-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" id="noAddRoomButton" data-bs-dismiss="modal">Ні</button>-->
-<!--                        <button type="button" class="btn btn-primary" id="yesAddRoomButton">Так</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
     </div>
 </form>

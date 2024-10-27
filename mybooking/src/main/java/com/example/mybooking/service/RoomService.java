@@ -59,11 +59,28 @@ public class RoomService {
         }
     }
 
+    public void deleteRoomById(Long roomId, Long partnerId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Неправильный ID комнаты: " + roomId));
+
+        if (!room.getHotel().getOwner().getId().equals(partnerId)) {
+            throw new SecurityException("Партнёр не является владельцем этой комнаты.");
+        }
+
+        roomRepository.deleteById(roomId);
+    }
+
     public void deleteRoom(Long id) {
         roomRepository.deleteById(id);
     }
+
     // Добавляем метод для получения номеров по списку идентификаторов
     public List<Room> getRoomsByIds(List<Long> roomIds) {
         return roomRepository.findAllById(roomIds);
     }
+
+    public List<Room> getRoomsByHotel(Long hotelId) {
+        return roomRepository.findByHotelId(hotelId);
+    }
+
 }

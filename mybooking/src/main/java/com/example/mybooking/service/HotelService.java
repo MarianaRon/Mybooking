@@ -40,8 +40,6 @@ public class HotelService {
 
     //    /**
 //     * Получение всех отелей из базы данных.
-//     *
-//     * @return список всех отелей.
 //     */
     public List<Hotel> getAllHotels() {
         logger.debug("Fetching all hotels");
@@ -59,9 +57,6 @@ public class HotelService {
 
     /**
      * Получение отеля по ID.
-     *
-     * @param id ID отеля
-     * @return Optional с отелем, если найден
      */
     public Optional<Hotel> getHotelById(Long id) {
 
