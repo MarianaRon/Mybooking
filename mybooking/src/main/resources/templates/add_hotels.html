@@ -28,9 +28,12 @@
             background-color: #f8f9fa;
         }
         h3 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
+            color: #275271FF;  /* Оставляем синий цвет заголовка */
+            text-align: center;  /* Выровняем заголовок по центру */
+            margin-bottom: 20px;  /* Отступ снизу для отдаления от элементов ниже */
+            font-size: 24px;  /* Увеличим размер шрифта, чтобы заголовок был более заметным */
+            font-weight: bold;  /* Жирное начертание для акцента */
+            font-family: 'Arial', sans-serif;  /* Укажем более нейтральный шрифт */
         }
         .navbar {
             background-color: #275271FF;
@@ -163,7 +166,7 @@
         .housing-type button {
             padding: 10px;
             font-size: 14px;
-            background-color: #E7A188FF;
+            background-color: #275271FF;
             color: white;
             border: none;
             border-radius: 5px;
@@ -172,7 +175,7 @@
         }
 
         .housing-type button:hover {
-            background-color: #d68c72;
+            background-color: #E7A188FF;
         }
         /* Стили для карты */
         #map {
@@ -428,47 +431,48 @@
         <input type="hidden" id="step" name="step" value="1" />
         <!-- Название отеля -->
         <div class="field-with-label">
-            <div class="text-wrapper-34">Реєстрація помешкання</div>
-            <p class="text-wrapper-35">Додайте своє помешкання і готуйтесь приймати нових гостей</p>
+            <div class="profile-label"></div>
+            <div class="text-wrapper-34"><h3>Додайте своє помешкання і готуйтесь приймати нових гостей</h3></div>
         </div>
 
         <div class="label-wrapper">
-            <p class="label">
-                <span class="text-wrapper-4">Назва </span> <span class="text-wrapper-5">*</span>
-            </p>
+            <h5 class="amenities-header">Назва Вашого помешкання</h5>
+<!--            <p class="label">-->
+<!--            <p class="text-wrapper-11">Назва Вашого помешкання</p>-->
+<!--            </p>-->
         </div>
-        <input type="text" id="name" name="name" class="form-control" placeholder="Назва вашого помешкання" required />
+        <input type="text" id="name" name="name" class="form-control" placeholder="Введіть назву Вашого помешкання" required />
 
         <!-- Тип жилья -->
         <div class="container">
             <div class="housing-type">
                 <img src="/img/5_Business_form/3_Star_Hotel.png" alt="Апартаменти">
                 <h2>Апартаменти</h2>
-                <p>Помешкання з меблями і кухнею, яке гості бронюють цілком</p>
+                <p>Помешкання з кухнею. Підвищеной комфортності</p>
                 <button type="button" onclick="selectHousingType('Апартаменти')">Обрати</button>
             </div>
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/house.png" alt="Будинки">
                 <h2>Будинки</h2>
-                <p>Апартаменти, будинки для відпочинку, вілли та ін.</p>
+                <p>Будинки для відпочинку, які орендують цілком.</p>
                 <button type="button" onclick="selectHousingType('Будинки')">Обрати</button>
             </div>
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/Room.png" alt="Готель">
-                <h2>Готель або Hostel</h2>
-                <p>Номер в готелі, хостели, ліжко, апарт-готелі</p>
-                <button type="button" onclick="selectHousingType('Готель або Hostel')">Обрати</button>
+                <h2>Готель</h2>
+                <p>Номер в готелі. Можна обрати намери люкс</p>
+                <button type="button" onclick="selectHousingType('Готель')">Обрати</button>
             </div>
             <!-- Добавляем скрытое поле для хранения выбранного типа жилья -->
 <!--            <input type="hidden" id="housingType" name="housingType" value="" />-->
 
             <div class="housing-type">
-                <img src="/img/5_Business_form/Camping_Tent.png" alt="Альтернативні помешкання">
-                <h2>Альтернативні помешкання</h2>
-                <p>Ботелі, кемпінги, намети-люкс, звичайні намети.</p>
-                <button type="button" onclick="selectHousingType('Альтернативні помешкання')">Обрати</button>
+                <img src="/img/5_Business_form/Camping_Tent.png" alt="Hostel">
+                <h2>Hostel</h2>
+                <p>Ліжко в хостелі, можна орендувати кімнату.</p>
+                <button type="button" onclick="selectHousingType('Hostel')">Обрати</button>
             </div>
 
             <!-- Скрытое поле для хранения выбранного типа жилья -->
@@ -480,36 +484,32 @@
     Этот шаг позволяет пользователю указать город, адрес и координаты для отеля.-->
     <div id="step-2" class="step">
         <input type="hidden" id="step" name="step" value="2" />
-        <p class="text-wrapper-8">Де знаходиться Ваш об’єкт власності?</p>
+        <div class="profile-label"><h3>Де знаходиться Ваш об’єкт власності?</h3></div>
         <!-- Город -->
         <div class="field-with-label-3">
             <div class="label-wrapper">
                 <p class="label">
-                    <span class="text-wrapper-4">Місто </span> <span class="text-wrapper-5">*</span>
+<!--                <p class="text-wrapper-11">Місто, в якому розташоване Ваше помешкання</p>-->
                 </p>
-            </div>
-            <!-- Добавляем выпадающий список для выбора города с Select2 -->
-            <select id="cityId" name="cityId" class="form-control" required></select>
 
-            <!-- Скрытое поле для сохранения выбранного cityId -->
-            <!--            <input type="hidden" id="cityIdHidden" name="cityId" />-->
+                <!-- Добавляем выпадающий список для выбора города с Select2 -->
+                <select id="cityId" name="cityId" class="form-control" required></select>
+            </div>
         </div>
 
         <!-- Адрес -->
         <div class="field-with-label-4">
             <div class="label-wrapper">
                 <p class="label">
-                    <span class="text-wrapper-4">Вулиця та номер будинку </span> <span class="text-wrapper-5">*</span>
+<!--                  <p class="text-wrapper-11">Адреса, де розташоване Ваше помешкання</p>-->
                 </p>
+                <input type="text" id="addressStreet" name="addressStreet" placeholder="Введіть вулицю та номер будинку Вашого помешкання" required>
             </div>
-            <!--            <input type="text" id="street" name="addressStreet" class="form-control" placeholder=" вул. Вячеслава Лепинського 4Б" required />-->
-            <input type="text" id="addressStreet" name="addressStreet" placeholder="Введите адрес" required>
         </div>
 
         <!-- Карта для выбора местоположения -->
         <div class="map-container">
-            <h4>Зазначте місцерозташування помешкання на мапі</h4>
-
+            <div class="profile-label"><h3>Відображення міста на мапі в якому знаходиться  Ваше помешкання</h3></div>
             <div id="map" style="height: 400px; width: 100%;"></div>
 
             <input type="hidden" id="latitude" name="latitude" />
@@ -584,14 +584,14 @@
             <div class="profile-label"><h3>Додайте фотографії та опис Вашого помешкання</h3></div>
 
             <!-- Поле для выбора обложки -->
-            <label for="coverImage">Головне фото Вашого помешкання</label>
+            <p class="text-wrapper-11">Головне фото Вашого помешкання</p>
             <input type="file" id="coverImage" name="coverImage" accept="image/*"  class="form-control" onchange="handleCoverImage(this.files)" />
 
             <!-- Превью для обложки -->
             <div id="coverImagePreview" class="cover-image-preview mt-3"></div>
 
             <!-- Поле для выбора остальных изображений -->
-            <label for="imageFiles">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі перевари :</label>
+            <p class="text-wrapper-11">Додайте ще декілька фото, щоб орендар мав змогу роздивитися всі переваги</p>
             <input type="file" id="imageFiles" name="imageFiles" accept="image/*" multiple class="form-control" onchange="handleImages(this.files)" />
 
             <!-- Контейнер для отображения загруженных изображений -->
@@ -610,7 +610,7 @@
             </button>
         </div>
         <div class="button">
-            <button type="submit">Зберегти</button>
+            <button class="next-button" type="submit">Зберегти</button>
         </div>
     </div>
     </div>
@@ -662,13 +662,13 @@
         previewContainer.innerHTML = ''; // Очищаем контейнер перед загрузкой новой обложки
 
         if (files.length === 0) {
-            previewContainer.innerHTML = '<p>Обложка не выбрана</p>';
+            previewContainer.innerHTML = '<p>Обкладинка не обрана</p>';
         } else if (files.length > 1) {
-            alert('Пожалуйста, выберите только одно изображение для обложки.');
+            alert('Будь ласка оберіть лише одне фото');
         } else {
             const file = files[0];
             if (file.size > 10 * 1024 * 1024) { // Ограничение на 5 МБ
-                alert('Размер файла не должен превышать 5 МБ.');
+                alert('Розмір файлу має бути до 10 МБ');
                 return;
             }
 
@@ -768,7 +768,7 @@
         // Получаем форму по ID
         var form = document.getElementById('form-step');
         if (!form) {
-            alert("Форма не найдена. Проверьте правильность ID формы.");
+            alert("Форма не знайдена. Проверьте правильность ID формы.");
             return;
         }
         var formData = new FormData(form);
@@ -840,7 +840,7 @@
     //При выборе города осуществляется AJAX-запрос для получения координат и обновления карты.
     $(document).ready(function() {
         $('#cityId').select2({
-            placeholder: "Выберите город",
+            placeholder: "Оберіть місто",
             minimumInputLength: 1,
             ajax: {
                 url: '/cities/search',

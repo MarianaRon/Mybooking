@@ -361,7 +361,7 @@
         <div class="register-box">
             <!-- Условия для незалогиненного пользователя -->
             <div th:if="${session.userName == null}">
-                <h2 style="color: #333;">Зареєструйтесь безкоштовно</h2>
+                <h3 style="color: #333;">Зареєструйтесь безкоштовно</h3>
                 <ul style="color: #333; list-style: none; padding-left: 0;">
                     <li style="margin-bottom: 10px;">✔ 45% господарів помешкань отримують своє перше бронювання протягом тижня</li>
                     <li style="margin-bottom: 10px;">✔ Ви самі вибираєте отримувати миттєві бронювання чи запити</li>
@@ -378,6 +378,13 @@
                 <form action="/hotels/hotels_by_partner" method="get" class="d-flex">
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Переглянути</button>
                 </form>
+                <ul style="color: #333; list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">✔ Редагуйте, корегуйте внесені Вами дані з легкістю</li>
+                </ul>
+
+                <ul style="color: #333; list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">✔ Зареєструй своє помешкання та почни заробляти вже сьогодні</li>
+                </ul>
                 <form action="/hotels/add" method="get" class="d-flex mt-3">
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Зареєструвати нове помешкання</button>
                 </form>
@@ -476,10 +483,10 @@
                         Розширюйте свій бізнес, додавши свої помешкання на найбільший у світі веб-сайт у сфері онлайн туризму, Arrenvi.com.</p>
                 </div>
                 <div class="sidebar-menu">
-                    <a href="/hotels/add" class="btn btn-success">Зареєструвати нове помешкання</a>
-                    <a href="hotels/hotels_by_partner" class="btn btn-success">Переглянути мої помешкання</a>
-                    <a href="/partners/profile_Partner" class="btn btn-success">Редагування профілю</a>
-                    <a href="#" class="btn btn-success">Видалити аккаунт</a>
+                    <a href="/hotels/add" class="btn btn-primary">Зареєструвати нове помешкання</a>
+                    <a href="hotels/hotels_by_partner" class="btn btn-primary">Переглянути мої помешкання</a>
+                    <a href="/partners/profile_Partner" class="btn btn-primary">Редагування профілю</a>
+                    <a href="#" class="btn btn-primary">Видалити аккаунт</a>
                 </div>
             </div>
 
