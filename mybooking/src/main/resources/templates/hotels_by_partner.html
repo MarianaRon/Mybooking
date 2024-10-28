@@ -77,6 +77,18 @@
             justify-content: space-around;
             margin-top: 50px;
         }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 0 15px; /* Отступы от краев карточки */
+        }
+
+        .button-group a {
+            flex-grow: 1; /* Растягиваем кнопки на всю доступную ширину */
+            max-width: 47%; /* Ограничиваем ширину каждой кнопки */
+        }
         .housing-type img {
             width: 50px; /* Размер изображения */
             height: auto;
@@ -176,7 +188,7 @@
             border-radius: 8px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавим тени для визуальной глубины */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Добавим тени для визуальной глубины */
         }
 
 
@@ -211,7 +223,7 @@
 
         .hotel-card {
             border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         }
         .other-images img {
             margin-right: 10px;
@@ -219,6 +231,7 @@
             height: auto;
             border-radius: 5px;
             object-fit: cover;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .other-images img:last-child {
@@ -231,6 +244,7 @@
 
         .card-body {
             padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
 
@@ -248,7 +262,9 @@
             display: inline-flex; /* Выравниваем содержимое по центру */
             justify-content: center;
             align-items: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
+
 
         .btn_edit img {
             width: 28px; /* Задаем размер иконки */
@@ -256,7 +272,7 @@
         }
 
         .btn_edit:hover {
-            background-color: #d7d5d5;
+            background-color:  #f8f9fa;
             /*color: white;*/
             /*box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);*/
             /*transform: scale(1.05);*/
@@ -267,11 +283,13 @@
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 
         }
         .btn-danger img {
             width: 30px; /* Задаем размер иконки */
             height: auto;
+
         }
         .btn-danger:hover {
             background-color: #d57c5d;;
@@ -284,6 +302,7 @@
             border-radius: 5px; /* Скругляем углы */
             font-weight: bold;
             padding: 10px 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 
         }
 
@@ -294,6 +313,7 @@
         .hotel-cover-img {
             width: 100%;
             height: auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .other-images .image-row {
@@ -301,6 +321,7 @@
             flex-wrap: wrap;
             justify-content: flex-start;
             gap: 10px; /* Расстояние между изображениями */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .other-images .small-img {
@@ -308,6 +329,7 @@
             height: auto;
             object-fit: cover;
             border-radius: 5px;
+
         }
         /*///////////*/
         /* Стили для модального окна */
@@ -350,6 +372,7 @@
             transition: 0.3s;
             cursor: pointer;
             z-index: 1001; /* Убедимся, что крестик выше изображения */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .close:hover,
@@ -532,8 +555,6 @@
                                 <a th:href="@{/rooms/add/{hotelId}(hotelId=${hotel.id})}" class="btn btn-primary mt-2" style="flex-grow: 1;">
                                     Додати номер
                                 </a>
-                                <!-- Кнопка "Перегляд номерів" -->
-
                                 <a th:href="@{/rooms/room_by_partner/{hotelId}(hotelId=${hotel.id})}" class="btn btn-primary">Перегляд номерів</a>
                             </div>
                             <!-- Детали отеля -->

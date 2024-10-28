@@ -1,10 +1,7 @@
 package com.example.mybooking.controller;
 
 import com.example.mybooking.model.*;
-import com.example.mybooking.service.AmenityService;
-import com.example.mybooking.service.HotelService;
-import com.example.mybooking.service.ImageService;
-import com.example.mybooking.service.RoomService;
+import com.example.mybooking.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +29,9 @@ public class RoomController {
     private RoomService roomService;
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Autowired
     private AmenityService amenityService;
@@ -368,6 +368,7 @@ public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model
     public String saveRoomEdit(@PathVariable("id") Long id,
                                @RequestParam("price") Double price,
                                @RequestParam("description") String description,
+                               @RequestParam("capacity") Integer capacity,
                                @RequestParam(value = "amenities", required = false) List<Long> amenityIds,
                                @RequestParam(value = "coverImage", required = false) MultipartFile coverImageFile,
                                @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,
@@ -391,10 +392,17 @@ public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model
         }
         // Выводим ID отеля в консоль для проверки
         System.out.println("Hotel ID: " + room.getHotel().getId());
+
+        // Проверка, что capacity не null
+        if (capacity == null || capacity <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Количество людей должно быть указано.");
+            return "redirect:/rooms/edit_full/" + id;
+        }
         // Обновляем данные номера
 
         room.setDescription(description);
         room.setPrice(price);
+        room.setCapacity(capacity);
 
         // Привязываем удобства
         if (amenityIds != null) {
@@ -430,6 +438,33 @@ public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model
 
         // Перенаправляем обратно на список номеров партнёра
         return "redirect:/rooms/room_by_partner/" + room.getHotel().getId();
+    }
+
+    @GetMapping("/rooms/{id}/reservations")
+    public String viewRoomReservations(@PathVariable("id") Long roomId, Model model, HttpSession session) {
+        // Получаем текущего авторизованного партнёра
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+        if (loggedInPartner == null) {
+            return "redirect:/exit_Account";  // Перенаправляем на страницу входа, если партнёр не авторизован
+        }
+
+        // Получаем номер по ID
+        Room room = roomService.getRoomById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + roomId));
+
+        // Проверяем, что партнёр является владельцем комнаты
+        if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
+            return "redirect:/hotels/hotels_by_partner";
+        }
+
+        // Получаем все бронирования для данной комнаты
+        List<Reservation> reservations = reservationService.getReservationsByRoom(roomId);
+
+        // Добавляем комнату и бронирования в модель
+        model.addAttribute("room", room);
+        model.addAttribute("reservations", reservations);
+
+        return "view_reservations";  // Возвращаем шаблон для отображения бронирований
     }
 
     @PostMapping("/deleteRoom/{id}")

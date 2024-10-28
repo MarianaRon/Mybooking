@@ -33,4 +33,8 @@ public class ReservationService {
     public List<Reservation> findReservationsByUser(User user) {
         return reservationRepository.findByUser(user);
     }
+    public List<Reservation> getReservationsByRoom(Long roomId) {
+        return reservationRepository.findByRoomId(roomId);
+    }
+
 }

@@ -15,6 +15,7 @@
         .navbar {
             background-color: #275271FF;
             color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Тень под хедером */
         }
 
         .logo-component {
@@ -69,6 +70,7 @@
             display: flex;
             margin-top: 50px;
             padding-bottom: 50px; /* Добавлен отступ снизу */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .sidebar {
@@ -134,6 +136,7 @@
             color: white;
             border: none;
             margin-right: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .btn-save:hover {
@@ -146,6 +149,7 @@
             color: #275271FF;
             border: 2px solid #275271FF;
             font-weight: bold;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .btn-cancel:hover {
@@ -165,11 +169,13 @@
             height: auto;
             object-fit: cover;
             margin-bottom: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         /* Стили для отображения изображений в строку */
         .additional-images {
             margin-top: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .images-list {
@@ -208,7 +214,7 @@
             width: 100%; /* Полная ширина */
             height: 100%; /* Полная высота */
             overflow: auto; /* Разрешаем прокрутку в случае необходимости */
-            background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
         }
 
         .modal-content {
@@ -416,9 +422,13 @@
                 <input type="number" class="form-control" name="price" th:value="${room.price}" required>
             </div>
             <!-- Кількість осіб< -->
+<!--            <div class="profile-row">-->
+<!--                <div class="profile-label">Кількість осіб</div>-->
+<!--                <input type="number" class="form-control" name="room.capacity" th:value="${room.capacity}" required>-->
+<!--            </div>-->
             <div class="profile-row">
                 <div class="profile-label">Кількість осіб</div>
-                <input type="number" class="form-control" name="room.capacity" th:value="${room.capacity}" required>
+                <input type="number" class="form-control" name="capacity" th:value="${room.capacity}" required>
             </div>
 
             <!-- Описание -->
