@@ -48,13 +48,47 @@
             background-color: white;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
             width: 30%;
             margin-left: 20px;
+            z-index: 1; /* Повышаем приоритет, чтобы текст был за блоком */
         }
 
         .text-white {
             color: white;
+        }
+
+        /* Анимации для выезда текста */
+        .slide-in {
+            animation: slideIn 0.6s forwards;
+        }
+
+        .slide-out {
+            animation: slideOut 0.6s forwards;
+        }
+
+        /* Ключевые кадры для анимации появления (слева направо) */
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Ключевые кадры для анимации исчезновения (справа налево) */
+        @keyframes slideOut {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
         }
 
         .auth-buttons .btn-light {
@@ -358,7 +392,9 @@
     <div class="container" style="padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
         <!-- Основной контент слева -->
         <div class="navbar-bottom" style="max-width: 50%;">
-            <h1 class="text-white" style="font-size: 2.5rem;">Зареєструйте своє помешкання на Arrenvi.com</h1>
+            <h1 class="text-white" style="font-size: 2.5rem; ">Зареєструйте своє помешкання на Arrenvi.com</h1>
+            <h1 class="text-white" id="dynamic-title" style="font-size: 2.5rem;">Апартаменти</h1>
+            <p class="text-white" id="dynamic-subtitle" style="font-size: 1.2rem;">Помешкання з кухнею. Підвищеної комфортності</p>
             <p class="text-white" style="font-size: 1.2rem;">Незалежно від того, чи приймаєте ви гостей у вільний від роботи час чи це ваша основна робота, зареєструйте своє помешкання сьогодні, щоб почати заробляти більше.</p>
         </div>
 
@@ -379,12 +415,12 @@
 
             <!-- Условия для залогиненного пользователя -->
             <div th:if="${session.userName != null}">
-                <h2 style="color: #333;">Зареєстровані помешкання</h2>
+                <h3 style="color: #333;">Зареєстровані помешкання</h3>
                 <form action="/hotels/hotels_by_partner" method="get" class="d-flex">
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Переглянути</button>
                 </form>
                 <ul style="color: #333; list-style: none; padding-left: 0;">
-                    <li style="margin-bottom: 10px;">✔ Редагуйте, корегуйте внесені Вами дані з легкістю</li>
+                    <li style="margin-bottom: 10px; margin-top: 10px;">✔ Редагуйте, корегуйте внесені Вами дані з легкістю</li>
                 </ul>
 
                 <ul style="color: #333; list-style: none; padding-left: 0;">
@@ -587,6 +623,56 @@
         <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
     </div>
 </footer>
+
+<script>
+    // Массив заголовков и подзаголовков
+    const headerTexts = [
+        {
+            title: "Апартаменти",
+            subtitle: "Помешкання з кухнею. Підвищеної комфортності"
+        },
+        {
+            title: "Будинок",
+            subtitle: "Будинки для відпочинку, які орендують цілком"
+        },
+        {
+            title: "Готель",
+            subtitle: "Номер в готелі. Можна обрати намери люкс"
+        },
+        {
+            title: "Hostel",
+            subtitle: "Ліжко в хостелі. Можна орендувати ліжко"
+        }
+    ];
+
+    let currentIndex = 0;
+
+    // Функция для смены текста с анимацией
+    function changeHeaderText() {
+        // Удаляем текущие элементы с экрана с анимацией "slide-out"
+        const titleElement = document.getElementById('dynamic-title');
+        const subtitleElement = document.getElementById('dynamic-subtitle');
+
+        titleElement.classList.add('slide-out');
+        subtitleElement.classList.add('slide-out');
+
+        setTimeout(() => {
+            // Обновляем текст после завершения анимации "slide-out"
+            currentIndex = (currentIndex + 1) % headerTexts.length;
+            titleElement.textContent = headerTexts[currentIndex].title;
+            subtitleElement.textContent = headerTexts[currentIndex].subtitle;
+
+            // Убираем классы "slide-out" и добавляем "slide-in" для новых текстов
+            titleElement.classList.remove('slide-out');
+            subtitleElement.classList.remove('slide-out');
+            titleElement.classList.add('slide-in');
+            subtitleElement.classList.add('slide-in');
+        }, 600); // Время ожидания, равное длительности анимации
+    }
+
+    // Автоматическая смена текста каждые 5 секунд
+    setInterval(changeHeaderText, 6000);
+</script>
 <script>
     // Ensure the dropdown closes when clicking outside
     document.addEventListener('click', function (event) {

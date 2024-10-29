@@ -168,6 +168,7 @@
         }
 
         /* Стили для карточек отелей */
+        /* Стили для карточек отелей */
         .hotel-card {
             width: 100%; /* Сделать карточку занимать всю ширину столбца */
             max-width: 800px; /* Ограничить максимальную ширину */
@@ -177,15 +178,25 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Добавим тени для визуальной глубины */
+            display: flex; /* Добавим flex для гарантии согласованных размеров */
+            flex-direction: column; /* Направление содержимого сверху вниз */
         }
 
+        .hotel-cover-wrapper {
+            width: 100%;
+            height: 300px; /* Задаем фиксированную высоту для всех обложек */
+            overflow: hidden; /* Изображения, выходящие за пределы контейнера, будут обрезаны */
+            display: flex;
+            justify-content: center; /* Центрируем изображение по горизонтали */
+            align-items: center; /* Центрируем изображение по вертикали */
+        }
 
         .hotel-cover-img {
-            height: 400px; /*  высота главного изображения */
-            object-fit: cover;
-            border-bottom: 1px solid #ddd;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень под хедером */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Масштабируем изображение, чтобы оно заполняло весь блок */
         }
+
         /* Карточки будут расположены по центру */
         .content {
             display: flex;
@@ -545,19 +556,20 @@
         <!-- Отображение номеров, зарегистрированных партнером -->
         <div class="row">
             <div class="container mt-5">
+
                 <div class="row justify-content-center">
                     <div class="col-md-6" th:each="room : ${rooms}">
 
                         <div class="card hotel-card mb-4 position-relative">
                             <!-- Заголовок карточки комнаты -->
-                            <div> <h2 th:text="${room.type} + ' у ' + ${hotel.name}"></h2></div>
+                            <div> <h2 th:text="${room.type}"></h2><h2> «<span th:text="${hotel.name}"></span>»</h2></div>
                             <!-- Кнопка "Ваше житло забронювали", если есть бронирования -->
-
+                            <div class="hotel-cover-wrapper">
                             <!-- Изображение комнаты -->
                             <img th:if="${room.coverImage != null}"
                                  th:src="@{/rooms/cover/{id}(id=${room.id})}"
                                  alt="Обкладинка" class="card-img-top hotel-cover-img" onclick="openModal(this)">
-
+                            </div>
                             <!-- Место для дополнительных изображений -->
                             <div class="other-images mt-3">
                                 <div class="image-row">

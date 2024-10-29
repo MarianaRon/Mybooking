@@ -38,6 +38,7 @@
         .navbar {
             background-color: #275271FF;
             color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .auth-buttons {
@@ -95,63 +96,56 @@
         .button {
             display: flex;
             justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .button button {
             padding: 10px 20px;
         }
 
-
-        /*.logo-component-2 {*/
-        /*    max-width: 150px; !* Настройте размер под нужный *!*/
-        /*    opacity: 1; !* Убедитесь, что прозрачность установлена на 100% *!*/
-        /*    filter: brightness(2); !* Увеличиваем яркость, если логотип слишком тусклый *!*/
-        /*    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); !* Более выраженная тень для лучшей читаемости *!*/
-        /*}*/
-
-        /*.logo-component-2:hover {*/
-        /*    transform: scale(1.1); !* Увеличение логотипа при наведении *!*/
-        /*}*/
-        /*.navbar-brand {*/
-        /*    color: #ffffff; !* Белый цвет текста *!*/
-        /*    font-size: 1.5em;*/
-        /*    font-weight: bold;*/
-        /*    margin-left: 200px;*/
-        /*    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); !* Тень для текста, чтобы сделать его более заметным *!*/
-        /*}*/
-
-        /*.auth-buttons {*/
-        /*    color: #ffffff;*/
-        /*    background-color: #E7A188FF;*/
-        /*    display: flex;*/
-        /*    align-items: center;*/
-        /*    margin-right: 200px;*/
-
-        /*}*/
-
-
-
+        /* Основной контейнер с увеличенным отступом между элементами */
         .container {
             display: flex;
             justify-content: space-around;
             margin-top: 50px;
+            gap: 30px; /* Добавляем отступы между типами жилья */
+        }
+        /* Стиль для поля ввода с тенью */
+        input.form-control {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем легкую тень */
+            border: 1px solid #275271FF; /* Добавляем цвет границы */
+            padding: 10px; /* Увеличиваем внутренние отступы для удобства */
+            transition: all 0.3s ease-in-out; /* Плавный переход для стиля при фокусе */
         }
 
+        /* Изменение при фокусе на поле ввода */
+        input.form-control:focus {
+            border-color: #E7A188FF; /* Изменяем цвет границы при фокусе */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Добавляем более выраженную тень при фокусе */
+        }
+
+        /* Общий стиль для карточек типа жилья */
         .housing-type {
             border: 1px solid #ccc;
             padding: 20px;
             text-align: center;
-            width: 220px; /* Уменьшено, чтобы уменьшить ширину блока */
+            width: 240px; /* Фиксированная ширина как у первой карточки */
             margin-bottom: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 350px; /* Фиксированная высота */
+        }
+        /* Центрирование изображения */
+        .housing-type img {
+            width: 70px;
+            height: auto;
+            margin: 0 auto 15px auto; /* Центрируем изображение */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        .housing-type img {
-            width: 50px; /* Размер изображения */
-            height: auto;
-            margin-bottom: 15px;
-        }
 
         .housing-type h2 {
             font-size: 18px; /* Уменьшен размер шрифта */
@@ -163,6 +157,7 @@
             margin-bottom: 20px;
         }
 
+        /* Кнопка будет фиксирована внизу карточки */
         .housing-type button {
             padding: 10px;
             font-size: 14px;
@@ -171,7 +166,9 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
+            margin-top: auto; /* Устанавливаем кнопку в нижнюю часть карточки */
+            width: 100%; /* Кнопка будет занимать всю ширину карточки */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Добавим тень для выделения */
         }
 
         .housing-type button:hover {
@@ -183,10 +180,12 @@
             width: 100%;
             margin-top: 30px;
             border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .map-container {
             margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
         footer {
             background-color: #275271FF;
@@ -233,6 +232,7 @@
             height: 30px;
             margin: 0 10px;
             transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .social-icon:hover {
@@ -250,6 +250,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .button .prev-button {
@@ -292,8 +293,9 @@
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
             width: 100%;
+
         }
 
         .amenities-header {
@@ -345,6 +347,7 @@
             width: 100%;
             max-height: 400px;
             object-fit: cover; /* Избегаем растяжения изображения */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         #imagePreview img {
@@ -357,12 +360,14 @@
         .price-section {
             text-align: center;
             margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .price-section input {
             width: 200px;
             margin-top: 10px;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .price-label {
@@ -380,6 +385,7 @@
             justify-content: center;
             gap: 20px;
             margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
@@ -446,21 +452,21 @@
         <!-- Тип жилья -->
         <div class="container">
             <div class="housing-type">
-                <img src="/img/5_Business_form/3_Star_Hotel.png" alt="Апартаменти">
+                <img src="/img/5_Business_form/Apartamentu.png" alt="Апартаменти">
                 <h2>Апартаменти</h2>
-                <p>Помешкання з кухнею. Підвищеной комфортності</p>
+                <p>Помешкання з кухнею. Підвищеної комфортності</p>
                 <button type="button" onclick="selectHousingType('Апартаменти')">Обрати</button>
             </div>
 
             <div class="housing-type">
                 <img src="/img/5_Business_form/house.png" alt="Будинки">
-                <h2>Будинки</h2>
+                <h2>Будинок</h2>
                 <p>Будинки для відпочинку, які орендують цілком.</p>
                 <button type="button" onclick="selectHousingType('Будинки')">Обрати</button>
             </div>
 
             <div class="housing-type">
-                <img src="/img/5_Business_form/Room.png" alt="Готель">
+                <img src="/img/5_Business_form/3_Star_Hotel.png" alt="Готель">
                 <h2>Готель</h2>
                 <p>Номер в готелі. Можна обрати намери люкс</p>
                 <button type="button" onclick="selectHousingType('Готель')">Обрати</button>
@@ -469,7 +475,7 @@
 <!--            <input type="hidden" id="housingType" name="housingType" value="" />-->
 
             <div class="housing-type">
-                <img src="/img/5_Business_form/Camping_Tent.png" alt="Hostel">
+                <img src="/img/5_Business_form/Hostel.png" alt="Hostel">
                 <h2>Hostel</h2>
                 <p>Ліжко в хостелі, можна орендувати кімнату.</p>
                 <button type="button" onclick="selectHousingType('Hostel')">Обрати</button>
@@ -602,16 +608,15 @@
             <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5" required></textarea>
             <!--        <textarea id="description" name="description" class="form-control" placeholder="Додайте короткий опис (до 2500 символів)" rows="5"></textarea>-->
         </div>
-        <div class="button">
-            <button type="button" class="prev-button" onclick="prevStep(3)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
-                </svg>
-            </button>
-        </div>
-        <div class="button">
-            <button class="next-button" type="submit">Зберегти</button>
-        </div>
+            <div class="button">
+                <button type="button" class="prev-button" onclick="prevStep(3)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M5.854 11.854a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708.708L2.707 7.5H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                </button>
+                <button class="next-button" type="submit">Зберегти</button>
+            </div>
+
     </div>
     </div>
 </form>
