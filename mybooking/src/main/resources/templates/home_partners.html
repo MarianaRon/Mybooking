@@ -91,6 +91,11 @@
             }
         }
 
+        /* Добавляем тень для текста, который не анимируется */
+        .text-shadow {
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Задает тень */
+        }
+
         .auth-buttons .btn-light {
             color: black;
             background-color: #ffffff;
@@ -276,7 +281,11 @@
             gap: 15px;
             flex: 1 1 calc(50% - 20px);
         }
-
+        h4 {
+            /*font-style: italic;*/
+            font-weight: bold; /* Жирное начертание */
+            color: #275271FF;
+        }
         .user-name {
             text-align: center;     /* Выравнивание по центру */
             font-size: 36px;        /* Увеличиваем размер шрифта */
@@ -352,7 +361,7 @@
         <!-- Логотип -->
         <div class="logo-container" style="display: flex; align-items: center;">
             <a class="nav-link" href="/" style="display: flex; align-items: center;">
-                <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 40px; margin-right: 10px;" />
+                <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 100px; margin-right: 10px;" />
             </a>
 
         </div>
@@ -391,10 +400,10 @@
     <!-- Вторая строка: сообщение и форма -->
     <div class="container" style="padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
         <!-- Основной контент слева -->
-        <div class="navbar-bottom" style="max-width: 50%;">
-            <h1 class="text-white" style="font-size: 2.5rem; ">Зареєструйте своє помешкання на Arrenvi.com</h1>
-            <h1 class="text-white" id="dynamic-title" style="font-size: 2.5rem;">Апартаменти</h1>
-            <p class="text-white" id="dynamic-subtitle" style="font-size: 1.2rem;">Помешкання з кухнею. Підвищеної комфортності</p>
+        <div class="navbar-bottom text-shadow" style="max-width: 50%;">
+            <h1 class="text-white text-shadow" style="font-size: 2.5rem; ">Зареєструйте своє помешкання на Arrenvi.com</h1>
+            <h1 class="text-white text-shadow" id="dynamic-title" style="font-size: 2.5rem;">Апартаменти</h1>
+            <p class="text-white  text-shadow" id="dynamic-subtitle" style="font-size: 1.2rem;">Помешкання з кухнею. Підвищеної комфортності</p>
             <p class="text-white" style="font-size: 1.2rem;">Незалежно від того, чи приймаєте ви гостей у вільний від роботи час чи це ваша основна робота, зареєструйте своє помешкання сьогодні, щоб почати заробляти більше.</p>
         </div>
 
@@ -402,7 +411,7 @@
         <div class="register-box">
             <!-- Условия для незалогиненного пользователя -->
             <div th:if="${session.userName == null}">
-                <h3 style="color: #333;">Зареєструйтесь безкоштовно</h3>
+                <h3 style="color: #333; font-size: 25px;">Зареєструйтесь безкоштовно</h3>
                 <ul style="color: #333; list-style: none; padding-left: 0;">
                     <li style="margin-bottom: 10px;">✔ 45% господарів помешкань отримують своє перше бронювання протягом тижня</li>
                     <li style="margin-bottom: 10px;">✔ Ви самі вибираєте отримувати миттєві бронювання чи запити</li>
@@ -415,7 +424,7 @@
 
             <!-- Условия для залогиненного пользователя -->
             <div th:if="${session.userName != null}">
-                <h3 style="color: #333;">Зареєстровані помешкання</h3>
+                <h3 style="color: #333; font-size: 25px;">Зареєстровані помешкання</h3>
                 <form action="/hotels/hotels_by_partner" method="get" class="d-flex">
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Переглянути</button>
                 </form>
