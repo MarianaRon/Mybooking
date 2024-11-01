@@ -624,4 +624,13 @@ public class HotelController {
         }
 
     }
+
+//    для видалення готеля із списку на сторінці адміністратора
+@PostMapping("/delete/{id}")
+public String deleteHotelPost(@PathVariable Long id) {
+    hotelService.deleteHotelById(id);
+    return "redirect:/hotels/hotel_list";
+}
+
+
 }

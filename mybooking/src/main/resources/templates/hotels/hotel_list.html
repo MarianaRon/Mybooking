@@ -174,42 +174,42 @@
 
 <div class="container">
     <h1>Робота з таблицею ГОТЕЛІ</h1>
-    <form action="/hotels/add_hotel" method="post" enctype="multipart/form-data">
-        <label for="name">Назва:</label>
-        <input type="text" id="name" name="name" placeholder="Назва готелю" th:value="${hotel.name}" required>
+<!--    <form action="/hotels/add_hotel" method="post" enctype="multipart/form-data">-->
+<!--        <label for="name">Назва:</label>-->
+<!--        <input type="text" id="name" name="name" placeholder="Назва готелю" th:value="${hotel.name}" required>-->
 
-        <label for="description">Опис:</label>
-        <textarea id="description" name="description" placeholder="Опис готелю" th:text="${hotel.description}" required></textarea>
+<!--        <label for="description">Опис:</label>-->
+<!--        <textarea id="description" name="description" placeholder="Опис готелю" th:text="${hotel.description}" required></textarea>-->
 
-        <label for="addressStreet">Адреса:</label>
-        <input type="text" id="addressStreet" name="addressStreet" placeholder="Введіть адресу" th:value="${hotel.addressStreet}" required>
+<!--        <label for="addressStreet">Адреса:</label>-->
+<!--        <input type="text" id="addressStreet" name="addressStreet" placeholder="Введіть адресу" th:value="${hotel.addressStreet}" required>-->
 
-        <label for="latitude">Широта:</label>
-        <input type="number" step="0.000001" id="latitude" name="latitude" placeholder="Широта" th:value="${hotel.latitude}" required>
+<!--        <label for="latitude">Широта:</label>-->
+<!--        <input type="number" step="0.000001" id="latitude" name="latitude" placeholder="Широта" th:value="${hotel.latitude}" required>-->
 
-        <label for="longitude">Довгота:</label>
-        <input type="number" step="0.000001" id="longitude" name="longitude" placeholder="Довгота" th:value="${hotel.longitude}" required>
+<!--        <label for="longitude">Довгота:</label>-->
+<!--        <input type="number" step="0.000001" id="longitude" name="longitude" placeholder="Довгота" th:value="${hotel.longitude}" required>-->
 
-        <label for="owner">Власник:</label>
-        <select id="owner" name="owner" required>
-            <option value="" disabled selected>Оберіть власника</option>
-            <option th:each="partner : ${partners}" th:value="${partner.id}" th:text="${partner.email}"></option>
-        </select>
+<!--        <label for="owner">Власник:</label>-->
+<!--        <select id="owner" name="owner" required>-->
+<!--            <option value="" disabled selected>Оберіть власника</option>-->
+<!--            <option th:each="partner : ${partners}" th:value="${partner.id}" th:text="${partner.email}"></option>-->
+<!--        </select>-->
 
-        <label for="housingType">Тип житла:</label>
-        <input type="text" id="housingType" name="housingType" placeholder="Тип житла" th:value="${hotel.housingType}" required>
+<!--        <label for="housingType">Тип житла:</label>-->
+<!--        <input type="text" id="housingType" name="housingType" placeholder="Тип житла" th:value="${hotel.housingType}" required>-->
 
-        <label for="city">Місто:</label>
-        <select id="city" name="city" required>
-            <option value="" disabled selected>Оберіть місто</option>
-            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name + ', ' + city.region}"></option>
-        </select>
+<!--        <label for="city">Місто:</label>-->
+<!--        <select id="city" name="city" required>-->
+<!--            <option value="" disabled selected>Оберіть місто</option>-->
+<!--            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name + ', ' + city.region}"></option>-->
+<!--        </select>-->
 
-        <label for="coverImage">Зображення обкладинки:</label>
-        <input type="file" id="coverImage" name="coverImage" accept="image/*" required>
+<!--        <label for="coverImage">Зображення обкладинки:</label>-->
+<!--        <input type="file" id="coverImage" name="coverImage" accept="image/*" required>-->
 
-        <button type="submit">Додати готель</button>
-    </form>
+<!--        <button type="submit">Додати готель</button>-->
+<!--    </form>-->
 
     <table>
         <thead>
@@ -236,10 +236,11 @@
                 <img th:src="@{/hotels/coverImage/{id}(id=${hotel.id})}" alt="Обкладинка" width="100">
             </td>
             <td>
-                <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}">Редагувати</a>
+<!--                <a th:href="@{/hotels/edit/{id}(id=${hotel.id})}">Редагувати</a>-->
                 <form th:action="@{/hotels/delete/{id}(id=${hotel.id})}" method="post" style="display:inline;">
                     <button type="submit">Видалити</button>
                 </form>
+
             </td>
         </tr>
         </tbody>
