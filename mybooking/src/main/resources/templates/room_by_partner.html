@@ -162,11 +162,6 @@
             background-color: #d68c72;
         }
 
-        /* Стили для основной части контента */
-        .content {
-            width: 75%;
-        }
-
         /* Стили для карточек отелей */
         /* Стили для карточек отелей */
         .hotel-card {
@@ -189,19 +184,30 @@
             display: flex;
             justify-content: center; /* Центрируем изображение по горизонтали */
             align-items: center; /* Центрируем изображение по вертикали */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Добавим тени для визуальной глубины */
         }
 
         .hotel-cover-img {
             width: 100%;
             height: 100%;
             object-fit: cover; /* Масштабируем изображение, чтобы оно заполняло весь блок */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Добавим тени для визуальной глубины */
         }
-
-        /* Карточки будут расположены по центру */
-        .content {
+        /* Стили для главного контейнера */
+        .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-top: 15px;
+            justify-content: space-around;
+        }
+        /* Карточки будут расположены по центру */
+        /*.content {*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    align-items: center;*/
+        /*}*/
+        /* Стили для основной части контента */
+        .content {
+            width: 75%;
         }
         .rating-box {
             border-radius: 0 0 0 8px;
