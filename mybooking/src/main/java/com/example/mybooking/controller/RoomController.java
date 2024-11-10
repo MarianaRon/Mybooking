@@ -440,32 +440,62 @@ public String showAddRoomForm(@PathVariable("hotelId") Long hotelId, Model model
         return "redirect:/rooms/room_by_partner/" + room.getHotel().getId();
     }
 
-    @GetMapping("/rooms/{id}/reservations")
-    public String viewRoomReservations(@PathVariable("id") Long roomId, Model model, HttpSession session) {
-        // Получаем текущего авторизованного партнёра
-        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
-        if (loggedInPartner == null) {
-            return "redirect:/exit_Account";  // Перенаправляем на страницу входа, если партнёр не авторизован
-        }
-
-        // Получаем номер по ID
-        Room room = roomService.getRoomById(roomId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + roomId));
-
-        // Проверяем, что партнёр является владельцем комнаты
-        if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
-            return "redirect:/hotels/hotels_by_partner";
-        }
-
-        // Получаем все бронирования для данной комнаты
-        List<Reservation> reservations = reservationService.getReservationsByRoom(roomId);
-
-        // Добавляем комнату и бронирования в модель
-        model.addAttribute("room", room);
-        model.addAttribute("reservations", reservations);
-
-        return "view_reservations";  // Возвращаем шаблон для отображения бронирований
+//    @GetMapping("/rooms/{id}/reservations")
+//    public String viewRoomReservations(@PathVariable("id") Long roomId, Model model, HttpSession session) {
+//        // Получаем текущего авторизованного партнёра
+//        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+//        if (loggedInPartner == null) {
+//            return "redirect:/exit_Account";  // Перенаправляем на страницу входа, если партнёр не авторизован
+//        }
+//
+//        // Получаем номер по ID
+//        Room room = roomService.getRoomById(roomId)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + roomId));
+//
+//        // Проверяем, что партнёр является владельцем комнаты
+//        if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
+//            return "redirect:/hotels/hotels_by_partner";
+//        }
+//
+//        // Получаем все бронирования для данной комнаты
+//        List<Reservation> reservations = reservationService.getReservationsByRoom(roomId);
+//
+//        // Добавляем комнату и бронирования в модель
+//        model.addAttribute("room", room);
+//        model.addAttribute("reservations", reservations);
+//
+//        return "view_reservations";  // Возвращаем шаблон для отображения бронирований
+//    }
+// Метод для отображения всех бронирований определенного номера
+@GetMapping("/{roomId}/reservations")
+public String getRoomReservations(@PathVariable Long roomId, Model model, HttpSession session) {
+    // Получаем текущего авторизованного партнера
+    Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+    if (loggedInPartner == null) {
+        return "redirect:/exit_Account"; // Перенаправляем на страницу входа, если партнер не авторизован
     }
+
+    // Получаем номер по ID
+    Room room = roomService.getRoomById(roomId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + roomId));
+
+    // Проверяем, что партнёр является владельцем номера
+    if (!room.getHotel().getOwner().getId().equals(loggedInPartner.getId())) {
+        return "redirect:/hotels/hotels_by_partner"; // Перенаправляем, если партнёр не владелец номера
+    }
+
+    // Получаем список бронирований для данного номера
+    List<Reservation> reservations = reservationService.getReservationsByRoom(roomId);
+
+    // Логирование для отладки
+    logger.info("Total reservations found for room ID {}: {}", roomId, reservations.size());
+
+    // Добавляем данные в модель
+    model.addAttribute("room", room);
+    model.addAttribute("reservations", reservations);
+
+    return "room_reservations"; // Возвращаем шаблон для отображения бронирований
+}
 
     @PostMapping("/deleteRoom/{id}")
     public String deleteRoomPartner(@PathVariable("id") Long roomId, HttpSession session, RedirectAttributes redirectAttributes) {

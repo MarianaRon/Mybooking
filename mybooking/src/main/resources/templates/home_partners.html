@@ -24,6 +24,14 @@
             align-items: center;
 
         }
+        .logo-component {
+            transition: transform 0.3s ease-in-out; /* Плавный переход */
+            max-height: 100px; /* Соответствует вашему заданному размеру */
+        }
+
+        .logo-component:hover {
+            transform: scale(1.1); /* Увеличение на 10% при наведении */
+        }
 
         .auth-buttons .btn-help {
             background-color: #E7A188FF;
@@ -615,12 +623,12 @@
             <p>Arrenvi@gmail.com</p>
         </div>
         <div class="footer-section">
-            <h4>Для бізнесу</h4>
+            <h4 class="nav-link">Для бізнесу</h4>
             <p><a href="/hotels/add">Зареєструвати помешкання</a></p>
         </div>
         <div class="footer-section">
             <h2><a class="nav-link" href="/about_us">Про нас</a></h2>
-            <h4>Ми в соц мережах:</h4>
+            <h4 class="nav-link">Ми в соц мережах:</h4>
             <a href="#"><img class="img" src="/images/instagram.png" /></a>
             <a href="#"><img class="img" src="/images/facebook.png" /></a>
         </div>

@@ -14,13 +14,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
+        /* Шрифт для всей страницы */
+        body {
+
+            background-color: #e6e6e6;
+
+        }
 
         .button button {
             padding: 10px 20px;
         }
         .mb-4 {
             color: #275271FF;
-
+        }
+        /* Центрирование заголовка */
+        .content h2 {
+            text-align: center;
+            margin-bottom: 15px;
         }
         h4 {
             /*font-style: italic;*/
@@ -28,10 +38,19 @@
 
             color: #275271FF;
         }
+        .logo-component {
+            transition: transform 0.3s ease-in-out; /* Плавный переход */
+            max-height: 90px;
+            margin-right: 10px;
+        }
+
+        .logo-component:hover {
+            transform: scale(1.1); /* Увеличение на 10% при наведении */
+        }
         .navbar {
             background-color: #275271FF;
             color: white;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень под хедером */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Тень под хедером */
         }
         .auth-buttons {
             color: #ffffff;
@@ -120,10 +139,12 @@
         .sidebar {
             width: 25%;
             background-color: #f8f9fa;
+
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             margin-right: 20px;
+
         }
         .user-name {
             text-align: center;     /* Выравнивание по центру */
@@ -155,16 +176,20 @@
             border-radius: 4px;
             margin-bottom: 10px;
             font-size: 16px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень под хедером */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Тень под хедером */
         }
 
         .sidebar-menu a:hover {
             background-color: #d68c72;
         }
+        .hotel-card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
 
         /* Стили для карточек отелей */
-        /* Стили для карточек отелей */
         .hotel-card {
+            margin-top: 1px; /* Добавляет небольшой отступ сверху */
             width: 100%; /* Сделать карточку занимать всю ширину столбца */
             max-width: 800px; /* Ограничить максимальную ширину */
             margin-bottom: 30px; /* Добавить расстояние между карточками */
@@ -172,7 +197,7 @@
             border-radius: 8px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Добавим тени для визуальной глубины */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Добавим тени для визуальной глубины */
             display: flex; /* Добавим flex для гарантии согласованных размеров */
             flex-direction: column; /* Направление содержимого сверху вниз */
         }
@@ -209,13 +234,7 @@
         .content {
             width: 75%;
         }
-        .rating-box {
-            border-radius: 0 0 0 8px;
-            background-color: #275271FF;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
+
         .rating-box .fs-4 {
             font-size: 1.5rem; /* Размер текста для рейтинга */
             font-weight: bold; /* Жирный текст */
@@ -227,10 +246,7 @@
             color: white;
         }
 
-        .hotel-card {
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-        }
+
         .other-images img {
             margin-right: 10px;
             width: calc(50% - 5px);
@@ -465,26 +481,30 @@
         .pulse-btn {
             animation: pulse 2s infinite;
         }
+        /* Объемная панель бронирований */
         .reservation-panel {
             position: fixed;
-            right: -300px; /* Изначально скрыта за экраном */
+            right: -310px; /* Увеличено на 1 см */
             top: 0;
             height: 100%;
-            width: 300px;
+            width: 310px; /* Увеличено на 1 см */
             background-color: #275271FF;
             color: white;
             transition: right 0.3s ease-in-out;
             z-index: 1000;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5); /* Объемная тень */
             overflow-y: auto;
+            border-radius: 10px 0 0 10px; /* Скругленные углы */
         }
 
         .reservation-panel.open {
-            right: 0; /* Когда открыта, она будет видна */
+            right: 0; /* Открытая панель */
         }
 
         .panel-content {
             padding: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         .close-panel-btn {
@@ -495,8 +515,13 @@
             cursor: pointer;
             width: 100%;
             border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Объемная тень */
         }
 
+        .close-panel-btn:hover {
+            background-color: #c6806b;
+        }
 
     </style>
 </head>
@@ -558,10 +583,9 @@
     <!-- Правая часть: контент с зарегистрированными отелями -->
     <div class="content">
 <!--        <h2 class="mb-4">Ваші номери, які розміщено у <span th:text="${hotel.name}"></span></h2>-->
-
         <!-- Отображение номеров, зарегистрированных партнером -->
         <div class="row">
-            <div class="container mt-5">
+<!--            <div class="container mt-5">-->
 
                 <div class="row justify-content-center">
                     <div class="col-md-6" th:each="room : ${rooms}">
@@ -592,12 +616,12 @@
                                 <button th:if="${#lists.size(room.reservations) > 0}"
                                         class="btn btn-primary pulse-btn w-100"
                                         style="max-width: 300px;"
-                                        onclick="openReservationPanel('reservationPanel[[${roomStat.index}]]')">
+                                        th:attr="onclick=|openReservationPanel('reservationPanel${room.id}')|">
                                     Ваше житло забронювали
                                 </button>
                             </div>
 
-
+                            <!--                                        onclick="openReservationPanel('reservationPanel[[${roomStat.index}]]')">-->
                             <!-- Детали номера -->
                             <div class="card-body">
                                 <h4>Ціна (вказана за добу):</h4>
@@ -616,13 +640,17 @@
                                 </div>
 
                                 <!-- Панель для отображения бронирований -->
-                                <div id="reservationPanel[[${roomStat.index}]]" class="reservation-panel">
+                                <div th:id="'reservationPanel' + ${room.id}" class="reservation-panel">
+<!--                                <div id="reservationPanel[[${roomStat.index}]]" class="reservation-panel">-->
                                     <div class="panel-content">
                                         <h5>Перегляд бронювань: <span th:text="${room.type}"></span></h5>
                                         <ul>
                                             <li th:each="reservation : ${room.reservations}">
-                                                <strong>Готель:</strong> <span th:text="${reservation.room.hotel.name}"></span> -
-                                                <strong>Кімната:</strong> <span th:text="${reservation.room.type}"></span> -
+                                                <hr>
+                                                <strong>Готель:</strong> <span th:text="${reservation.room.hotel.name}"></span>
+                                                <br>
+                                                <strong></strong> <span th:text="${reservation.room.type}"></span>
+                                                <br>
                                                 <strong>Місткість:</strong> <span th:text="${reservation.room.capacity}"></span> осіб
                                                 <br>
                                                 <strong>Ціна за добу:</strong> <span th:text="${reservation.room.price}"></span> грн
@@ -633,9 +661,11 @@
                                                 <br>
                                                 <strong>Загальна сума:</strong> <span th:text="${reservation.totalPrice}"></span> грн
                                                 <hr>
+
                                             </li>
                                         </ul>
-                                        <button class="close-panel-btn" onclick="closeReservationPanel('reservationPanel[[${roomStat.index}]]')">Закрити</button>
+                                        <button class="close-panel-btn" th:attr="onclick=|closeReservationPanel('reservationPanel${room.id}')|">Закрити</button>
+<!--                                        <button class="close-panel-btn" onclick="closeReservationPanel('reservationPanel[[${roomStat.index}]]')">Закрити</button>-->
                                     </div>
                                 </div>
 
@@ -699,12 +729,12 @@
             <p>Arrenvi@gmail.com</p>
         </div>
         <div class="footer-section">
-            <h4>Для бізнесу</h4>
+            <h4 class="nav-link">Для бізнесу</h4>
             <p><a href="/hotels/add">Зареєструвати помешкання</a></p>
         </div>
         <div class="footer-section">
             <h2><a class="nav-link" href="/about_us">Про нас</a></h2>
-            <h4>Ми в соц мережах:</h4>
+            <h4 class="nav-link">Ми в соц мережах:</h4>
             <a href="#"><img class="img" src="/images/instagram.png" /></a>
             <a href="#"><img class="img" src="/images/facebook.png" /></a>
         </div>

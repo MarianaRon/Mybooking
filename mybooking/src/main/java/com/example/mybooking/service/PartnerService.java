@@ -63,4 +63,11 @@ public class PartnerService {
     public Optional<Partner> findByEmail(String email) {
         return partnerRepository.findByEmail(email);
     }
+
+    public void deletePartnerById(Long id) {
+        Optional<Partner> partnerOpt = partnerRepository.findById(id);
+        if (partnerOpt.isPresent()) {
+            partnerRepository.delete(partnerOpt.get()); // Удаляем партнера
+        }
+    }
 }

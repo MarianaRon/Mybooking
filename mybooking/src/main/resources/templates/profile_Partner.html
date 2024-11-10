@@ -21,7 +21,15 @@
             color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
+        .logo-component {
+            transition: transform 0.3s ease-in-out; /* Плавный переход */
+            max-height: 90px; /* Соответствует вашему заданному размеру */
+            margin-right: 10px;
+        }
 
+        .logo-component:hover {
+            transform: scale(1.1); /* Увеличение на 10% при наведении */
+        }
 
         .auth-buttons {
             color: #ffffff;
@@ -317,7 +325,7 @@
         <div class="HEADER-desktop">
             <div class="frame">
                 <div class="frame">
-                    <a class="nav-link" href="/"><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 50px;"/></span></a>
+                    <a class="nav-link" href="/"><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo"/></span></a>
                 </div>
             </div>
         </div>
@@ -364,7 +372,7 @@
         </div>
         <div class="sidebar-menu">
 
-            <a href="hotels/hotels_by_partner" class="btn btn-primary">Переглянути мої помешкання</a>
+            <a href="hotels_by_partner" class="btn btn-primary">Переглянути мої помешкання</a>
             <a href="/hotels/add" class="btn btn-primary">Додати нове помешкання</a>
             <a href="#" class="btn btn-primary">Видалити аккаунт</a>
             <a  href="/home_partners" class="btn btn-primary">Головна</a>
@@ -458,12 +466,12 @@
             <p>Arrenvi@gmail.com</p>
         </div>
         <div class="footer-section">
-            <h4>Для бізнесу</h4>
+            <h4 class="nav-link">Для бізнесу</h4>
             <p><a href="/hotels/add">Зареєструвати помешкання</a></p>
         </div>
         <div class="footer-section">
             <h2><a class="nav-link" href="/about_us">Про нас</a></h2>
-            <h4>Ми в соц мережах:</h4>
+            <h4 class="nav-link">Ми в соц мережах:</h4>
             <a href="#"><img class="img" src="/images/instagram.png" /></a>
             <a href="#"><img class="img" src="/images/facebook.png" /></a>
         </div>
