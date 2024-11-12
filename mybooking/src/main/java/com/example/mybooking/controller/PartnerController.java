@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 import java.util.List;
@@ -68,32 +69,40 @@ public class PartnerController {
 
         if (optionalPartner.isPresent()) {
             Partner partner = optionalPartner.get();
-            if (partner.getPassword().equals(password)) {
+
+
+            // Используем BCrypt для проверки введенного пароля с хешированным паролем в базе
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (passwordEncoder.matches(password, partner.getPassword())) {
                 session.setAttribute("loggedInPartner", partner);
                 session.setAttribute("userName", partner.getFirstName());
                 return "redirect:/home_partners";
             } else {
-                model.addAttribute("errorMessage", "Неправильный email или пароль");
+                model.addAttribute("errorMessage", "Невірний email або пароль");
                 return "partner_Account";
             }
         } else {
-            model.addAttribute("errorMessage", "Партнер с таким email не найден.");
+            model.addAttribute("errorMessage", "Партнер з таким email не знайдений.");
             return "partner_Account";
         }
     }
-
+/////////////
     // Создание нового партнера
     @PostMapping
     public String createPartner(@ModelAttribute Partner partner, @RequestParam("confirmPassword") String confirmPassword, Model model) {
         if (!partner.getPassword().equals(confirmPassword)) {
-            model.addAttribute("errorMessage", "Пароли не совпадают");
+            model.addAttribute("errorMessage", "Паролі не співпадають");
             return "partners/partner_form";
         }
 
         if (partner.getPassword().length() < 6) {
-            model.addAttribute("errorMessage", "Пароль должен быть длиной не менее 6 символов");
+            model.addAttribute("errorMessage", "Пароль повинен бути не меньше 6 сімволів");
             return "partners/partner_form";
         }
+        // Хешируем пароль перед сохранением
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(partner.getPassword());
+        partner.setPassword(hashedPassword);
 
         partnerService.createPartner(partner);
         return "redirect:/home_partners";
@@ -104,6 +113,11 @@ public class PartnerController {
     public String deletePartner(@PathVariable Long id) {
         partnerService.deletePartner(id);
         return "redirect:/partners";
+    }
+
+    private Long getCurrentPartnerId() {
+        // Логика получения ID текущего партнера из сессии
+        return 1L; // Временно возвращаем ID партнера 1
     }
 
     // Логаут партнера
@@ -197,11 +211,11 @@ public class PartnerController {
             // Логика изменения пароля (если введен новый пароль)
             if (newPassword != null && !newPassword.isEmpty()) {
                 if (!newPassword.equals(confirmPassword)) {
-                    model.addAttribute("errorMessage", "Пароли не совпадают");
+                    model.addAttribute("errorMessage", "Паролі не співпадають");
                     return "partners/edit_profile"; // возвращаемся к форме с ошибкой
                 }
                 if (newPassword.length() < 6) {
-                    model.addAttribute("errorMessage", "Пароль должен быть длиной не менее 6 символов");
+                    model.addAttribute("errorMessage", "Пароль має бути не меньше 6 сімволів");
                     return "partners/edit_profile"; // возвращаемся к форме с ошибкой
                 }
                 existingPartner.setPassword(newPassword); // Обновляем пароль
@@ -269,5 +283,18 @@ public class PartnerController {
         model.addAttribute("hotels", hotels);
         return "hotels_by_partner"; // Отображаем отели партнера
     }
+    //////////////
+    @GetMapping("/delete")
+    public String deleteAccount(HttpSession session) {
+        Partner loggedInPartner = (Partner) session.getAttribute("loggedInPartner");
+
+        if (loggedInPartner != null) {
+            partnerService.deletePartner(loggedInPartner.getId());
+            session.invalidate(); // Завершаем сессию после удаления аккаунта
+        }
+
+        return "redirect:/"; // Перенаправляем на главную страницу после удаления
+    }
+
 
 }

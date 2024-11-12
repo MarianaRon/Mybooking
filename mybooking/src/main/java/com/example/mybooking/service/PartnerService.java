@@ -6,6 +6,7 @@ import com.example.mybooking.repository.IPartnerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,12 @@ public class PartnerService {
 
     @Autowired
     private IPartnerRepository partnerRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
+    public PartnerService(IPartnerRepository partnerRepository) {
+        this.partnerRepository = partnerRepository;
+    }
 
     public List<Partner> getAllPartners() {
         return partnerRepository.findAll();
@@ -47,12 +54,14 @@ public class PartnerService {
         // Логика изменения пароля (если введен новый пароль)
         if (newPassword != null && !newPassword.isEmpty()) {
             if (!newPassword.equals(confirmPassword)) {
-                return "Пароли не совпадают";
+                return "Паролі не співпадають";
             }
             if (newPassword.length() < 6) {
-                return "Пароль должен быть длиной не менее 6 символов";
+                return "Пароль має бути не меньше 6 символів";
             }
-            existingPartner.setPassword(newPassword); // Обновляем пароль
+            // Хешируем новый пароль перед сохранением
+            String hashedPassword = passwordEncoder.encode(newPassword);
+            existingPartner.setPassword(hashedPassword);
         }
 
         // Сохраняем обновленные данные партнера
@@ -64,10 +73,5 @@ public class PartnerService {
         return partnerRepository.findByEmail(email);
     }
 
-    public void deletePartnerById(Long id) {
-        Optional<Partner> partnerOpt = partnerRepository.findById(id);
-        if (partnerOpt.isPresent()) {
-            partnerRepository.delete(partnerOpt.get()); // Удаляем партнера
-        }
-    }
+
 }
