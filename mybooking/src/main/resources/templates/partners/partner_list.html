@@ -225,10 +225,10 @@
             <td th:text="${partner.phone}"></td>
             <td>
                 <a th:href="@{/partners/edit/{id}(id=${partner.id})}">Редагувати</a>
-                <form th:action="@{/partners/{id}(id=${partner.id})}" method="post" style="display:inline-block;">
-                    <input type="hidden" name="_method" value="delete">
-                    <button type="submit">Видалити</button>
-                </form>
+<!--                <form th:action="@{/partners/{id}(id=${partner.id})}" method="post" style="display:inline-block;">-->
+<!--                    <input type="hidden" name="_method" value="delete">-->
+<!--                    <button type="submit">Видалити</button>-->
+<!--                </form>-->
             </td>
         </tr>
         </tbody>
