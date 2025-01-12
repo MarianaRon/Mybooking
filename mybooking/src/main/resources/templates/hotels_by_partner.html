@@ -545,6 +545,7 @@
                                  th:src="@{/hotels/cover/{id}(id=${hotel.id})}"
                                  alt="Обложка" class="card-img-top hotel-cover-img" onclick="openModal(this)">
                             </div>
+
                                 <!-- Блок с рейтингом -->
                             <div class="rating-box position-absolute top-0 end-0 p-2 bg-primary text-white">
                                 <!-- Условие для отображения текста в зависимости от рейтинга -->
@@ -556,9 +557,11 @@
                                     (${hotel.averageRating >= 2.0} ?'Непогано'))))">
 
                                 </span>
-                                <span class="d-block fs-4 fw-bold"  th:text="${hotel.averageRating}">0.0</span> <!-- Здесь отображается реальный рейтинг -->
+                                <!-- Здесь отображается реальный рейтинг -->
+                                <span class="d-block fs-4 fw-bold"  th:text="${hotel.averageRating}">0.0</span>
                                 <!-- Ссылка на отзывы -->
-                                <a th:href="@{/hotels/{id}/reviews(id=${hotel.id})}" class="text-white text-decoration-underline d-block" th:text="'Відгуки: ' + ${hotel.reviews.size()}">Відгуки</a>
+                                <a th:href="@{/hotels/{id}/reviews(id=${hotel.id})}" class="text-white text-decoration-underline d-block"
+                                   th:text="'Відгуки: ' + ${hotel.reviews.size()}">Відгуки</a>
                             </div>
 
                             <!-- Место для дополнительных изображений -->

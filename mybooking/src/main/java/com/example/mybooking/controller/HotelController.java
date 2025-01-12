@@ -571,7 +571,6 @@ public class HotelController {
             return "redirect:/hotels/hotel_list";
         }
     }
-
     @GetMapping("/hotels/coverImage/{id}")
     @ResponseBody
     public ResponseEntity<byte[]> getHotelCoverImage(@PathVariable("id") Long hotelId) {
@@ -585,8 +584,6 @@ public class HotelController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 
     @GetMapping("/{id}")
     public String getHotelDetails(@PathVariable("id") Long id, Model model) {
@@ -610,7 +607,6 @@ public class HotelController {
             if (!images.isEmpty()) {
                 hotel.setCoverImage(images.get(0).getPhotoBytes());  // Використовуємо перше зображення як обкладинку
             }
-
             // Додавання атрибутів до моделі
             model.addAttribute("hotel", hotel);
             model.addAttribute("city", hotel.getCity());
@@ -631,6 +627,5 @@ public String deleteHotelPost(@PathVariable Long id) {
     hotelService.deleteHotelById(id);
     return "redirect:/hotels/hotel_list";
 }
-
 
 }
